@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상담 사전설문 · 남진우 자산관리</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8973A;
+    --gold-light: #D4AF5A;
+    --gold-pale: #F5EDD6;
+    --dark: #0E0E0E;
+    --dark-2: #1A1A1A;
+    --dark-3: #252525;
+    --mid: #6B6B6B;
+    --light: #F0EBE1;
+    --white: #FDFAF5;
+    --border: rgba(184,151,58,0.2);
+    --error: #c0392b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: rgba(14,14,14,0.95);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9a9a9a;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-back:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    padding: 120px 60px 60px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-intro {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 28px 36px;
+    text-align: left;
+    margin-top: 40px;
+  }
+  .hero-intro p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13.5px;
+    line-height: 2.1;
+    color: rgba(240,235,225,0.92);
+    font-weight: 300;
+  }
+  .hero-intro p + p { margin-top: 16px; }
+  .hero-intro strong { color: var(--gold-light); font-weight: 400; }
+  .hero-intro .sign {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #9a9a9a;
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .hero-intro .promise {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: rgba(184,151,58,0.06);
+    border: 1px solid rgba(184,151,58,0.2);
+    font-size: 13px;
+    color: var(--gold-light);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    max-width: 700px;
+    margin: 40px auto 0;
+    padding: 0 60px;
+  }
+  .progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 8px;
+  }
+  .step-dot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: #9a9a9a;
+    transition: color 0.3s;
+  }
+  .step-dot.active { color: var(--gold-light); }
+  .step-dot.done { color: var(--gold); }
+  .step-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    transition: all 0.3s;
+  }
+  .step-dot.active .step-circle {
+    border-color: var(--gold-light);
+    background: var(--gold);
+    color: var(--dark);
+  }
+  .step-dot.done .step-circle {
+    border-color: var(--gold);
+    background: rgba(184,151,58,0.15);
+    color: var(--gold);
+  }
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 12px;
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--gold); }
+  .progress-bar {
+    height: 2px;
+    background: var(--dark-3);
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--gold), var(--gold-light));
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* FORM */
+  .form-wrap {
+    max-width: 700px;
+    margin: 40px auto 80px;
+    padding: 0 60px;
+  }
+
+  .form-page { display: none; }
+  .form-page.active { display: block !important; }
+  .form-page.active { display: block; animation: fadeSlide 0.4s ease; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .page-title span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+  }
+
+  /* QUESTION */
+  .q-block {
+    margin-bottom: 36px;
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    transition: border-color 0.2s;
+  }
+  .q-block:focus-within { border-color: rgba(184,151,58,0.5); }
+
+  .q-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 18px;
+    line-height: 1.5;
+    font-family: 'Noto Serif KR', serif;
+  }
+  .q-label .req {
+    color: var(--gold);
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-sub {
+    font-size: 11px;
+    color: #9a9a9a;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  /* RADIO */
+  .radio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .radio-grid.single-col { grid-template-columns: 1fr; }
+
+  .radio-item, .check-item {
+    position: relative;
+  }
+  .radio-item input, .check-item input {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+  .radio-item label, .check-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: rgba(240,235,225,0.88);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .radio-item label::before {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 1px solid var(--mid);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .check-item label::before {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--mid);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .radio-item input:checked + label,
+  .check-item input:checked + label {
+    color: var(--white);
+    border-color: rgba(184,151,58,0.3);
+    background: rgba(184,151,58,0.06);
+  }
+  .radio-item input:checked + label::before {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: inset 0 0 0 3px var(--dark-2);
+  }
+  .check-item input:checked + label::before {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .radio-item label:hover, .check-item label:hover {
+    color: var(--light);
+    border-color: rgba(184,151,58,0.2);
+  }
+
+  /* TEXT INPUT */
+  .text-input, .textarea-input {
+    width: 100%;
+    background: var(--dark-3);
+    border: 1px solid rgba(184,151,58,0.15);
+    color: var(--light);
+    padding: 12px 16px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .text-input:focus, .textarea-input:focus {
+    border-color: rgba(184,151,58,0.5);
+  }
+  .text-input::placeholder, .textarea-input::placeholder {
+    color: #9a9a9a;
+  }
+  .textarea-input { min-height: 80px; }
+
+  /* OTHER input */
+  .other-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .other-wrap:focus-within {
+    border-color: rgba(184,151,58,0.2);
+    background: rgba(184,151,58,0.04);
+  }
+  .other-wrap::before {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--mid);
+    flex-shrink: 0;
+  }
+  .other-wrap.has-value::before {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .other-text {
+    flex: 1;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(184,151,58,0.2);
+    color: var(--light);
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    padding: 4px 0;
+    outline: none;
+  }
+  .other-text::placeholder { color: #9a9a9a; }
+  .other-label { font-size: 13px; color: rgba(240,235,225,0.88); white-space: nowrap; }
+
+  /* ERROR */
+  .q-error {
+    font-size: 11px;
+    color: var(--error);
+    margin-top: 8px;
+    display: none;
+    letter-spacing: 0.05em;
+  }
+  .q-block.has-error { border-color: rgba(192,57,43,0.4); }
+  .q-block.has-error .q-error { display: block; }
+
+  /* BUTTONS */
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .btn-prev {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: 1px solid rgba(184,151,58,0.3);
+    color: #9a9a9a;
+    background: none;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .btn-prev:hover { color: var(--gold-light); border-color: var(--gold); }
+
+  .btn-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 40px;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    transition: all 0.3s;
+    margin-left: auto;
+  }
+  .btn-next:hover { background: var(--gold-light); gap: 16px; }
+  .btn-next svg { transition: transform 0.3s; }
+  .btn-next:hover svg { transform: translateX(3px); }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 48px;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s;
+    margin-left: auto;
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* COMPLETE PAGE */
+  #page-complete {
+    display: none;
+    max-width: 700px;
+    margin: 100px auto 80px;
+    padding: 0 60px;
+    text-align: center;
+    animation: fadeSlide 0.5s ease;
+  }
+  #page-complete.active { display: block; }
+  .complete-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+    color: var(--gold);
+  }
+  #page-complete h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  #page-complete h2 em { font-style: italic; color: var(--gold-light); }
+  #page-complete p {
+    font-size: 14px;
+    color: #9a9a9a;
+    line-height: 1.9;
+    margin-bottom: 40px;
+  }
+  .complete-box {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    text-align: left;
+    margin-bottom: 32px;
+  }
+  .complete-box-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .complete-box p {
+    font-size: 13px;
+    color: rgba(240,235,225,0.90);
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+  .kakao-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: #FEE500;
+    color: #3C1E1E;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none;
+    transition: all 0.3s;
+    margin-bottom: 16px;
+  }
+  .kakao-btn:hover { background: #f0d900; transform: translateY(-1px); }
+  .copy-notice {
+    font-size: 11px;
+    color: #9a9a9a;
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+  .copy-notice.copied { color: var(--gold); }
+
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(184,151,58,0.3), transparent); }
+
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid rgba(184,151,58,0.1);
+    margin-top: 80px;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light); }
+  .footer-copy { font-size: 11px; color: #9a9a9a; }
+
+  @media (max-width: 700px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 90px 24px 40px; }
+    .progress-wrap { padding: 0 24px; }
+    .form-wrap { padding: 0 24px; }
+    .hero-intro { padding: 20px 20px; }
+    .radio-grid { grid-template-columns: 1fr 1fr; }
+    .form-actions { flex-wrap: wrap; }
+    .btn-next, .btn-submit { width: 100%; justify-content: center; }
+    #page-complete { padding: 0 24px; }
+    footer { padding: 30px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <a href="index.html#contact" class="nav-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    돌아가기
+  </a>
+</nav>
+
+<!-- HERO / 드리는 말씀 -->
+<div class="hero">
+  <div class="hero-eyebrow">Pre-Consultation Survey</div>
+  <h1>상담 전<br><em>드리는 말씀</em></h1>
+
+  <div class="hero-intro">
+    <p>안녕하세요. 자산관리사 <strong>남진우 팀장</strong>입니다.</p>
+    <p>
+      혹시 이런 생각 하시지 않으세요?<br>
+      <strong>"왜 나만 돈을 못 모으는 것 같지?"</strong><br>
+      <strong>"월급관리는 이렇게 하는 게 맞는 건가? 남들도 이렇게 하나?"</strong><br>
+      <strong>"투자는 위험한 거 아닌가? 리딩방이라도 들어가볼까..?"</strong>
+    </p>
+    <p>
+      저도 그랬습니다. 돈은 아껴쓰는데 모이는 것 같지는 않고, 남들처럼 투자하자니 막상 두렵고…<br>
+      여러분과 똑같이 이런 시간을 겪고 금융전문가가 되어 수많은 상담을 해보니 가장 중요한 건 이거였습니다.
+    </p>
+    <p>
+      <strong>"남들을 둘러보기 전 나를 돌아봐라"</strong><br>
+      돈이 필요한 이유는 내가 행복하기 위해서잖아요. 그래서 나를 알아야 합니다.<br>
+      내면의 나는 진정으로 무엇을 원하는지, 돈으로 무엇을 해야 내가 행복한지!
+    </p>
+    <p>
+      저는 재무상담에서 '재무'에 대한 돈 이야기를 하기 전에 인생에 대한 진정성 있는 '상담'을 할 겁니다.<br>
+      저축과 투자의 원칙을 설명하고, 선생님 상황과 성향에 맞춰 계획을 같이 세울게요.<br>
+      나중에는 <strong>저의 도움 없이도 본인 스스로 관리할 수 있는 능력</strong>을 만들어 드릴 겁니다.
+    </p>
+    <div class="promise">
+      "여기까지 읽으신 분들은 상담에 200% 이상 만족하실 겁니다. 장담합니다."
+    </div>
+    <p style="margin-top:16px">상담 전 아래 설문을 작성해주시면 <strong>더욱 원활한 상담</strong>이 됩니다.</p>
+    <div class="sign">자산관리사 남진우 팀장 드림</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" id="progress-wrap" style="display:none">
+  <div class="progress-steps">
+    <div class="step-dot active" id="step1-dot">
+      <div class="step-circle">1</div>
+      <span>기본 정보</span>
+    </div>
+    <div class="step-line" id="step-line"></div>
+    <div class="step-dot" id="step2-dot">
+      <div class="step-circle">2</div>
+      <span>재무 현황</span>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap" id="form-wrap">
+
+  <!-- PAGE 1: 기본 정보 -->
+  <div class="form-page active" id="page1">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--white);margin-bottom:28px;letter-spacing:0.05em;">기본 정보</h3>
+
+    <!-- 이름 -->
+    <div class="q-block" id="q-name">
+      <div class="q-label"><span class="req">*</span> 이름</div>
+      <input type="text" class="text-input" id="name" placeholder="이름을 입력해주세요">
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 추천인 -->
+    <div class="q-block" id="q-referral">
+      <div class="q-label"><span class="req">*</span> 추천인 성함 (혹은 유입경로)</div>
+      <input type="text" class="text-input" id="referral" placeholder="예: 홍길동 소개, 유튜브, 인스타그램 등">
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 연락처 -->
+    <div class="q-block" id="q-contact">
+      <div class="q-label"><span class="req">*</span> 연락처 (번호 혹은 카톡 ID)</div>
+      <input type="text" class="text-input" id="contact" placeholder="010-0000-0000 또는 카카오톡 ID">
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- MBTI -->
+    <div class="q-block" id="q-mbti">
+      <div class="q-label"><span class="req">*</span> MBTI</div>
+      <input type="text" class="text-input" id="mbti" placeholder="예: INTJ, ENFP 등">
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 성별 -->
+    <div class="q-block" id="q-gender">
+      <div class="q-label"><span class="req">*</span> 성별</div>
+      <div class="radio-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="radio-item"><input type="radio" name="gender" id="g1" value="여자"><label for="g1">여자</label></div>
+        <div class="radio-item"><input type="radio" name="gender" id="g2" value="남자"><label for="g2">남자</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 연령대 -->
+    <div class="q-block" id="q-age">
+      <div class="q-label"><span class="req">*</span> 연령대</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="age" id="a1" value="20~25세"><label for="a1">20~25세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a2" value="26~30세"><label for="a2">26~30세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a3" value="31~35세"><label for="a3">31~35세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a4" value="36~40세"><label for="a4">36~40세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a5" value="41~45세"><label for="a5">41~45세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a6" value="46~50세"><label for="a6">46~50세</label></div>
+        <div class="radio-item"><input type="radio" name="age" id="a7" value="51세 이상"><label for="a7">51세 이상</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 결혼여부 -->
+    <div class="q-block" id="q-married">
+      <div class="q-label"><span class="req">*</span> 결혼 여부</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="married" id="m1" value="미혼"><label for="m1">미혼</label></div>
+        <div class="radio-item"><input type="radio" name="married" id="m2" value="기혼(자녀없음)"><label for="m2">기혼(자녀없음)</label></div>
+        <div class="radio-item"><input type="radio" name="married" id="m3" value="기혼(자녀있음)"><label for="m3">기혼(자녀있음)</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 직업 -->
+    <div class="q-block" id="q-job">
+      <div class="q-label"><span class="req">*</span> 직업, 경력 (구체적일수록 좋습니다)</div>
+      <input type="text" class="text-input" id="job" placeholder="예: IT회사 개발자 3년차, 간호사 5년차, 자영업(음식점) 등">
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 거주지 -->
+    <div class="q-block" id="q-region">
+      <div class="q-label"><span class="req">*</span> 거주지</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="region" id="r1" value="서울특별시"><label for="r1">서울특별시</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r2" value="경기도"><label for="r2">경기도</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r3" value="강원도"><label for="r3">강원도</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r4" value="충청도"><label for="r4">충청도</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r5" value="전라도"><label for="r5">전라도</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r6" value="경상도"><label for="r6">경상도</label></div>
+        <div class="radio-item"><input type="radio" name="region" id="r7" value="제주도 및 기타도서지역"><label for="r7">제주도 및 기타도서지역</label></div>
+      </div>
+      <div class="other-wrap" id="region-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="region-other" placeholder="직접 입력">
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 금융컨설팅 경험 -->
+    <div class="q-block" id="q-exp">
+      <div class="q-label"><span class="req">*</span> 금융컨설팅 경험 (중복체크)</div>
+      <div class="radio-grid single-col">
+        <div class="check-item"><input type="checkbox" name="exp" id="e1" value="재무상담가(자산관리사)"><label for="e1">재무상담가(자산관리사)</label></div>
+        <div class="check-item"><input type="checkbox" name="exp" id="e2" value="은행 방문"><label for="e2">은행 방문</label></div>
+        <div class="check-item"><input type="checkbox" name="exp" id="e3" value="증권사 방문"><label for="e3">증권사 방문</label></div>
+        <div class="check-item"><input type="checkbox" name="exp" id="e4" value="보험설계사 보험상담"><label for="e4">보험설계사 보험상담</label></div>
+        <div class="check-item"><input type="checkbox" name="exp" id="e5" value="전혀없음"><label for="e5">전혀없음</label></div>
+      </div>
+      <div class="other-wrap" id="exp-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="exp-other" placeholder="직접 입력">
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 관심분야 -->
+    <div class="q-block" id="q-interest">
+      <div class="q-label"><span class="req">*</span> 관심분야 (중복체크)</div>
+      <div class="radio-grid single-col">
+        <div class="check-item"><input type="checkbox" name="interest" id="i1" value="전반적인 월급관리"><label for="i1">전반적인 월급관리</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i2" value="목돈마련"><label for="i2">목돈마련</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i3" value="결혼자금마련"><label for="i3">결혼자금마련</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i4" value="주택마련(내집마련)"><label for="i4">주택마련(내집마련)</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i5" value="투자수익률 개선(주식/채권/펀드/ETF 등)"><label for="i5">투자수익률 개선(주식/채권/펀드/ETF 등)</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i6" value="경제적 자유(은퇴 및 노후설계)"><label for="i6">경제적 자유(은퇴 및 노후설계)</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i7" value="부채(대출)상환"><label for="i7">부채(대출)상환</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i8" value="세금(비과세/상속/증여 등)"><label for="i8">세금(비과세/상속/증여 등)</label></div>
+        <div class="check-item"><input type="checkbox" name="interest" id="i9" value="금융지식, 경제상식 배우기"><label for="i9">금융지식, 경제상식 배우기</label></div>
+      </div>
+      <div class="other-wrap" id="interest-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="interest-other" placeholder="직접 입력">
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    </div>
+
+  <!-- PAGE 2: 재무 현황 -->
+  <div class="form-page active" id="page2">
+    <div class="section-divider-inner" style="height:1px;background:rgba(184,151,58,0.2);margin:40px 0 36px;"></div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--white);margin-bottom:28px;letter-spacing:0.05em;">재무 현황</h3>
+
+    <!-- 보유 금융상품 -->
+    <div class="q-block" id="q-products">
+      <div class="q-label"><span class="req">*</span> 보유(가입)중인 금융상품 (중복체크)</div>
+      <div class="radio-grid">
+        <div class="check-item"><input type="checkbox" name="products" id="p1" value="적금"><label for="p1">적금</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p2" value="예금"><label for="p2">예금</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p3" value="주택청약"><label for="p3">주택청약</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p4" value="주식(직접투자)"><label for="p4">주식(직접투자)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p5" value="채권/원자재(직접투자)"><label for="p5">채권/원자재(직접투자)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p6" value="펀드(간접투자)"><label for="p6">펀드(간접투자)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p7" value="ETF"><label for="p7">ETF</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p8" value="보험(보장성)"><label for="p8">보험(보장성: 암, 뇌, 심, 자동차 등)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p9" value="보험(저축성)"><label for="p9">보험(저축성: 저축, 연금 등)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p10" value="세제적격(연금저축/IRP)"><label for="p10">세제적격(연금저축/IRP)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p11" value="부동산(임대소득/오피스텔)"><label for="p11">부동산(임대소득/오피스텔)</label></div>
+        <div class="check-item"><input type="checkbox" name="products" id="p12" value="아무것도 없음"><label for="p12">아무것도 없음</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 월평균 수입 -->
+    <div class="q-block" id="q-income">
+      <div class="q-label"><span class="req">*</span> 월평균 수입</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="income" id="inc1" value="50~100만"><label for="inc1">50~100만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc2" value="100~200만"><label for="inc2">100~200만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc3" value="200~250만"><label for="inc3">200~250만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc4" value="250~300만"><label for="inc4">250~300만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc5" value="300~350만"><label for="inc5">300~350만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc6" value="350~400만"><label for="inc6">350~400만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc7" value="400~450만"><label for="inc7">400~450만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc8" value="450~500만"><label for="inc8">450~500만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc9" value="500만~600만"><label for="inc9">500~600만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc10" value="600만~700만"><label for="inc10">600~700만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc11" value="700만~800만"><label for="inc11">700~800만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc12" value="800만~900만"><label for="inc12">800~900만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc13" value="900만~1,000만"><label for="inc13">900~1,000만</label></div>
+        <div class="radio-item"><input type="radio" name="income" id="inc14" value="1,000만 이상"><label for="inc14">1,000만 이상</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 월평균 지출 -->
+    <div class="q-block" id="q-expense">
+      <div class="q-label"><span class="req">*</span> 월평균 지출 (대략적으로)</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="expense" id="ex1" value="50만 미만"><label for="ex1">50만 미만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex2" value="50~100만"><label for="ex2">50~100만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex3" value="100~150만"><label for="ex3">100~150만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex4" value="150~200만"><label for="ex4">150~200만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex5" value="200~250만"><label for="ex5">200~250만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex6" value="250~300만"><label for="ex6">250~300만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex7" value="300~400만"><label for="ex7">300~400만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex8" value="400만~500만"><label for="ex8">400~500만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex9" value="500만~600만"><label for="ex9">500~600만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex10" value="600만~700만"><label for="ex10">600~700만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex11" value="700만~800만"><label for="ex11">700~800만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex12" value="800만~900만"><label for="ex12">800~900만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex13" value="900만~1,000만"><label for="ex13">900~1,000만</label></div>
+        <div class="radio-item"><input type="radio" name="expense" id="ex14" value="1,000만 이상"><label for="ex14">1,000만 이상</label></div>
+      </div>
+      <div class="other-wrap" id="expense-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="expense-other" placeholder="직접 입력">
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 저축가능금액 -->
+    <div class="q-block" id="q-save">
+      <div class="q-label"><span class="req">*</span> 저축가능금액</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="save" id="sv1" value="50만원 이하"><label for="sv1">50만 이하</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv2" value="50~100만"><label for="sv2">50~100만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv3" value="100~150만"><label for="sv3">100~150만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv4" value="150~200만"><label for="sv4">150~200만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv5" value="200~250만"><label for="sv5">200~250만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv6" value="250~300만"><label for="sv6">250~300만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv7" value="300~350만"><label for="sv7">300~350만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv8" value="350~400만"><label for="sv8">350~400만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv9" value="400~450만"><label for="sv9">400~450만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv10" value="450~500만"><label for="sv10">450~500만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv11" value="500만~600만"><label for="sv11">500~600만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv12" value="600만~700만"><label for="sv12">600~700만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv13" value="700만~800만"><label for="sv13">700~800만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv14" value="800만~900만"><label for="sv14">800~900만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv15" value="900만~1,000만"><label for="sv15">900~1,000만</label></div>
+        <div class="radio-item"><input type="radio" name="save" id="sv16" value="1,000만 이상"><label for="sv16">1,000만 이상</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 자산 현황 -->
+    <div class="q-block" id="q-asset">
+      <div class="q-label"><span class="req">*</span> 자산 현황 (금융자산 + 부동산 자산)</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="asset" id="as1" value="1,000만 미만"><label for="as1">1,000만 미만</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as2" value="1,000~3,000만"><label for="as2">1,000~3,000만</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as3" value="3,000~5,000만"><label for="as3">3,000~5,000만</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as4" value="5,000~10,000만(1억)"><label for="as4">5,000만~1억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as5" value="10,000~15,000만"><label for="as5">1억~1.5억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as6" value="15,000~20,000만"><label for="as6">1.5억~2억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as7" value="20,000~25,000만"><label for="as7">2억~2.5억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as8" value="25,000~30,000만"><label for="as8">2.5억~3억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as9" value="30,000~40,000만"><label for="as9">3억~4억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as10" value="40,000~50,000만"><label for="as10">4억~5억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as11" value="50,000만~100,000만(10억)"><label for="as11">5억~10억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as12" value="100,000만~150,000만(15억)"><label for="as12">10억~15억</label></div>
+        <div class="radio-item"><input type="radio" name="asset" id="as13" value="150,000만 이상"><label for="as13">15억 이상</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 부채 현황 -->
+    <div class="q-block" id="q-debt">
+      <div class="q-label"><span class="req">*</span> 부채 현황 (신용대출 + 담보대출)</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="debt" id="dt1" value="1,000만원 미만"><label for="dt1">1,000만 미만</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt2" value="1,000~3,000만"><label for="dt2">1,000~3,000만</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt3" value="3,000~5,000만"><label for="dt3">3,000~5,000만</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt4" value="5,000~10,000만(1억)"><label for="dt4">5,000만~1억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt5" value="10,000~15,000만"><label for="dt5">1억~1.5억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt6" value="15,000~20,000만"><label for="dt6">1.5억~2억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt7" value="20,000~25,000만"><label for="dt7">2억~2.5억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt8" value="25,000~30,000만"><label for="dt8">2.5억~3억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt9" value="30,000~40,000만"><label for="dt9">3억~4억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt10" value="40,000~50,000만"><label for="dt10">4억~5억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt11" value="50,000만~100,000만"><label for="dt11">5억~10억</label></div>
+        <div class="radio-item"><input type="radio" name="debt" id="dt12" value="100,000만(10억) 이상"><label for="dt12">10억 이상</label></div>
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 주거 현황 -->
+    <div class="q-block" id="q-housing">
+      <div class="q-label"><span class="req">*</span> 주거 현황</div>
+      <div class="radio-grid">
+        <div class="radio-item"><input type="radio" name="housing" id="h1" value="부모님과 동거"><label for="h1">부모님과 동거</label></div>
+        <div class="radio-item"><input type="radio" name="housing" id="h2" value="자가"><label for="h2">자가</label></div>
+        <div class="radio-item"><input type="radio" name="housing" id="h3" value="전세"><label for="h3">전세</label></div>
+        <div class="radio-item"><input type="radio" name="housing" id="h4" value="월세"><label for="h4">월세</label></div>
+        <div class="radio-item"><input type="radio" name="housing" id="h5" value="반 전세(전세+월세)"><label for="h5">반 전세(전세+월세)</label></div>
+        <div class="radio-item"><input type="radio" name="housing" id="h6" value="기숙사, 홀쉐어링"><label for="h6">기숙사, 홀쉐어링</label></div>
+      </div>
+      <div class="other-wrap" id="housing-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="housing-other" placeholder="직접 입력">
+      </div>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 미리 알려주실 내용 -->
+    <div class="q-block" id="q-preinfo">
+      <div class="q-label"><span class="req">*</span> 제가 미리 알고있으면 상담에 도움이 될 만한 부분을 적어주세요!</div>
+      <textarea class="textarea-input" id="preinfo" rows="4" placeholder="자유롭게 적어주세요. 없으면 '없음'이라고 적어주세요."></textarea>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 신청 계기 / 가장 큰 고민 -->
+    <div class="q-block" id="q-reason">
+      <div class="q-label"><span class="req">*</span> 컨설팅 신청 계기 혹은 자산관리에서 가장 고민은 무엇인가요?</div>
+      <textarea class="textarea-input" id="reason" rows="4" placeholder="솔직하게 적어주실수록 더 좋은 상담이 됩니다."></textarea>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <!-- 얻어가고 싶은 것 -->
+    <div class="q-block" id="q-goal">
+      <div class="q-label"><span class="req">*</span> 저와의 컨설팅을 통해 얻어가고 싶은 것을 두 가지 이상 적어주세요.</div>
+      <textarea class="textarea-input" id="goal" rows="4" placeholder="예: 투자 방향 잡기, 보험 정리, 노후 준비 방법 등..."></textarea>
+      <div class="q-error">필수 항목입니다.</div>
+    </div>
+
+    <div class="form-actions">
+      
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+        설문 제출하기
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMPLETE -->
+<div id="page-complete">
+  <div class="complete-icon">
+    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <h2>설문이 <em>완료</em>되었습니다</h2>
+  <p>
+    소중한 답변 감사합니다.<br>
+    아래 버튼을 눌러 카카오톡 오픈채팅으로 이동하신 후<br>
+    <strong style="color:var(--gold-light)">자동으로 복사된 설문 내용을 붙여넣기(Ctrl+V)</strong> 해주세요.
+  </p>
+
+  <div class="complete-box">
+    <div class="complete-box-title">안내 사항</div>
+    <p>
+      1. 아래 "카카오톡 상담 신청" 버튼을 클릭하세요.<br>
+      2. 오픈채팅방이 열리면 입력창을 탭/클릭 후 붙여넣기(Ctrl+V / 길게 누르기) 하세요.<br>
+      3. 전송 버튼을 누르시면 상담 접수가 완료됩니다.<br>
+      4. 확인 후 빠른 시간 내에 연락드리겠습니다. 🙏
+    </p>
+  </div>
+
+  <a href="https://open.kakao.com/o/example" target="_blank" class="kakao-btn" id="kakao-link" onclick="copyAndOpen(event)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.69 2 11.25c0 2.91 1.83 5.47 4.6 6.96l-1.17 4.24 4.88-3.17c.54.07 1.1.11 1.69.11 5.52 0 10-3.69 10-8.25S17.52 3 12 3z"/></svg>
+    카카오톡 오픈채팅으로 이동
+  </a>
+  <div class="copy-notice" id="copy-notice">설문 내용이 클립보드에 복사됩니다.</div>
+
+  <div style="margin-top:40px">
+    <a href="index.html" style="font-size:12px; color:var(--mid); text-decoration:none; letter-spacing:0.1em;">← 홈으로 돌아가기</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+<footer>
+  <div class="footer-logo">JW · NAM Wealth Consulting</div>
+  <div class="footer-copy">© 2025 남진우 자산관리 컨설팅</div>
+</footer>
+
+<script>
+  let surveyData = {};
+
+  // ── 페이지 이동 ──────────────────────────────────────
+  function goPage2() { return; // 1페이지 통합으로 미사용
+  if(false){
+    if (!validatePage1()) return;
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    updateProgress(2);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goPage1() { return; // 1페이지 통합으로 미사용
+  if(false){
+    document.getElementById('page2').classList.remove('active');
+    document.getElementById('page1').classList.add('active');
+    updateProgress(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(page) {
+    const fill = document.getElementById('progress-fill');
+    const s1 = document.getElementById('step1-dot');
+    const s2 = document.getElementById('step2-dot');
+    const line = document.getElementById('step-line');
+    if (page === 1) {
+      fill.style.width = '25%';
+      s1.className = 'step-dot active';
+      s2.className = 'step-dot';
+      line.className = 'step-line';
+    } else {
+      fill.style.width = '75%';
+      s1.className = 'step-dot done';
+      s2.className = 'step-dot active';
+      line.className = 'step-line done';
+    }
+  }
+
+  // ── 유효성 검사 ──────────────────────────────────────
+  function getVal(id) { return (document.getElementById(id)||{}).value?.trim() || ''; }
+  function getRadio(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+  function getChecks(name) {
+    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(e => e.value);
+  }
+
+  function setError(blockId, hasError) {
+    const block = document.getElementById(blockId);
+    if (!block) return;
+    if (hasError) block.classList.add('has-error');
+    else block.classList.remove('has-error');
+  }
+
+  function validatePage1() {
+    let ok = true;
+    const checks = [
+      { id: 'q-name',     val: () => getVal('name') },
+      { id: 'q-referral', val: () => getVal('referral') },
+      { id: 'q-contact',  val: () => getVal('contact') },
+      { id: 'q-mbti',     val: () => getVal('mbti') },
+      { id: 'q-gender',   val: () => getRadio('gender') },
+      { id: 'q-age',      val: () => getRadio('age') },
+      { id: 'q-married',  val: () => getRadio('married') },
+      { id: 'q-job',      val: () => getVal('job') },
+      { id: 'q-region',   val: () => getRadio('region') || getVal('region-other') },
+      { id: 'q-exp',      val: () => getChecks('exp').length > 0 || getVal('exp-other') },
+      { id: 'q-interest', val: () => getChecks('interest').length > 0 || getVal('interest-other') },
+    ];
+    checks.forEach(c => {
+      const v = c.val();
+      const bad = !v || v === false;
+      setError(c.id, bad);
+      if (bad) ok = false;
+    });
+    if (!ok) {
+      const first = document.querySelector('.has-error');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return ok;
+  }
+
+  function validatePage2() {
+    let ok = true;
+    const checks = [
+      { id: 'q-products', val: () => getChecks('products').length > 0 },
+      { id: 'q-income',   val: () => getRadio('income') },
+      { id: 'q-expense',  val: () => getRadio('expense') || getVal('expense-other') },
+      { id: 'q-save',     val: () => getRadio('save') },
+      { id: 'q-asset',    val: () => getRadio('asset') },
+      { id: 'q-debt',     val: () => getRadio('debt') },
+      { id: 'q-housing',  val: () => getRadio('housing') || getVal('housing-other') },
+      { id: 'q-preinfo',  val: () => getVal('preinfo') },
+      { id: 'q-reason',   val: () => getVal('reason') },
+      { id: 'q-goal',     val: () => getVal('goal') },
+    ];
+    checks.forEach(c => {
+      const v = c.val();
+      const bad = !v || v === false;
+      setError(c.id, bad);
+      if (bad) ok = false;
+    });
+    if (!ok) {
+      const first = document.querySelector('#page2 .has-error');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return ok;
+  }
+
+  // ── 제출 ──────────────────────────────────────────────
+  function submitForm() {
+    if (!validatePage1()) return;
+    if (!validatePage2()) return;
+
+    const expChecks = getChecks('exp');
+    const expOther = getVal('exp-other');
+    if (expOther) expChecks.push('기타: ' + expOther);
+
+    const intChecks = getChecks('interest');
+    const intOther = getVal('interest-other');
+    if (intOther) intChecks.push('기타: ' + intOther);
+
+    const prodChecks = getChecks('products');
+
+    surveyData = {
+      name: getVal('name'),
+      referral: getVal('referral'),
+      contact: getVal('contact'),
+      mbti: getVal('mbti'),
+      gender: getRadio('gender'),
+      age: getRadio('age'),
+      married: getRadio('married'),
+      job: getVal('job'),
+      region: getRadio('region') || ('기타: ' + getVal('region-other')),
+      exp: expChecks,
+      interest: intChecks,
+      products: prodChecks,
+      income: getRadio('income'),
+      expense: getRadio('expense') || ('기타: ' + getVal('expense-other')),
+      save: getRadio('save'),
+      asset: getRadio('asset'),
+      debt: getRadio('debt'),
+      housing: getRadio('housing') || ('기타: ' + getVal('housing-other')),
+      preinfo: getVal('preinfo'),
+      reason: getVal('reason'),
+      goal: getVal('goal'),
+    };
+
+    // 클립보드용 텍스트 생성
+    const text = buildKakaoText(surveyData);
+    try { navigator.clipboard.writeText(text); } catch(e) {}
+
+    // UI 전환
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('page-complete').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // progress 완료
+    document.getElementById('progress-fill').style.width = '100%';
+  }
+
+  function buildKakaoText(d) {
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    return `📋 [사전설문 접수] ${dateStr}
+━━━━━━━━━━━━━━━━━
+👤 기본 정보
+이름: ${d.name}
+추천인/유입: ${d.referral}
+연락처: ${d.contact}
+MBTI: ${d.mbti}
+성별: ${d.gender}
+연령대: ${d.age}
+결혼여부: ${d.married}
+직업·경력: ${d.job}
+거주지: ${d.region}
+━━━━━━━━━━━━━━━━━
+📊 관심 & 경험
+금융컨설팅 경험: ${d.exp.join(', ') || '없음'}
+관심분야: ${d.interest.join(', ') || '없음'}
+━━━━━━━━━━━━━━━━━
+💰 재무 현황
+보유 금융상품: ${d.products.join(', ') || '없음'}
+월평균 수입: ${d.income}
+월평균 지출: ${d.expense}
+저축가능금액: ${d.save}
+자산 현황: ${d.asset}
+부채 현황: ${d.debt}
+주거 현황: ${d.housing}
+━━━━━━━━━━━━━━━━━
+💬 주관식
+[미리 알려주실 내용]
+${d.preinfo}
+
+[신청 계기 / 가장 큰 고민]
+${d.reason}
+
+[얻어가고 싶은 것]
+${d.goal}
+━━━━━━━━━━━━━━━━━`;
+  }
+
+  function copyAndOpen(e) {
+    const text = buildKakaoText(surveyData);
+    navigator.clipboard.writeText(text).then(() => {
+      const notice = document.getElementById('copy-notice');
+      notice.textContent = '✓ 클립보드에 복사되었습니다! 오픈채팅에서 붙여넣기 해주세요.';
+      notice.classList.add('copied');
+    }).catch(() => {
+      document.getElementById('copy-notice').textContent = '복사에 실패했습니다. 직접 내용을 입력해주세요.';
+    });
+    // 카카오 링크는 href로 처리
+  }
+
+  // 기타 입력 연동
+  document.querySelectorAll('.other-text').forEach(input => {
+    input.addEventListener('input', function() {
+      const wrap = this.closest('.other-wrap');
+      if (this.value.trim()) wrap.classList.add('has-value');
+      else wrap.classList.remove('has-value');
+    });
+  });
+
+  // 초기 progress
+  updateProgress(1);
+  document.getElementById('progress-fill').style.width = '10%';
+</script>
+</body>
+</html>
