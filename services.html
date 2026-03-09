@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서비스 소개 · 남진우 자산관리</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #9a9a9a;
+      --border: rgba(201,169,110,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: #9a9a9a;
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 52vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,169,110,0.07) 0%, transparent 70%);
+    }
+    /* diagonal line accent */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(201,169,110,0.2), transparent);
+    }
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 400;
+      line-height: 1.12;
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p {
+      color: #9a9a9a;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    /* SERVICE NAV ANCHORS */
+    .service-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 0 2rem;
+      margin-top: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--dark-2);
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+    }
+    .service-nav a {
+      padding: 1.1rem 2.5rem;
+      color: #9a9a9a;
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+      white-space: nowrap;
+    }
+    .service-nav a:hover, .service-nav a.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* INTRO STRIP */
+    .intro-strip {
+      max-width: 900px;
+      margin: 5rem auto 0;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .intro-item {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      padding: 2rem 1.8rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.6s forwards;
+    }
+    .intro-item:nth-child(1) { animation-delay: 0.1s; }
+    .intro-item:nth-child(2) { animation-delay: 0.2s; }
+    .intro-item:nth-child(3) { animation-delay: 0.3s; }
+    .intro-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .intro-label { font-size: 0.78rem; color: #9a9a9a; }
+
+    /* SERVICE BLOCK */
+    .service-block {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-block:last-of-type { border-bottom: none; }
+
+    .service-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+    .service-header.reverse { direction: rtl; }
+    .service-header.reverse > * { direction: ltr; }
+
+    .service-meta { }
+    .service-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: rgba(201,169,110,0.12);
+      line-height: 1;
+      margin-bottom: -1.5rem;
+      display: block;
+    }
+    .service-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .service-title em { font-style: italic; color: var(--gold); }
+    .service-desc {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: #d0ccc6;
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+    }
+
+    .service-visual {
+      position: relative;
+    }
+    .service-box {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .service-box-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .service-list { list-style: none; }
+    .service-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+    .service-list li:last-child { border-bottom: none; }
+    .service-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.55rem;
+    }
+
+    /* PROCESS STEPS */
+    .process-section {
+      margin-top: 4rem;
+    }
+    .process-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .step {
+      background: var(--dark);
+      padding: 1.8rem 1.5rem;
+      position: relative;
+    }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: rgba(201,169,110,0.25);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .step-name {
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .step-desc { font-size: 0.76rem; color: #9a9a9a; line-height: 1.65; }
+
+    /* MINI REVIEW */
+    .mini-review {
+      margin-top: 3.5rem;
+      background: var(--dark-3);
+      border-left: 2px solid var(--gold);
+      padding: 1.8rem 2rem;
+      position: relative;
+    }
+    .mini-review::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      opacity: 0.2;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.2rem;
+      line-height: 1;
+    }
+    .mini-review-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.86rem;
+      line-height: 1.85;
+      color: #c0bab0;
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+    }
+    .mini-review-author {
+      font-size: 0.72rem;
+      color: #9a9a9a;
+      letter-spacing: 0.05em;
+    }
+    .mini-review-author span { color: var(--gold); }
+
+    /* COMPARISON TABLE */
+    .compare-section {
+      margin-top: 4rem;
+    }
+    .compare-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .compare-table th {
+      padding: 0.9rem 1.2rem;
+      text-align: left;
+      background: var(--dark-2);
+      color: #9a9a9a;
+      font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th.highlight { color: var(--gold); }
+    .compare-table td {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      color: #d0ccc6;
+      vertical-align: middle;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td.highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .check { color: var(--gold); font-size: 1rem; }
+    .cross { color: #555; font-size: 1rem; }
+
+    /* DIVIDER */
+    .section-divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 7rem 2rem 8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    }
+    .cta-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section p {
+      color: #9a9a9a;
+      font-size: 0.92rem;
+      line-height: 1.85;
+      max-width: 480px;
+      margin: 0 auto 3rem;
+    }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold {
+      display: inline-block;
+      padding: 0.95rem 3rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.95rem 3rem;
+      border: 1px solid rgba(201,169,110,0.4);
+      color: var(--gold);
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,169,110,0.05); transform: translateY(-2px); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #9a9a9a;
+      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 860px) {
+      .service-header { grid-template-columns: 1fr; gap: 3rem; }
+      .service-header.reverse { direction: ltr; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .intro-strip { grid-template-columns: 1fr; gap: 1px; }
+      .service-nav a { padding: 1rem 1.2rem; font-size: 0.72rem; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .service-nav { overflow-x: auto; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html" class="active">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Services</div>
+  <h1>단순한 상품 권유가 아닌<br /><em>진짜 파트너십</em></h1>
+  <p>
+    금융은 복잡합니다. 하지만 복잡하게 느껴지는 이유는<br />
+    아무도 제대로 설명해주지 않았기 때문입니다.<br />
+    저는 이유와 맥락까지 함께 설명합니다.
+  </p>
+</section>
+
+<!-- SERVICE NAV -->
+<nav class="service-nav">
+  <a href="#diagnosis">재무 진단 & 설계</a>
+  <a href="#investment">투자 상품 컨설팅</a>
+  <a href="#tax">세금 & 절세 전략</a>
+</nav>
+
+<!-- STATS -->
+<div class="intro-strip">
+  <div class="intro-item">
+    <span class="intro-num">200+</span>
+    <div class="intro-label">누적 상담 고객</div>
+  </div>
+  <div class="intro-item">
+    <span class="intro-num">98%</span>
+    <div class="intro-label">고객 재계약률</div>
+  </div>
+  <div class="intro-item">
+    <span class="intro-num">5년</span>
+    <div class="intro-label">전문 경력</div>
+  </div>
+</div>
+
+
+<!-- ────────────────────────────────────────────
+     SERVICE 01 · 재무 진단 & 설계
+──────────────────────────────────────────── -->
+<section class="service-block" id="diagnosis">
+  <div class="service-header">
+
+    <div class="service-meta">
+      <span class="service-number">01</span>
+      <div class="service-eyebrow">Financial Diagnosis</div>
+      <h2 class="service-title">재무 진단<br /><em>& 설계</em></h2>
+      <p class="service-desc">
+        많은 분들이 "돈을 모아야 한다"는 건 알지만 어디서부터 시작해야 할지 모릅니다.
+        지금 얼마를 벌고, 어디에 쓰고, 무엇이 새고 있는지 — 재무제표 작성부터 시작합니다.
+        숫자를 눈으로 보는 순간, 막연한 불안이 구체적인 계획으로 바뀝니다.
+        단기 목표부터 은퇴까지, 한 장의 로드맵으로 정리해드립니다.
+      </p>
+    </div>
+
+    <div class="service-visual">
+      <div class="service-box">
+        <div class="service-box-title">포함 내용</div>
+        <ul class="service-list">
+          <li>개인 재무제표 작성 및 현황 분석</li>
+          <li>고정지출 / 변동지출 구조 파악</li>
+          <li>단기·중기·장기 재무 목표 설정</li>
+          <li>저축률·투자 비중 최적화 설계</li>
+          <li>부채 우선순위 정리 및 상환 전략</li>
+          <li>목표별 맞춤 재무 로드맵 제공</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="process-section">
+    <div class="process-title">상담 진행 방식</div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-name">사전 자료 작성</div>
+        <div class="step-desc">엑셀 재무제표 양식 작성 후 제출. 현재 수입·지출·자산·부채를 정리합니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-name">1:1 진단 상담</div>
+        <div class="step-desc">작성하신 내용을 토대로 현재 재무 흐름을 함께 분석합니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-name">목표 설정</div>
+        <div class="step-desc">단기·중기·장기 목표를 구체적으로 수치화합니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div class="step-name">로드맵 제공</div>
+        <div class="step-desc">실천 가능한 재무 플랜을 문서로 정리해 전달드립니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINI REVIEW -->
+  <div class="mini-review">
+    <p class="mini-review-text">
+      스스로 재무제표를 작성해보니 불필요한 소비도 체크해보게 됐고 보유중인 자산 중 변환이 필요한 자산을 확인할 수 있었어요. 재테크 목표와 방향을 구체적으로 설정하니 그에 맞는 현실적인 계획을 세울 수 있었어요.
+    </p>
+    <div class="mini-review-author"><span>실제 고객 후기</span> · 30대 직장인</div>
+  </div>
+</section>
+
+
+<!-- ────────────────────────────────────────────
+     SERVICE 02 · 투자 상품 컨설팅
+──────────────────────────────────────────── -->
+<section class="service-block" id="investment">
+  <div class="service-header reverse">
+
+    <div class="service-meta">
+      <span class="service-number">02</span>
+      <div class="service-eyebrow">Investment Consulting</div>
+      <h2 class="service-title">투자 상품<br /><em>컨설팅</em></h2>
+      <p class="service-desc">
+        펀드, ETF, 채권, 보험, 연금 — 선택지가 너무 많아서 오히려 아무것도 못 하는 분들이 많습니다.
+        상품을 권유하는 것이 아니라, 고객의 위험 성향과 목적에 맞는 상품을 선별하고
+        "왜 이 상품인지"를 납득할 수 있게 설명합니다.
+        이해하지 못한 상품에는 가입하지 않는 것이 원칙입니다.
+      </p>
+    </div>
+
+    <div class="service-visual">
+      <div class="service-box">
+        <div class="service-box-title">다루는 상품군</div>
+        <ul class="service-list">
+          <li>펀드 · ETF · 채권 포트폴리오 설계</li>
+          <li>연금저축 · IRP 납입 전략 수립</li>
+          <li>변액보험 / 저축성보험 구조 분석</li>
+          <li>ISA 계좌 활용 투자 전략</li>
+          <li>위험 성향별 자산 배분 설계</li>
+          <li>기존 보유 금융상품 리밸런싱</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE TABLE -->
+  <div class="compare-section">
+    <div class="compare-title">일반 상담 vs 남진우 컨설팅</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>일반 금융사 상담</th>
+          <th class="highlight">남진우 컨설팅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>상품 추천 기준</td>
+          <td>판매 수수료 중심</td>
+          <td class="highlight">고객 목적·성향 중심</td>
+        </tr>
+        <tr>
+          <td>설명 방식</td>
+          <td>상품 소개서 전달</td>
+          <td class="highlight">이유와 맥락까지 직접 설명</td>
+        </tr>
+        <tr>
+          <td>비교 분석</td>
+          <td><span class="cross">✕</span> 자사 상품만</td>
+          <td class="highlight"><span class="check">✓</span> 다양한 상품 비교</td>
+        </tr>
+        <tr>
+          <td>사후 관리</td>
+          <td><span class="cross">✕</span> 계약 후 단절</td>
+          <td class="highlight"><span class="check">✓</span> 지속적 리밸런싱</td>
+        </tr>
+        <tr>
+          <td>관계 방식</td>
+          <td>판매자 → 고객</td>
+          <td class="highlight">파트너십</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MINI REVIEW -->
+  <div class="mini-review">
+    <p class="mini-review-text">
+      자산 관리 능력을 키우고 싶지만 막연했는데, 현재의 재정 상황부터 은퇴까지 단계별로 명확하고 실질적인 가이드를 주셔서 정말 유익했습니다. 설명해주신 방법들 모두 제가 바로 실천하기 좋은 실용적인 팁과 전략들이어서 더더욱 도움이 된 것 같아요.
+    </p>
+    <div class="mini-review-author"><span>실제 고객 후기</span> · 20대 직장인</div>
+  </div>
+</section>
+
+
+<!-- ────────────────────────────────────────────
+     SERVICE 03 · 세금 & 절세 전략
+──────────────────────────────────────────── -->
+<section class="service-block" id="tax">
+  <div class="service-header">
+
+    <div class="service-meta">
+      <span class="service-number">03</span>
+      <div class="service-eyebrow">Tax Strategy</div>
+      <h2 class="service-title">세금 &<br /><em>절세 전략</em></h2>
+      <p class="service-desc">
+        열심히 투자해도 세금으로 새는 돈이 있습니다.
+        금융소득 종합과세, IRP·ISA 절세 한도, 연말정산 최적화, 증여·상속 전략까지.
+        합법적인 절세만으로 실질 수익률을 크게 높일 수 있습니다.
+        모르면 내야 하고, 알면 아낄 수 있습니다.
+      </p>
+    </div>
+
+    <div class="service-visual">
+      <div class="service-box">
+        <div class="service-box-title">절세 항목</div>
+        <ul class="service-list">
+          <li>연말정산 공제 항목 최적화</li>
+          <li>IRP · 연금저축 세액공제 전략</li>
+          <li>ISA 계좌 비과세 한도 활용법</li>
+          <li>금융소득 종합과세 분리 전략</li>
+          <li>증여세 면제 한도 활용 계획</li>
+          <li>상속 대비 사전 자산 이전 설계</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="process-section">
+    <div class="process-title">절세 컨설팅 흐름</div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-name">현황 파악</div>
+        <div class="step-desc">현재 납부 세금 구조, 보유 계좌, 소득 유형을 파악합니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-name">누락 공제 발굴</div>
+        <div class="step-desc">놓치고 있는 세액공제·소득공제 항목을 찾아드립니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-name">절세 플랜 설계</div>
+        <div class="step-desc">IRP·ISA·연금저축 납입 한도와 순서를 최적화합니다.</div>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div class="step-name">장기 전략 수립</div>
+        <div class="step-desc">증여·상속을 포함한 10년 이상 자산 이전 계획을 세웁니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINI REVIEW -->
+  <div class="mini-review">
+    <p class="mini-review-text">
+      신경 안 쓰고 있던 보험 관련 부분도 정리해주셔서 좋았습니다!! 연말정산 관련해서도 궁금했었는데 어느정도 정리되었고, 자산분배와 관리를 어떻게 해야할지 몰랐는데 어느정도 큰 틀을 잡을 수 있을 것 같습니다.
+    </p>
+    <div class="mini-review-author"><span>실제 고객 후기</span> · 30대 직장인</div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-eyebrow">First Consultation Free</div>
+  <h2>어떤 서비스가 필요한지<br /><em>모르셔도 됩니다</em></h2>
+  <p>
+    첫 상담에서 현재 상황을 들어보고,<br />
+    무엇이 필요한지 함께 찾아드립니다.<br />
+    첫 상담은 무료입니다.
+  </p>
+  <div class="cta-buttons">
+    <a href="consult.html" class="btn-gold">무료 상담 신청</a>
+    <a href="reviews.html" class="btn-outline">고객 후기 보기</a>
+  </div>
+</section>
+
+<footer>
+  JW · NAM Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
+</footer>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('.service-block');
+  const navLinks = document.querySelectorAll('.service-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 140) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

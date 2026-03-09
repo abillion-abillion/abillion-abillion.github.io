@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>재테크 & 금융 팁 · 남진우 자산관리</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: #9a9a9a;
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 46vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(201,169,110,0.08) 0%, transparent 70%);
+    }
+    .hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p {
+      color: #9a9a9a;
+      font-size: 0.95rem;
+      line-height: 1.85;
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2rem auto 0;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+
+    /* CHANNEL BANNER */
+    .channel-banner {
+      max-width: 860px;
+      margin: 0 auto 1rem;
+      padding: 0 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.75s forwards;
+    }
+    .channel-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+    }
+    .channel-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--dark-3);
+      border: 1px solid rgba(201,169,110,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .channel-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .channel-info { flex: 1; }
+    .channel-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .channel-handle { font-size: 0.75rem; color: #9a9a9a; letter-spacing: 0.05em; }
+    .btn-subscribe {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.6rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .btn-subscribe:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-subscribe svg { width: 14px; height: 14px; fill: var(--dark); }
+
+    /* FILTER */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1.5rem 2rem 2.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.45rem 1.3rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: #9a9a9a;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.25s;
+      border-radius: 2px;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,169,110,0.06);
+    }
+
+    /* VIDEO SECTION */
+    .videos-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* VIDEO CARD */
+    .video-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s forwards;
+      position: relative;
+    }
+    .video-card:hover { border-color: rgba(201,169,110,0.4); transform: translateY(-4px); }
+    .video-card:nth-child(1) { animation-delay: 0.05s; }
+    .video-card:nth-child(2) { animation-delay: 0.12s; }
+    .video-card:nth-child(3) { animation-delay: 0.19s; }
+    .video-card:nth-child(4) { animation-delay: 0.26s; }
+    .video-card:nth-child(5) { animation-delay: 0.33s; }
+    .video-card:nth-child(6) { animation-delay: 0.4s; }
+
+    .video-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--dark-3);
+    }
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.4s;
+      filter: brightness(0.85);
+    }
+    .video-card:hover .video-thumb img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+    .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-card:hover .play-btn { opacity: 1; }
+    .play-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(201,169,110,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .play-circle svg { width: 18px; height: 18px; fill: var(--dark); margin-left: 3px; }
+
+    /* gold line at top */
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+      z-index: 1;
+    }
+    .video-card:hover::before { transform: scaleX(1); }
+
+    .video-info { padding: 1.2rem 1.3rem 1.4rem; }
+    .video-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .video-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+    .video-meta {
+      font-size: 0.7rem;
+      color: #9a9a9a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .video-meta::before {
+      content: '';
+      display: inline-block;
+      width: 16px; height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(6px);
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.open .modal-box { transform: scale(1); }
+    .modal-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: #9a9a9a;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--gold); }
+    .modal-iframe-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+    .modal-iframe-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .modal-title {
+      padding: 1rem 0 0;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 2rem 2rem 6rem;
+      border-top: 1px solid var(--border);
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section p { color: #9a9a9a; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold {
+      display: inline-block;
+      padding: 0.9rem 2.6rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.9rem 2.6rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-outline:hover { background: rgba(201,169,110,0.08); transform: translateY(-2px); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #9a9a9a;
+      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) {
+      .videos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .videos-grid { grid-template-columns: 1fr; }
+      .channel-inner { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html" class="active">재테크 팁</a></li>
+    <li><a href="index.html#contact">상담 신청</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Finance Tips & Insights</div>
+  <h1>알아야 돈이 된다<br /><em>재테크 & 금융 인사이트</em></h1>
+  <p>어렵게만 느껴지던 금융 이야기를<br/>쉽고 명확하게 풀어드립니다.<br/>지식이 쌓이면 선택이 달라집니다.</p>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- CHANNEL BANNER -->
+<div class="channel-banner">
+  <div class="channel-inner">
+    <div class="channel-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.82 12l-6.07 3.52z"/>
+      </svg>
+    </div>
+    <div class="channel-info">
+      <div class="channel-name">자산관리사 허머니</div>
+      <div class="channel-handle">@자산관리사허머니 · 재테크 · 금융 · 자산관리</div>
+    </div>
+    <a href="https://www.youtube.com/@자산관리사허머니" target="_blank" class="btn-subscribe">
+      <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.82 12l-6.07 3.52z"/></svg>
+      채널 구독하기
+    </a>
+  </div>
+</div>
+
+<!-- VIDEOS -->
+<section class="videos-section">
+  <div class="section-eyebrow">Latest Videos</div>
+  <h2 class="section-title">금융 지식, <em>직접 확인해보세요</em></h2>
+
+  <div class="videos-grid" id="videosGrid">
+
+    <!-- 영상 1 -->
+    <div class="video-card" onclick="openModal('mqq8kq07l6Y', this)" data-tags="재테크">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/mqq8kq07l6Y/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">재테크</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 영상 2 -->
+    <div class="video-card" onclick="openModal('FAw8DW76v3M', this)" data-tags="금융">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/FAw8DW76v3M/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">금융</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 영상 3 -->
+    <div class="video-card" onclick="openModal('JvvHP7ZjPJ4', this)" data-tags="투자">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/JvvHP7ZjPJ4/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">투자</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 영상 4 -->
+    <div class="video-card" onclick="openModal('f9bUo2bJadA', this)" data-tags="재테크">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/f9bUo2bJadA/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">재테크</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 영상 5 -->
+    <div class="video-card" onclick="openModal('Wn8WZcEHYV8', this)" data-tags="연금">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/Wn8WZcEHYV8/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">연금</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 영상 6 -->
+    <div class="video-card" onclick="openModal('jZBdU9-tamQ', this)" data-tags="절세">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/jZBdU9-tamQ/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">절세</div>
+        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-meta">자산관리사 허머니</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>영상이 도움이 됐다면,<br /><em>직접 만나보세요</em></h2>
+  <p>영상으로 전달할 수 없는 것들이 있습니다.<br/>당신의 상황에 맞는 이야기는 1:1 상담에서 시작됩니다.</p>
+  <div class="cta-buttons">
+    <a href="index.html#contact" class="btn-gold">무료 상담 신청</a>
+    <a href="https://www.youtube.com/@자산관리사허머니" target="_blank" class="btn-outline">채널 더 보기</a>
+  </div>
+</section>
+
+<footer>
+  JW · NAM Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModalBtn()">✕ &nbsp;닫기</button>
+    <div class="modal-iframe-wrap">
+      <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="modal-title" id="modalTitle"></div>
+  </div>
+</div>
+
+<script>
+  function openModal(videoId, card) {
+    const title = card.querySelector('.video-title').textContent;
+    document.getElementById('modalIframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    document.getElementById('modalTitle').textContent = title === '제목을 입력해주세요' ? '' : title;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal')) closeModalBtn();
+  }
+  function closeModalBtn() {
+    document.getElementById('modal').classList.remove('open');
+    document.getElementById('modalIframe').src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+</script>
+</body>
+</html>
