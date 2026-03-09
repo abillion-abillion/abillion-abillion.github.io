@@ -1009,54 +1009,23 @@
 </footer>
 
 <script>
+  'use strict';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx9wniCDjjMwHi8O0QZRyLYrMl6oZ0MgI1xC3xNsZE57zpecWy1jZ8VRrkxsvARoXQMbA/exec';
+  const KAKAO_URL = 'https://open.kakao.com/me/Heomoney';
   let surveyData = {};
 
-  // ── 페이지 이동 ──────────────────────────────────────
-  function goPage2() { return; // 1페이지 통합으로 미사용
-  if(false){
-    if (!validatePage1()) return;
-    document.getElementById('page1').classList.remove('active');
-    document.getElementById('page2').classList.add('active');
-    updateProgress(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ── 헬퍼 ─────────────────────────────────────────────
+  function getVal(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
   }
-
-  function goPage1() { return; // 1페이지 통합으로 미사용
-  if(false){
-    document.getElementById('page2').classList.remove('active');
-    document.getElementById('page1').classList.add('active');
-    updateProgress(1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function updateProgress(page) {
-    const fill = document.getElementById('progress-fill');
-    const s1 = document.getElementById('step1-dot');
-    const s2 = document.getElementById('step2-dot');
-    const line = document.getElementById('step-line');
-    if (page === 1) {
-      fill.style.width = '25%';
-      s1.className = 'step-dot active';
-      s2.className = 'step-dot';
-      line.className = 'step-line';
-    } else {
-      fill.style.width = '75%';
-      s1.className = 'step-dot done';
-      s2.className = 'step-dot active';
-      line.className = 'step-line done';
-    }
-  }
-
-  // ── 유효성 검사 ──────────────────────────────────────
-  function getVal(id) { return (document.getElementById(id)||{}).value?.trim() || ''; }
   function getRadio(name) {
-    const el = document.querySelector(`input[name="${name}"]:checked`);
+    const el = document.querySelector('input[name="' + name + '"]:checked');
     return el ? el.value : '';
   }
   function getChecks(name) {
-    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(e => e.value);
+    return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function(e){ return e.value; });
   }
-
   function setError(blockId, hasError) {
     const block = document.getElementById(blockId);
     if (!block) return;
@@ -1064,217 +1033,137 @@
     else block.classList.remove('has-error');
   }
 
-  function validatePage1() {
+  // ── 유효성 검사 ──────────────────────────────────────
+  function validateAll() {
     let ok = true;
     const checks = [
-      { id: 'q-name',     val: () => getVal('name') },
-      { id: 'q-referral', val: () => getVal('referral') },
-      { id: 'q-contact',  val: () => getVal('contact') },
-      { id: 'q-mbti',     val: () => getVal('mbti') },
-      { id: 'q-gender',   val: () => getRadio('gender') },
-      { id: 'q-age',      val: () => getRadio('age') },
-      { id: 'q-married',  val: () => getRadio('married') },
-      { id: 'q-job',      val: () => getVal('job') },
-      { id: 'q-region',   val: () => getRadio('region') || getVal('region-other') },
-      { id: 'q-exp',      val: () => getChecks('exp').length > 0 || getVal('exp-other') },
-      { id: 'q-interest', val: () => getChecks('interest').length > 0 || getVal('interest-other') },
+      { id: 'q-name',     fn: function(){ return getVal('name'); } },
+      { id: 'q-referral', fn: function(){ return getVal('referral'); } },
+      { id: 'q-contact',  fn: function(){ return getVal('contact'); } },
+      { id: 'q-mbti',     fn: function(){ return getVal('mbti'); } },
+      { id: 'q-gender',   fn: function(){ return getRadio('gender'); } },
+      { id: 'q-age',      fn: function(){ return getRadio('age'); } },
+      { id: 'q-married',  fn: function(){ return getRadio('married'); } },
+      { id: 'q-job',      fn: function(){ return getVal('job'); } },
+      { id: 'q-region',   fn: function(){ return getRadio('region') || getVal('region-other'); } },
+      { id: 'q-exp',      fn: function(){ return getChecks('exp').length > 0 || getVal('exp-other') ? 'ok' : ''; } },
+      { id: 'q-interest', fn: function(){ return getChecks('interest').length > 0 || getVal('interest-other') ? 'ok' : ''; } },
+      { id: 'q-products', fn: function(){ return getChecks('products').length > 0 ? 'ok' : ''; } },
+      { id: 'q-income',   fn: function(){ return getRadio('income'); } },
+      { id: 'q-expense',  fn: function(){ return getRadio('expense') || getVal('expense-other'); } },
+      { id: 'q-save',     fn: function(){ return getRadio('save'); } },
+      { id: 'q-asset',    fn: function(){ return getRadio('asset'); } },
+      { id: 'q-debt',     fn: function(){ return getRadio('debt'); } },
+      { id: 'q-housing',  fn: function(){ return getRadio('housing') || getVal('housing-other'); } },
+      { id: 'q-preinfo',  fn: function(){ return getVal('preinfo'); } },
+      { id: 'q-reason',   fn: function(){ return getVal('reason'); } },
+      { id: 'q-goal',     fn: function(){ return getVal('goal'); } },
     ];
-    checks.forEach(c => {
-      const v = c.val();
-      const bad = !v || v === false;
+    checks.forEach(function(c) {
+      var v = c.fn();
+      var bad = !v;
       setError(c.id, bad);
       if (bad) ok = false;
     });
     if (!ok) {
-      const first = document.querySelector('.has-error');
+      var first = document.querySelector('.has-error');
       if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     return ok;
   }
 
-  function validatePage2() {
-    let ok = true;
-    const checks = [
-      { id: 'q-products', val: () => getChecks('products').length > 0 },
-      { id: 'q-income',   val: () => getRadio('income') },
-      { id: 'q-expense',  val: () => getRadio('expense') || getVal('expense-other') },
-      { id: 'q-save',     val: () => getRadio('save') },
-      { id: 'q-asset',    val: () => getRadio('asset') },
-      { id: 'q-debt',     val: () => getRadio('debt') },
-      { id: 'q-housing',  val: () => getRadio('housing') || getVal('housing-other') },
-      { id: 'q-preinfo',  val: () => getVal('preinfo') },
-      { id: 'q-reason',   val: () => getVal('reason') },
-      { id: 'q-goal',     val: () => getVal('goal') },
-    ];
-    checks.forEach(c => {
-      const v = c.val();
-      const bad = !v || v === false;
-      setError(c.id, bad);
-      if (bad) ok = false;
-    });
-    if (!ok) {
-      const first = document.querySelector('#page2 .has-error');
-      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    return ok;
-  }
-
-  // ── 제출 ──────────────────────────────────────────────
+  // ── 제출 ─────────────────────────────────────────────
   function submitForm() {
-    if (!validatePage1()) return;
-    if (!validatePage2()) return;
+    if (!validateAll()) return;
 
-    const expChecks = getChecks('exp');
-    const expOther = getVal('exp-other');
-    if (expOther) expChecks.push('기타: ' + expOther);
+    // 데이터 수집
+    var expList = getChecks('exp');
+    var expOther = getVal('exp-other');
+    if (expOther) expList.push('기타: ' + expOther);
 
-    const intChecks = getChecks('interest');
-    const intOther = getVal('interest-other');
-    if (intOther) intChecks.push('기타: ' + intOther);
-
-    const prodChecks = getChecks('products');
+    var intList = getChecks('interest');
+    var intOther = getVal('interest-other');
+    if (intOther) intList.push('기타: ' + intOther);
 
     surveyData = {
-      name: getVal('name'),
+      name:     getVal('name'),
       referral: getVal('referral'),
-      contact: getVal('contact'),
-      mbti: getVal('mbti'),
-      gender: getRadio('gender'),
-      age: getRadio('age'),
-      married: getRadio('married'),
-      job: getVal('job'),
-      region: getRadio('region') || ('기타: ' + getVal('region-other')),
-      exp: expChecks,
-      interest: intChecks,
-      products: prodChecks,
-      income: getRadio('income'),
-      expense: getRadio('expense') || ('기타: ' + getVal('expense-other')),
-      save: getRadio('save'),
-      asset: getRadio('asset'),
-      debt: getRadio('debt'),
-      housing: getRadio('housing') || ('기타: ' + getVal('housing-other')),
-      preinfo: getVal('preinfo'),
-      reason: getVal('reason'),
-      goal: getVal('goal'),
+      contact:  getVal('contact'),
+      mbti:     getVal('mbti'),
+      gender:   getRadio('gender'),
+      age:      getRadio('age'),
+      married:  getRadio('married'),
+      job:      getVal('job'),
+      region:   getRadio('region') || ('기타: ' + getVal('region-other')),
+      exp:      expList,
+      interest: intList,
+      products: getChecks('products'),
+      income:   getRadio('income'),
+      expense:  getRadio('expense') || ('기타: ' + getVal('expense-other')),
+      save:     getRadio('save'),
+      asset:    getRadio('asset'),
+      debt:     getRadio('debt'),
+      housing:  getRadio('housing') || ('기타: ' + getVal('housing-other')),
+      preinfo:  getVal('preinfo'),
+      reason:   getVal('reason'),
+      goal:     getVal('goal'),
     };
 
-    // 제출 버튼 비활성화 (중복 제출 방지)
-    const submitBtn = document.getElementById('btn-submit');
-    submitBtn.disabled = true;
-    submitBtn.textContent = '전송 중...';
+    // 버튼 비활성화
+    var btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = '전송 중...';
 
-    // ① 구글 스프레드시트로 데이터 전송
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx9wniCDjjMwHi8O0QZRyLYrMl6oZ0MgI1xC3xNsZE57zpecWy1jZ8VRrkxsvARoXQMbA/exec';
-
-    const payload = {
-      name:     surveyData.name,
-      referral: surveyData.referral,
-      contact:  surveyData.contact,
-      mbti:     surveyData.mbti,
-      gender:   surveyData.gender,
-      age:      surveyData.age,
-      married:  surveyData.married,
-      job:      surveyData.job,
-      region:   surveyData.region,
-      exp:      surveyData.exp.join(', '),
-      interest: surveyData.interest.join(', '),
-      products: surveyData.products.join(', '),
-      income:   surveyData.income,
-      expense:  surveyData.expense,
-      save:     surveyData.save,
-      asset:    surveyData.asset,
-      debt:     surveyData.debt,
-      housing:  surveyData.housing,
-      preinfo:  surveyData.preinfo,
-      reason:   surveyData.reason,
-      goal:     surveyData.goal,
-    };
-
-    // fetch (no-cors: Apps Script는 CORS 헤더 미지원이므로 no-cors 사용)
+    // ① 구글 스프레드시트 전송 (no-cors)
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).catch(() => {}); // 오류 무시 (no-cors라 응답 못 읽음, 정상)
+      body: JSON.stringify({
+        name:     surveyData.name,
+        referral: surveyData.referral,
+        contact:  surveyData.contact,
+        mbti:     surveyData.mbti,
+        gender:   surveyData.gender,
+        age:      surveyData.age,
+        married:  surveyData.married,
+        job:      surveyData.job,
+        region:   surveyData.region,
+        exp:      surveyData.exp.join(', '),
+        interest: surveyData.interest.join(', '),
+        products: surveyData.products.join(', '),
+        income:   surveyData.income,
+        expense:  surveyData.expense,
+        save:     surveyData.save,
+        asset:    surveyData.asset,
+        debt:     surveyData.debt,
+        housing:  surveyData.housing,
+        preinfo:  surveyData.preinfo,
+        reason:   surveyData.reason,
+        goal:     surveyData.goal,
+      }),
+    }).catch(function(){});
 
-    // ② UI 전환 (fetch 응답 안 기다리고 즉시 전환 — no-cors 특성상)
+    // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
     document.getElementById('form-wrap').style.display = 'none';
     document.getElementById('page-complete').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // ③ 카카오톡으로 바로 이동 (1초 딜레이로 완료 화면 잠깐 보여주기)
-    setTimeout(() => {
-      window.open('https://open.kakao.com/me/Heomoney', '_blank');
+    // ③ 1.2초 후 카카오톡으로 이동
+    setTimeout(function() {
+      window.open(KAKAO_URL, '_blank');
     }, 1200);
   }
 
-  function buildKakaoText(d) {
-    const now = new Date();
-    const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-    return `📋 [사전설문 접수] ${dateStr}
-━━━━━━━━━━━━━━━━━
-👤 기본 정보
-이름: ${d.name}
-추천인/유입: ${d.referral}
-연락처: ${d.contact}
-MBTI: ${d.mbti}
-성별: ${d.gender}
-연령대: ${d.age}
-결혼여부: ${d.married}
-직업·경력: ${d.job}
-거주지: ${d.region}
-━━━━━━━━━━━━━━━━━
-📊 관심 & 경험
-금융컨설팅 경험: ${d.exp.join(', ') || '없음'}
-관심분야: ${d.interest.join(', ') || '없음'}
-━━━━━━━━━━━━━━━━━
-💰 재무 현황
-보유 금융상품: ${d.products.join(', ') || '없음'}
-월평균 수입: ${d.income}
-월평균 지출: ${d.expense}
-저축가능금액: ${d.save}
-자산 현황: ${d.asset}
-부채 현황: ${d.debt}
-주거 현황: ${d.housing}
-━━━━━━━━━━━━━━━━━
-💬 주관식
-[미리 알려주실 내용]
-${d.preinfo}
-
-[신청 계기 / 가장 큰 고민]
-${d.reason}
-
-[얻어가고 싶은 것]
-${d.goal}
-━━━━━━━━━━━━━━━━━`;
-  }
-
-  function copyAndOpen(e) {
-    const text = buildKakaoText(surveyData);
-    navigator.clipboard.writeText(text).then(() => {
-      const notice = document.getElementById('copy-notice');
-      notice.textContent = '✓ 클립보드에 복사되었습니다! 오픈채팅에서 붙여넣기 해주세요.';
-      notice.classList.add('copied');
-    }).catch(() => {
-      document.getElementById('copy-notice').textContent = '복사에 실패했습니다. 직접 내용을 입력해주세요.';
-    });
-    // 카카오 링크는 href로 처리
-  }
-
   // 기타 입력 연동
-  document.querySelectorAll('.other-text').forEach(input => {
+  document.querySelectorAll('.other-text').forEach(function(input) {
     input.addEventListener('input', function() {
-      const wrap = this.closest('.other-wrap');
+      var wrap = this.closest('.other-wrap');
       if (this.value.trim()) wrap.classList.add('has-value');
       else wrap.classList.remove('has-value');
     });
   });
-
-  // 초기 progress
-  updateProgress(1);
-  document.getElementById('progress-fill').style.width = '10%';
 </script>
 </body>
 </html>
