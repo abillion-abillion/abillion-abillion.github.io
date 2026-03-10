@@ -48,7 +48,7 @@
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      color: #9a9a9a;
+      color: #e2e2e2;
       text-decoration: none;
       font-size: 0.82rem;
       letter-spacing: 0.08em;
@@ -94,7 +94,7 @@
     }
     .hero h1 em { font-style: italic; color: var(--gold); }
     .hero p {
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.95rem;
       line-height: 1.85;
       max-width: 500px;
@@ -144,7 +144,7 @@
       color: var(--text);
       margin-bottom: 0.25rem;
     }
-    .channel-handle { font-size: 0.75rem; color: #9a9a9a; letter-spacing: 0.05em; }
+    .channel-handle { font-size: 0.75rem; color: #e2e2e2; letter-spacing: 0.05em; }
     .btn-subscribe {
       display: inline-flex;
       align-items: center;
@@ -175,7 +175,7 @@
       padding: 0.45rem 1.3rem;
       border: 1px solid var(--border);
       background: transparent;
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.76rem;
       letter-spacing: 0.06em;
@@ -310,7 +310,7 @@
     }
     .video-meta {
       font-size: 0.7rem;
-      color: #9a9a9a;
+      color: #e2e2e2;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -353,7 +353,7 @@
       right: 0;
       background: none;
       border: none;
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.8rem;
       letter-spacing: 0.1em;
       cursor: pointer;
@@ -397,7 +397,7 @@
       margin-bottom: 1rem;
     }
     .cta-section h2 em { font-style: italic; color: var(--gold); }
-    .cta-section p { color: #9a9a9a; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
+    .cta-section p { color: #e2e2e2; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn-gold {
       display: inline-block;
@@ -426,7 +426,7 @@
     footer {
       text-align: center;
       padding: 2rem;
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.75rem;
       border-top: 1px solid var(--border);
       letter-spacing: 0.05em;
@@ -440,6 +440,7 @@
     @media (max-width: 600px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
+      .nav-toggle { display: flex; }
       .videos-grid { grid-template-columns: 1fr; }
       .channel-inner { flex-wrap: wrap; }
     }
@@ -448,7 +449,7 @@
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
     <li><a href="index.html#about">소개</a></li>
     <li><a href="services.html">서비스</a></li>
@@ -456,7 +457,18 @@
     <li><a href="tips.html" class="active">재테크 팁</a></li>
     <li><a href="index.html#contact">상담 신청</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- 모바일 풀스크린 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="index.html#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -504,7 +516,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">재테크</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">30-40대 집 마련 계획이 있다면 반드시 봐야 할 영상</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -521,7 +533,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">금융</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">월 100만 원씩 저축했을 뿐인데 인생이 불안해진 이유</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -538,7 +550,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">투자</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">자산관리 욕먹는 시대, 그럼에도 10억 만든 원칙</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -555,7 +567,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">재테크</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">ETF 고를 때 이 문장 모르면 평생 손해봅니다</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -572,7 +584,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">연금</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">아들 돌반지가 1년 만에 2배가 되었습니다 (금값 진짜 미쳤어요)</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -589,7 +601,7 @@
       </div>
       <div class="video-info">
         <div class="video-tag">절세</div>
-        <div class="video-title">제목을 입력해주세요</div>
+        <div class="video-title">평범하게 살면 망하는 시대</div>
         <div class="video-meta">자산관리사 허머니</div>
       </div>
     </div>
@@ -608,7 +620,7 @@
 </section>
 
 <footer>
-  JW · NAM Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
 </footer>
 
 <!-- MODAL -->
@@ -639,6 +651,25 @@
     document.body.style.overflow = '';
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+  // 햄버거 메뉴
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
 </script>
 </body>
 </html>

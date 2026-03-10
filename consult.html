@@ -414,7 +414,7 @@
     display: flex;
     gap: 16px;
     margin-top: 48px;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
   }
   .btn-prev {
@@ -470,7 +470,7 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 500;
     transition: all 0.3s;
-    margin-left: auto;
+    margin: 0 auto;
   }
   .btn-submit:hover { background: var(--gold-light); }
   .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -587,7 +587,7 @@
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <a href="index.html#contact" class="nav-back">
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     돌아가기
@@ -622,7 +622,7 @@
       나중에는 <strong>저의 도움 없이도 본인 스스로 관리할 수 있는 능력</strong>을 만들어 드릴 겁니다.
     </p>
     <div class="promise">
-      "여기까지 읽으신 분들은 상담에 200% 이상 만족하실 겁니다. 장담합니다."
+  "여기까지 읽으신 분들은 상담에 <span style="font-size:1.15em;font-weight:600;color:var(--gold-light);">200%</span> 이상 만족하실 겁니다. 장담합니다."
     </div>
     <p style="margin-top:16px">상담 전 아래 설문을 작성해주시면 <strong>더욱 원활한 상담</strong>이 됩니다.</p>
     <div class="sign">자산관리사 남진우 팀장 드림</div>
@@ -876,6 +876,10 @@
         <div class="radio-item"><input type="radio" name="save" id="sv15" value="900만~1,000만"><label for="sv15">900~1,000만</label></div>
         <div class="radio-item"><input type="radio" name="save" id="sv16" value="1,000만 이상"><label for="sv16">1,000만 이상</label></div>
       </div>
+      <div class="other-wrap" id="save-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="save-other" placeholder="직접 입력">
+      </div>
       <div class="q-error">필수 항목입니다.</div>
     </div>
 
@@ -897,6 +901,10 @@
         <div class="radio-item"><input type="radio" name="asset" id="as12" value="100,000만~150,000만(15억)"><label for="as12">10억~15억</label></div>
         <div class="radio-item"><input type="radio" name="asset" id="as13" value="150,000만 이상"><label for="as13">15억 이상</label></div>
       </div>
+      <div class="other-wrap" id="asset-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="asset-other" placeholder="직접 입력">
+      </div>
       <div class="q-error">필수 항목입니다.</div>
     </div>
 
@@ -916,6 +924,10 @@
         <div class="radio-item"><input type="radio" name="debt" id="dt10" value="40,000~50,000만"><label for="dt10">4억~5억</label></div>
         <div class="radio-item"><input type="radio" name="debt" id="dt11" value="50,000만~100,000만"><label for="dt11">5억~10억</label></div>
         <div class="radio-item"><input type="radio" name="debt" id="dt12" value="100,000만(10억) 이상"><label for="dt12">10억 이상</label></div>
+      </div>
+      <div class="other-wrap" id="debt-other-wrap">
+        <span class="other-label">기타:</span>
+        <input type="text" class="other-text" id="debt-other" placeholder="직접 입력">
       </div>
       <div class="q-error">필수 항목입니다.</div>
     </div>
@@ -959,8 +971,7 @@
       <div class="q-error">필수 항목입니다.</div>
     </div>
 
-    <div class="form-actions">
-      
+    <div class="form-actions" style="justify-content:center;">
       <button class="btn-submit" id="btn-submit" onclick="submitForm()">
         설문 제출하기
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1004,7 +1015,7 @@
 
 <div class="divider"></div>
 <footer>
-  <div class="footer-logo">JW · NAM Wealth Consulting</div>
+  <div class="footer-logo">JW Financial Consulting Wealth Consulting</div>
   <div class="footer-copy">© 2025 남진우 자산관리 컨설팅</div>
 </footer>
 
@@ -1051,9 +1062,9 @@
       { id: 'q-products', fn: function(){ return getChecks('products').length > 0 ? 'ok' : ''; } },
       { id: 'q-income',   fn: function(){ return getRadio('income'); } },
       { id: 'q-expense',  fn: function(){ return getRadio('expense') || getVal('expense-other'); } },
-      { id: 'q-save',     fn: function(){ return getRadio('save'); } },
-      { id: 'q-asset',    fn: function(){ return getRadio('asset'); } },
-      { id: 'q-debt',     fn: function(){ return getRadio('debt'); } },
+      { id: 'q-save',     fn: function(){ return getRadio('save') || getVal('save-other'); } },
+      { id: 'q-asset',    fn: function(){ return getRadio('asset') || getVal('asset-other'); } },
+      { id: 'q-debt',     fn: function(){ return getRadio('debt') || getVal('debt-other'); } },
       { id: 'q-housing',  fn: function(){ return getRadio('housing') || getVal('housing-other'); } },
       { id: 'q-preinfo',  fn: function(){ return getVal('preinfo'); } },
       { id: 'q-reason',   fn: function(){ return getVal('reason'); } },
@@ -1100,9 +1111,9 @@
       products: getChecks('products'),
       income:   getRadio('income'),
       expense:  getRadio('expense') || ('기타: ' + getVal('expense-other')),
-      save:     getRadio('save'),
-      asset:    getRadio('asset'),
-      debt:     getRadio('debt'),
+      save:     getRadio('save') || ('기타: ' + getVal('save-other')),
+      asset:    getRadio('asset') || ('기타: ' + getVal('asset-other')),
+      debt:     getRadio('debt') || ('기타: ' + getVal('debt-other')),
       housing:  getRadio('housing') || ('기타: ' + getVal('housing-other')),
       preinfo:  getVal('preinfo'),
       reason:   getVal('reason'),
@@ -1134,9 +1145,9 @@
         products: surveyData.products.join(', '),
         income:   surveyData.income,
         expense:  surveyData.expense,
-        save:     surveyData.save,
-        asset:    surveyData.asset,
-        debt:     surveyData.debt,
+        save:     surveyData.save || getVal('save-other'),
+        asset:    surveyData.asset || getVal('asset-other'),
+        debt:     surveyData.debt || getVal('debt-other'),
         housing:  surveyData.housing,
         preinfo:  surveyData.preinfo,
         reason:   surveyData.reason,
@@ -1147,13 +1158,14 @@
     // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
     document.getElementById('form-wrap').style.display = 'none';
+    document.querySelector('.hero').style.display = 'none';
     document.getElementById('page-complete').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // ③ 1.2초 후 카카오톡으로 이동
+    // ③ 3초 후 카카오톡으로 이동
     setTimeout(function() {
       window.open(KAKAO_URL, '_blank');
-    }, 1200);
+    }, 3000);
   }
 
   // 기타 입력 연동

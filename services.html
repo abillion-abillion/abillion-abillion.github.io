@@ -48,7 +48,7 @@
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      color: #9a9a9a;
+      color: #e2e2e2;
       text-decoration: none;
       font-size: 0.82rem;
       letter-spacing: 0.08em;
@@ -103,7 +103,7 @@
     }
     .hero h1 em { font-style: italic; color: var(--gold); }
     .hero p {
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.95rem;
       line-height: 1.9;
       max-width: 520px;
@@ -127,7 +127,7 @@
     }
     .service-nav a {
       padding: 1.1rem 2.5rem;
-      color: #9a9a9a;
+      color: #e2e2e2;
       text-decoration: none;
       font-size: 0.78rem;
       letter-spacing: 0.1em;
@@ -167,7 +167,7 @@
       display: block;
       margin-bottom: 0.3rem;
     }
-    .intro-label { font-size: 0.78rem; color: #9a9a9a; }
+    .intro-label { font-size: 0.78rem; color: #e2e2e2; }
 
     /* SERVICE BLOCK */
     .service-block {
@@ -301,7 +301,7 @@
       font-weight: 500;
       margin-bottom: 0.5rem;
     }
-    .step-desc { font-size: 0.76rem; color: #9a9a9a; line-height: 1.65; }
+    .step-desc { font-size: 0.76rem; color: #e2e2e2; line-height: 1.65; }
 
     /* MINI REVIEW */
     .mini-review {
@@ -332,7 +332,7 @@
     }
     .mini-review-author {
       font-size: 0.72rem;
-      color: #9a9a9a;
+      color: #e2e2e2;
       letter-spacing: 0.05em;
     }
     .mini-review-author span { color: var(--gold); }
@@ -357,7 +357,7 @@
       padding: 0.9rem 1.2rem;
       text-align: left;
       background: var(--dark-2);
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-weight: 400;
       font-size: 0.72rem;
       letter-spacing: 0.1em;
@@ -416,7 +416,7 @@
     }
     .cta-section h2 em { font-style: italic; color: var(--gold); }
     .cta-section p {
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.92rem;
       line-height: 1.85;
       max-width: 480px;
@@ -450,7 +450,7 @@
     footer {
       text-align: center;
       padding: 2rem;
-      color: #9a9a9a;
+      color: #e2e2e2;
       font-size: 0.75rem;
       border-top: 1px solid var(--border);
       letter-spacing: 0.05em;
@@ -468,15 +468,71 @@
     @media (max-width: 600px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
+      .nav-toggle { display: flex; }
       .steps { grid-template-columns: 1fr; }
       .service-nav { overflow-x: auto; justify-content: flex-start; }
     }
+  
+    /* 후기 하이라이트 */
+    .hl {
+      background: rgba(201,169,110,0.13);
+      color: #e8d5b0;
+      padding: 0 3px;
+      border-radius: 2px;
+    }
+
+    /* 대표 후기 (안명진님) */
+    .featured-review {
+      margin: 4rem 0 0;
+      background: linear-gradient(135deg, rgba(201,169,110,0.07) 0%, rgba(14,14,14,0) 100%);
+      border: 1px solid rgba(201,169,110,0.25);
+      border-left: 3px solid var(--gold);
+      padding: 2.5rem 2.8rem;
+      position: relative;
+    }
+    .featured-review-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,169,110,0.4);
+      padding: 3px 10px;
+      margin-bottom: 1.4rem;
+    }
+    .featured-review::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.12;
+      position: absolute;
+      top: 1rem;
+      left: 1.8rem;
+      line-height: 1;
+    }
+    .featured-review-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.88rem;
+      line-height: 2;
+      color: #d0cac0;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+    }
+    .featured-review-text p { margin-bottom: 1rem; }
+    .featured-review-author {
+      font-size: 0.78rem;
+      color: #e2e2e2;
+      letter-spacing: 0.05em;
+    }
+    .featured-review-author span { color: var(--gold); }
+
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">JW · NAM</a>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
     <li><a href="index.html#about">소개</a></li>
     <li><a href="services.html" class="active">서비스</a></li>
@@ -484,7 +540,18 @@
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- 모바일 풀스크린 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="index.html#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -520,6 +587,21 @@
   </div>
 </div>
 
+
+
+<!-- ★ 대표 후기 · 안명진님 -->
+<section class="service-block" style="padding-bottom:2rem;">
+  <div class="featured-review">
+    <div class="featured-review-badge">★ 대표 고객 후기</div>
+    <div class="featured-review-text">
+      <p>자산관리를 받고자 마음먹고 여기저기 많이 알아보게 되었고 최종적으로는 허머니님께 관리를 받게 되었습니다. 허머니님을 선택한 이유는 <span class="hl">단순 상품 판매 권유가 아닌 전체적인 자산관리의 목표와 방향성을 기본으로 설계 및 노하우를 알려주신다</span>는데에 있었습니다.</p>
+      <p>자산관리는 흔히 자산 많은 사람만 받는다거나, 상품만 판매한다는 부정적인 인식도 있었으나 상담을 하고 계획을 세우면서 이런 부분은 많이 없어진 것 같습니다. <span class="hl">실제 본인의 경험과 실제 사례들도 보면서 저도 희망을 가지게 되었</span>구요. 전문적인 지식을 바탕으로 많은 설명과 경험담도 도움이 되는 것 같습니다. 유익한 자료도 공유해주셔서 더 좋은 것 같습니다.</p>
+      <p>가장 좋았던 점은 <span class="hl">대응을 정말 죄송할정도로 잘해주십니다.</span> 한번은 제 거주지 근처로 오셔서 미팅을 해주신적도 있고, 퇴근하고 자료를 송부드렸는데 바로 답장 및 피드백이 오시는 등 정말 진심을 다 해 주십니다. 비유하자면 <span class="hl">헬스장 PT 2시간 3회 끊었는데 트레이너쌤이 3회 끝나는 기간 내내 24시간 밀착케어 해주시는 것 같습니다.</span> 이러면 반강제적으로 자산 및 본인 경제상황에 있어서 자기 객관화가 정말 잘 되게 됩니다.</p>
+      <p>이후로는 <span class="hl">단/중/장기 플랜을 만들어 가며 제가 놓쳤던 부분들을 쏙쏙 집어주십니다.</span> 앞으로 저는 계속 자산관리를 받기로 했습니다. 지금이라도 만나서 다행이라 생각하며 보시는 분들이 참고가 되셨으면 좋겠습니다. 상담을 준비하는 과정 자체도 도움이 많이 되니 단순 상담 권유 가입 이런 부분이 걱정이 되신다면 해당 클래스를 진행하는 것이 큰 도움이 될 것 같습니다.</p>
+    </div>
+    <div class="featured-review-author"><span>안명진</span> 님 · 실제 고객 후기</div>
+  </div>
+</section>
 
 <!-- ────────────────────────────────────────────
      SERVICE 01 · 재무 진단 & 설계
@@ -584,9 +666,12 @@
   <!-- MINI REVIEW -->
   <div class="mini-review">
     <p class="mini-review-text">
-      스스로 재무제표를 작성해보니 불필요한 소비도 체크해보게 됐고 보유중인 자산 중 변환이 필요한 자산을 확인할 수 있었어요. 재테크 목표와 방향을 구체적으로 설정하니 그에 맞는 현실적인 계획을 세울 수 있었어요.
+      부부가 함께 재무제표를 작성해보니 <span class="hl">서로 몰랐던 소비 패턴과 불필요한 지출</span>을 함께 확인하게 됐어요. 보유 중인 자산 중 변환이 필요한 부분도 짚어주셨고, <span class="hl">둘이 같이 재테크 목표와 방향을 구체적으로 세우니</span> 훨씬 실천하기 좋은 계획이 만들어졌어요.
     </p>
-    <div class="mini-review-author"><span>실제 고객 후기</span> · 30대 직장인</div>
+    <div class="mini-review-author">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">30대</span>
+      <span>실제 고객 후기</span> · 대기업 직장인 부부
+    </div>
   </div>
 </section>
 
@@ -668,9 +753,12 @@
   <!-- MINI REVIEW -->
   <div class="mini-review">
     <p class="mini-review-text">
-      자산 관리 능력을 키우고 싶지만 막연했는데, 현재의 재정 상황부터 은퇴까지 단계별로 명확하고 실질적인 가이드를 주셔서 정말 유익했습니다. 설명해주신 방법들 모두 제가 바로 실천하기 좋은 실용적인 팁과 전략들이어서 더더욱 도움이 된 것 같아요.
+      자산 관리 능력을 키우고 싶지만 막연했는데, <span class="hl">현재 재정 상황부터 은퇴까지 단계별로 명확하고 실질적인 가이드</span>를 주셔서 정말 유익했습니다. 설명해주신 방법들이 모두 <span class="hl">바로 실천하기 좋은 실용적인 팁과 전략</span>들이어서 더더욱 도움이 됐어요.
     </p>
-    <div class="mini-review-author"><span>실제 고객 후기</span> · 20대 직장인</div>
+    <div class="mini-review-author">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">20대</span>
+      <span>실제 고객 후기</span> · 20대 직장인
+    </div>
   </div>
 </section>
 
@@ -738,9 +826,12 @@
   <!-- MINI REVIEW -->
   <div class="mini-review">
     <p class="mini-review-text">
-      신경 안 쓰고 있던 보험 관련 부분도 정리해주셔서 좋았습니다!! 연말정산 관련해서도 궁금했었는데 어느정도 정리되었고, 자산분배와 관리를 어떻게 해야할지 몰랐는데 어느정도 큰 틀을 잡을 수 있을 것 같습니다.
+      부부 각각 신경 안 쓰고 있던 <span class="hl">보험 관련 부분을 둘 다 한번에 정리</span>해주셔서 정말 좋았습니다. 연말정산도 함께 살펴봐 주셨고, <span class="hl">부부 공동 자산 분배와 관리 방향에 대한 큰 틀</span>을 잡을 수 있게 되었어요. 같이 오길 잘했다는 생각이 들었습니다.
     </p>
-    <div class="mini-review-author"><span>실제 고객 후기</span> · 30대 직장인</div>
+    <div class="mini-review-author">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">40대</span>
+      <span>실제 고객 후기</span> · 대기업 직장인 부부
+    </div>
   </div>
 </section>
 
@@ -761,7 +852,7 @@
 </section>
 
 <footer>
-  JW · NAM Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
 </footer>
 
 <script>
@@ -778,6 +869,25 @@
       if (a.getAttribute('href') === '#' + current) a.classList.add('active');
     });
   });
+
+  // 햄버거 메뉴
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
 </script>
 </body>
 </html>
