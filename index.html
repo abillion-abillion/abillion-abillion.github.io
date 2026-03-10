@@ -460,9 +460,55 @@
   }
   .footer-nav a:hover { color: var(--gold-light); }
   .footer-copy { font-size: 11px; color: #9a9a9a; letter-spacing: 0.05em; }
+  /* 햄버거 버튼 */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold-light);
+    transition: all 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* 모바일 메뉴 오버레이 */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(14,14,14,0.97);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--white); }
+
   @media (max-width: 900px) {
     nav { padding: 24px 30px; }
     .nav-links { display: none; }
+    .nav-toggle { display: flex; }
     section { padding: 80px 30px; }
     .hero { padding: 0 30px; }
     .hero-line { display: none; }
@@ -489,7 +535,19 @@
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- 모바일 풀스크린 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
 
 <section class="hero">
   <div class="hero-bg"></div>
@@ -658,6 +716,23 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  // 햄버거 메뉴
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  // 메뉴 링크 클릭 시 닫기
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 
 </body>
