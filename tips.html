@@ -434,6 +434,253 @@
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
+    /* ─── EBOOK SECTION ─── */
+    .ebook-section {
+      max-width: 860px;
+      margin: 0 auto 0.5rem;
+      padding: 0 2rem;
+    }
+    .ebook-inner {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0e1a2b 0%, #111823 40%, #0e0e0e 100%);
+      border: 1px solid rgba(201,169,110,0.35);
+      padding: 2.8rem 2.8rem 2.8rem 2.8rem;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .ebook-inner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ebook-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* 책 커버 */
+    .ebook-cover-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .ebook-cover {
+      width: 130px;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #1a3a5c 0%, #0d2240 100%);
+      border: 1px solid rgba(201,169,110,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 0.8rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 8px 12px 32px rgba(0,0,0,0.6), -2px 0 0 rgba(201,169,110,0.2);
+    }
+    .ebook-cover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+    .ebook-cover-year {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .ebook-cover-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+    .ebook-cover-sub {
+      font-size: 0.6rem;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.7rem;
+    }
+    .ebook-cover-divider {
+      width: 24px; height: 1px;
+      background: var(--gold);
+      margin: 0 auto 0.6rem;
+    }
+    .ebook-cover-author {
+      font-size: 0.62rem;
+      color: rgba(232,212,176,0.7);
+      letter-spacing: 0.1em;
+    }
+    .ebook-badge {
+      position: absolute;
+      top: -10px; right: -10px;
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(201,169,110,0.4);
+    }
+    .ebook-badge span:first-child {
+      font-size: 0.52rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .ebook-badge span:last-child {
+      font-size: 0.48rem;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    /* 우측 콘텐츠 */
+    .ebook-content {}
+    .ebook-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .ebook-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 0.8rem;
+    }
+    .ebook-title em { font-style: italic; color: var(--gold); }
+    .ebook-desc {
+      font-size: 0.82rem;
+      color: #aaa;
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+    }
+    .ebook-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ebook-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .ebook-stat-icon {
+      width: 28px; height: 28px;
+      background: rgba(201,169,110,0.1);
+      border: 1px solid rgba(201,169,110,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .ebook-stat-text {}
+    .ebook-stat-val {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .ebook-stat-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    /* 폼 */
+    .ebook-form {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .ebook-form-group {
+      display: flex;
+      gap: 0.6rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .ebook-input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,169,110,0.2);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    .ebook-input::placeholder { color: #555; }
+    .ebook-input:focus { border-color: rgba(201,169,110,0.6); }
+    .btn-ebook {
+      padding: 0.7rem 1.6rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-ebook:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ebook:active { transform: translateY(0); }
+    .ebook-privacy {
+      font-size: 0.65rem;
+      color: #555;
+      margin-top: 0.6rem;
+      width: 100%;
+    }
+
+    /* 성공 상태 */
+    .ebook-success {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: rgba(201,169,110,0.08);
+      border: 1px solid rgba(201,169,110,0.3);
+      margin-top: 0.5rem;
+    }
+    .ebook-success.show { display: flex; }
+    .ebook-success-icon { font-size: 1.4rem; }
+    .ebook-success-text { font-size: 0.82rem; color: var(--gold-light); line-height: 1.6; }
+
+    @media (max-width: 640px) {
+      .ebook-inner {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+      .ebook-cover-wrap { margin: 0 auto; }
+      .ebook-cover { width: 110px; }
+      .ebook-stats { justify-content: center; }
+      .ebook-form-group { flex-direction: column; }
+      .btn-ebook { width: 100%; justify-content: center; }
+    }
+
     @media (max-width: 900px) {
       .videos-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -496,6 +743,85 @@
     </a>
   </div>
 </div>
+
+<!-- EBOOK DOWNLOAD SECTION -->
+<section class="ebook-section" id="ebook">
+  <div class="ebook-inner">
+
+    <!-- 책 커버 -->
+    <div class="ebook-cover-wrap">
+      <div class="ebook-cover">
+        <div class="ebook-cover-year">월급날마다 꺼내보는</div>
+        <div class="ebook-cover-title">2039<br/>자산관리<br/>지침서</div>
+        <div class="ebook-cover-sub">직장인 · 사업자 필독서</div>
+        <div class="ebook-cover-divider"></div>
+        <div class="ebook-cover-author">허머니 지음</div>
+      </div>
+      <div class="ebook-badge">
+        <span>★ 4.8</span>
+        <span>리뷰 100+</span>
+      </div>
+    </div>
+
+    <!-- 우측 콘텐츠 -->
+    <div class="ebook-content">
+      <div class="ebook-eyebrow">Free E-Book · 무료 전자책</div>
+      <h2 class="ebook-title">
+        컨설팅 3시간 분량을<br/>
+        <em>한 권에 담았습니다</em>
+      </h2>
+      <p class="ebook-desc">
+        500명 이상의 상담 경험에서 나온 핵심만 수록했습니다.<br/>
+        왕초보도 읽으면 혼자 자산관리를 시작할 수 있도록 썼습니다.
+      </p>
+
+      <div class="ebook-stats">
+        <div class="ebook-stat">
+          <div class="ebook-stat-icon">📋</div>
+          <div class="ebook-stat-text">
+            <div class="ebook-stat-val">자가점검 체크리스트</div>
+            <div class="ebook-stat-label">수록</div>
+          </div>
+        </div>
+        <div class="ebook-stat">
+          <div class="ebook-stat-icon">⏱</div>
+          <div class="ebook-stat-text">
+            <div class="ebook-stat-val">3시간 컨설팅 분량</div>
+            <div class="ebook-stat-label">아낌없이 수록</div>
+          </div>
+        </div>
+        <div class="ebook-stat">
+          <div class="ebook-stat-icon">⭐</div>
+          <div class="ebook-stat-text">
+            <div class="ebook-stat-val">평점 4.8 · 100건+</div>
+            <div class="ebook-stat-label">실제 독자 리뷰</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신청 폼 -->
+      <div id="ebookFormWrap">
+        <div class="ebook-form">
+          <div class="ebook-form-group">
+            <input class="ebook-input" type="text" id="ebookName" placeholder="이름" autocomplete="name" />
+            <input class="ebook-input" type="tel" id="ebookPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
+          </div>
+          <button class="btn-ebook" onclick="submitEbook()">무료로 받기 →</button>
+        </div>
+        <div class="ebook-privacy">✦ 입력하신 정보는 전자책 발송 외 다른 용도로 사용되지 않습니다.</div>
+      </div>
+
+      <div class="ebook-success" id="ebookSuccess">
+        <div class="ebook-success-icon">✓</div>
+        <div class="ebook-success-text">
+          다운로드가 시작되었습니다! 📥<br/>
+          저장이 안 됐다면 <a href="#" id="retryDownload" style="color:var(--gold);text-decoration:underline;">여기를 클릭</a>해주세요.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- VIDEOS -->
 <section class="videos-section">
@@ -635,6 +961,84 @@
 </div>
 
 <script>
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  //  설정값 – 여기만 바꾸면 됩니다
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const BOT_TOKEN   = 'YOUR_BOT_TOKEN';   // @BotFather 토큰
+  const CHAT_ID     = 'YOUR_CHAT_ID';     // 본인 Telegram Chat ID
+  const PDF_URL     = 'https://drive.google.com/uc?export=download&id=15NmHseu0q-KP06m3EyVMLCBQQYIsmwUO';
+  // Google Drive 직접 다운로드 URL 만드는 법:
+  //   Drive에서 파일 공유 → "링크가 있는 모든 사용자" 설정
+  //   공유 링크: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+  //   아래 형태로 변환: https://drive.google.com/uc?export=download&id=FILE_ID
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  async function submitEbook() {
+    const name  = document.getElementById('ebookName').value.trim();
+    const phone = document.getElementById('ebookPhone').value.trim();
+
+    if (!name) {
+      document.getElementById('ebookName').focus();
+      document.getElementById('ebookName').style.borderColor = 'rgba(201,169,110,0.8)';
+      return;
+    }
+    if (!phone) {
+      document.getElementById('ebookPhone').focus();
+      document.getElementById('ebookPhone').style.borderColor = 'rgba(201,169,110,0.8)';
+      return;
+    }
+
+    const btn = document.querySelector('.btn-ebook');
+    btn.textContent = '처리 중...';
+    btn.disabled = true;
+
+    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const message =
+      `📚 전자책 신청\n` +
+      `──────────────\n` +
+      `👤 이름: ${name}\n` +
+      `📱 연락처: ${phone}\n` +
+      `🕐 신청일시: ${now}`;
+
+    // ① 텔레그램 DB 수집 (실패해도 다운로드는 진행)
+    try {
+      await fetch(
+        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+        }
+      );
+    } catch (e) {
+      console.warn('Telegram 전송 실패 (다운로드는 계속 진행):', e);
+    }
+
+    // ② 즉시 PDF 다운로드 트리거
+    const a = document.createElement('a');
+    a.href = PDF_URL;
+    a.download = '2039_자산관리_지침서_허머니.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // ③ UI 성공 상태로 전환
+    document.getElementById('ebookFormWrap').style.display = 'none';
+    document.getElementById('ebookSuccess').classList.add('show');
+
+    // 재시도 링크
+    document.getElementById('retryDownload').addEventListener('click', function(e) {
+      e.preventDefault();
+      const a2 = document.createElement('a');
+      a2.href = PDF_URL;
+      a2.download = '2039_자산관리_지침서_허머니.pdf';
+      document.body.appendChild(a2);
+      a2.click();
+      document.body.removeChild(a2);
+    });
+  }
+
+  // ── 유튜브 모달 ──────────────────────────────────────────────
   function openModal(videoId, card) {
     const title = card.querySelector('.video-title').textContent;
     document.getElementById('modalIframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
