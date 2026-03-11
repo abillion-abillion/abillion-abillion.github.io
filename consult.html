@@ -37,7 +37,7 @@
     z-index: 100;
     padding: 20px 60px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     background: rgba(14,14,14,0.95);
     border-bottom: 1px solid var(--border);
@@ -49,7 +49,26 @@
     letter-spacing: 0.15em;
     color: var(--gold-light);
     text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
   }
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .nav-links a {
+    color: #e2e2e2;
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
   .nav-back {
     display: flex;
     align-items: center;
@@ -571,8 +590,41 @@
   .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light); }
   .footer-copy { font-size: 11px; color: #9a9a9a; }
 
+      .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      box-shadow: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 8px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .nav-toggle:focus { outline: none; box-shadow: none; }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.3s;
+      border-radius: 0;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
   @media (max-width: 700px) {
     nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
     .hero { padding: 90px 24px 40px; }
     .progress-wrap { padding: 0 24px; }
     .form-wrap { padding: 0 24px; }
@@ -589,12 +641,31 @@
 
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
-  <a href="index.html#contact" class="nav-back">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    돌아가기
-  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="freebie.html">무료 혜택</a></li>
+    <li><a href="consult.html" class="active">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
 </nav>
 
+
+<!-- 모바일 풀스크린 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="index.html#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
 <!-- HERO / 드리는 말씀 -->
 <div class="hero">
   <div class="hero-eyebrow">Pre-Consultation Survey</div>

@@ -67,11 +67,18 @@
     font-size: 20px;
     letter-spacing: 0.15em;
     color: var(--gold-light);
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
   }
   .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 40px;
     list-style: none;
+    z-index: 1;
   }
   .nav-links a {
     color: #e2e2e2;
@@ -465,22 +472,33 @@
   .nav-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
     background: none;
     border: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 2;
+    flex-shrink: 0;
   }
+  .nav-toggle:focus { outline: none; box-shadow: none; }
   .nav-toggle span {
     display: block;
     width: 24px;
-    height: 1px;
+    height: 1.5px;
     background: var(--gold-light);
     transition: all 0.3s;
+    border-radius: 0;
   }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
   /* 모바일 메뉴 오버레이 */
   .mobile-menu {
@@ -528,7 +546,7 @@
 <body>
 
 <nav>
-  <div class="nav-logo">JW Financial Consulting</div>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
     <li><a href="#about">소개</a></li>
     <li><a href="services.html">서비스</a></li>
@@ -545,6 +563,7 @@
 
 <!-- 모바일 풀스크린 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
   <a href="#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
