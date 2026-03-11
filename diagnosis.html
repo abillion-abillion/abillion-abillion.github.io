@@ -89,7 +89,7 @@
       width: 100%; padding: 0.75rem 1rem;
       background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.2);
       color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem;
-      outline: none; transition: border-color 0.25s; border-radius: 6px;
+      outline: none; transition: border-color 0.25s; border-radius: 10px;
     }
     .form-input::placeholder { color: #555; }
     .form-input:focus, .form-select:focus { border-color: rgba(201,169,110,0.6); }
@@ -107,7 +107,7 @@
       background: var(--gold); color: var(--dark);
       font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: 700;
       letter-spacing: 0.1em; border: none; cursor: pointer;
-      transition: background 0.25s, transform 0.15s; border-radius: 6px;
+      transition: background 0.25s, transform 0.15s; border-radius: 10px;
     }
     .btn-start:hover { background: var(--gold-light); transform: translateY(-1px); }
 
@@ -136,7 +136,7 @@
       padding: 0.9rem 1.2rem; width: 100%;
       background: rgba(255,255,255,0.03); border: 1px solid var(--border);
       color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem;
-      cursor: pointer; text-align: left; transition: all 0.2s; border-radius: 8px;
+      cursor: pointer; text-align: left; transition: all 0.2s; border-radius: 12px;
     }
     .option-btn:hover { border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.05); }
     .option-btn.selected { border-color: var(--gold); background: rgba(201,169,110,0.12); color: var(--gold-light); }
@@ -152,20 +152,20 @@
     .btn-prev {
       padding: 0.75rem 2rem; border: 1px solid var(--border); background: transparent;
       color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
-      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 10px;
     }
     .btn-prev:hover { border-color: var(--gold); color: var(--gold); }
     .btn-next {
       flex: 1; padding: 0.75rem; background: var(--dark-3); border: 1px solid rgba(201,169,110,0.3);
       color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
-      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 10px;
     }
     .btn-next:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
     .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
     .btn-submit-final {
       flex: 1; padding: 0.75rem; background: var(--gold); border: none;
       color: var(--dark); font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem; font-weight: 700;
-      cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; border-radius: 10px;
     }
     .btn-submit-final:hover { background: var(--gold-light); }
     .btn-submit-final:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -238,13 +238,13 @@
 
     /* 약점/강점 분석 */
     .report-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .analysis-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 1.2rem; border-radius: 8px; }
+    .analysis-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 1.2rem; border-radius: 12px; }
     .analysis-box-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
     .analysis-item { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: #bbb; line-height: 1.6; margin-bottom: 0.5rem; }
     .analysis-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
 
     /* 맞춤 메시지 */
-    .report-message { background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.25); padding: 1.5rem; margin-bottom: 2rem; position: relative; border-radius: 8px; }
+    .report-message { background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.25); padding: 1.5rem; margin-bottom: 2rem; position: relative; border-radius: 12px; }
     .report-message::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold); opacity: 0.2; position: absolute; top: 0.5rem; left: 1rem; line-height: 1; }
     .report-message-text { font-family: 'Noto Serif KR', serif; font-size: 0.88rem; line-height: 1.85; color: var(--text); padding-left: 1.5rem; }
 
@@ -358,7 +358,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-label">Free Asset Diagnosis · 무료 자산 진단</div>
-  <h1>평균과 비교 후,<br/><em>VIP 진단보고서를 받아가세요</em></h1>
+  <h1>VIP 재무진단 보고서,<br/><em>지금 무료로 받아가세요</em></h1>
   <p>10개 문항으로 자산·부채·투자·절세·보험·지출을<br/>나이대·성별·직업 평균과 비교해 진단합니다.</p>
 </section>
 
@@ -369,7 +369,7 @@
   <div id="infoSection" class="step-section">
     <div class="step-header">
       <div class="step-eyebrow">Step 1 of 2 · 기본 정보</div>
-      <h2 class="step-title">30초 진단 후 VIP 보고서,<br/><em>받아보실 분의 성함과 연락처를 남겨주세요</em></h2>
+      <h2 class="step-title">진단은 30초입니다<br/><em>보고서를 받으실 분의 정보를 입력 후 진단을 시작해주세요</em></h2>
     </div>
 
     <div class="info-grid">
