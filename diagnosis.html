@@ -80,7 +80,7 @@
     .step-header { margin-bottom: 2rem; text-align: center; }
     .step-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
     .step-title { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 400; }
-    .step-title em { font-style: italic; color: var(--gold); }
+    .step-title em { font-style: italic; color: var(--gold); font-size: 0.72em; }
 
     /* 기본정보 그리드 */
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
@@ -342,7 +342,7 @@
     <li><a href="services.html">서비스</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="freebie.html">무료 혜택</a></li>
-    <li><a href="index.html#contact">상담 신청</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
 </nav>
@@ -1060,14 +1060,14 @@ function shareKakaoResult() {
     content: {
       title: `내 자산 진단 점수: ${total}점 · 허머니 무료 진단`,
       description: '나이대·성별·직업 평균과 비교한 무료 자산 진단을 해봤어요. 너도 해봐!',
-      imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+      imageUrl: 'https://jwfinancial.co.kr/og-image.png',
       link: {
-        mobileWebUrl: 'https://abillion-abillion.github.io/diagnosis.html',
-        webUrl: 'https://abillion-abillion.github.io/diagnosis.html',
+        mobileWebUrl: 'https://jwfinancial.co.kr/diagnosis.html',
+        webUrl: 'https://jwfinancial.co.kr/diagnosis.html',
       },
     },
     buttons: [
-      { title: '나도 진단받기', link: { mobileWebUrl: 'https://abillion-abillion.github.io/diagnosis.html', webUrl: 'https://abillion-abillion.github.io/diagnosis.html' } },
+      { title: '나도 진단받기', link: { mobileWebUrl: 'https://jwfinancial.co.kr/diagnosis.html', webUrl: 'https://jwfinancial.co.kr/diagnosis.html' } },
     ],
   });
 }
