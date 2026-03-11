@@ -35,8 +35,8 @@
       background: rgba(14,14,14,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; flex-shrink: 0; z-index: 2; }
+    .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; z-index: 1; }
     .nav-links a { color: #e2e2e2; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
     .nav-toggle {
@@ -74,32 +74,6 @@
     .hero p { color: #aaa; font-size: 0.95rem; line-height: 1.85; max-width: 500px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
     .hero-divider { width: 40px; height: 1px; background: var(--gold); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
 
-    /* NAVER BLOG BANNER */
-    .blog-banner {
-      max-width: 860px; margin: 0 auto 1rem; padding: 0 2rem;
-      opacity: 0; animation: fadeUp 0.7s 0.75s forwards;
-    }
-    .blog-inner {
-      display: flex; align-items: center; gap: 1.5rem;
-      background: var(--dark-2); border: 1px solid var(--border); padding: 1.4rem 2rem;
-    }
-    .blog-icon {
-      width: 48px; height: 48px; border-radius: 10px;
-      background: #03C75A; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .blog-icon svg { width: 26px; height: 26px; }
-    .blog-info { flex: 1; }
-    .blog-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
-    .blog-handle { font-size: 0.75rem; color: #e2e2e2; letter-spacing: 0.04em; }
-    .btn-blog {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.6rem 1.5rem; background: #03C75A; color: #fff;
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; font-weight: 500;
-      letter-spacing: 0.06em; text-decoration: none;
-      transition: opacity 0.25s, transform 0.2s; white-space: nowrap; border-radius: 2px;
-    }
-    .btn-blog:hover { opacity: 0.88; transform: translateY(-1px); }
 
     /* COLUMN GRID */
     .columns-section { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 6rem; }
@@ -201,7 +175,6 @@
       .nav-links { display: none; }
       .nav-toggle { display: flex; }
       .columns-grid { grid-template-columns: 1fr; }
-      .blog-inner { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -238,24 +211,7 @@
   <div class="hero-divider"></div>
 </section>
 
-<!-- NAVER BLOG BANNER -->
-<div class="blog-banner">
-  <div class="blog-inner">
-    <div class="blog-icon">
-      <!-- 네이버 N 로고 -->
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" fill="white"/>
-      </svg>
-    </div>
-    <div class="blog-info">
-      <div class="blog-name">허머니 네이버 블로그</div>
-      <div class="blog-handle">실생활 재테크 · 금융 꿀팁 · 최신 이슈 정리</div>
-    </div>
-    <a href="https://blog.naver.com/moneymustard" target="_blank" class="btn-blog">
-      블로그 구독하기 →
-    </a>
-  </div>
-</div>
+
 
 <!-- COLUMNS SECTION -->
 <section class="columns-section">
@@ -482,60 +438,5 @@
   }
 </script>
 
-<!-- ──── 무료혜택 팝업 ──── -->
-<style>
-#fpOverlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;padding:1rem}
-#fpOverlay.on{opacity:1;pointer-events:auto}
-#fpBox{background:#0d1219;border:1px solid rgba(201,169,110,.35);max-width:400px;width:100%;position:relative;transform:translateY(20px);transition:transform .35s;overflow:hidden}
-#fpOverlay.on #fpBox{transform:translateY(0)}
-#fpBox:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96e,#e8d5b0,#c9a96e,transparent)}
-.fp-inner{padding:1.8rem 1.8rem 1.4rem}
-.fp-eye{font-size:.58rem;letter-spacing:.28em;color:#c9a96e;text-transform:uppercase;margin-bottom:.6rem}
-.fp-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;line-height:1.45;color:#e8e4dc;margin-bottom:.55rem}
-.fp-title em{font-style:italic;color:#c9a96e}
-.fp-desc{font-size:.75rem;color:#888;line-height:1.8;margin-bottom:1.3rem}
-.fp-btns{display:flex;flex-direction:column;gap:.5rem}
-.fp-btn-a{display:block;padding:.8rem;background:#c9a96e;color:#0e0e0e;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-align:center;text-decoration:none;border:none;cursor:pointer;transition:background .2s}
-.fp-btn-a:hover{background:#e8d5b0}
-.fp-btn-b{display:block;padding:.8rem;background:transparent;border:1px solid rgba(201,169,110,.3);color:#c9a96e;font-size:.8rem;letter-spacing:.08em;text-align:center;text-decoration:none;cursor:pointer;transition:background .2s}
-.fp-btn-b:hover{background:rgba(201,169,110,.08)}
-.fp-foot{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1.8rem;border-top:1px solid rgba(255,255,255,.05)}
-.fp-skip{font-size:.65rem;color:#555;background:none;border:none;cursor:pointer;letter-spacing:.04em;transition:color .2s}
-.fp-skip:hover{color:#888}
-.fp-x{position:absolute;top:.7rem;right:.7rem;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#777;font-size:.9rem;transition:background .2s,color .2s}
-.fp-x:hover{background:rgba(255,255,255,.12);color:#e8e4dc}
-</style>
-<div id="fpOverlay">
-  <div id="fpBox">
-    <button class="fp-x" onclick="fpClose()">✕</button>
-    <div class="fp-inner">
-      <div class="fp-eye">Free Gift · 무료 혜택</div>
-      <div class="fp-title">지금 바로 받아가세요,<br/><em>무료로 드립니다</em></div>
-      <div class="fp-desc">📚 자산관리 입문 전자책 무료 다운로드<br/>🔍 나이대·직업 평균 비교 자산 진단<br/>두 가지 모두 완전 무료입니다.</div>
-      <div class="fp-btns">
-        <a href="freebie.html" class="fp-btn-a">📚 무료 전자책 받기</a>
-        <a href="diagnosis.html" class="fp-btn-b">🔍 무료 자산 진단 시작하기</a>
-      </div>
-    </div>
-    <div class="fp-foot">
-      <button class="fp-skip" onclick="fpSkipToday()">오늘 하루 보지 않기</button>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var today=new Date().toDateString();
-  if(localStorage.getItem('fpSkip')===today) return;
-  var p=location.pathname;
-  if(p.includes('freebie')||p.includes('diagnosis')) return;
-  setTimeout(function(){var o=document.getElementById('fpOverlay');if(o)o.classList.add('on');},3000);
-})();
-function fpClose(){document.getElementById('fpOverlay').classList.remove('on');}
-function fpSkipToday(){localStorage.setItem('fpSkip',new Date().toDateString());fpClose();}
-document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('fpOverlay').addEventListener('click',function(e){if(e.target===this)fpClose();});
-});
-</script>
-<!-- ──── /무료혜택 팝업 ──── -->
 </body>
 </html>
