@@ -787,9 +787,9 @@
 
 <!-- ──── 무료혜택 팝업 ──── -->
 <style>
-#fpOverlay{position:fixed;inset:0;z-index:9998;background:transparent;display:flex;align-items:flex-end;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .45s;padding:1.5rem 2rem 2rem}
+#fpOverlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;padding:1rem}
 #fpOverlay.on{opacity:1;pointer-events:auto}
-#fpBox{background:#0d1219;border:1px solid rgba(201,169,110,.4);max-width:360px;width:100%;position:relative;transform:translateY(16px);transition:transform .45s;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.85),0 0 0 1px rgba(201,169,110,.1)}
+#fpBox{background:#0d1219;border:1px solid rgba(201,169,110,.45);max-width:380px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.9),0 0 0 1px rgba(201,169,110,.15)}
 #fpOverlay.on #fpBox{transform:translateY(0)}
 #fpBox:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96e,#e8d5b0,#c9a96e,transparent)}
 .fp-inner{padding:1.8rem 1.8rem 1.4rem}
@@ -798,10 +798,10 @@
 .fp-title em{font-style:italic;color:#c9a96e}
 .fp-desc{font-size:.75rem;color:#888;line-height:1.8;margin-bottom:1.3rem}
 .fp-btns{display:flex;flex-direction:column;gap:.5rem}
-.fp-btn-a{display:block;padding:.8rem;background:#c9a96e;color:#0e0e0e;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-align:center;text-decoration:none;border:none;cursor:pointer;transition:background .2s}
-.fp-btn-a:hover{background:#e8d5b0}
-.fp-btn-b{display:block;padding:.8rem;background:transparent;border:1px solid rgba(201,169,110,.3);color:#c9a96e;font-size:.8rem;letter-spacing:.08em;text-align:center;text-decoration:none;cursor:pointer;transition:background .2s}
-.fp-btn-b:hover{background:rgba(201,169,110,.08)}
+.fp-btn-a{display:block;padding:1rem 1.2rem;background:linear-gradient(135deg,#c9a96e,#e8d5b0);color:#0a0a0a;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-align:center;text-decoration:none;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(201,169,110,.35)}
+.fp-btn-a:hover{background:linear-gradient(135deg,#e8d5b0,#f5ecd0);box-shadow:0 6px 28px rgba(201,169,110,.55);transform:translateY(-1px)}
+.fp-btn-b{display:block;padding:1rem 1.2rem;background:rgba(201,169,110,.08);border:1.5px solid rgba(201,169,110,.55);color:#e8d5b0;font-size:.88rem;font-weight:600;letter-spacing:.1em;text-align:center;text-decoration:none;cursor:pointer;transition:all .2s}
+.fp-btn-b:hover{background:rgba(201,169,110,.18);border-color:rgba(201,169,110,.8);transform:translateY(-1px)}
 .fp-foot{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1.8rem;border-top:1px solid rgba(255,255,255,.05)}
 .fp-skip{font-size:.65rem;color:#555;background:none;border:none;cursor:pointer;letter-spacing:.04em;transition:color .2s}
 .fp-skip:hover{color:#888}
