@@ -635,13 +635,29 @@
     #page-complete { padding: 0 24px; }
     footer { padding: 30px 24px; flex-direction: column; gap: 12px; text-align: center; }
   }
+
+  /* 모바일 풀스크린 메뉴 */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0;
+    background: rgba(14,14,14,.97); z-index: 99;
+    flex-direction: column; align-items: center;
+    justify-content: flex-start; padding-top: 5rem; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-link {
+    color: #c9a96e; text-decoration: none;
+    font-family: 'Playfair Display','Cormorant Garamond',serif;
+    font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
+    transition: color .3s;
+  }
+  .mobile-link:hover { color: #fff; }
 </style>
 </head>
 <body>
 
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
-    <ul class="nav-links">
+  <ul class="nav-links">
     <li><a href="index.html#about">소개</a></li>
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
@@ -664,7 +680,7 @@
   <a href="column.html" class="mobile-link">칼럼</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
   <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
-  <a href="consult.html" class="mobile-link" style="color:var(--gold);">상담 신청</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 <!-- HERO / 드리는 말씀 -->
 <div class="hero">
@@ -1249,5 +1265,61 @@
     });
   });
 </script>
+
+<!-- ──── 무료혜택 팝업 ──── -->
+<style>
+#fpOverlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;padding:1rem}
+#fpOverlay.on{opacity:1;pointer-events:auto}
+#fpBox{background:#0d1219;border:1px solid rgba(201,169,110,.35);max-width:400px;width:100%;position:relative;transform:translateY(20px);transition:transform .35s;overflow:hidden}
+#fpOverlay.on #fpBox{transform:translateY(0)}
+#fpBox:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96e,#e8d5b0,#c9a96e,transparent)}
+.fp-inner{padding:1.8rem 1.8rem 1.4rem}
+.fp-eye{font-size:.58rem;letter-spacing:.28em;color:#c9a96e;text-transform:uppercase;margin-bottom:.6rem}
+.fp-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;line-height:1.45;color:#e8e4dc;margin-bottom:.55rem}
+.fp-title em{font-style:italic;color:#c9a96e}
+.fp-desc{font-size:.75rem;color:#888;line-height:1.8;margin-bottom:1.3rem}
+.fp-btns{display:flex;flex-direction:column;gap:.5rem}
+.fp-btn-a{display:block;padding:.8rem;background:#c9a96e;color:#0e0e0e;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-align:center;text-decoration:none;border:none;cursor:pointer;transition:background .2s}
+.fp-btn-a:hover{background:#e8d5b0}
+.fp-btn-b{display:block;padding:.8rem;background:transparent;border:1px solid rgba(201,169,110,.3);color:#c9a96e;font-size:.8rem;letter-spacing:.08em;text-align:center;text-decoration:none;cursor:pointer;transition:background .2s}
+.fp-btn-b:hover{background:rgba(201,169,110,.08)}
+.fp-foot{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1.8rem;border-top:1px solid rgba(255,255,255,.05)}
+.fp-skip{font-size:.65rem;color:#555;background:none;border:none;cursor:pointer;letter-spacing:.04em;transition:color .2s}
+.fp-skip:hover{color:#888}
+.fp-x{position:absolute;top:.7rem;right:.7rem;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#777;font-size:.9rem;transition:background .2s,color .2s}
+.fp-x:hover{background:rgba(255,255,255,.12);color:#e8e4dc}
+</style>
+<div id="fpOverlay">
+  <div id="fpBox">
+    <button class="fp-x" onclick="fpClose()">✕</button>
+    <div class="fp-inner">
+      <div class="fp-eye">Free Gift · 무료 혜택</div>
+      <div class="fp-title">지금 바로 받아가세요,<br/><em>무료로 드립니다</em></div>
+      <div class="fp-desc">📚 자산관리 입문 전자책 무료 다운로드<br/>🔍 나이대·직업 평균 비교 자산 진단<br/>두 가지 모두 완전 무료입니다.</div>
+      <div class="fp-btns">
+        <a href="freebie.html" class="fp-btn-a">📚 무료 전자책 받기</a>
+        <a href="diagnosis.html" class="fp-btn-b">🔍 무료 자산 진단 시작하기</a>
+      </div>
+    </div>
+    <div class="fp-foot">
+      <button class="fp-skip" onclick="fpSkipToday()">오늘 하루 보지 않기</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var today=new Date().toDateString();
+  if(localStorage.getItem('fpSkip')===today) return;
+  var p=location.pathname;
+  if(p.includes('freebie')||p.includes('diagnosis')) return;
+  setTimeout(function(){var o=document.getElementById('fpOverlay');if(o)o.classList.add('on');},3000);
+})();
+function fpClose(){document.getElementById('fpOverlay').classList.remove('on');}
+function fpSkipToday(){localStorage.setItem('fpSkip',new Date().toDateString());fpClose();}
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('fpOverlay').addEventListener('click',function(e){if(e.target===this)fpClose();});
+});
+</script>
+<!-- ──── /무료혜택 팝업 ──── -->
 </body>
 </html>
