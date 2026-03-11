@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>무료 자산 진단 · 허머니 자산관리</title>
+  <meta name="description" content="10분 무료 자산 진단 - 나이대, 성별, 직업별 평균과 비교해 내 재무 상태를 확인해보세요.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --gold-pale: rgba(201,169,110,0.1);
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+      --green: #4caf7d;
+      --red: #e05a5a;
+      --blue: #5a8fe0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: #e2e2e2; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-link { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .mobile-link:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 40vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 9rem 2rem 3rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,169,110,0.09) 0%, transparent 70%);
+    }
+    .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 400; line-height: 1.15; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.25s forwards; }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { color: #aaa; font-size: 0.9rem; line-height: 1.85; max-width: 520px; opacity: 0; animation: fadeUp 0.6s 0.4s forwards; }
+
+    /* ── MAIN WRAP ── */
+    .main-wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem 8rem; }
+
+    /* ── STEP 1: 기본정보 ── */
+    .step-section { opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
+    .step-header { margin-bottom: 2rem; text-align: center; }
+    .step-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .step-title { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 400; }
+    .step-title em { font-style: italic; color: var(--gold); }
+
+    /* 기본정보 그리드 */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .info-field label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.45rem; }
+    .form-input, .form-select {
+      width: 100%; padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.2);
+      color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem;
+      outline: none; transition: border-color 0.25s;
+    }
+    .form-input::placeholder { color: #555; }
+    .form-input:focus, .form-select:focus { border-color: rgba(201,169,110,0.6); }
+    .form-select {
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      background-color: rgba(255,255,255,0.04);
+    }
+    .form-select option { background: #1a1a1a; }
+    .info-full { grid-column: 1 / -1; }
+
+    .btn-start {
+      width: 100%; padding: 1rem; margin-top: 0.5rem;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.1em; border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+    }
+    .btn-start:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ── STEP 2: 문항 ── */
+    #quizSection { display: none; }
+
+    /* 진행 바 */
+    .progress-wrap { margin-bottom: 2.5rem; }
+    .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+    .progress-label { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; }
+    .progress-num { font-size: 0.72rem; color: var(--text-muted); }
+    .progress-bar { height: 3px; background: rgba(255,255,255,0.08); position: relative; }
+    .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; width: 0%; }
+
+    /* 질문 카드 */
+    .question-wrap { display: none; }
+    .question-wrap.active { display: block; animation: fadeUp 0.4s forwards; }
+    .question-num { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .question-text { font-family: 'Noto Serif KR', serif; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 400; line-height: 1.65; margin-bottom: 0.5rem; color: var(--text); }
+    .question-hint { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.5; }
+
+    /* 선택지 */
+    .options-list { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+    .option-btn {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.9rem 1.2rem; width: 100%;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem;
+      cursor: pointer; text-align: left; transition: all 0.2s;
+    }
+    .option-btn:hover { border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.05); }
+    .option-btn.selected { border-color: var(--gold); background: rgba(201,169,110,0.12); color: var(--gold-light); }
+    .option-alpha {
+      width: 26px; height: 26px; border-radius: 50%; border: 1px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 500; flex-shrink: 0; transition: all 0.2s;
+    }
+    .option-btn.selected .option-alpha { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+    /* 문항 네비 */
+    .q-nav { display: flex; gap: 0.8rem; }
+    .btn-prev {
+      padding: 0.75rem 2rem; border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em;
+    }
+    .btn-prev:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-next {
+      flex: 1; padding: 0.75rem; background: var(--dark-3); border: 1px solid rgba(201,169,110,0.3);
+      color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em;
+    }
+    .btn-next:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-submit-final {
+      flex: 1; padding: 0.75rem; background: var(--gold); border: none;
+      color: var(--dark); font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em;
+    }
+    .btn-submit-final:hover { background: var(--gold-light); }
+    .btn-submit-final:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── STEP 3: 결과 ── */
+    #resultSection { display: none; }
+
+    /* 결과 리포트 (PDF 캡처용) */
+    #reportCard {
+      background: #0a0f18;
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #reportCard::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* 리포트 헤더 */
+    .report-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .report-brand { }
+    .report-brand-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.15em; }
+    .report-brand-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.2rem; letter-spacing: 0.08em; }
+    .report-meta { text-align: right; }
+    .report-meta-name { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; color: var(--text); }
+    .report-meta-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .report-date { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* 총점 */
+    .report-score-section { display: flex; gap: 2rem; margin-bottom: 2rem; align-items: center; }
+    .score-circle-wrap { flex-shrink: 0; }
+    .score-circle {
+      width: 120px; height: 120px; border-radius: 50%;
+      border: 2px solid rgba(201,169,110,0.3);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; background: rgba(201,169,110,0.05);
+    }
+    .score-circle::before {
+      content: '';
+      position: absolute; inset: 6px; border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.15);
+    }
+    .score-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); line-height: 1; }
+    .score-denom { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .score-summary { flex: 1; }
+    .score-grade { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .score-desc { font-size: 0.82rem; color: #bbb; line-height: 1.75; }
+
+    /* 6개 영역 바 차트 */
+    .report-areas { margin-bottom: 2rem; }
+    .areas-title { font-size: 0.68rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; }
+    .area-row { margin-bottom: 1rem; }
+    .area-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .area-name { font-size: 0.8rem; color: var(--text); }
+    .area-score-label { font-size: 0.75rem; }
+    .area-bar-bg { height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; position: relative; }
+    .area-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; position: relative; }
+    .area-bar-avg { position: absolute; top: -3px; height: 14px; width: 2px; background: rgba(255,255,255,0.35); border-radius: 1px; }
+    .area-compare { font-size: 0.68rem; margin-top: 0.3rem; display: flex; align-items: center; gap: 0.4rem; }
+    .badge-up { color: var(--green); }
+    .badge-down { color: var(--red); }
+    .badge-avg { color: #888; }
+
+    /* 레이더 차트 */
+    .report-radar { margin-bottom: 2rem; display: flex; justify-content: center; }
+    #radarCanvas { max-width: 320px; max-height: 320px; }
+
+    /* 약점/강점 분석 */
+    .report-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .analysis-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 1.2rem; }
+    .analysis-box-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+    .analysis-item { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: #bbb; line-height: 1.6; margin-bottom: 0.5rem; }
+    .analysis-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
+
+    /* 맞춤 메시지 */
+    .report-message { background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.25); padding: 1.5rem; margin-bottom: 2rem; position: relative; }
+    .report-message::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold); opacity: 0.2; position: absolute; top: 0.5rem; left: 1rem; line-height: 1; }
+    .report-message-text { font-family: 'Noto Serif KR', serif; font-size: 0.88rem; line-height: 1.85; color: var(--text); padding-left: 1.5rem; }
+
+    /* 컨설팅 유도 박스 */
+    .consult-cta {
+      background: linear-gradient(135deg, #0e1a2b 0%, #111823 100%);
+      border: 1px solid rgba(201,169,110,0.4); padding: 2rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .consult-cta::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .consult-cta-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.7rem; }
+    .consult-cta-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.8rem; line-height: 1.4; }
+    .consult-cta-title em { font-style: italic; color: var(--gold); }
+    .consult-cta-desc { font-size: 0.8rem; color: #aaa; line-height: 1.8; margin-bottom: 1.5rem; }
+    .consult-cta-disclaimer { font-size: 0.68rem; color: #555; margin-top: 1rem; }
+
+    /* 리포트 푸터 */
+    .report-footer { border-top: 1px solid var(--border); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+    .report-footer-left { font-size: 0.65rem; color: var(--text-muted); line-height: 1.6; }
+    .report-footer-right { font-family: 'Playfair Display', serif; font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; }
+
+    /* 결과 액션 버튼들 */
+    .result-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-download {
+      flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.08em; border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-download:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-share-kakao {
+      flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
+      background: #FEE500; color: #3A1D1D;
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.06em; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-share-kakao:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-consult {
+      flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
+      background: transparent; border: 1px solid var(--gold); color: var(--gold);
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem;
+      letter-spacing: 0.06em; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-consult:hover { background: rgba(201,169,110,0.1); transform: translateY(-1px); }
+    .btn-retry {
+      padding: 0.9rem 1.5rem; border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em;
+    }
+    .btn-retry:hover { border-color: var(--border); color: var(--text); }
+
+    /* 로딩 오버레이 */
+    .loading-overlay {
+      position: fixed; inset: 0; background: rgba(10,10,10,0.92); z-index: 200;
+      display: none; align-items: center; justify-content: center; flex-direction: column; gap: 1.2rem;
+    }
+    .loading-overlay.active { display: flex; }
+    .loading-spinner {
+      width: 40px; height: 40px; border: 2px solid rgba(201,169,110,0.2);
+      border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    .loading-text { font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.1em; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    footer { text-align: center; padding: 2rem; color: #555; font-size: 0.75rem; border-top: 1px solid var(--border); letter-spacing: 0.05em; }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .info-grid { grid-template-columns: 1fr; }
+      .report-analysis { grid-template-columns: 1fr; }
+      .report-score-section { flex-direction: column; text-align: center; }
+      .report-header { flex-direction: column; gap: 0.8rem; }
+      .report-meta { text-align: left; }
+      .result-actions { flex-direction: column; }
+      #reportCard { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="freebie.html">무료 혜택</a></li>
+    <li><a href="index.html#contact">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Free Asset Diagnosis · 무료 자산 진단</div>
+  <h1>나의 재무 상태,<br/><em>평균과 비교해보세요</em></h1>
+  <p>10개 문항으로 자산·부채·투자·절세·보험·지출을<br/>나이대·성별·직업 평균과 비교해 진단합니다.</p>
+</section>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- STEP 1: 기본정보 -->
+  <div id="infoSection" class="step-section">
+    <div class="step-header">
+      <div class="step-eyebrow">Step 1 of 2 · 기본 정보</div>
+      <h2 class="step-title">먼저 간단한 <em>정보를 입력해주세요</em></h2>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-field">
+        <label>이름</label>
+        <input class="form-input" type="text" id="infoName" placeholder="이름을 입력해주세요" />
+      </div>
+      <div class="info-field">
+        <label>연락처</label>
+        <input class="form-input" type="tel" id="infoPhone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" />
+        <div id="phoneError" style="display:none;font-size:0.68rem;color:#e05a5a;margin-top:0.35rem;">010으로 시작하는 11자리 숫자를 입력해주세요 (예: 010-1234-5678)</div>
+      </div>
+      <div class="info-field">
+        <label>성별</label>
+        <select class="form-select" id="infoGender">
+          <option value="">선택해주세요</option>
+          <option value="남성">남성</option>
+          <option value="여성">여성</option>
+        </select>
+      </div>
+      <div class="info-field">
+        <label>연령대</label>
+        <select class="form-select" id="infoAge">
+          <option value="">선택해주세요</option>
+          <option value="20대">20대</option>
+          <option value="30대">30대</option>
+          <option value="40대">40대</option>
+          <option value="50대 이상">50대 이상</option>
+        </select>
+      </div>
+      <div class="info-field info-full">
+        <label>직업 유형</label>
+        <select class="form-select" id="infoJob">
+          <option value="">선택해주세요</option>
+          <option value="직장인">직장인 (근로소득자)</option>
+          <option value="사업자">사업자 / 프리랜서</option>
+          <option value="공무원">공무원 / 교직원</option>
+          <option value="기타">기타</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">진단 시작하기 →</button>
+    <div style="font-size:0.68rem;color:#555;margin-top:0.6rem;text-align:center;">✦ 입력하신 정보는 진단 목적 외 사용되지 않습니다</div>
+  </div>
+
+  <!-- STEP 2: 문항 -->
+  <div id="quizSection">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label" id="progressLabel">질문 1 / 10</span>
+        <span class="progress-num" id="progressPct">10%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div id="questionsContainer"></div>
+  </div>
+
+  <!-- STEP 3: 결과 -->
+  <div id="resultSection">
+    <div id="reportCard">
+      <!-- 헤더 -->
+      <div class="report-header">
+        <div class="report-brand">
+          <div class="report-brand-name">JW Financial Consulting</div>
+          <div class="report-brand-sub">자산관리사 허머니 · 무료 자산 진단 리포트</div>
+        </div>
+        <div class="report-meta">
+          <div class="report-meta-name" id="resultName"></div>
+          <div class="report-meta-info" id="resultInfo"></div>
+          <div class="report-date" id="resultDate"></div>
+        </div>
+      </div>
+
+      <!-- 총점 -->
+      <div class="report-score-section">
+        <div class="score-circle-wrap">
+          <div class="score-circle">
+            <div class="score-num" id="totalScore">0</div>
+            <div class="score-denom">/ 100점</div>
+          </div>
+        </div>
+        <div class="score-summary">
+          <div class="score-grade" id="gradeText"></div>
+          <div class="score-desc" id="gradeDesc"></div>
+        </div>
+      </div>
+
+      <!-- 6영역 바 차트 -->
+      <div class="report-areas">
+        <div class="areas-title">▸ 영역별 진단 결과 vs 동일 그룹 평균</div>
+        <div id="areaBars"></div>
+      </div>
+
+      <!-- 레이더 차트 -->
+      <div class="report-radar">
+        <canvas id="radarCanvas" width="320" height="320"></canvas>
+      </div>
+
+      <!-- 강점/약점 -->
+      <div class="report-analysis">
+        <div class="analysis-box">
+          <div class="analysis-box-title" style="color:var(--green);">
+            <span>✦</span> 잘하고 있는 부분
+          </div>
+          <div id="strengthList"></div>
+        </div>
+        <div class="analysis-box">
+          <div class="analysis-box-title" style="color:var(--red);">
+            <span>▲</span> 개선이 필요한 부분
+          </div>
+          <div id="weaknessList"></div>
+        </div>
+      </div>
+
+      <!-- 맞춤 메시지 -->
+      <div class="report-message">
+        <div class="report-message-text" id="customMessage"></div>
+      </div>
+
+      <!-- 컨설팅 유도 -->
+      <div class="consult-cta">
+        <div class="consult-cta-eyebrow">Next Step · 다음 단계</div>
+        <div class="consult-cta-title">진단 결과를 바탕으로<br/><em>구체적인 실행 계획을 세워드립니다</em></div>
+        <div class="consult-cta-desc">
+          진단은 현재 상태를 파악하는 첫 걸음입니다.<br/>
+          같은 점수라도 소득·목표·시기에 따라 전략이 완전히 달라집니다.<br/>
+          1:1 상담에서 내 상황에 맞는 로드맵을 함께 그려보세요.
+        </div>
+        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+          <a href="consult.html" style="display:inline-block;padding:0.8rem 2rem;background:var(--gold);color:var(--dark);font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-decoration:none;transition:background 0.2s;">무료 상담 신청하기</a>
+          <a href="https://open.kakao.com/me/Heomoney" target="_blank" style="display:inline-block;padding:0.8rem 2rem;border:1px solid var(--gold);color:var(--gold);font-size:0.82rem;letter-spacing:0.08em;text-decoration:none;transition:background 0.2s;">카카오톡 문의</a>
+        </div>
+        <div class="consult-cta-disclaimer">* 상담은 무료이며, 별도 계약 의무가 없습니다.</div>
+      </div>
+
+      <!-- 리포트 푸터 -->
+      <div class="report-footer">
+        <div class="report-footer-left">
+          본 진단은 입력하신 정보를 기반으로 한 참고 자료입니다.<br/>
+          실제 재무 전략은 전문 자산관리사와 상담을 권장합니다.
+        </div>
+        <div class="report-footer-right">Heomoney · 자산관리사 허머니</div>
+      </div>
+    </div>
+
+    <!-- 결과 액션 버튼들 -->
+    <div class="result-actions">
+      <button class="btn-download" onclick="downloadReport()">
+        ⬇ PDF 저장하기
+      </button>
+      <button class="btn-share-kakao" onclick="shareKakaoResult()">
+        💬 카카오 공유
+      </button>
+      <a href="consult.html" class="btn-consult">
+        📋 1:1 상담 신청
+      </a>
+      <button class="btn-retry" onclick="retryDiag()">다시 진단하기</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  JW Financial Consulting · © 2025 허머니 자산관리 컨설팅 &nbsp;|&nbsp; 본 진단은 참고용으로 제공됩니다
+</footer>
+
+<!-- 로딩 -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">분석 중...</div>
+</div>
+
+<!-- 카카오 SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  설정값
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const BOT_TOKEN    = 'YOUR_BOT_TOKEN';
+const CHAT_ID      = 'YOUR_CHAT_ID';
+const KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY';
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Kakao.init(KAKAO_JS_KEY);
+
+// ─── 문항 데이터 ─────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    area: '자산',
+    areaEn: 'asset',
+    text: '현재 본인의 순자산(총자산 - 부채) 규모는 어느 정도인가요?',
+    hint: '부동산, 예금, 투자자산 등 전체 자산에서 대출·부채를 뺀 금액입니다.',
+    options: [
+      { label: '5,000만 원 미만', score: 1 },
+      { label: '5,000만 원 ~ 1억 원', score: 2 },
+      { label: '1억 원 ~ 3억 원', score: 3 },
+      { label: '3억 원 ~ 5억 원', score: 4 },
+      { label: '5억 원 이상', score: 5 },
+    ]
+  },
+  {
+    area: '부채',
+    areaEn: 'debt',
+    text: '현재 부채(대출·카드론 등) 상황은 어떤가요?',
+    hint: '월소득 대비 부채 비율(DTI)이 낮을수록 재무 건전성이 높습니다.',
+    options: [
+      { label: '부채가 월소득의 60% 초과', score: 1 },
+      { label: '부채가 월소득의 40~60%', score: 2 },
+      { label: '부채가 월소득의 20~40%', score: 3 },
+      { label: '부채가 월소득의 20% 미만', score: 4 },
+      { label: '부채 없음', score: 5 },
+    ]
+  },
+  {
+    area: '저축',
+    areaEn: 'saving',
+    text: '월 소득 중 저축(적금·예금 포함)하는 비율은?',
+    hint: '비상금 포함 단순 저축 비율입니다. 투자는 다음 문항에서 따로 확인합니다.',
+    options: [
+      { label: '저축 거의 못함 (5% 미만)', score: 1 },
+      { label: '5~15%', score: 2 },
+      { label: '15~25%', score: 3 },
+      { label: '25~35%', score: 4 },
+      { label: '35% 이상', score: 5 },
+    ]
+  },
+  {
+    area: '투자',
+    areaEn: 'invest',
+    text: '현재 투자(주식·ETF·펀드·부동산 등)를 하고 있나요?',
+    hint: '투자 금액 규모보다 얼마나 체계적으로 운용하는지가 중요합니다.',
+    options: [
+      { label: '투자 전혀 없음', score: 1 },
+      { label: '과거에 했지만 현재 없음', score: 2 },
+      { label: '소액 투자 중 (월 10만 원 미만)', score: 3 },
+      { label: '정기적으로 투자 중 (월 10~50만 원)', score: 4 },
+      { label: '체계적 포트폴리오 운용 중 (월 50만 원+)', score: 5 },
+    ]
+  },
+  {
+    area: '연금',
+    areaEn: 'pension',
+    text: '노후 연금 준비 현황은 어떻게 되나요?',
+    hint: '국민연금 외 개인적 연금(IRP·연금저축펀드·변액연금) 가입 여부를 포함합니다.',
+    options: [
+      { label: '국민연금 외 준비 없음', score: 1 },
+      { label: '가입은 했으나 납입 중단', score: 2 },
+      { label: '연금저축 또는 IRP 1개 납입 중', score: 3 },
+      { label: 'IRP + 연금저축 동시 납입 중', score: 4 },
+      { label: '연간 세액공제 한도 최대 활용 중', score: 5 },
+    ]
+  },
+  {
+    area: '절세',
+    areaEn: 'tax',
+    text: '세금(연말정산·절세 상품)을 얼마나 활용하고 있나요?',
+    hint: '절세만 잘해도 연간 수십~수백만 원의 실질 수익 효과가 납니다.',
+    options: [
+      { label: '절세에 대해 거의 모름', score: 1 },
+      { label: '연말정산 기본 공제만 받음', score: 2 },
+      { label: '카드·의료비·교육비 등 주요 공제 챙김', score: 3 },
+      { label: 'IRP·연금저축 절세 상품까지 활용', score: 4 },
+      { label: '절세 전략을 체계적으로 설계·운용 중', score: 5 },
+    ]
+  },
+  {
+    area: '보험',
+    areaEn: 'insurance',
+    text: '현재 가입한 보험 상황은 어떤가요?',
+    hint: '보험은 너무 없어도, 너무 많아도 문제입니다. 필요한 것만 적정하게 유지하는 것이 핵심입니다.',
+    options: [
+      { label: '보험 전혀 없음', score: 1 },
+      { label: '실손보험만 있음', score: 2 },
+      { label: '실손 + 암·입원 등 기본 보장', score: 3 },
+      { label: '보장성 + 저축성 균형 있게 가입', score: 4 },
+      { label: '필요 보장만 유지·불필요 정리 완료', score: 5 },
+    ]
+  },
+  {
+    area: '지출',
+    areaEn: 'expense',
+    text: '월 지출 관리는 어떻게 하고 있나요?',
+    hint: '지출을 파악해야 저축과 투자 여력을 정확히 계산할 수 있습니다.',
+    options: [
+      { label: '지출을 전혀 파악하지 못함', score: 1 },
+      { label: '대략적으로만 앎', score: 2 },
+      { label: '주요 항목은 파악하고 있음', score: 3 },
+      { label: '가계부 또는 앱으로 기록 중', score: 4 },
+      { label: '월별 예산을 설정하고 지출 통제 중', score: 5 },
+    ]
+  },
+  {
+    area: '비상금',
+    areaEn: 'emergency',
+    text: '비상금(긴급 예비자금)은 얼마나 준비되어 있나요?',
+    hint: '일반적으로 월 생활비의 3~6개월치를 유동성 있는 형태로 보유하는 것을 권장합니다.',
+    options: [
+      { label: '비상금 없음', score: 1 },
+      { label: '1개월치 미만', score: 2 },
+      { label: '1~3개월치 보유', score: 3 },
+      { label: '3~6개월치 보유', score: 4 },
+      { label: '6개월치 이상 + 별도 운용', score: 5 },
+    ]
+  },
+  {
+    area: '재무목표',
+    areaEn: 'goal',
+    text: '본인만의 재무 목표와 계획이 있나요?',
+    hint: '구체적인 숫자와 기간이 있는 목표를 세운 사람이 그렇지 않은 사람보다 자산 형성 속도가 빠릅니다.',
+    options: [
+      { label: '재무 목표 전혀 없음', score: 1 },
+      { label: '막연하게 생각만 있음', score: 2 },
+      { label: '목표는 있지만 구체적 계획 없음', score: 3 },
+      { label: '목표와 기간은 설정, 실행 부족', score: 4 },
+      { label: '구체적 목표·기간·실행계획 모두 있음', score: 5 },
+    ]
+  },
+];
+
+// ─── 그룹별 평균 데이터 ───────────────────────────────────────────
+// [자산, 부채, 저축, 투자, 연금, 절세, 보험, 지출, 비상금, 재무목표]
+const AVG_DATA = {
+  '20대': { '남성': { '직장인': [2,3,2,2,1,2,2,2,2,2], '사업자': [2,2,2,2,1,2,2,2,2,2], '공무원': [2,3,3,2,2,2,2,2,2,2], '기타': [2,3,2,1,1,2,2,2,2,2] },
+             '여성': { '직장인': [2,3,2,2,1,2,2,2,2,2], '사업자': [2,2,2,2,1,2,2,2,2,2], '공무원': [2,3,3,2,2,2,2,3,2,2], '기타': [2,3,2,1,1,2,2,2,2,2] } },
+  '30대': { '남성': { '직장인': [3,3,3,2,2,2,3,3,2,3], '사업자': [3,2,2,3,2,3,3,2,2,3], '공무원': [3,3,3,2,3,3,3,3,3,3], '기타': [2,3,2,2,1,2,2,2,2,2] },
+             '여성': { '직장인': [3,3,3,2,2,2,3,3,2,3], '사업자': [3,2,2,2,2,2,3,2,2,3], '공무원': [3,3,3,2,3,3,3,3,3,3], '기타': [2,3,2,2,1,2,2,2,2,2] } },
+  '40대': { '남성': { '직장인': [3,3,3,3,3,3,3,3,3,3], '사업자': [3,2,3,3,2,3,3,2,3,3], '공무원': [4,3,4,3,4,4,3,3,3,4], '기타': [3,3,2,2,2,2,3,2,2,3] },
+             '여성': { '직장인': [3,3,3,3,3,3,3,3,3,3], '사업자': [3,2,3,2,2,3,3,2,2,3], '공무원': [4,3,4,3,4,4,3,3,3,4], '기타': [3,3,2,2,2,2,3,2,2,3] } },
+  '50대 이상': { '남성': { '직장인': [4,3,3,3,3,3,3,3,3,3], '사업자': [4,2,3,3,3,3,3,3,3,3], '공무원': [4,3,4,3,4,4,3,3,4,4], '기타': [3,3,2,2,2,2,3,2,2,3] },
+                  '여성': { '직장인': [4,3,3,3,3,3,3,3,3,3], '사업자': [3,2,3,3,3,3,3,3,3,3], '공무원': [4,3,4,3,4,4,3,3,4,4], '기타': [3,3,2,2,2,2,3,2,2,3] } },
+};
+
+// ─── 상태 ─────────────────────────────────────────────────────────
+let userInfo = {};
+let answers  = new Array(10).fill(null);
+let currentQ = 0;
+let radarChart = null;
+
+// ─── 연락처 포맷 검증 ────────────────────────────────────────────
+function validatePhone(raw) {
+  // 숫자만 추출
+  const digits = raw.replace(/\D/g, '');
+  // 010으로 시작하고 총 11자리
+  return /^010\d{8}$/.test(digits);
+}
+
+function formatPhone(raw) {
+  const d = raw.replace(/\D/g, '');
+  if (d.length <= 3) return d;
+  if (d.length <= 7) return d.slice(0,3) + '-' + d.slice(3);
+  return d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7,11);
+}
+
+// 연락처 입력 시 자동 하이픈 + 실시간 에러 표시
+document.addEventListener('DOMContentLoaded', () => {
+  const phoneInput = document.getElementById('infoPhone');
+  const phoneError = document.getElementById('phoneError');
+  if (!phoneInput) return;
+
+  phoneInput.addEventListener('input', (e) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+    e.target.value = formatPhone(digits);
+    // 실시간 검증 (입력 중엔 너그럽게, 11자리 완성 후 판단)
+    if (digits.length === 11) {
+      if (validatePhone(digits)) {
+        phoneInput.style.borderColor = 'rgba(76,175,125,0.7)';
+        if (phoneError) phoneError.style.display = 'none';
+      } else {
+        phoneInput.style.borderColor = 'rgba(224,90,90,0.8)';
+        if (phoneError) phoneError.style.display = 'block';
+      }
+    } else {
+      phoneInput.style.borderColor = 'rgba(201,169,110,0.2)';
+      if (phoneError) phoneError.style.display = 'none';
+    }
+  });
+
+  phoneInput.addEventListener('blur', (e) => {
+    const digits = e.target.value.replace(/\D/g, '');
+    if (digits.length > 0 && !validatePhone(digits)) {
+      phoneInput.style.borderColor = 'rgba(224,90,90,0.8)';
+      if (phoneError) phoneError.style.display = 'block';
+    }
+  });
+});
+
+// ─── STEP 1: 시작 ────────────────────────────────────────────────
+function startQuiz() {
+  const name   = document.getElementById('infoName').value.trim();
+  const phone  = document.getElementById('infoPhone').value.trim();
+  const gender = document.getElementById('infoGender').value;
+  const age    = document.getElementById('infoAge').value;
+  const job    = document.getElementById('infoJob').value;
+  const phoneError = document.getElementById('phoneError');
+
+  if (!name) {
+    document.getElementById('infoName').focus();
+    document.getElementById('infoName').style.borderColor = 'rgba(224,90,90,0.8)';
+    return;
+  }
+  if (!phone || !validatePhone(phone)) {
+    document.getElementById('infoPhone').focus();
+    document.getElementById('infoPhone').style.borderColor = 'rgba(224,90,90,0.8)';
+    if (phoneError) phoneError.style.display = 'block';
+    return;
+  }
+  if (!gender) { alert('성별을 선택해주세요.'); return; }
+  if (!age) { alert('연령대를 선택해주세요.'); return; }
+  if (!job) { alert('직업 유형을 선택해주세요.'); return; }
+
+  // 하이픈 포함 형식으로 저장
+  const digits = phone.replace(/\D/g, '');
+  const cleanPhone = formatPhone(digits);
+  userInfo = { name, phone: cleanPhone, gender, age, job };
+  answers = new Array(10).fill(null);
+  currentQ = 0;
+
+  document.getElementById('infoSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestion(0);
+}
+
+// ─── STEP 2: 문항 렌더링 ────────────────────────────────────────
+function renderQuestion(idx) {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  const q = QUESTIONS[idx];
+  const wrap = document.createElement('div');
+  wrap.className = 'question-wrap active';
+  wrap.innerHTML = `
+    <div class="question-num">Q${idx+1} · ${q.area} 영역</div>
+    <div class="question-text">${q.text}</div>
+    <div class="question-hint">${q.hint}</div>
+    <div class="options-list" id="optionsList"></div>
+    <div class="q-nav" id="qNav"></div>
+  `;
+  container.appendChild(wrap);
+
+  // 선택지
+  const optList = document.getElementById('optionsList');
+  const alphas = ['①', '②', '③', '④', '⑤'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (answers[idx] === i ? ' selected' : '');
+    btn.innerHTML = `<span class="option-alpha">${alphas[i]}</span><span>${opt.label}</span>`;
+    btn.onclick = () => selectOption(idx, i);
+    optList.appendChild(btn);
+  });
+
+  // 네비게이션
+  updateNav(idx);
+  updateProgress(idx);
+}
+
+function selectOption(qIdx, optIdx) {
+  answers[qIdx] = optIdx;
+  document.querySelectorAll('#optionsList .option-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === optIdx);
+  });
+  updateNav(qIdx);
+  // 자동 다음으로 (마지막 제외)
+  if (qIdx < 9) {
+    setTimeout(() => goNext(), 320);
+  }
+}
+
+function updateNav(idx) {
+  const nav = document.getElementById('qNav');
+  nav.innerHTML = '';
+  if (idx > 0) {
+    const prev = document.createElement('button');
+    prev.className = 'btn-prev'; prev.textContent = '← 이전';
+    prev.onclick = () => { currentQ--; renderQuestion(currentQ); };
+    nav.appendChild(prev);
+  }
+  if (idx < 9) {
+    const next = document.createElement('button');
+    next.className = 'btn-next'; next.textContent = '다음 →';
+    next.disabled = answers[idx] === null;
+    next.id = 'btnNext';
+    next.onclick = goNext;
+    nav.appendChild(next);
+  } else {
+    const submit = document.createElement('button');
+    submit.className = 'btn-submit-final';
+    submit.textContent = '진단 결과 보기 →';
+    submit.disabled = answers.includes(null);
+    submit.onclick = calcResult;
+    nav.appendChild(submit);
+  }
+}
+
+function goNext() {
+  if (answers[currentQ] === null) return;
+  currentQ++;
+  renderQuestion(currentQ);
+}
+
+function updateProgress(idx) {
+  const pct = Math.round(((idx + 1) / 10) * 100);
+  document.getElementById('progressLabel').textContent = `질문 ${idx+1} / 10`;
+  document.getElementById('progressPct').textContent = `${pct}%`;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ─── STEP 3: 결과 계산 ─────────────────────────────────────────
+function calcResult() {
+  if (answers.includes(null)) { alert('모든 문항에 답해주세요.'); return; }
+
+  showLoading('재무 데이터 분석 중...');
+
+  setTimeout(async () => {
+    const scores = answers.map((a, i) => QUESTIONS[i].options[a].score);
+    const total = Math.round((scores.reduce((a, b) => a + b, 0) / 50) * 100);
+
+    // 그룹 평균 가져오기
+    const age = userInfo.age;
+    const gender = userInfo.gender;
+    const job = userInfo.job;
+    let avgScores = AVG_DATA[age]?.[gender]?.[job] || AVG_DATA['30대']['남성']['직장인'];
+
+    // 영역별 비교
+    const areaResults = QUESTIONS.map((q, i) => ({
+      area: q.area,
+      score: scores[i],
+      avg: avgScores[i],
+      diff: scores[i] - avgScores[i],
+    }));
+
+    // 결과 렌더
+    renderResult(scores, total, areaResults);
+
+    // 텔레그램 전송
+    try { await sendTelegram(scores, total, areaResults); } catch(e) {}
+
+    hideLoading();
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('resultSection').style.display = 'block';
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+
+    // 차트 렌더 (DOM 확인 후)
+    setTimeout(() => renderRadar(scores, avgScores), 100);
+  }, 1600);
+}
+
+function renderResult(scores, total, areaResults) {
+  const now = new Date();
+  document.getElementById('resultName').textContent = userInfo.name + ' 님';
+  document.getElementById('resultInfo').textContent = `${userInfo.age} · ${userInfo.gender} · ${userInfo.job}`;
+  document.getElementById('resultDate').textContent = now.toLocaleDateString('ko-KR') + ' 기준';
+
+  // 총점
+  document.getElementById('totalScore').textContent = total;
+
+  // 등급 설정
+  let grade, gradeColor, desc;
+  if (total >= 85) { grade = 'A+ 탁월함 ✦'; gradeColor = '#c9a96e'; desc = '전 영역에서 평균을 상회하는 우수한 재무 관리를 하고 계십니다. 지금처럼 유지하면서 더 정교한 전략을 더해보세요.'; }
+  else if (total >= 70) { grade = 'A  우수함 ✦'; gradeColor = '#c9a96e'; desc = '대부분의 영역에서 탄탄한 재무 기반을 갖추고 있습니다. 일부 약점 영역만 보완하면 상위 10%에 진입할 수 있습니다.'; }
+  else if (total >= 55) { grade = 'B  양호함'; gradeColor = '#e8d5b0'; desc = '전반적으로 평균 수준이지만, 몇 가지 핵심 영역에서 개선의 여지가 있습니다. 약점 보완이 자산 증가의 가장 빠른 지름길입니다.'; }
+  else if (total >= 40) { grade = 'C  개선 필요'; gradeColor = '#e09050'; desc = '기본기 중 보완이 필요한 부분이 있습니다. 지금 파악한 것만으로도 큰 진전입니다. 우선순위를 정해 하나씩 개선해보세요.'; }
+  else { grade = 'D  즉시 점검 필요'; gradeColor = '#e05a5a'; desc = '재무 구조 전반에 걸쳐 점검이 필요한 상태입니다. 혼자 해결하려 하기보다 전문가와 함께 방향을 잡는 것이 효율적입니다.'; }
+
+  const gradeEl = document.getElementById('gradeText');
+  gradeEl.textContent = grade;
+  gradeEl.style.color = gradeColor;
+  document.getElementById('gradeDesc').textContent = desc;
+
+  // 영역별 바
+  const barContainer = document.getElementById('areaBars');
+  barContainer.innerHTML = '';
+  const COLORS = { asset:'#c9a96e', debt:'#5a8fe0', saving:'#4caf7d', invest:'#e0a05a', pension:'#a05ae0', tax:'#5ae0c9', insurance:'#e05a5a', expense:'#e8d5b0', emergency:'#7de0a0', goal:'#e0e05a' };
+  const colorKeys = Object.keys(COLORS);
+
+  areaResults.forEach((ar, i) => {
+    const fillPct = (ar.score / 5) * 100;
+    const avgPct  = (ar.avg / 5) * 100;
+    const diffTxt = ar.diff > 0 ? `<span class="badge-up">▲ 평균보다 ${ar.diff === 1 ? '약간' : '많이'} 높음</span>` :
+                    ar.diff < 0 ? `<span class="badge-down">▼ 평균보다 ${Math.abs(ar.diff) === 1 ? '약간' : '많이'} 낮음</span>` :
+                                  `<span class="badge-avg">≈ 평균 수준</span>`;
+    const color = COLORS[colorKeys[i]] || '#c9a96e';
+    const scoreLabel = `<span style="color:${color};font-weight:500;">${ar.score}</span><span style="color:#555;font-size:0.65rem;">/5</span>`;
+
+    barContainer.innerHTML += `
+      <div class="area-row">
+        <div class="area-row-top">
+          <div class="area-name">${ar.area}</div>
+          <div class="area-score-label">${scoreLabel}</div>
+        </div>
+        <div class="area-bar-bg">
+          <div class="area-bar-fill" style="width:${fillPct}%;background:${color};"></div>
+          <div class="area-bar-avg" style="left:${avgPct}%;"></div>
+        </div>
+        <div class="area-compare">${diffTxt} <span style="color:#555;font-size:0.65rem;">· 흰 선 = 동일 그룹 평균</span></div>
+      </div>`;
+  });
+
+  // 강점 / 약점
+  const sorted = [...areaResults].sort((a,b) => b.diff - a.diff);
+  const strengths = sorted.filter(a => a.diff >= 0).slice(0, 3);
+  const weaknesses = sorted.filter(a => a.diff < 0).slice(-3).reverse();
+
+  const strEl = document.getElementById('strengthList');
+  strEl.innerHTML = strengths.length
+    ? strengths.map(s => `<div class="analysis-item"><div class="analysis-dot" style="background:var(--green);"></div><span><b style="color:var(--green);">${s.area}</b> — 동일 그룹 평균 대비 우수. 이 강점을 유지·활용하세요.</span></div>`).join('')
+    : `<div class="analysis-item"><div class="analysis-dot" style="background:#555;"></div><span>평균 이상인 영역이 없습니다. 전반적인 개선이 필요합니다.</span></div>`;
+
+  const weakEl = document.getElementById('weaknessList');
+  weakEl.innerHTML = weaknesses.length
+    ? weaknesses.map(w => `<div class="analysis-item"><div class="analysis-dot" style="background:var(--red);"></div><span><b style="color:var(--red);">${w.area}</b> — 동일 그룹 평균 대비 부족. 우선 개선 대상입니다.</span></div>`).join('')
+    : `<div class="analysis-item"><div class="analysis-dot" style="background:var(--green);"></div><span>모든 영역이 평균 이상입니다. 훌륭합니다!</span></div>`;
+
+  // 맞춤 메시지
+  const topWeak = weaknesses[0];
+  const messages = {
+    '자산':     '순자산 규모를 키우려면 지출 구조 재설계와 투자 비율 확대가 동시에 필요합니다. 소득이 늘어도 지출이 따라오면 자산은 쌓이지 않습니다.',
+    '부채':     '부채 비율이 높으면 투자와 저축 여력이 줄어듭니다. 고금리 부채부터 순서를 정해 갚아나가는 전략이 중요합니다.',
+    '저축':     '저축 비율을 높이는 가장 효과적인 방법은 선저축 후지출입니다. 월급날 자동이체로 강제 저축 구조를 만들어보세요.',
+    '투자':     '물가 상승률을 이기는 자산 성장을 위해서는 저축만으로는 부족합니다. ETF부터 소액으로 시작해 투자 습관을 만드세요.',
+    '연금':     '연금 준비는 빨리 시작할수록 유리합니다. IRP+연금저축 조합으로 세액공제 혜택을 받으면서 노후를 준비해보세요.',
+    '절세':     '절세는 수익률 높은 투자보다 확실한 효과를 냅니다. 세액공제 상품 활용만으로 연간 60~120만 원을 돌려받을 수 있습니다.',
+    '보험':     '보험은 너무 적으면 위험, 너무 많으면 낭비입니다. 지금 가입된 보험의 보장 내용을 점검해 불필요한 항목을 정리해보세요.',
+    '지출':     '지출 파악이 모든 재무 설계의 시작입니다. 한 달만 가계부를 써보면 어디서 새는 돈이 있는지 바로 보입니다.',
+    '비상금':   '비상금이 없으면 급한 돈을 신용카드나 대출로 해결하게 됩니다. 월 생활비의 3개월치를 CMA나 파킹통장에 먼저 쌓아두세요.',
+    '재무목표': '목표 없이 저축·투자를 하면 중간에 흔들리기 쉽습니다. 5년 후 내가 원하는 자산 모습을 구체적인 숫자로 적어보세요.',
+  };
+
+  const msgKey = topWeak ? topWeak.area : '재무목표';
+  document.getElementById('customMessage').textContent =
+    (topWeak ? `${userInfo.name} 님의 경우, ${topWeak.area} 영역이 동일 그룹 평균보다 낮게 나타났습니다. ` : '') +
+    (messages[msgKey] || '재무 전반에 걸쳐 균형 있는 관리가 필요합니다.');
+}
+
+// ─── 레이더 차트 ──────────────────────────────────────────────
+function renderRadar(scores, avgScores) {
+  const ctx = document.getElementById('radarCanvas').getContext('2d');
+  if (radarChart) { radarChart.destroy(); radarChart = null; }
+
+  const labels = QUESTIONS.map(q => q.area);
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '나의 점수',
+          data: scores,
+          backgroundColor: 'rgba(201,169,110,0.18)',
+          borderColor: 'rgba(201,169,110,0.85)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(201,169,110,1)',
+          pointRadius: 4,
+        },
+        {
+          label: '동일 그룹 평균',
+          data: avgScores,
+          backgroundColor: 'rgba(255,255,255,0.04)',
+          borderColor: 'rgba(255,255,255,0.25)',
+          borderWidth: 1.5,
+          borderDash: [4, 4],
+          pointBackgroundColor: 'rgba(255,255,255,0.4)',
+          pointRadius: 3,
+        },
+      ],
+    },
+    options: {
+      responsive: false,
+      scales: {
+        r: {
+          min: 0, max: 5, ticks: { stepSize: 1, display: false },
+          grid: { color: 'rgba(255,255,255,0.08)' },
+          angleLines: { color: 'rgba(255,255,255,0.1)' },
+          pointLabels: {
+            color: '#bbb', font: { family: 'Noto Sans KR', size: 11 }
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: { color: '#aaa', font: { family: 'Noto Sans KR', size: 11 }, boxWidth: 14 }
+        },
+      },
+    },
+  });
+}
+
+// ─── PDF 다운로드 ──────────────────────────────────────────────
+async function downloadReport() {
+  showLoading('리포트 생성 중...');
+  try {
+    const { jsPDF } = window.jspdf;
+    const card = document.getElementById('reportCard');
+
+    // 차트 가시성 보장
+    await new Promise(r => setTimeout(r, 300));
+
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#0a0f18',
+      logging: false,
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgH  = (canvas.height / canvas.width) * pageW;
+
+    if (imgH <= pageH) {
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, imgH);
+    } else {
+      // 여러 페이지
+      let yPos = 0;
+      while (yPos < imgH) {
+        if (yPos > 0) pdf.addPage();
+        const sliceH = Math.min(pageH, imgH - yPos);
+        const srcY   = (yPos / imgH) * canvas.height;
+        const srcH   = (sliceH / imgH) * canvas.height;
+
+        const sliceCanvas = document.createElement('canvas');
+        sliceCanvas.width  = canvas.width;
+        sliceCanvas.height = srcH;
+        const sCtx = sliceCanvas.getContext('2d');
+        sCtx.drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
+        pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pageW, sliceH);
+        yPos += pageH;
+      }
+    }
+
+    const fname = `허머니_자산진단_${userInfo.name}_${new Date().toLocaleDateString('ko-KR').replace(/\./g,'').replace(/ /g,'')}.pdf`;
+    pdf.save(fname);
+  } catch(e) {
+    console.error(e);
+    alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.');
+  }
+  hideLoading();
+}
+
+// ─── 카카오 공유 ──────────────────────────────────────────────
+function shareKakaoResult() {
+  if (!Kakao.isInitialized()) return;
+  const scores = answers.map((a, i) => QUESTIONS[i].options[a].score);
+  const total = Math.round((scores.reduce((a, b) => a + b, 0) / 50) * 100);
+  Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: `내 자산 진단 점수: ${total}점 · 허머니 무료 진단`,
+      description: '나이대·성별·직업 평균과 비교한 무료 자산 진단을 해봤어요. 너도 해봐!',
+      imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+      link: {
+        mobileWebUrl: 'https://abillion-abillion.github.io/diagnosis.html',
+        webUrl: 'https://abillion-abillion.github.io/diagnosis.html',
+      },
+    },
+    buttons: [
+      { title: '나도 진단받기', link: { mobileWebUrl: 'https://abillion-abillion.github.io/diagnosis.html', webUrl: 'https://abillion-abillion.github.io/diagnosis.html' } },
+    ],
+  });
+}
+
+// ─── 텔레그램 전송 ────────────────────────────────────────────
+async function sendTelegram(scores, total, areaResults) {
+  const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+  const areaLines = areaResults.map(a => `  ${a.area}: ${a.score}/5 (평균 ${a.avg}/5, ${a.diff >= 0 ? '▲+' : '▼'}${a.diff})`).join('\n');
+  const message =
+    `🔍 [무료 자산 진단 완료]\n` +
+    `────────────────────\n` +
+    `👤 ${userInfo.name} | ${userInfo.age} ${userInfo.gender} ${userInfo.job}\n` +
+    `📱 ${userInfo.phone}\n` +
+    `📊 총점: ${total}점 / 100점\n` +
+    `\n영역별 점수:\n${areaLines}\n` +
+    `🕐 ${now}`;
+
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+  });
+}
+
+// ─── 다시 진단 ───────────────────────────────────────────────
+function retryDiag() {
+  answers = new Array(10).fill(null);
+  currentQ = 0;
+  document.getElementById('resultSection').style.display = 'none';
+  document.getElementById('infoSection').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── 로딩 ─────────────────────────────────────────────────────
+function showLoading(msg) {
+  document.getElementById('loadingText').textContent = msg || '처리 중...';
+  document.getElementById('loadingOverlay').classList.add('active');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('active');
+}
+
+// ─── 햄버거 메뉴 ─────────────────────────────────────────────
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+if (navToggle && mobileMenu) {
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+</script>
+</body>
+</html>

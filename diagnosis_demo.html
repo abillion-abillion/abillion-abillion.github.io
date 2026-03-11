@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자산 진단 결과 리포트 예시 · 허머니</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+      --green: #4caf7d;
+      --red: #e05a5a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    /* ── 상단 데모 배너 ── */
+    .demo-banner {
+      background: linear-gradient(90deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+      border-bottom: 1px solid rgba(201,169,110,0.3);
+      padding: 0.85rem 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .demo-badge {
+      background: var(--gold); color: var(--dark);
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em;
+      padding: 0.25rem 0.7rem;
+    }
+    .demo-text { font-size: 0.8rem; color: var(--gold-light); }
+    .demo-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1.2rem; background: var(--gold); color: var(--dark);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .demo-btn:hover { background: var(--gold-light); }
+
+    /* ── WRAP ── */
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 2.5rem 2rem 6rem; }
+
+    /* ── 리포트 카드 ── */
+    #reportCard {
+      background: #0a0f18;
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 2.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #reportCard::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 40%, var(--gold-light) 60%, transparent 100%);
+    }
+    #reportCard::after {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── 리포트 헤더 ── */
+    .report-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 2.2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    .brand-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+    .brand-emblem {
+      width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 0.8rem; color: var(--gold);
+    }
+    .brand-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--gold); letter-spacing: 0.15em; }
+    .brand-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-left: 40px; }
+    .report-meta { text-align: right; }
+    .meta-name { font-family: 'Noto Serif KR', serif; font-size: 1.15rem; color: var(--text); }
+    .meta-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
+    .meta-date { font-size: 0.62rem; color: #555; margin-top: 0.2rem; }
+
+    /* ── 총점 섹션 ── */
+    .score-section {
+      display: flex; gap: 2.5rem; margin-bottom: 2.5rem; align-items: center;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+    }
+    .score-ring-wrap { flex-shrink: 0; position: relative; }
+    .score-ring {
+      width: 130px; height: 130px; border-radius: 50%;
+      background: conic-gradient(var(--gold) 0deg, var(--gold) calc(3.6deg * 72), rgba(255,255,255,0.07) calc(3.6deg * 72));
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .score-ring-inner {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: #0a0f18;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: absolute;
+    }
+    .score-big { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); line-height: 1; }
+    .score-100 { font-size: 0.6rem; color: var(--text-muted); margin-top: 0.15rem; letter-spacing: 0.05em; }
+    .score-info { flex: 1; }
+    .score-grade-wrap { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .grade-badge {
+      padding: 0.3rem 0.9rem;
+      background: linear-gradient(135deg, rgba(201,169,110,0.2), rgba(201,169,110,0.08));
+      border: 1px solid rgba(201,169,110,0.4);
+      font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold);
+    }
+    .grade-label { font-size: 0.75rem; color: #888; letter-spacing: 0.08em; }
+    .score-desc { font-size: 0.82rem; color: #bbb; line-height: 1.78; }
+
+    /* ── 영역별 바 ── */
+    .section-block { margin-bottom: 2.5rem; }
+    .section-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .area-row { margin-bottom: 1.1rem; }
+    .area-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.4rem; }
+    .area-name { font-size: 0.8rem; color: var(--text); }
+    .area-nums { font-size: 0.72rem; display: flex; align-items: center; gap: 0.5rem; }
+    .area-mine { font-weight: 500; }
+    .area-sep { color: #444; }
+    .area-avg-lbl { color: #666; font-size: 0.65rem; }
+    .bar-track { height: 9px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: visible; position: relative; }
+    .bar-mine { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(.25,.46,.45,.94); }
+    .bar-avg-line {
+      position: absolute; top: -4px; height: 17px; width: 2px;
+      background: rgba(255,255,255,0.3); border-radius: 1px;
+    }
+    .area-verdict { font-size: 0.68rem; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.35rem; }
+    .up { color: var(--green); }
+    .dn { color: var(--red); }
+    .eq { color: #666; }
+
+    /* ── 레이더 차트 ── */
+    .radar-wrap {
+      display: flex; justify-content: center; align-items: center;
+      padding: 1rem 0 0.5rem;
+      position: relative;
+    }
+    .radar-wrap::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,169,110,0.04) 0%, transparent 70%);
+    }
+
+    /* ── 강점 / 약점 ── */
+    .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .sw-box { background: rgba(255,255,255,0.025); border: 1px solid var(--border); padding: 1.3rem 1.4rem; }
+    .sw-title { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .sw-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.7rem; font-size: 0.78rem; color: #bbb; line-height: 1.6; }
+    .sw-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
+
+    /* ── 맞춤 메시지 ── */
+    .insight-box {
+      background: linear-gradient(135deg, rgba(201,169,110,0.07), rgba(201,169,110,0.03));
+      border: 1px solid rgba(201,169,110,0.22);
+      padding: 1.8rem 2rem; margin-bottom: 2rem; position: relative; overflow: hidden;
+    }
+    .insight-box::before {
+      content: '❝';
+      font-family: 'Playfair Display', serif; font-size: 4rem;
+      color: var(--gold); opacity: 0.12;
+      position: absolute; top: -0.4rem; left: 0.8rem; line-height: 1;
+      pointer-events: none;
+    }
+    .insight-eyebrow { font-size: 0.6rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .insight-text { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; line-height: 1.9; color: #d0ccc4; padding-left: 1rem; }
+    .insight-highlight { color: var(--gold-light); font-weight: 600; }
+
+    /* ── 컨설팅 CTA ── */
+    .cta-box {
+      background: linear-gradient(135deg, #0d1b2e 0%, #0e1520 50%, #0a0f18 100%);
+      border: 1px solid rgba(201,169,110,0.35);
+      padding: 2.2rem 2.4rem; text-align: center; position: relative; overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .cta-box::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .cta-box::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 65%); }
+    .cta-eyebrow { font-size: 0.62rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .cta-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 400; line-height: 1.45; margin-bottom: 0.9rem; }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-desc { font-size: 0.8rem; color: #999; line-height: 1.85; margin-bottom: 1.6rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn-primary {
+      padding: 0.85rem 2.2rem; background: var(--gold); color: var(--dark);
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+      text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block;
+    }
+    .cta-btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .cta-btn-secondary {
+      padding: 0.85rem 2.2rem; border: 1px solid rgba(201,169,110,0.5); color: var(--gold);
+      font-size: 0.82rem; letter-spacing: 0.08em;
+      text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block;
+    }
+    .cta-btn-secondary:hover { background: rgba(201,169,110,0.08); transform: translateY(-1px); }
+    .cta-disclaimer { font-size: 0.65rem; color: #555; margin-top: 1rem; }
+
+    /* ── 리포트 푸터 ── */
+    .report-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.3rem; display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .rf-left { font-size: 0.63rem; color: #555; line-height: 1.65; }
+    .rf-right { font-family: 'Playfair Display', serif; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.12em; }
+
+    /* ── 액션 버튼 ── */
+    .action-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-dl { flex: 1; min-width: 150px; padding: 0.95rem; background: var(--gold); color: var(--dark); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background 0.2s, transform 0.15s; }
+    .btn-dl:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-kakao { flex: 1; min-width: 150px; padding: 0.95rem; background: #FEE500; color: #3A1D1D; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-kakao:hover { opacity: 0.88; }
+    .btn-consult { flex: 1; min-width: 150px; padding: 0.95rem; border: 1px solid var(--gold); color: var(--gold); background: transparent; font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background 0.2s; }
+    .btn-consult:hover { background: rgba(201,169,110,0.08); }
+
+    /* ── 로딩 ── */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(10,10,10,0.92); z-index: 200; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 1.2rem; }
+    .loading-overlay.active { display: flex; }
+    .loading-spinner { width: 40px; height: 40px; border: 2px solid rgba(201,169,110,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .loading-text { font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.1em; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes barFill { from { width: 0 !important; } }
+
+    @media (max-width: 600px) {
+      #reportCard { padding: 1.5rem; }
+      .score-section { flex-direction: column; text-align: center; gap: 1.5rem; padding: 1.4rem; }
+      .report-header { flex-direction: column; gap: 0.8rem; }
+      .report-meta { text-align: left; }
+      .sw-grid { grid-template-columns: 1fr; }
+      .action-bar { flex-direction: column; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 데모 배너 -->
+<div class="demo-banner">
+  <span class="demo-badge">SAMPLE</span>
+  <span class="demo-text">이것은 결과 리포트 예시입니다 — 실제 진단을 받으시려면 아래 버튼을 눌러주세요</span>
+  <a href="diagnosis.html" class="demo-btn">무료 진단 받기 →</a>
+</div>
+
+<div class="page-wrap">
+  <div id="reportCard">
+
+    <!-- ── 헤더 ── -->
+    <div class="report-header">
+      <div>
+        <div class="brand-logo">
+          <div class="brand-emblem">JW</div>
+          <div class="brand-name">JW Financial Consulting</div>
+        </div>
+        <div class="brand-sub">자산관리사 허머니 · 무료 자산 진단 리포트</div>
+      </div>
+      <div class="report-meta">
+        <div class="meta-name">홍길동 님</div>
+        <div class="meta-info">30대 · 남성 · 직장인</div>
+        <div class="meta-date">2025년 3월 11일 기준</div>
+      </div>
+    </div>
+
+    <!-- ── 총점 ── -->
+    <div class="score-section">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <div class="score-ring-inner">
+            <div class="score-big">72</div>
+            <div class="score-100">/ 100점</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-info">
+        <div class="score-grade-wrap">
+          <div class="grade-badge">A &nbsp;우수함</div>
+          <div class="grade-label">상위 약 25%</div>
+        </div>
+        <div class="score-desc">
+          대부분의 영역에서 탄탄한 재무 기반을 갖추고 있습니다.<br/>
+          저축과 투자 습관은 동일 그룹 평균을 웃돌고 있으며,<br/>
+          <span style="color:var(--gold-light);">절세·연금 영역을 보완하면 상위 10%에 진입</span>할 수 있습니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 영역별 진단 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">영역별 진단 결과 vs 동일 그룹 평균</div>
+
+      <!-- 자산 -->
+      <div class="area-row" data-score="4" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">💰 자산</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#c9a96e;">4점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:80%;background:#c9a96e;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span> <span style="color:#444;font-size:0.62rem;">· 흰 선 = 동일 그룹 평균</span></div>
+      </div>
+
+      <!-- 부채 -->
+      <div class="area-row" data-score="3" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">📉 부채</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#5a8fe0;">3점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:60%;background:#5a8fe0;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="eq">≈ 평균 수준</span></div>
+      </div>
+
+      <!-- 저축 -->
+      <div class="area-row" data-score="4" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">🏦 저축</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#4caf7d;">4점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:80%;background:#4caf7d;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span></div>
+      </div>
+
+      <!-- 투자 -->
+      <div class="area-row" data-score="3" data-avg="2">
+        <div class="area-top">
+          <div class="area-name">📈 투자</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e0a05a;">3점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 2점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:60%;background:#e0a05a;"></div>
+          <div class="bar-avg-line" style="left:40%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span></div>
+      </div>
+
+      <!-- 연금 -->
+      <div class="area-row" data-score="2" data-avg="2">
+        <div class="area-top">
+          <div class="area-name">🌿 연금</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#a05ae0;">2점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 2점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:40%;background:#a05ae0;"></div>
+          <div class="bar-avg-line" style="left:40%;"></div>
+        </div>
+        <div class="area-verdict"><span class="eq">≈ 평균 수준 · 개선 여지 있음</span></div>
+      </div>
+
+      <!-- 절세 -->
+      <div class="area-row" data-score="2" data-avg="2">
+        <div class="area-top">
+          <div class="area-name">📋 절세</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e05a5a;">2점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 2점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:40%;background:#e05a5a;"></div>
+          <div class="bar-avg-line" style="left:40%;"></div>
+        </div>
+        <div class="area-verdict"><span class="dn">▼ 즉시 개선 권장</span></div>
+      </div>
+
+      <!-- 보험 -->
+      <div class="area-row" data-score="4" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">🛡 보험</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#5ae0c9;">4점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:80%;background:#5ae0c9;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span></div>
+      </div>
+
+      <!-- 지출 -->
+      <div class="area-row" data-score="3" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">💳 지출</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e8d5b0;">3점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:60%;background:#e8d5b0;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="eq">≈ 평균 수준</span></div>
+      </div>
+
+      <!-- 비상금 -->
+      <div class="area-row" data-score="3" data-avg="2">
+        <div class="area-top">
+          <div class="area-name">🔒 비상금</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#7de0a0;">3점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 2점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:60%;background:#7de0a0;"></div>
+          <div class="bar-avg-line" style="left:40%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span></div>
+      </div>
+
+      <!-- 재무목표 -->
+      <div class="area-row" data-score="4" data-avg="3">
+        <div class="area-top">
+          <div class="area-name">🎯 재무목표</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e0e05a;">4점</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 3점</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:80%;background:#e0e05a;"></div>
+          <div class="bar-avg-line" style="left:60%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 높음</span></div>
+      </div>
+    </div>
+
+    <!-- ── 레이더 차트 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">종합 비교 차트</div>
+      <div class="radar-wrap">
+        <canvas id="radarChart" width="340" height="340"></canvas>
+      </div>
+    </div>
+
+    <!-- ── 강점 / 약점 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">강점 & 개선 포인트</div>
+      <div class="sw-grid">
+        <div class="sw-box">
+          <div class="sw-title" style="color:var(--green);">✦ &nbsp;잘하고 있는 부분</div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">자산</b> — 동일 그룹 대비 자산 규모가 우수합니다. 현재 방향을 유지하세요.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">저축</b> — 꾸준한 저축 습관이 재무 안정의 기반이 되고 있습니다.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">재무목표</b> — 구체적인 목표가 있어 실행 가능성이 높습니다.</span>
+          </div>
+        </div>
+        <div class="sw-box">
+          <div class="sw-title" style="color:var(--red);">▲ &nbsp;개선이 필요한 부분</div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--red);"></div>
+            <span><b style="color:var(--red);">절세</b> — 연간 최대 수십만 원을 아낄 수 있는 절세 전략이 미흡합니다.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:#e09050;"></div>
+            <span><b style="color:#e09050;">연금</b> — IRP·연금저축 세액공제 한도를 아직 충분히 활용하지 않고 있습니다.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:#888;"></div>
+            <span><b style="color:#aaa;">투자</b> — 체계적인 포트폴리오 구성으로 더 높은 수익률을 노려볼 수 있습니다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 맞춤 인사이트 ── -->
+    <div class="insight-box">
+      <div class="insight-eyebrow">자산관리사 허머니의 한마디</div>
+      <div class="insight-text">
+        홍길동 님은 <span class="insight-highlight">저축과 자산 관리 기본기가 탄탄한 편</span>입니다. 그러나 절세 영역이 동일 그룹 평균에 머물러 있어, 이 부분만 개선해도 연간 60~120만 원의 추가 효과를 볼 수 있습니다. IRP에 300만 원, 연금저축에 400만 원을 납입하면 세액공제만으로 최대 115만 5천 원을 돌려받을 수 있습니다. <span class="insight-highlight">지금 당장 시작하지 않으면 매년 이만큼씩 손해</span>를 보고 있는 셈입니다.
+      </div>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="cta-box">
+      <div class="cta-eyebrow">Next Step · 다음 단계</div>
+      <div class="cta-title">
+        진단 결과를 바탕으로<br/><em>구체적인 실행 계획을 세워드립니다</em>
+      </div>
+      <div class="cta-desc">
+        진단은 현재 상태를 파악하는 첫 걸음입니다.<br/>
+        같은 점수라도 소득·목표·시기에 따라 전략이 완전히 달라집니다.<br/>
+        1:1 상담에서 내 상황에 맞는 로드맵을 함께 그려보세요.
+      </div>
+      <div class="cta-btns">
+        <a href="consult.html" class="cta-btn-primary">무료 상담 신청하기</a>
+        <a href="https://open.kakao.com/me/Heomoney" target="_blank" class="cta-btn-secondary">카카오톡 문의</a>
+      </div>
+      <div class="cta-disclaimer">* 상담은 무료이며, 별도 계약 의무가 없습니다.</div>
+    </div>
+
+    <!-- ── 리포트 푸터 ── -->
+    <div class="report-footer">
+      <div class="rf-left">
+        본 진단은 입력하신 정보를 기반으로 한 참고 자료입니다.<br/>
+        실제 재무 전략은 전문 자산관리사와의 상담을 권장합니다.
+      </div>
+      <div class="rf-right">Heomoney · 허머니 자산관리</div>
+    </div>
+
+  </div><!-- /#reportCard -->
+
+  <!-- 액션 버튼 -->
+  <div class="action-bar">
+    <button class="btn-dl" onclick="downloadPDF()">⬇ PDF 저장하기</button>
+    <button class="btn-kakao">💬 카카오 공유</button>
+    <a href="consult.html" class="btn-consult">📋 1:1 상담 신청</a>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<!-- 로딩 -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">PDF 생성 중...</div>
+</div>
+
+<script>
+// ── 레이더 차트 ──────────────────────────────────────────────────
+const ctx = document.getElementById('radarChart').getContext('2d');
+new Chart(ctx, {
+  type: 'radar',
+  data: {
+    labels: ['자산','부채','저축','투자','연금','절세','보험','지출','비상금','재무목표'],
+    datasets: [
+      {
+        label: '홍길동 님',
+        data: [4, 3, 4, 3, 2, 2, 4, 3, 3, 4],
+        backgroundColor: 'rgba(201,169,110,0.18)',
+        borderColor: 'rgba(201,169,110,0.9)',
+        borderWidth: 2,
+        pointBackgroundColor: '#c9a96e',
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      },
+      {
+        label: '30대 남성 직장인 평균',
+        data: [3, 3, 3, 2, 2, 2, 3, 3, 2, 3],
+        backgroundColor: 'rgba(255,255,255,0.03)',
+        borderColor: 'rgba(255,255,255,0.22)',
+        borderWidth: 1.5,
+        borderDash: [5, 4],
+        pointBackgroundColor: 'rgba(255,255,255,0.35)',
+        pointRadius: 3,
+      },
+    ],
+  },
+  options: {
+    responsive: false,
+    scales: {
+      r: {
+        min: 0, max: 5,
+        ticks: { stepSize: 1, display: false },
+        grid: { color: 'rgba(255,255,255,0.07)' },
+        angleLines: { color: 'rgba(255,255,255,0.1)' },
+        pointLabels: {
+          color: '#bbb',
+          font: { family: "'Noto Sans KR', sans-serif", size: 11 },
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: '#aaa',
+          font: { family: "'Noto Sans KR', sans-serif", size: 11 },
+          boxWidth: 14, padding: 16,
+        },
+      },
+      tooltip: {
+        backgroundColor: '#161616',
+        borderColor: 'rgba(201,169,110,0.3)',
+        borderWidth: 1,
+        titleColor: '#c9a96e',
+        bodyColor: '#ccc',
+        titleFont: { family: "'Noto Sans KR', sans-serif" },
+        bodyFont: { family: "'Noto Sans KR', sans-serif" },
+      },
+    },
+  },
+});
+
+// ── 바 애니메이션 (IntersectionObserver) ─────────────────────────
+const bars = document.querySelectorAll('.bar-mine');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'none';
+      void entry.target.offsetWidth; // reflow
+      entry.target.style.animation = 'barFill 1.2s cubic-bezier(.25,.46,.45,.94) forwards';
+    }
+  });
+}, { threshold: 0.3 });
+bars.forEach(b => observer.observe(b));
+
+// ── PDF 다운로드 ──────────────────────────────────────────────────
+async function downloadPDF() {
+  const overlay = document.getElementById('loadingOverlay');
+  overlay.classList.add('active');
+  try {
+    const { jsPDF } = window.jspdf;
+    const card = document.getElementById('reportCard');
+    await new Promise(r => setTimeout(r, 200));
+
+    const canvas = await html2canvas(card, {
+      scale: 2, useCORS: true,
+      backgroundColor: '#0a0f18',
+      logging: false,
+      onclone: (doc) => {
+        // 캡처 시 배너 숨기기
+        const banner = doc.querySelector('.demo-banner');
+        if (banner) banner.style.display = 'none';
+      }
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgH  = (canvas.height / canvas.width) * pageW;
+
+    if (imgH <= pageH) {
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, imgH);
+    } else {
+      let yPos = 0;
+      while (yPos < imgH) {
+        if (yPos > 0) pdf.addPage();
+        const sliceH = Math.min(pageH, imgH - yPos);
+        const srcY   = (yPos / imgH) * canvas.height;
+        const srcH   = (sliceH / imgH) * canvas.height;
+        const sc = document.createElement('canvas');
+        sc.width = canvas.width; sc.height = srcH;
+        sc.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
+        pdf.addImage(sc.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pageW, sliceH);
+        yPos += pageH;
+      }
+    }
+    pdf.save('허머니_자산진단_리포트_예시.pdf');
+  } catch(e) {
+    console.error(e);
+    alert('PDF 생성 중 오류가 발생했습니다.');
+  }
+  overlay.classList.remove('active');
+}
+</script>
+</body>
+</html>
