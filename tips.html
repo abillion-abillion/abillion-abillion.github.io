@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>재테크 팁 · J. W. Financial Consulting</title>
+  <title>재테크 & 금융 팁 · 남진우 자산관리</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
@@ -162,6 +162,40 @@
     }
     .btn-subscribe:hover { background: var(--gold-light); transform: translateY(-1px); }
     .btn-subscribe svg { width: 18px; height: 18px; fill: #FF0000; }
+
+    /* NAVER BLOG BANNER */
+    .blog-banner {
+      max-width: 860px; margin: 0.8rem auto 0; padding: 0 2rem;
+      opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+    }
+    .blog-inner {
+      display: flex; align-items: center; gap: 1.5rem;
+      background: var(--dark-2); border: 1px solid var(--border); padding: 1.2rem 2rem;
+    }
+    .blog-icon {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: #03C75A; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .blog-icon svg { width: 24px; height: 24px; }
+    .blog-info { flex: 1; }
+    .blog-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--text); margin-bottom: 0.2rem; }
+    .blog-handle { font-size: 0.72rem; color: #e2e2e2; letter-spacing: 0.04em; }
+    .btn-blog {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 1.3rem; background: #03C75A; color: #fff;
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.06em; text-decoration: none;
+      transition: opacity 0.25s, transform 0.2s; white-space: nowrap; border-radius: 2px;
+    }
+    .btn-blog:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* 카카오 공유 플로팅 버튼 */
+    .kakao-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 90; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .kakao-float-btn { width: 52px; height: 52px; border-radius: 50%; background: #FEE500; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+    .kakao-float-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+    .kakao-float-btn svg { width: 28px; height: 28px; }
+    .kakao-float-label { font-size: 0.62rem; color: #888; letter-spacing: 0.06em; white-space: nowrap; }
 
     /* FILTER */
     .filter-bar {
@@ -744,6 +778,24 @@
   </div>
 </div>
 
+<!-- NAVER BLOG BANNER -->
+<div class="blog-banner">
+  <div class="blog-inner">
+    <div class="blog-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" fill="white"/>
+      </svg>
+    </div>
+    <div class="blog-info">
+      <div class="blog-name">허머니 네이버 블로그</div>
+      <div class="blog-handle">실생활 재테크 · 금융 꿀팁 · 최신 이슈 정리</div>
+    </div>
+    <a href="https://blog.naver.com/YOUR_BLOG_ID" target="_blank" class="btn-blog">
+      블로그 구독하기 →
+    </a>
+  </div>
+</div>
+
 <!-- EBOOK DOWNLOAD SECTION -->
 <section class="ebook-section" id="ebook">
   <div class="ebook-inner">
@@ -949,6 +1001,19 @@
   JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 남진우 자산관리 컨설팅
 </footer>
 
+<!-- 카카오톡 공유 플로팅 버튼 -->
+<div class="kakao-float">
+  <button class="kakao-float-btn" onclick="shareKakao()" title="카카오톡으로 공유">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.477 2 2 5.805 2 10.5c0 2.986 1.813 5.607 4.554 7.148L5.5 22l4.772-2.586C10.825 19.8 11.408 19.857 12 19.857c5.523 0 10-3.805 10-8.357C22 5.805 17.523 2 12 2z" fill="#3A1D1D"/>
+    </svg>
+  </button>
+  <div class="kakao-float-label">카카오 공유</div>
+</div>
+
+<!-- 카카오 SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-box">
@@ -964,14 +1029,33 @@
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   //  설정값 – 여기만 바꾸면 됩니다
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  const BOT_TOKEN   = '8720572160:AAF8kYdv8PceDfQxDtrD4mRme2IC820dwOc';   // @BotFather 토큰
-  const CHAT_ID     = '6234327488';     // 본인 Telegram Chat ID
+  const BOT_TOKEN   = 'YOUR_BOT_TOKEN';   // @BotFather 토큰
+  const CHAT_ID     = 'YOUR_CHAT_ID';     // 본인 Telegram Chat ID
   const PDF_URL     = 'https://drive.google.com/uc?export=download&id=15NmHseu0q-KP06m3EyVMLCBQQYIsmwUO';
-  // Google Drive 직접 다운로드 URL 만드는 법:
-  //   Drive에서 파일 공유 → "링크가 있는 모든 사용자" 설정
-  //   공유 링크: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
-  //   아래 형태로 변환: https://drive.google.com/uc?export=download&id=FILE_ID
+  const KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY'; // 카카오 JavaScript 키
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Kakao.init(KAKAO_JS_KEY);
+
+  function shareKakao() {
+    if (!Kakao.isInitialized()) { alert('카카오 공유 초기화 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '재테크 & 금융 팁 · 허머니 자산관리',
+        description: '알아야 돈이 된다 - 재테크 영상과 금융 인사이트를 쉽게 확인해보세요.',
+        imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+        link: {
+          mobileWebUrl: 'https://abillion-abillion.github.io/tips.html',
+          webUrl: 'https://abillion-abillion.github.io/tips.html',
+        },
+      },
+      buttons: [
+        { title: '재테크 팁 보기', link: { mobileWebUrl: 'https://abillion-abillion.github.io/tips.html', webUrl: 'https://abillion-abillion.github.io/tips.html' } },
+        { title: '무료 상담 신청', link: { mobileWebUrl: 'https://abillion-abillion.github.io/consult.html', webUrl: 'https://abillion-abillion.github.io/consult.html' } },
+      ],
+    });
+  }
 
   async function submitEbook() {
     const name  = document.getElementById('ebookName').value.trim();

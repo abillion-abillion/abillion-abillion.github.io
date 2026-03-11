@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>무료 혜택 · 허머니 자산관리</title>
+  <meta name="description" content="무료 전자책 다운로드 + 무료 자산 진단 서비스. 지금 바로 받아보세요.">
+  <meta property="og:title" content="무료 전자책 & 자산 진단 · 허머니">
+  <meta property="og:description" content="무료 전자책 다운로드 + 10분 자산 진단으로 내 재무 상태를 점검해보세요.">
+  <meta property="og:image" content="https://abillion-abillion.github.io/og-image.png">
+  <meta property="og:url" content="https://abillion-abillion.github.io/freebie.html">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--dark); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: #e2e2e2; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-link { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .mobile-link:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 44vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 9rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,169,110,0.1) 0%, transparent 70%);
+    }
+    .hero-label { font-size: 0.72rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { color: #aaa; font-size: 0.95rem; line-height: 1.85; max-width: 560px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
+    .hero-divider { width: 40px; height: 1px; background: var(--gold); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
+
+    /* 뱃지 행 */
+    .hero-badges {
+      display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+    }
+    .hero-badge {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2);
+      padding: 0.4rem 1rem; font-size: 0.75rem; color: var(--gold-light);
+    }
+
+    /* TWO CARD LAYOUT */
+    .freebies-wrap {
+      max-width: 1040px; margin: 0 auto; padding: 1rem 2rem 6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+
+    /* 공통 카드 */
+    .freebie-card {
+      background: var(--dark-2); border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      opacity: 0; animation: fadeUp 0.7s forwards;
+    }
+    .freebie-card:nth-child(1) { animation-delay: 0.1s; }
+    .freebie-card:nth-child(2) { animation-delay: 0.22s; }
+    .freebie-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #0e1a2b 0%, #111823 40%, #0e0e0e 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.8rem 2rem 1.6rem; position: relative;
+    }
+    .card-header::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+    }
+    .card-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.5rem; }
+    .card-title em { font-style: italic; color: var(--gold); }
+    .card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.7; }
+
+    .card-body { padding: 1.8rem 2rem; }
+
+    /* ─── 전자책 카드 ─── */
+    .ebook-layout { display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem; }
+    .ebook-cover {
+      width: 90px; flex-shrink: 0; aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #1a3a5c 0%, #0d2240 100%);
+      border: 1px solid rgba(201,169,110,0.4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 0.7rem 0.5rem; text-align: center; position: relative;
+      box-shadow: 6px 10px 24px rgba(0,0,0,0.6);
+    }
+    .ebook-cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); }
+    .ebook-cover-year { font-size: 0.48rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .ebook-cover-ttl { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 600; color: #fff; line-height: 1.3; margin-bottom: 0.25rem; }
+    .ebook-cover-sub { font-size: 0.5rem; color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .ebook-cover-line { width: 18px; height: 1px; background: var(--gold); margin: 0 auto 0.4rem; }
+    .ebook-cover-author { font-size: 0.5rem; color: rgba(232,212,176,0.7); letter-spacing: 0.1em; }
+    .ebook-badge-mini {
+      position: absolute; top: -6px; right: -6px; width: 32px; height: 32px;
+      background: var(--gold); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 3px 8px rgba(201,169,110,0.4);
+    }
+    .ebook-badge-mini span { font-size: 0.4rem; font-weight: 700; color: var(--dark); line-height: 1.1; }
+
+    .ebook-points { list-style: none; }
+    .ebook-points li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.8rem; color: #bbb; line-height: 1.6; margin-bottom: 0.5rem;
+    }
+    .ebook-points li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; margin-top: 0.18rem; flex-shrink: 0; }
+
+    /* ─── 자산 진단 카드 ─── */
+    .diag-steps { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .diag-step {
+      flex: 1; background: rgba(201,169,110,0.06); border: 1px solid rgba(201,169,110,0.15);
+      padding: 0.8rem 0.5rem; text-align: center;
+    }
+    .diag-step-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
+    .diag-step-text { font-size: 0.68rem; color: #aaa; line-height: 1.4; }
+    .diag-items { margin-bottom: 1.4rem; }
+    .diag-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.55rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.78rem;
+    }
+    .diag-item-label { color: #bbb; }
+    .diag-item-val { font-size: 0.7rem; color: var(--gold); background: rgba(201,169,110,0.08); padding: 0.15rem 0.5rem; }
+
+    /* 공통 폼 */
+    .form-row { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+    .form-input {
+      flex: 1; min-width: 0; padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.2);
+      color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      outline: none; transition: border-color 0.25s;
+    }
+    .form-input::placeholder { color: #555; }
+    .form-input:focus { border-color: rgba(201,169,110,0.6); }
+    .form-select {
+      width: 100%; padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,169,110,0.2);
+      color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      outline: none; cursor: pointer; transition: border-color 0.25s; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+    }
+    .form-select:focus { border-color: rgba(201,169,110,0.6); }
+    .form-select option { background: var(--dark-3); color: var(--text); }
+    .btn-submit {
+      width: 100%; padding: 0.85rem; margin-top: 0.2rem;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.1em; border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+    }
+    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-privacy { font-size: 0.65rem; color: #555; margin-top: 0.5rem; }
+
+    /* 성공 상태 */
+    .success-box {
+      display: none; align-items: center; gap: 0.8rem;
+      padding: 1rem 1.2rem;
+      background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.3); margin-top: 0.5rem;
+    }
+    .success-box.show { display: flex; }
+    .success-icon { font-size: 1.4rem; }
+    .success-text { font-size: 0.82rem; color: var(--gold-light); line-height: 1.65; }
+    .success-text a { color: var(--gold); text-decoration: underline; }
+
+    /* CTA STRIP */
+    .cta-strip {
+      max-width: 1040px; margin: 0 auto 0; padding: 0 2rem 6rem;
+    }
+    .cta-inner {
+      text-align: center; padding: 3rem 2rem;
+      border: 1px solid var(--border); background: var(--dark-2); position: relative;
+    }
+    .cta-inner::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); }
+    .cta-inner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 400; margin-bottom: 0.8rem; }
+    .cta-inner h2 em { font-style: italic; color: var(--gold); }
+    .cta-inner p { font-size: 0.88rem; color: #aaa; line-height: 1.8; margin-bottom: 2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold { display: inline-block; padding: 0.9rem 2.6rem; background: var(--gold); color: var(--dark); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; font-weight: 500; transition: background 0.25s, transform 0.2s; }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; padding: 0.9rem 2.6rem; border: 1px solid var(--gold); color: var(--gold); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; transition: background 0.25s, transform 0.2s; }
+    .btn-outline:hover { background: rgba(201,169,110,0.08); transform: translateY(-2px); }
+
+    footer { text-align: center; padding: 2rem; color: #555; font-size: 0.75rem; border-top: 1px solid var(--border); letter-spacing: 0.05em; }
+
+    /* 카카오 공유 플로팅 버튼 */
+    .kakao-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 90; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .kakao-float-btn { width: 52px; height: 52px; border-radius: 50%; background: #FEE500; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+    .kakao-float-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+    .kakao-float-btn svg { width: 28px; height: 28px; }
+    .kakao-float-label { font-size: 0.62rem; color: #888; letter-spacing: 0.06em; white-space: nowrap; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      .freebies-wrap { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="freebie.html" class="active">무료 혜택</a></li>
+    <li><a href="index.html#contact">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="index.html#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Free Benefits · 무료 혜택</div>
+  <h1>지금 바로,<br /><em>무료로 시작해보세요</em></h1>
+  <p>전자책 한 권과 자산 진단 서비스로<br/>내 재무 상태를 먼저 확인해보세요.</p>
+  <div class="hero-divider"></div>
+  <div class="hero-badges">
+    <div class="hero-badge">📚 무료 전자책</div>
+    <div class="hero-badge">🔍 무료 자산 진단</div>
+    <div class="hero-badge">⚡ 즉시 발송</div>
+  </div>
+</section>
+
+<!-- TWO FREEBIES -->
+<div class="freebies-wrap">
+
+  <!-- ① 전자책 카드 -->
+  <div class="freebie-card">
+    <div class="card-header">
+      <div class="card-eyebrow">Free E-Book · 무료 전자책</div>
+      <div class="card-title">컨설팅 3시간 분량을<br/><em>한 권에 담았습니다</em></div>
+      <div class="card-desc">500명 이상의 상담 경험에서 나온 핵심만 수록했습니다.</div>
+    </div>
+    <div class="card-body">
+      <div class="ebook-layout">
+        <!-- 책 커버 -->
+        <div class="ebook-cover">
+          <div class="ebook-cover-year">월급날마다 꺼내보는</div>
+          <div class="ebook-cover-ttl">2039<br/>자산관리<br/>지침서</div>
+          <div class="ebook-cover-sub">직장인 · 사업자 필독서</div>
+          <div class="ebook-cover-line"></div>
+          <div class="ebook-cover-author">허머니 지음</div>
+          <div class="ebook-badge-mini">
+            <span>★4.8</span>
+            <span>100+</span>
+          </div>
+        </div>
+        <!-- 포인트 목록 -->
+        <ul class="ebook-points">
+          <li>자가점검 체크리스트 수록</li>
+          <li>왕초보도 혼자 자산관리 시작 가능</li>
+          <li>절세·투자·연금 핵심 전략</li>
+          <li>실제 상담 사례 기반 구성</li>
+        </ul>
+      </div>
+
+      <!-- 신청 폼 -->
+      <div id="ebookFormWrap">
+        <div class="form-row">
+          <input class="form-input" type="text" id="ebookName" placeholder="이름" autocomplete="name" />
+          <input class="form-input" type="tel" id="ebookPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
+        </div>
+        <button class="btn-submit" onclick="submitEbook()">📚 무료 전자책 받기 →</button>
+        <div class="form-privacy">✦ 입력하신 정보는 전자책 발송 외 다른 용도로 사용되지 않습니다.</div>
+      </div>
+
+      <div class="success-box" id="ebookSuccess">
+        <div class="success-icon">✓</div>
+        <div class="success-text">
+          다운로드가 시작되었습니다! 📥<br/>
+          저장이 안 됐다면 <a href="#" id="retryDownload">여기를 클릭</a>해주세요.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 자산 진단 카드 -->
+  <div class="freebie-card">
+    <div class="card-header">
+      <div class="card-eyebrow">Free Asset Diagnosis · 무료 자산 진단</div>
+      <div class="card-title">10분으로 알아보는<br/><em>내 재무 상태</em></div>
+      <div class="card-desc">이름과 연락처만 입력하면 진단 결과를 카카오톡으로 보내드립니다.</div>
+    </div>
+    <div class="card-body">
+      <!-- 진단 절차 -->
+      <div class="diag-steps">
+        <div class="diag-step">
+          <div class="diag-step-num">1</div>
+          <div class="diag-step-text">정보<br/>입력</div>
+        </div>
+        <div class="diag-step">
+          <div class="diag-step-num">2</div>
+          <div class="diag-step-text">AI<br/>분석</div>
+        </div>
+        <div class="diag-step">
+          <div class="diag-step-num">3</div>
+          <div class="diag-step-text">결과<br/>전달</div>
+        </div>
+      </div>
+
+      <!-- 진단 항목 미리보기 -->
+      <div class="diag-items">
+        <div class="diag-item">
+          <div class="diag-item-label">💼 현재 자산 구성 분석</div>
+          <div class="diag-item-val">포함</div>
+        </div>
+        <div class="diag-item">
+          <div class="diag-item-label">📊 월 잉여자금 활용 방향</div>
+          <div class="diag-item-val">포함</div>
+        </div>
+        <div class="diag-item">
+          <div class="diag-item-label">🏦 적합한 금융상품 추천</div>
+          <div class="diag-item-val">포함</div>
+        </div>
+        <div class="diag-item">
+          <div class="diag-item-label">🎯 절세 전략 방향 제시</div>
+          <div class="diag-item-val">포함</div>
+        </div>
+      </div>
+
+      <!-- 진단 폼 -->
+      <div id="diagFormWrap">
+        <div class="form-row">
+          <input class="form-input" type="text" id="diagName" placeholder="이름" autocomplete="name" />
+          <input class="form-input" type="tel" id="diagPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
+        </div>
+        <div class="form-row">
+          <select class="form-select" id="diagAge">
+            <option value="">연령대 선택</option>
+            <option value="20대">20대</option>
+            <option value="30대">30대</option>
+            <option value="40대">40대</option>
+            <option value="50대 이상">50대 이상</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <select class="form-select" id="diagJob">
+            <option value="">직업 유형 선택</option>
+            <option value="직장인">직장인 (근로소득자)</option>
+            <option value="사업자">사업자 / 프리랜서</option>
+            <option value="공무원/교직원">공무원 / 교직원</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <select class="form-select" id="diagGoal">
+            <option value="">주요 관심 분야 선택</option>
+            <option value="종잣돈 만들기">종잣돈 만들기</option>
+            <option value="절세 전략">절세 전략</option>
+            <option value="노후 준비/연금">노후 준비 / 연금</option>
+            <option value="내 집 마련">내 집 마련</option>
+            <option value="투자 포트폴리오">투자 포트폴리오 구성</option>
+          </select>
+        </div>
+        <button class="btn-submit" onclick="submitDiag()">🔍 무료 자산 진단 신청 →</button>
+        <div class="form-privacy">✦ 입력 정보는 진단 목적 외 사용되지 않습니다. 결과는 카카오톡으로 전달됩니다.</div>
+      </div>
+
+      <div class="success-box" id="diagSuccess">
+        <div class="success-icon">✓</div>
+        <div class="success-text">
+          진단 신청이 완료됐습니다! 🔍<br/>
+          1~2 영업일 내 카카오톡으로 결과를 전달드립니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div class="cta-inner">
+    <h2>더 깊은 이야기가 필요하다면,<br/><em>1:1 상담으로 이어가세요</em></h2>
+    <p>진단 결과를 바탕으로 구체적인 실행 계획을 세워드립니다.</p>
+    <div class="cta-buttons">
+      <a href="consult.html" class="btn-gold">맞춤 상담 신청하기</a>
+      <a href="https://open.kakao.com/me/Heomoney" target="_blank" class="btn-outline">카카오톡 문의</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 허머니 자산관리 컨설팅
+</footer>
+
+<!-- 카카오톡 공유 플로팅 버튼 -->
+<div class="kakao-float">
+  <button class="kakao-float-btn" onclick="shareKakao()" title="카카오톡으로 공유">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.477 2 2 5.805 2 10.5c0 2.986 1.813 5.607 4.554 7.148L5.5 22l4.772-2.586C10.825 19.8 11.408 19.857 12 19.857c5.523 0 10-3.805 10-8.357C22 5.805 17.523 2 12 2z" fill="#3A1D1D"/>
+    </svg>
+  </button>
+  <div class="kakao-float-label">카카오 공유</div>
+</div>
+
+<!-- 카카오 SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+<script>
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  //  설정값 – 여기만 수정하세요
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const BOT_TOKEN = 'YOUR_BOT_TOKEN';  // @BotFather 토큰
+  const CHAT_ID   = 'YOUR_CHAT_ID';   // 텔레그램 Chat ID
+  const PDF_URL   = 'https://drive.google.com/uc?export=download&id=15NmHseu0q-KP06m3EyVMLCBQQYIsmwUO';
+  const KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY'; // 카카오 JavaScript 키
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Kakao.init(KAKAO_JS_KEY);
+
+  // ── 전자책 제출 ──────────────────────────────────
+  async function submitEbook() {
+    const name  = document.getElementById('ebookName').value.trim();
+    const phone = document.getElementById('ebookPhone').value.trim();
+    if (!name) { highlight('ebookName'); return; }
+    if (!phone) { highlight('ebookPhone'); return; }
+
+    const btn = document.querySelector('#ebookFormWrap .btn-submit');
+    btn.textContent = '처리 중...'; btn.disabled = true;
+
+    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const message =
+      `📚 [전자책 신청]\n` +
+      `──────────────\n` +
+      `👤 이름: ${name}\n` +
+      `📱 연락처: ${phone}\n` +
+      `🕐 신청일시: ${now}`;
+
+    try {
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+      });
+    } catch (e) { console.warn('Telegram 전송 실패:', e); }
+
+    // PDF 다운로드
+    const a = document.createElement('a');
+    a.href = PDF_URL;
+    a.download = '2039_자산관리_지침서_허머니.pdf';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+
+    // UI 전환
+    document.getElementById('ebookFormWrap').style.display = 'none';
+    document.getElementById('ebookSuccess').classList.add('show');
+    document.getElementById('retryDownload').addEventListener('click', function(e) {
+      e.preventDefault();
+      const a2 = document.createElement('a');
+      a2.href = PDF_URL; a2.download = '2039_자산관리_지침서_허머니.pdf';
+      document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+    });
+  }
+
+  // ── 자산 진단 제출 ────────────────────────────────
+  async function submitDiag() {
+    const name  = document.getElementById('diagName').value.trim();
+    const phone = document.getElementById('diagPhone').value.trim();
+    const age   = document.getElementById('diagAge').value;
+    const job   = document.getElementById('diagJob').value;
+    const goal  = document.getElementById('diagGoal').value;
+
+    if (!name) { highlight('diagName'); return; }
+    if (!phone) { highlight('diagPhone'); return; }
+    if (!age) { alert('연령대를 선택해주세요.'); return; }
+    if (!job) { alert('직업 유형을 선택해주세요.'); return; }
+    if (!goal) { alert('주요 관심 분야를 선택해주세요.'); return; }
+
+    const btn = document.querySelector('#diagFormWrap .btn-submit');
+    btn.textContent = '신청 중...'; btn.disabled = true;
+
+    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const message =
+      `🔍 [무료 자산 진단 신청]\n` +
+      `──────────────────────\n` +
+      `👤 이름: ${name}\n` +
+      `📱 연락처: ${phone}\n` +
+      `🎂 연령대: ${age}\n` +
+      `💼 직업: ${job}\n` +
+      `🎯 관심 분야: ${goal}\n` +
+      `🕐 신청일시: ${now}`;
+
+    try {
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+      });
+    } catch (e) { console.warn('Telegram 전송 실패:', e); }
+
+    // UI 전환
+    document.getElementById('diagFormWrap').style.display = 'none';
+    document.getElementById('diagSuccess').classList.add('show');
+  }
+
+  // ── 카카오 공유 ──────────────────────────────────
+  function shareKakao() {
+    if (!Kakao.isInitialized()) { alert('카카오 공유 초기화 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '무료 전자책 & 자산 진단 · 허머니 자산관리',
+        description: '무료 전자책 다운로드 + 10분 자산 진단 서비스를 지금 바로 받아보세요.',
+        imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+        link: {
+          mobileWebUrl: 'https://abillion-abillion.github.io/freebie.html',
+          webUrl: 'https://abillion-abillion.github.io/freebie.html',
+        },
+      },
+      buttons: [
+        { title: '무료 혜택 받기', link: { mobileWebUrl: 'https://abillion-abillion.github.io/freebie.html', webUrl: 'https://abillion-abillion.github.io/freebie.html' } },
+        { title: '무료 상담 신청', link: { mobileWebUrl: 'https://abillion-abillion.github.io/consult.html', webUrl: 'https://abillion-abillion.github.io/consult.html' } },
+      ],
+    });
+  }
+
+  // ── 유틸 ─────────────────────────────────────────
+  function highlight(id) {
+    const el = document.getElementById(id);
+    el.focus(); el.style.borderColor = 'rgba(201,169,110,0.8)';
+  }
+
+  // ── 햄버거 메뉴 ──────────────────────────────────
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+</script>
+</body>
+</html>

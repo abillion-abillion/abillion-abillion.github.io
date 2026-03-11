@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>재테크 칼럼 · 허머니 자산관리</title>
+  <meta name="description" content="자산관리사 허머니의 재테크 칼럼. 금융 트렌드, 절세 전략, 투자 인사이트를 쉽고 명확하게 전달합니다.">
+  <meta property="og:title" content="재테크 칼럼 · 허머니 자산관리">
+  <meta property="og:description" content="500명 상담 경험에서 나온 실전 재테크 인사이트">
+  <meta property="og:image" content="https://abillion-abillion.github.io/og-image.png">
+  <meta property="og:url" content="https://abillion-abillion.github.io/column.html">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--dark); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: #e2e2e2; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+    /* 모바일 메뉴 */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-link { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .mobile-link:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 42vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 9rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(201,169,110,0.08) 0%, transparent 70%);
+    }
+    .hero-label { font-size: 0.72rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { color: #aaa; font-size: 0.95rem; line-height: 1.85; max-width: 500px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
+    .hero-divider { width: 40px; height: 1px; background: var(--gold); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
+
+    /* NAVER BLOG BANNER */
+    .blog-banner {
+      max-width: 860px; margin: 0 auto 1rem; padding: 0 2rem;
+      opacity: 0; animation: fadeUp 0.7s 0.75s forwards;
+    }
+    .blog-inner {
+      display: flex; align-items: center; gap: 1.5rem;
+      background: var(--dark-2); border: 1px solid var(--border); padding: 1.4rem 2rem;
+    }
+    .blog-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: #03C75A; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .blog-icon svg { width: 26px; height: 26px; }
+    .blog-info { flex: 1; }
+    .blog-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
+    .blog-handle { font-size: 0.75rem; color: #e2e2e2; letter-spacing: 0.04em; }
+    .btn-blog {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.5rem; background: #03C75A; color: #fff;
+      font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.06em; text-decoration: none;
+      transition: opacity 0.25s, transform 0.2s; white-space: nowrap; border-radius: 2px;
+    }
+    .btn-blog:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* COLUMN GRID */
+    .columns-section { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 6rem; }
+    .section-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.7rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    /* FILTER */
+    .filter-bar { display: flex; gap: 0.8rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 0.4rem 1.2rem; border: 1px solid var(--border); background: transparent;
+      color: #e2e2e2; font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem;
+      letter-spacing: 0.06em; cursor: pointer; transition: all 0.25s; border-radius: 2px;
+    }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.06); }
+
+    .columns-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    /* COLUMN CARD */
+    .col-card {
+      background: var(--dark-2); border: 1px solid var(--border);
+      overflow: hidden; cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s forwards;
+      position: relative; text-decoration: none; display: block;
+    }
+    .col-card:hover { border-color: rgba(201,169,110,0.4); transform: translateY(-4px); }
+    .col-card:nth-child(1) { animation-delay: 0.05s; }
+    .col-card:nth-child(2) { animation-delay: 0.12s; }
+    .col-card:nth-child(3) { animation-delay: 0.19s; }
+    .col-card:nth-child(4) { animation-delay: 0.26s; }
+    .col-card:nth-child(5) { animation-delay: 0.33s; }
+    .col-card:nth-child(6) { animation-delay: 0.40s; }
+    .col-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease; z-index: 1;
+    }
+    .col-card:hover::before { transform: scaleX(1); }
+    .col-thumb {
+      width: 100%; aspect-ratio: 16/9; background: var(--dark-3);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .col-thumb-emoji { font-size: 2.8rem; transition: transform 0.4s; }
+    .col-card:hover .col-thumb-emoji { transform: scale(1.15); }
+    .col-thumb-label {
+      position: absolute; top: 0.8rem; right: 0.8rem;
+      background: var(--gold); color: var(--dark);
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+    }
+    .col-info { padding: 1.2rem 1.3rem 1.4rem; }
+    .col-tag { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .col-title { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: 400; line-height: 1.65; color: var(--text); margin-bottom: 0.7rem; }
+    .col-excerpt { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+    .col-meta { font-size: 0.7rem; color: #666; display: flex; align-items: center; justify-content: space-between; }
+    .col-meta-left { display: flex; align-items: center; gap: 0.5rem; }
+    .col-meta-left::before { content: ''; display: inline-block; width: 14px; height: 1px; background: var(--gold); opacity: 0.5; }
+    .col-naver-badge {
+      font-size: 0.6rem; color: #03C75A; border: 1px solid rgba(3,199,90,0.3);
+      padding: 0.15rem 0.5rem; border-radius: 2px;
+    }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 2rem 2rem 6rem; border-top: 1px solid var(--border); }
+    .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400; margin-bottom: 1rem; }
+    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section p { color: #aaa; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold { display: inline-block; padding: 0.9rem 2.6rem; background: var(--gold); color: var(--dark); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; font-weight: 500; transition: background 0.25s, transform 0.2s; }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; padding: 0.9rem 2.6rem; border: 1px solid var(--gold); color: var(--gold); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; transition: background 0.25s, transform 0.2s; }
+    .btn-outline:hover { background: rgba(201,169,110,0.08); transform: translateY(-2px); }
+
+    footer { text-align: center; padding: 2rem; color: #555; font-size: 0.75rem; border-top: 1px solid var(--border); letter-spacing: 0.05em; }
+
+    /* 카카오 공유 플로팅 버튼 */
+    .kakao-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    }
+    .kakao-float-btn {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #FEE500; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .kakao-float-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+    .kakao-float-btn svg { width: 28px; height: 28px; }
+    .kakao-float-label { font-size: 0.62rem; color: #888; letter-spacing: 0.06em; white-space: nowrap; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) { .columns-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .columns-grid { grid-template-columns: 1fr; }
+      .blog-inner { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="column.html" class="active">칼럼</a></li>
+    <li><a href="index.html#contact">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="index.html#about" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Finance Column · 재테크 칼럼</div>
+  <h1>돈에 대한 질문,<br /><em>제대로 답해드립니다</em></h1>
+  <p>500명 이상의 상담 경험에서 나온<br/>실전 재테크 인사이트를 칼럼으로 정리했습니다.</p>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- NAVER BLOG BANNER -->
+<div class="blog-banner">
+  <div class="blog-inner">
+    <div class="blog-icon">
+      <!-- 네이버 N 로고 -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" fill="white"/>
+      </svg>
+    </div>
+    <div class="blog-info">
+      <div class="blog-name">허머니 네이버 블로그</div>
+      <div class="blog-handle">실생활 재테크 · 금융 꿀팁 · 최신 이슈 정리</div>
+    </div>
+    <a href="https://blog.naver.com/YOUR_BLOG_ID" target="_blank" class="btn-blog">
+      블로그 구독하기 →
+    </a>
+  </div>
+</div>
+
+<!-- COLUMNS SECTION -->
+<section class="columns-section">
+  <div class="section-eyebrow">Latest Columns</div>
+  <h2 class="section-title">금융 칼럼,<em> 지금 읽어보세요</em></h2>
+
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterColumns('all', this)">전체</button>
+    <button class="filter-btn" onclick="filterColumns('절세', this)">절세</button>
+    <button class="filter-btn" onclick="filterColumns('투자', this)">투자</button>
+    <button class="filter-btn" onclick="filterColumns('연금', this)">연금</button>
+    <button class="filter-btn" onclick="filterColumns('부동산', this)">부동산</button>
+    <button class="filter-btn" onclick="filterColumns('금융상품', this)">금융상품</button>
+  </div>
+
+  <div class="columns-grid" id="columnsGrid">
+
+    <!-- 칼럼 1 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST1" target="_blank" data-tags="절세">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1a2b,#1a3a5c);">
+        <div class="col-thumb-emoji">🏦</div>
+        <div class="col-thumb-label">절세</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">절세</div>
+        <div class="col-title">2025년 달라진 세금, 모르면 손해 보는 핵심 3가지</div>
+        <div class="col-excerpt">금투세 폐지 이후 바뀐 세금 환경에서 절세 전략을 새로 짜야 하는 이유.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2025.03</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 칼럼 2 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST2" target="_blank" data-tags="연금">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#1a1a0e,#2a2a0a);">
+        <div class="col-thumb-emoji">🌿</div>
+        <div class="col-thumb-label">연금</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">연금</div>
+        <div class="col-title">IRP와 연금저축, 뭐부터 넣어야 유리할까?</div>
+        <div class="col-excerpt">세액공제 한도 차이와 수령 방식에 따른 세금 차이를 한 번에 정리했습니다.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2025.02</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 칼럼 3 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST3" target="_blank" data-tags="투자">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#1a0e0e,#2e1515);">
+        <div class="col-thumb-emoji">📈</div>
+        <div class="col-thumb-label">투자</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">투자</div>
+        <div class="col-title">ETF 초보가 가장 많이 하는 실수 5가지</div>
+        <div class="col-excerpt">분산투자를 한다고 생각했지만 사실은 동일한 자산에 중복 투자하고 있었던 이유.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2025.01</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 칼럼 4 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST4" target="_blank" data-tags="부동산">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1a14,#142a1e);">
+        <div class="col-thumb-emoji">🏠</div>
+        <div class="col-thumb-label">부동산</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">부동산</div>
+        <div class="col-title">30대 무주택자, 지금 청약 넣어야 할까 말아야 할까</div>
+        <div class="col-excerpt">소득 수준, 대출 여력, 지역별 시장 상황을 고려한 실전 판단 기준을 정리했습니다.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2024.12</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 칼럼 5 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST5" target="_blank" data-tags="금융상품">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#1a0e1a,#2a1530);">
+        <div class="col-thumb-emoji">💳</div>
+        <div class="col-thumb-label">금융상품</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">금융상품</div>
+        <div class="col-title">월 50만 원 남았을 때, 어디에 넣는 게 맞을까?</div>
+        <div class="col-excerpt">비상금 → 연금 → 투자 순서로 돈의 우선순위를 정하는 법.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2024.11</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 칼럼 6 -->
+    <a class="col-card" href="https://blog.naver.com/YOUR_BLOG_ID/POST6" target="_blank" data-tags="절세">
+      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1520,#0d2040);">
+        <div class="col-thumb-emoji">📋</div>
+        <div class="col-thumb-label">절세</div>
+      </div>
+      <div class="col-info">
+        <div class="col-tag">절세</div>
+        <div class="col-title">직장인이 놓치면 아까운 연말정산 항목 총정리</div>
+        <div class="col-excerpt">의료비, 교육비, 신용카드 공제를 최대로 활용하는 실전 체크리스트.</div>
+        <div class="col-meta">
+          <div class="col-meta-left">2024.10</div>
+          <div class="col-naver-badge">N 블로그</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>칼럼이 도움이 됐다면,<br /><em>직접 만나보세요</em></h2>
+  <p>글로 전달할 수 없는 것들이 있습니다.<br/>당신의 상황에 맞는 이야기는 1:1 상담에서 시작됩니다.</p>
+  <div class="cta-buttons">
+    <a href="consult.html" class="btn-gold">무료 상담 신청</a>
+    <a href="https://blog.naver.com/YOUR_BLOG_ID" target="_blank" class="btn-outline">블로그 더 보기</a>
+  </div>
+</section>
+
+<footer>
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 허머니 자산관리 컨설팅
+</footer>
+
+<!-- 카카오톡 공유 플로팅 버튼 -->
+<div class="kakao-float">
+  <button class="kakao-float-btn" onclick="shareKakao()" title="카카오톡으로 공유">
+    <!-- 카카오 말풍선 아이콘 -->
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.477 2 2 5.805 2 10.5c0 2.986 1.813 5.607 4.554 7.148L5.5 22l4.772-2.586C10.825 19.8 11.408 19.857 12 19.857c5.523 0 10-3.805 10-8.357C22 5.805 17.523 2 12 2z" fill="#3A1D1D"/>
+    </svg>
+  </button>
+  <div class="kakao-float-label">카카오 공유</div>
+</div>
+
+<!-- 카카오 SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+<script>
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  //  카카오 JS 키 (카카오 Developers > 앱 > JavaScript 키)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY'; // ← 여기에 JavaScript 키 입력
+
+  Kakao.init(KAKAO_JS_KEY);
+
+  function shareKakao() {
+    if (!Kakao.isInitialized()) {
+      alert('카카오 공유 초기화 중입니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '재테크 칼럼 · 허머니 자산관리',
+        description: '500명 상담 경험에서 나온 실전 재테크 인사이트를 칼럼으로 정리했습니다.',
+        imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+        link: {
+          mobileWebUrl: 'https://abillion-abillion.github.io/column.html',
+          webUrl: 'https://abillion-abillion.github.io/column.html',
+        },
+      },
+      buttons: [
+        {
+          title: '칼럼 보러가기',
+          link: {
+            mobileWebUrl: 'https://abillion-abillion.github.io/column.html',
+            webUrl: 'https://abillion-abillion.github.io/column.html',
+          },
+        },
+        {
+          title: '무료 상담 신청',
+          link: {
+            mobileWebUrl: 'https://abillion-abillion.github.io/consult.html',
+            webUrl: 'https://abillion-abillion.github.io/consult.html',
+          },
+        },
+      ],
+    });
+  }
+
+  // ── 필터링 ──
+  function filterColumns(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.col-card').forEach(card => {
+      const tags = card.dataset.tags || '';
+      if (tag === 'all' || tags.includes(tag)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ── 햄버거 메뉴 ──
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+</script>
+</body>
+</html>
