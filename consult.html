@@ -644,14 +644,25 @@
     display: none; position: fixed; inset: 0;
     background: rgba(250,248,244,0.98); z-index: 99;
     flex-direction: column; align-items: center;
-    justify-content: flex-start; padding-top: 5rem; gap: 2rem;
+    justify-content: flex-start; padding-top: 0; gap: 2rem;
   }
   .mobile-menu.open { display: flex; }
+  .menu-header {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 1.2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Hahmlet', serif; font-size: 0.88rem;
+    color: var(--primary); letter-spacing: 0.12em;
+  }
+  .menu-close {
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px;
+  }
   .mobile-link {
     color: var(--primary); text-decoration: none;
     font-family: 'Hahmlet', serif;
-    font-size: 1.1rem; font-weight: 500; letter-spacing: .15em;
-    transition: color .3s;
+    font-size: 1.25rem; font-weight: 500; letter-spacing: .1em;
+    transition: color .3s; text-align: center;
   }
   .mobile-link:hover { color: var(--primary-dark); }
   p, li, span, td, th, label { font-weight: 600; }
@@ -678,6 +689,10 @@
 
 <!-- 모바일 풀스크린 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+  </div>
   <a href="index.html" class="mobile-link">홈</a>
   <a href="index.html#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
@@ -1260,6 +1275,24 @@
     setTimeout(function() {
       window.open(KAKAO_URL, '_blank');
     }, 3000);
+  }
+
+  // 햄버거 메뉴 토글
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
   }
 
   // 기타 입력 연동

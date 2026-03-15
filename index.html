@@ -538,24 +538,41 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 40px;;
-    padding-top: 5rem;
+    gap: 2rem;
+    padding-top: 0;
   }
   .mobile-menu.open { display: flex; }
+  .menu-header {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 1.2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Hahmlet', serif; font-size: 0.88rem;
+    color: var(--primary); letter-spacing: 0.12em;
+  }
+  .menu-close {
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px;
+  }
   .mobile-menu a {
     color: var(--primary);
     text-decoration: none;
     font-family: 'Hahmlet', serif;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
     transition: color 0.3s;
+    text-align: center;
   }
   .mobile-menu a:hover { color: var(--primary-dark); }
 
   @media (max-width: 900px) {
-    nav { padding: 24px 30px; }
-    .nav-links { display: none; }
+    nav { padding: 12px 20px; flex-wrap: wrap; }
+    .nav-links {
+      position: static; transform: none; display: flex;
+      flex-wrap: wrap; width: 100%; gap: 4px 12px;
+      order: 3; padding: 4px 0 2px;
+    }
+    .nav-links a { font-size: 13px; letter-spacing: 0.05em; text-transform: none; }
     .nav-toggle { display: flex; }
     section { padding: 80px 30px; }
     .hero { padding: 0 30px; }
@@ -580,12 +597,14 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
+    <li><a href="index.html">홈</a></li>
     <li><a href="#about">소개</a></li>
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="column.html">칼럼</a></li>
     <li><a href="freebie.html">무료 혜택</a></li>
+    <li><a href="diagnosis.html">무료 자산진단</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
@@ -595,6 +614,10 @@
 
 <!-- 모바일 풀스크린 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+  </div>
   <a href="index.html" class="mobile-link">홈</a>
   <a href="#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>

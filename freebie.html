@@ -47,12 +47,21 @@
     .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
-    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 90; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2.5rem;;
-    padding-top: 5rem;
-  }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(250,248,244,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2rem; padding-top: 0; }
     .mobile-menu.open { display: flex; }
-    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
-    .mobile-link:hover { color: var(--primary); }
+    .menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Hahmlet', serif; font-size: 0.88rem;
+      color: var(--primary); letter-spacing: 0.12em;
+    }
+    .menu-close {
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px;
+    }
+    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; text-align: center; }
+    .mobile-link:hover { color: var(--primary-dark); }
 
     /* HERO */
     .hero {
@@ -235,6 +244,8 @@
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .nav-toggle { display: flex; }
+      .ebook-layout { flex-direction: column; align-items: center; }
+      .ebook-points li { white-space: nowrap; }
     }
     p, li, span, td, th, label { font-weight: 600; }
     button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
@@ -257,12 +268,18 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+  </div>
   <a href="index.html" class="mobile-link">홈</a>
   <a href="index.html#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -342,12 +359,14 @@
               <span style="color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.1em;">📋 VIP 재무진단 보고서 샘플</span>
               <a href="diagnosis_demo.html" target="_blank" style="color: rgba(255,255,255,0.8); font-size: 11px; text-decoration: none; border: 1px solid rgba(255,255,255,0.4); padding: 3px 10px; border-radius: 4px;">전체 보기 →</a>
             </div>
-            <iframe
-              src="diagnosis_demo.html"
-              style="width: 100%; height: 700px; border: none; display: block;"
-              title="재무진단 보고서 샘플"
-              loading="lazy"
-            ></iframe>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+              <iframe
+                src="diagnosis_demo.html"
+                style="width: 640px; min-width: 640px; height: 700px; border: none; display: block;"
+                title="재무진단 보고서 샘플"
+                loading="lazy"
+              ></iframe>
+            </div>
           </div>
           <p style="text-align: center; font-size: 12px; color: #999; margin-top: 12px;">* 위 내용은 샘플이며, 실제 보고서는 입력하신 정보를 기반으로 개인 맞춤 제공됩니다.</p>
         </div>

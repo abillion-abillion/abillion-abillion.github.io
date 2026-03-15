@@ -53,13 +53,24 @@
 
     /* 모바일 메뉴 */
     .mobile-menu {
-      display: none; position: fixed; inset: 0; background: var(--bg); z-index: 90;
-      flex-direction: column; align-items: center; justify-content: flex-start; gap: 2.5rem;;
-    padding-top: 5rem;
-  }
+      display: none; position: fixed; inset: 0; background: rgba(250,248,244,0.98); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: flex-start; gap: 2rem;
+      padding-top: 0;
+    }
     .mobile-menu.open { display: flex; }
-    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
-    .mobile-link:hover { color: var(--primary); }
+    .menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Hahmlet', serif; font-size: 0.88rem;
+      color: var(--primary); letter-spacing: 0.12em;
+    }
+    .menu-close {
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px;
+    }
+    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; text-align: center; }
+    .mobile-link:hover { color: var(--primary-dark); }
 
     /* HERO */
     .hero {
@@ -200,12 +211,18 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+  </div>
   <a href="index.html" class="mobile-link">홈</a>
   <a href="index.html#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="tips.html" class="mobile-link">재테크 팁</a>
   <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
