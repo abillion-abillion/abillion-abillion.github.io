@@ -22,8 +22,8 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FAF8F4;
-    --bg-section: #F2EFE8;
+    --bg: #FFFFFF;
+    --bg-section: #F7F7F7;
     --surface: #FFFFFF;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
@@ -32,14 +32,14 @@
   }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 500; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 600; overflow-x: hidden; }
 
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(250,248,244,0.95); backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; }
@@ -67,7 +67,7 @@
       background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(92,122,62,0.09) 0%, transparent 70%);
     }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; }
-    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 400; line-height: 1.15; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.25s forwards; }
+    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.25s forwards; }
     .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.85; max-width: 520px; opacity: 0; animation: fadeUp 0.6s 0.4s forwards; }
 
@@ -78,7 +78,7 @@
     .step-section { opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
     .step-header { margin-bottom: 2rem; text-align: center; }
     .step-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .step-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 400; }
+    .step-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 500; }
     .step-title em { font-style: italic; color: var(--primary); font-size: 0.72em; }
 
     /* 기본정보 그리드 */
@@ -125,7 +125,7 @@
     .question-wrap { display: none; }
     .question-wrap.active { display: block; animation: fadeUp 0.4s forwards; }
     .question-num { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .question-text { font-family: 'Noto Serif KR', serif; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 400; line-height: 1.65; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .question-text { font-family: 'Noto Serif KR', serif; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 500; line-height: 1.65; margin-bottom: 0.5rem; color: var(--text-primary); }
     .question-hint { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.5; }
 
     /* 선택지 */
@@ -142,7 +142,7 @@
     .option-alpha {
       width: 26px; height: 26px; border-radius: 50%; border: 1px solid currentColor;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; font-weight: 500; flex-shrink: 0; transition: all 0.2s;
+      font-size: 0.7rem; font-weight: 600; flex-shrink: 0; transition: all 0.2s;
     }
     .option-btn.selected .option-alpha { background: var(--primary); color: #ffffff; border-color: var(--primary); }
 
@@ -174,7 +174,7 @@
 
     /* 결과 리포트 (PDF 캡처용) */
     #reportCard {
-      background: #0a0f18;
+      background: var(--surface);
       border: 1px solid var(--border);
       padding: 2.5rem;
       position: relative;
@@ -223,9 +223,9 @@
     .area-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
     .area-name { font-size: 0.8rem; color: var(--text-primary); }
     .area-score-label { font-size: 0.75rem; }
-    .area-bar-bg { height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; position: relative; }
+    .area-bar-bg { height: 8px; background: rgba(92,122,62,0.1); border-radius: 4px; overflow: hidden; position: relative; }
     .area-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; position: relative; }
-    .area-bar-avg { position: absolute; top: -3px; height: 14px; width: 2px; background: rgba(255,255,255,0.35); border-radius: 1px; }
+    .area-bar-avg { position: absolute; top: -3px; height: 14px; width: 2px; background: rgba(92,122,62,0.5); border-radius: 1px; }
     .area-compare { font-size: 0.68rem; margin-top: 0.3rem; display: flex; align-items: center; gap: 0.4rem; }
     .badge-up { color: var(--green); }
     .badge-down { color: var(--red); }
@@ -237,7 +237,7 @@
 
     /* 약점/강점 분석 */
     .report-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .analysis-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 1.2rem; border-radius: 12px; }
+    .analysis-box { background: var(--bg-section); border: 1px solid var(--border); padding: 1.2rem; border-radius: 12px; }
     .analysis-box-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
     .analysis-item { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
     .analysis-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
@@ -249,13 +249,13 @@
 
     /* 컨설팅 유도 박스 */
     .consult-cta {
-      background: linear-gradient(135deg, #0e1a2b 0%, #111823 100%);
+      background: #F0F4ED;
       border: 1px solid var(--border); padding: 2rem; text-align: center;
       position: relative; overflow: hidden;
     }
     .consult-cta::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); }
     .consult-cta-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.7rem; }
-    .consult-cta-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.8rem; line-height: 1.4; }
+    .consult-cta-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.4; color: var(--text-primary); }
     .consult-cta-title em { font-style: italic; color: var(--primary); }
     .consult-cta-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; }
     .consult-cta-disclaimer { font-size: 0.68rem; color: var(--text-muted); margin-top: 1rem; }
@@ -303,7 +303,7 @@
 
     /* 로딩 오버레이 */
     .loading-overlay {
-      position: fixed; inset: 0; background: rgba(10,10,10,0.92); z-index: 200;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
       display: none; align-items: center; justify-content: center; flex-direction: column; gap: 1.2rem;
     }
     .loading-overlay.active { display: flex; }
@@ -330,6 +330,9 @@
       .result-actions { flex-direction: column; }
       #reportCard { padding: 1.5rem; }
     }
+    p, li, span, td, th, label { font-weight: 600; }
+    button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
+    .nav-links a { font-weight: 700; }
   </style>
 </head>
 <body>

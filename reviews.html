@@ -15,8 +15,8 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FAF8F4;
-    --bg-section: #F2EFE8;
+    --bg: #FFFFFF;
+    --bg-section: #F7F7F7;
     --surface: #FFFFFF;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
@@ -28,7 +28,7 @@
       background: var(--bg);
       color: var(--text-primary);
       font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       overflow-x: hidden;
     }
     nav {
@@ -39,7 +39,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(250,248,244,0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -128,7 +128,7 @@
     .hero h1 {
       font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 400;
+      font-weight: 700;
       line-height: 1.2;
       margin-bottom: 1.2rem;
       opacity: 0;
@@ -252,7 +252,7 @@
       color: var(--text-secondary);
       margin-bottom: 1.5rem;
       font-family: 'Noto Serif KR', serif;
-      font-weight: 300;
+      font-weight: 500;
     }
     .review-footer {
       display: flex;
@@ -275,7 +275,7 @@
       flex-shrink: 0;
     }
     .review-meta { flex: 1; }
-    .review-name { font-size: 0.8rem; color: var(--text-primary); font-weight: 500; margin-bottom: 0.15rem; }
+    .review-name { font-size: 0.8rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.15rem; }
     .review-info { font-size: 0.72rem; color: var(--text-secondary); }
     .review-card.featured { grid-column: span 2; }
     @media (max-width: 768px) { .review-card.featured { grid-column: span 1; } }
@@ -293,7 +293,7 @@
       font-size: 0.82rem;
       letter-spacing: 0.12em;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 700;
       transition: background 0.25s, transform 0.2s;
     }
     .btn-gold:hover { background: var(--primary-dark); transform: translateY(-2px); }
@@ -324,7 +324,7 @@
     /* 대표 후기 */
     .featured-review-wrap {
       grid-column: 1 / -1;
-      background: linear-gradient(135deg, rgba(92,122,62,0.07) 0%, rgba(250,248,244,0) 100%);
+      background: linear-gradient(135deg, rgba(92,122,62,0.07) 0%, rgba(255,255,255,0) 100%);
       border: 1px solid var(--border);
       border-left: 3px solid var(--primary);
       border-radius: 4px;
@@ -370,17 +370,17 @@
       display: flex; align-items: center; justify-content: center;
       width: 36px; height: 36px; border-radius: 50%;
       background: rgba(92,122,62,0.18);
-      color: var(--primary); font-size: 0.72rem; font-weight: 500;
+      color: var(--primary); font-size: 0.72rem; font-weight: 600;
       flex-shrink: 0;
     }
-    .featured-name { font-size: 0.82rem; color: var(--text-primary); font-weight: 500; }
+    .featured-name { font-size: 0.82rem; color: var(--text-primary); font-weight: 600; }
     .featured-info { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem; }
 
   
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(250,248,244,0.98); z-index: 99;
+    background: rgba(255,255,255,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
@@ -388,10 +388,13 @@
   .mobile-link {
     color: var(--primary); text-decoration: none;
     font-family: 'Playfair Display','Cormorant Garamond',serif;
-    font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
+    font-size: 1.1rem; font-weight: 500; letter-spacing: .15em;
     transition: color .3s;
   }
   .mobile-link:hover { color: var(--primary-dark); }
+  p, li, span, td, th, label { font-weight: 600; }
+  button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
+  .nav-links a { font-weight: 700; }
 </style>
 </head>
 <body>
@@ -690,10 +693,10 @@
     Your Story
     <span style="display:block;width:30px;height:1px;background:var(--primary);"></span>
   </div>
-  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.2;color:#fdfaf5;margin-bottom:1.5rem;">
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.2;color:#2C2C2C;margin-bottom:1.5rem;">
     당신의 이야기도<br/><em style="color:var(--primary);font-style:italic;">들려주세요</em>
   </h2>
-  <p style="font-size:0.9rem;color:#e2e2e2;margin-bottom:2.5rem;line-height:1.9;">첫 상담은 무료입니다.<br/>지금 이 후기들처럼, 당신의 변화도 시작될 수 있습니다.</p>
+  <p style="font-size:0.9rem;color:#5A5A5A;margin-bottom:2.5rem;line-height:1.9;">첫 상담은 무료입니다.<br/>지금 이 후기들처럼, 당신의 변화도 시작될 수 있습니다.</p>
   <a href="consult.html" class="btn-gold">무료 상담 신청하기</a>
 </section>
 

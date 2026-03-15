@@ -19,8 +19,8 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FAF8F4;
-    --bg-section: #F2EFE8;
+    --bg: #FFFFFF;
+    --bg-section: #F7F7F7;
     --surface: #FFFFFF;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
@@ -28,14 +28,14 @@
     --border: #DDD9D0;
   }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 500; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 600; overflow-x: hidden; }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(250,248,244,0.92); backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; }
@@ -72,7 +72,7 @@
       background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(92,122,62,0.08) 0%, transparent 70%);
     }
     .hero-label { font-size: 0.72rem; letter-spacing: 0.28em; color: var(--primary); text-transform: uppercase; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
-    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
     .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.85; max-width: 500px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
     .hero-divider { width: 40px; height: 1px; background: var(--primary); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
@@ -81,7 +81,7 @@
     /* COLUMN GRID */
     .columns-section { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 6rem; }
     .section-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.7rem; }
-    .section-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .section-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .section-title em { font-style: italic; color: var(--primary); }
 
     /* FILTER */
@@ -131,7 +131,7 @@
     }
     .col-info { padding: 1.2rem 1.3rem 1.4rem; }
     .col-tag { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .col-title { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: 400; line-height: 1.65; color: var(--text-primary); margin-bottom: 0.7rem; }
+    .col-title { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: 500; line-height: 1.65; color: var(--text-primary); margin-bottom: 0.7rem; }
     .col-excerpt { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
     .col-meta { font-size: 0.7rem; color: #666; display: flex; align-items: center; justify-content: space-between; }
     .col-meta-left { display: flex; align-items: center; gap: 0.5rem; }
@@ -143,11 +143,11 @@
 
     /* CTA */
     .cta-section { text-align: center; padding: 2rem 2rem 6rem; border-top: 1px solid var(--border); }
-    .cta-section h2 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400; margin-bottom: 1rem; }
+    .cta-section h2 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; margin-bottom: 1rem; }
     .cta-section h2 em { font-style: italic; color: var(--primary); }
     .cta-section p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-gold { display: inline-block; padding: 0.9rem 2.6rem; background: var(--primary); color: #ffffff; font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; font-weight: 500; transition: background 0.25s, transform 0.2s; }
+    .btn-gold { display: inline-block; padding: 0.9rem 2.6rem; background: var(--primary); color: #ffffff; font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; font-weight: 700; transition: background 0.25s, transform 0.2s; }
     .btn-gold:hover { background: var(--primary-dark); transform: translateY(-2px); }
     .btn-outline { display: inline-block; padding: 0.9rem 2.6rem; border: 1px solid var(--primary); color: var(--primary); font-size: 0.82rem; letter-spacing: 0.12em; text-decoration: none; transition: background 0.25s, transform 0.2s; }
     .btn-outline:hover { background: rgba(92,122,62,0.08); transform: translateY(-2px); }
@@ -179,6 +179,9 @@
       .nav-toggle { display: flex; }
       .columns-grid { grid-template-columns: 1fr; }
     }
+  p, li, span, td, th, label { font-weight: 600; }
+  button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
+  .nav-links a { font-weight: 700; }
   </style>
 </head>
 <body>
@@ -235,7 +238,7 @@
 
     <!-- 칼럼 1 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST1" target="_blank" data-tags="절세">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1a2b,#1a3a5c);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">🏦</div>
         <div class="col-thumb-label">절세</div>
       </div>
@@ -252,7 +255,7 @@
 
     <!-- 칼럼 2 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST2" target="_blank" data-tags="연금">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#1a1a0e,#2a2a0a);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">🌿</div>
         <div class="col-thumb-label">연금</div>
       </div>
@@ -269,7 +272,7 @@
 
     <!-- 칼럼 3 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST3" target="_blank" data-tags="투자">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#1a0e0e,#2e1515);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">📈</div>
         <div class="col-thumb-label">투자</div>
       </div>
@@ -286,7 +289,7 @@
 
     <!-- 칼럼 4 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST4" target="_blank" data-tags="부동산">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1a14,#142a1e);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">🏠</div>
         <div class="col-thumb-label">부동산</div>
       </div>
@@ -303,7 +306,7 @@
 
     <!-- 칼럼 5 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST5" target="_blank" data-tags="금융상품">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#1a0e1a,#2a1530);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">💳</div>
         <div class="col-thumb-label">금융상품</div>
       </div>
@@ -320,7 +323,7 @@
 
     <!-- 칼럼 6 -->
     <a class="col-card" href="https://blog.naver.com/moneymustard/POST6" target="_blank" data-tags="절세">
-      <div class="col-thumb" style="background: linear-gradient(135deg,#0e1520,#0d2040);">
+      <div class="col-thumb" style="background: #F0F4ED;">
         <div class="col-thumb-emoji">📋</div>
         <div class="col-thumb-label">절세</div>
       </div>

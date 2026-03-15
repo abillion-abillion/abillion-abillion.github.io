@@ -15,8 +15,8 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FAF8F4;
-    --bg-section: #F2EFE8;
+    --bg: #FFFFFF;
+    --bg-section: #F7F7F7;
     --surface: #FFFFFF;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
@@ -28,7 +28,7 @@
       background: var(--bg);
       color: var(--text-primary);
       font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       overflow-x: hidden;
     }
 
@@ -41,7 +41,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(250,248,244,0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -113,7 +113,7 @@
     .hero h1 {
       font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2.4rem, 5vw, 4.2rem);
-      font-weight: 400;
+      font-weight: 700;
       line-height: 1.12;
       margin-bottom: 1.6rem;
       opacity: 0;
@@ -225,7 +225,7 @@
     .service-title {
       font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 400;
+      font-weight: 600;
       line-height: 1.2;
       margin-bottom: 1.5rem;
     }
@@ -235,7 +235,7 @@
       line-height: 1.9;
       color: var(--text-secondary);
       font-family: 'Noto Serif KR', serif;
-      font-weight: 300;
+      font-weight: 500;
     }
 
     .service-visual {
@@ -316,7 +316,7 @@
     .step-name {
       font-size: 0.82rem;
       color: var(--text-primary);
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
     .step-desc { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; }
@@ -376,7 +376,7 @@
       text-align: left;
       background: var(--bg-section);
       color: var(--text-secondary);
-      font-weight: 400;
+      font-weight: 600;
       font-size: 0.72rem;
       letter-spacing: 0.1em;
       border-bottom: 1px solid var(--border);
@@ -391,7 +391,7 @@
     .compare-table tr:last-child td { border-bottom: none; }
     .compare-table td.highlight {
       color: var(--text-primary);
-      font-weight: 500;
+      font-weight: 600;
     }
     .check { color: var(--primary); font-size: 1rem; }
     .cross { color: var(--text-muted); font-size: 1rem; }
@@ -428,7 +428,7 @@
     .cta-section h2 {
       font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
+      font-weight: 700;
       line-height: 1.2;
       margin-bottom: 1.5rem;
     }
@@ -449,7 +449,7 @@
       font-size: 0.82rem;
       letter-spacing: 0.14em;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 700;
       transition: background 0.25s, transform 0.2s;
     }
     .btn-gold:hover { background: var(--primary-dark); transform: translateY(-2px); }
@@ -532,7 +532,7 @@
     /* 대표 후기 (안명진님) */
     .featured-review {
       margin: 4rem 0 0;
-      background: linear-gradient(135deg, rgba(92,122,62,0.07) 0%, rgba(250,248,244,0) 100%);
+      background: linear-gradient(135deg, rgba(92,122,62,0.07) 0%, rgba(255,255,255,0) 100%);
       border: 1px solid var(--border);
       border-left: 3px solid var(--primary);
       padding: 2.5rem 2.8rem;
@@ -579,7 +579,7 @@
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(250,248,244,0.98); z-index: 99;
+    background: rgba(255,255,255,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
@@ -587,10 +587,13 @@
   .mobile-link {
     color: var(--primary); text-decoration: none;
     font-family: 'Playfair Display','Cormorant Garamond',serif;
-    font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
+    font-size: 1.1rem; font-weight: 500; letter-spacing: .15em;
     transition: color .3s;
   }
   .mobile-link:hover { color: var(--primary-dark); }
+  p, li, span, td, th, label { font-weight: 600; }
+  button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
+  .nav-links a { font-weight: 700; }
 </style>
 </head>
 <body>
