@@ -15,9 +15,9 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FFFFFF;
-    --bg-section: #F7F7F7;
-    --surface: #FFFFFF;
+    --bg: #FAF8F4;
+    --bg-section: #FAF8F4;
+    --surface: #FAF8F4;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
     --text-muted: #8A8A8A;
@@ -41,7 +41,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(255,255,255,0.92);
+      background: rgba(250,248,244,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -158,34 +158,32 @@
       border-bottom-color: var(--primary);
     }
 
-    /* INTRO STRIP */
-    .intro-strip {
+    /* INTRO BADGES */
+    .intro-badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 2.5rem 2rem;
       max-width: 900px;
-      margin: 5rem auto 0;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      margin: 0 auto;
     }
-    .intro-item {
-      background: var(--bg-section);
-      border: 1px solid var(--border);
-      padding: 2rem 1.8rem;
-      text-align: center;
+    .intro-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(92,122,62,0.08);
+      border: 1px solid rgba(92,122,62,0.22);
+      color: var(--primary-dark);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 999px;
       opacity: 0;
       animation: fadeUp 0.6s forwards;
     }
-    .intro-item:nth-child(1) { animation-delay: 0.1s; }
-    .intro-item:nth-child(2) { animation-delay: 0.2s; }
-    .intro-item:nth-child(3) { animation-delay: 0.3s; }
-    .intro-num {
-      font-family: 'Hahmlet', serif;
-      font-size: 2.4rem;
-      color: var(--primary);
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    .intro-label { font-size: 0.78rem; color: var(--text-secondary); }
+    .intro-badge:nth-child(1) { animation-delay: 0.1s; }
+    .intro-badge:nth-child(2) { animation-delay: 0.2s; }
+    .intro-badge:nth-child(3) { animation-delay: 0.3s; }
 
     /* SERVICE BLOCK */
     .service-block {
@@ -243,10 +241,16 @@
     }
     .service-box {
       background: var(--bg-section);
-      border: 1px solid var(--border);
-      padding: 2.5rem;
+      border: 1px solid #E8EDE4;
+      padding: 2.25rem 2rem;
       position: relative;
       overflow: hidden;
+      border-radius: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(92,122,62,0.13);
     }
     .service-box::before {
       content: '';
@@ -579,7 +583,7 @@
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(255,255,255,0.98); z-index: 99;
+    background: rgba(250,248,244,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
@@ -627,12 +631,11 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Services</div>
+  <div class="hero-label">허머니가 도와드릴 수 있는 것들</div>
   <h1>단순한 상품 권유가 아닌<br /><em>진짜 파트너십</em></h1>
   <p>
-    금융은 복잡합니다. 하지만 복잡하게 느껴지는 이유는<br />
-    아무도 제대로 설명해주지 않았기 때문입니다.<br />
-    저는 이유와 맥락까지 함께 설명합니다.
+    상품 판매가 아니라 내 편이 되어드리는 것.<br />
+    500번의 상담에서 쌓은 경험으로 딱 맞는 방법을 찾아드립니다.
   </p>
 </section>
 

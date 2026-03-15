@@ -58,9 +58,9 @@
     --primary-light: #7A9E58;
     --primary-dark: #3F5B28;
     --accent: #A8B89A;
-    --bg: #FFFFFF;
-    --bg-section: #F7F7F7;
-    --surface: #FFFFFF;
+    --bg: #FAF8F4;
+    --bg-section: #FAF8F4;
+    --surface: #FAF8F4;
     --text-primary: #2C2C2C;
     --text-secondary: #5A5A5A;
     --text-muted: #8A8A8A;
@@ -83,7 +83,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255,255,255,0.95);
+    background: rgba(250,248,244,0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
   }
@@ -196,21 +196,21 @@
   }
   .hero-stats {
     display: flex;
-    gap: 48px;
+    gap: 12px;
+    flex-wrap: wrap;
     margin-bottom: 56px;
   }
-  .stat-num {
-    font-family: 'Hahmlet', serif;
-    font-size: 36px;
-    font-weight: 500;
-    color: var(--primary);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-    letter-spacing: 0.1em;
-    margin-top: 6px;
+  .stat-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(92,122,62,0.08);
+    border: 1px solid rgba(92,122,62,0.22);
+    color: var(--primary-dark);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
   .btn-primary {
     display: inline-flex;
@@ -303,29 +303,32 @@
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
+    gap: 20px;
   }
   /* ★ 서비스 카드 링크화 */
   .service-card {
     background: var(--bg);
     padding: 48px 40px;
-    transition: background 0.4s;
+    transition: background 0.4s, transform 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: hidden;
     display: block;
     text-decoration: none;
     color: inherit;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(92,122,62,0.08);
+    border: 1px solid #E8EDE4;
   }
   .service-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2px;
+    height: 3px;
     background: var(--primary);
     transform: scaleX(0);
     transition: transform 0.4s;
     transform-origin: left;
+    border-radius: 16px 16px 0 0;
   }
   .service-card::after {
     content: '→';
@@ -335,7 +338,7 @@
     color: rgba(92,122,62,0);
     transition: color 0.3s, transform 0.3s;
   }
-  .service-card:hover { background: var(--surface); }
+  .service-card:hover { background: var(--surface); transform: translateY(-4px); box-shadow: 0 8px 28px rgba(92,122,62,0.14); }
   .service-card:hover::before { transform: scaleX(1); }
   .service-card:hover::after { color: var(--primary-light); transform: translateX(4px); }
   .service-num {
@@ -393,14 +396,14 @@
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
+    gap: 20px;
   }
-  .testimonial-card { background: var(--surface); border: 1px solid var(--border); padding: 48px 40px; }
+  .testimonial-card { background: #F5F8F2; border-left: 4px solid var(--primary); border-radius: 0 12px 12px 12px; padding: 48px 40px; box-shadow: 0 2px 12px rgba(92,122,62,0.07); }
   .quote-mark {
     font-family: 'Hahmlet', serif;
-    font-size: 72px;
-    color: rgba(92,122,62,0.2);
+    font-size: 3rem;
+    color: var(--primary);
+    opacity: 0.3;
     line-height: 0.8;
     margin-bottom: 24px;
   }
@@ -429,7 +432,7 @@
   .author-name { font-size: 13px; color: var(--text-primary); font-weight: 600; }
   .author-desc { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
   .cta {
-    background: var(--bg-section);
+    background: linear-gradient(135deg, #F0F5EB 0%, #EAF2E3 100%);
     text-align: center;
     padding: 120px 60px;
     position: relative;
@@ -530,7 +533,7 @@
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255,255,255,0.98);
+    background: rgba(250,248,244,0.98);
     z-index: 99;
     flex-direction: column;
     align-items: center;
@@ -607,30 +610,20 @@
   <div class="hero-bg"></div>
   <div class="hero-line"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Private Wealth Advisor</div>
+    <div class="hero-eyebrow">복잡한 금융, 쉽게 풀어드립니다</div>
     <h1 class="hero-name">남진우<em>.</em></h1>
     <p class="hero-title">개인 자산관리 전문가</p>
     <p class="hero-desc">
-      복잡한 금융의 세계를 명확하게 설명하고,<br>
-      당신의 자산이 당신을 위해 일하도록 설계합니다.<br>
-      단순한 상품 판매가 아닌, 진정한 파트너십을 제안합니다.
+      어렵게만 느껴지던 재테크, 사실 순서만 알면 됩니다.<br>
+      500명 이상의 상담 경험으로 내 상황에 딱 맞는 방법을 찾아드릴게요.
     </p>
     <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">500<span style="font-size:20px">+</span></div>
-        <div class="stat-label">누적 상담 고객</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">5</div>
-        <div class="stat-label">년 전문 경력</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">98<span style="font-size:20px">%</span></div>
-        <div class="stat-label">고객 재계약률</div>
-      </div>
+      <div class="stat-badge">500명과 함께했어요</div>
+      <div class="stat-badge">5년째 곁에 있습니다</div>
+      <div class="stat-badge">10명 중 9명이 추천해요</div>
     </div>
     <a href="consult.html" class="btn-primary">
-      무료 상담 신청
+      지금 바로 상담 신청하기
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
@@ -682,7 +675,7 @@
     <a href="services.html#diagnosis" class="service-card">
       <div class="service-num">01</div>
       <h3 class="service-title">재무 진단 &amp; 설계</h3>
-      <p class="service-desc">현재 재무 상태를 객관적으로 진단하고, 단기·중장기 목표에 맞는 맞춤형 재무 로드맵을 설계해드립니다. 부채 관리부터 저축, 투자 비중 설계까지 전반을 다룹니다.</p>
+      <p class="service-desc">현재 재무 상태를 객관적으로 진단하고, 단기·중장기 목표에 맞는 맞춤형 재무 로드맵을 설계해드립니다. 부채 관리부터 저축, 투자 비중 설계까지 함께 정리해드려요.</p>
       <div class="service-tags">
         <span class="tag">재무분석</span><span class="tag">목표설계</span><span class="tag">포트폴리오</span>
       </div>
@@ -690,7 +683,7 @@
     <a href="services.html#investment" class="service-card">
       <div class="service-num">02</div>
       <h3 class="service-title">투자 상품 컨설팅</h3>
-      <p class="service-desc">펀드, ETF, 채권, 보험, 연금 등 다양한 금융상품 중 고객의 위험 성향과 목적에 맞는 상품을 선별하여 추천합니다. 단순 권유가 아닌 이유를 설명합니다.</p>
+      <p class="service-desc">펀드, ETF, 채권, 보험, 연금 등 다양한 금융상품 중 고객의 위험 성향과 목적에 맞는 상품을 선별하여 추천합니다. 단순 권유가 아닌, 이유와 맥락까지 설명해드립니다.</p>
       <div class="service-tags">
         <span class="tag">펀드·ETF</span><span class="tag">연금</span><span class="tag">보험설계</span>
       </div>
@@ -698,7 +691,7 @@
     <a href="services.html#tax" class="service-card">
       <div class="service-num">03</div>
       <h3 class="service-title">세금 &amp; 절세 전략</h3>
-      <p class="service-desc">금융소득 종합과세, IRP·ISA 활용, 증여·상속 절세까지. 합법적인 절세 전략으로 실질 수익률을 높이는 방법을 안내합니다.</p>
+      <p class="service-desc">금융소득 종합과세, IRP·ISA 활용, 증여·상속 절세까지. 합법적인 절세 전략으로 실질 수익률을 높이는 방법을 찾아드릴게요.</p>
       <div class="service-tags">
         <span class="tag">절세설계</span><span class="tag">IRP·ISA</span><span class="tag">상속·증여</span>
       </div>
@@ -750,11 +743,11 @@
 <section class="cta" id="contact">
   <div class="cta-content reveal">
     <div class="section-label" style="justify-content:center">Contact</div>
-    <h2 class="cta-title">당신의 돈,<br>지금 제대로 <em>일하고 있나요?</em></h2>
-    <p class="cta-sub">첫 상담은 무료입니다. 재무 목표, 걱정되는 부분, 궁금한 것 모두 편하게 이야기해주세요.<br>정답이 없는 질문도 괜찮습니다.</p>
+    <h2 class="cta-title">지금 어떤 고민이<br>있으신가요?</h2>
+    <p class="cta-sub">재테크가 막막하든, 구체적인 계획이 필요하든<br>이야기만 해주시면 함께 풀어드릴게요.</p>
     <div class="cta-buttons">
       <a href="consult.html" class="btn-primary">
-        카카오톡 상담 신청
+        무료 상담 신청 →
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       
