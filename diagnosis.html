@@ -7,7 +7,7 @@
   <meta name="description" content="10분 무료 자산 진단 - 나이대, 성별, 직업별 평균과 비교해 내 재무 상태를 확인해보세요.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -32,7 +32,7 @@
   }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 600; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Hahmlet', serif; font-weight: 600; overflow-x: hidden; }
 
     /* ── NAV ── */
     nav {
@@ -42,7 +42,7 @@
       background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; }
+    .nav-logo { font-family: 'Hahmlet', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
@@ -53,7 +53,7 @@
     .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
     .mobile-menu { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 90; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
     .mobile-menu.open { display: flex; }
-    .mobile-link { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
     .mobile-link:hover { color: var(--primary); }
 
     /* ── HERO ── */
@@ -67,7 +67,7 @@
       background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(92,122,62,0.09) 0%, transparent 70%);
     }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; }
-    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.25s forwards; }
+    .hero h1 { font-family: 'Hahmlet', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.25s forwards; }
     .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.85; max-width: 520px; opacity: 0; animation: fadeUp 0.6s 0.4s forwards; }
 
@@ -78,7 +78,7 @@
     .step-section { opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
     .step-header { margin-bottom: 2rem; text-align: center; }
     .step-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .step-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 500; }
+    .step-title { font-family: 'Hahmlet', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 500; }
     .step-title em { font-style: italic; color: var(--primary); font-size: 0.72em; }
 
     /* 기본정보 그리드 */
@@ -87,7 +87,7 @@
     .form-input, .form-select {
       width: 100%; padding: 0.75rem 1rem;
       background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem;
+      color: var(--text-primary); font-family: 'Hahmlet', serif; font-size: 0.82rem;
       outline: none; transition: border-color 0.25s; border-radius: 10px;
     }
     .form-input::placeholder { color: var(--text-muted); }
@@ -104,7 +104,7 @@
     .btn-start {
       width: 100%; padding: 1rem; margin-top: 0.5rem;
       background: var(--primary); color: #ffffff;
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: 700;
+      font-family: 'Hahmlet', serif; font-size: 0.9rem; font-weight: 700;
       letter-spacing: 0.1em; border: none; cursor: pointer;
       transition: background 0.25s, transform 0.15s; border-radius: 10px;
     }
@@ -125,7 +125,7 @@
     .question-wrap { display: none; }
     .question-wrap.active { display: block; animation: fadeUp 0.4s forwards; }
     .question-num { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .question-text { font-family: 'Noto Serif KR', serif; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 500; line-height: 1.65; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .question-text { font-family: 'Hahmlet', serif; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 500; line-height: 1.65; margin-bottom: 0.5rem; color: var(--text-primary); }
     .question-hint { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.5; }
 
     /* 선택지 */
@@ -134,7 +134,7 @@
       display: flex; align-items: center; gap: 1rem;
       padding: 0.9rem 1.2rem; width: 100%;
       background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem;
+      color: var(--text-primary); font-family: 'Hahmlet', serif; font-size: 0.85rem;
       cursor: pointer; text-align: left; transition: all 0.2s; border-radius: 12px;
     }
     .option-btn:hover { border-color: rgba(92,122,62,0.4); background: rgba(92,122,62,0.05); }
@@ -150,20 +150,20 @@
     .q-nav { display: flex; gap: 0.8rem; }
     .btn-prev {
       padding: 0.75rem 2rem; border: 1px solid var(--border); background: transparent;
-      color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      color: var(--text-muted); font-family: 'Hahmlet', serif; font-size: 0.8rem;
       cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 10px;
     }
     .btn-prev:hover { border-color: var(--primary); color: var(--primary); }
     .btn-next {
       flex: 1; padding: 0.75rem; background: var(--surface); border: 1px solid var(--border);
-      color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem;
+      color: var(--text-primary); font-family: 'Hahmlet', serif; font-size: 0.8rem;
       cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; border-radius: 10px;
     }
     .btn-next:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
     .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
     .btn-submit-final {
       flex: 1; padding: 0.75rem; background: var(--primary); border: none;
-      color: #ffffff; font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: #ffffff; font-family: 'Hahmlet', serif; font-size: 0.85rem; font-weight: 700;
       cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; border-radius: 10px;
     }
     .btn-submit-final:hover { background: var(--primary-light); }
@@ -189,10 +189,10 @@
     /* 리포트 헤더 */
     .report-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .report-brand { }
-    .report-brand-name { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1rem; color: var(--primary); letter-spacing: 0.15em; }
+    .report-brand-name { font-family: 'Hahmlet', serif; font-size: 1rem; color: var(--primary); letter-spacing: 0.15em; }
     .report-brand-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.2rem; letter-spacing: 0.08em; }
     .report-meta { text-align: right; }
-    .report-meta-name { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; color: var(--text-primary); }
+    .report-meta-name { font-family: 'Hahmlet', serif; font-size: 1.1rem; color: var(--text-primary); }
     .report-meta-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
     .report-date { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
 
@@ -210,10 +210,10 @@
       position: absolute; inset: 6px; border-radius: 50%;
       border: 1px solid var(--border);
     }
-    .score-num { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--primary); line-height: 1; }
+    .score-num { font-family: 'Hahmlet', serif; font-size: 2.2rem; color: var(--primary); line-height: 1; }
     .score-denom { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
     .score-summary { flex: 1; }
-    .score-grade { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .score-grade { font-family: 'Hahmlet', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
     .score-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.75; }
 
     /* 6개 영역 바 차트 */
@@ -244,8 +244,8 @@
 
     /* 맞춤 메시지 */
     .report-message { background: rgba(92,122,62,0.07); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 2rem; position: relative; border-radius: 12px; }
-    .report-message::before { content: '"'; font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 3rem; color: var(--primary); opacity: 0.2; position: absolute; top: 0.5rem; left: 1rem; line-height: 1; }
-    .report-message-text { font-family: 'Noto Serif KR', serif; font-size: 0.88rem; line-height: 1.85; color: var(--text-primary); padding-left: 1.5rem; }
+    .report-message::before { content: '"'; font-family: 'Hahmlet', serif; font-size: 3rem; color: var(--primary); opacity: 0.2; position: absolute; top: 0.5rem; left: 1rem; line-height: 1; }
+    .report-message-text { font-family: 'Hahmlet', serif; font-size: 0.88rem; line-height: 1.85; color: var(--text-primary); padding-left: 1.5rem; }
 
     /* 컨설팅 유도 박스 */
     .consult-cta {
@@ -255,7 +255,7 @@
     }
     .consult-cta::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); }
     .consult-cta-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.7rem; }
-    .consult-cta-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.4; color: var(--text-primary); }
+    .consult-cta-title { font-family: 'Hahmlet', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.4; color: var(--text-primary); }
     .consult-cta-title em { font-style: italic; color: var(--primary); }
     .consult-cta-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; }
     .consult-cta-disclaimer { font-size: 0.68rem; color: var(--text-muted); margin-top: 1rem; }
@@ -263,14 +263,14 @@
     /* 리포트 푸터 */
     .report-footer { border-top: 1px solid var(--border); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
     .report-footer-left { font-size: 0.65rem; color: var(--text-muted); line-height: 1.6; }
-    .report-footer-right { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--primary); letter-spacing: 0.1em; }
+    .report-footer-right { font-family: 'Hahmlet', serif; font-size: 0.75rem; color: var(--primary); letter-spacing: 0.1em; }
 
     /* 결과 액션 버튼들 */
     .result-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .btn-download {
       flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
       background: var(--primary); color: #ffffff;
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; font-weight: 700;
+      font-family: 'Hahmlet', serif; font-size: 0.82rem; font-weight: 700;
       letter-spacing: 0.08em; border: none; cursor: pointer;
       transition: background 0.25s, transform 0.15s;
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -279,7 +279,7 @@
     .btn-share-kakao {
       flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
       background: #FEE500; color: #3A1D1D;
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; font-weight: 700;
+      font-family: 'Hahmlet', serif; font-size: 0.82rem; font-weight: 700;
       letter-spacing: 0.06em; border: none; cursor: pointer;
       transition: opacity 0.2s, transform 0.15s;
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -288,7 +288,7 @@
     .btn-consult {
       flex: 1; min-width: 160px; padding: 0.9rem 1.5rem;
       background: transparent; border: 1px solid var(--primary); color: var(--primary);
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem;
+      font-family: 'Hahmlet', serif; font-size: 0.82rem;
       letter-spacing: 0.06em; cursor: pointer; text-decoration: none;
       transition: background 0.2s, transform 0.15s;
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -296,7 +296,7 @@
     .btn-consult:hover { background: rgba(92,122,62,0.1); transform: translateY(-1px); }
     .btn-retry {
       padding: 0.9rem 1.5rem; border: 1px solid var(--border); background: transparent;
-      color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem;
+      color: var(--text-muted); font-family: 'Hahmlet', serif; font-size: 0.78rem;
       cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em;
     }
     .btn-retry:hover { border-color: var(--border); color: var(--text-primary); }

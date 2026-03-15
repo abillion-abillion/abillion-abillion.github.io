@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
     --primary: #5C7A3E;
@@ -28,7 +28,7 @@
     --border: #DDD9D0;
   }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-weight: 600; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Hahmlet', serif; font-weight: 600; overflow-x: hidden; }
 
     /* NAV */
     nav {
@@ -38,7 +38,7 @@
       background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; }
+    .nav-logo { font-family: 'Hahmlet', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; }
     .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; z-index: 1; }
     .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
@@ -58,7 +58,7 @@
     padding-top: 5rem;
   }
     .mobile-menu.open { display: flex; }
-    .mobile-link { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.3rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
     .mobile-link:hover { color: var(--primary); }
 
     /* HERO */
@@ -72,7 +72,7 @@
       background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(92,122,62,0.08) 0%, transparent 70%);
     }
     .hero-label { font-size: 0.72rem; letter-spacing: 0.28em; color: var(--primary); text-transform: uppercase; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
-    .hero h1 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .hero h1 { font-family: 'Hahmlet', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
     .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.85; max-width: 500px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
     .hero-divider { width: 40px; height: 1px; background: var(--primary); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
@@ -81,14 +81,14 @@
     /* COLUMN GRID */
     .columns-section { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 6rem; }
     .section-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.7rem; }
-    .section-title { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .section-title { font-family: 'Hahmlet', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .section-title em { font-style: italic; color: var(--primary); }
 
     /* FILTER */
     .filter-bar { display: flex; gap: 0.8rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
     .filter-btn {
       padding: 0.4rem 1.2rem; border: 1px solid var(--border); background: transparent;
-      color: var(--text-secondary); font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem;
+      color: var(--text-secondary); font-family: 'Hahmlet', serif; font-size: 0.76rem;
       letter-spacing: 0.06em; cursor: pointer; transition: all 0.25s; border-radius: 2px;
     }
     .filter-btn:hover, .filter-btn.active { border-color: var(--primary); color: var(--primary); background: rgba(92,122,62,0.08); }
@@ -131,7 +131,7 @@
     }
     .col-info { padding: 1.2rem 1.3rem 1.4rem; }
     .col-tag { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--primary); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .col-title { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: 500; line-height: 1.65; color: var(--text-primary); margin-bottom: 0.7rem; }
+    .col-title { font-family: 'Hahmlet', serif; font-size: 0.9rem; font-weight: 500; line-height: 1.65; color: var(--text-primary); margin-bottom: 0.7rem; }
     .col-excerpt { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
     .col-meta { font-size: 0.7rem; color: #666; display: flex; align-items: center; justify-content: space-between; }
     .col-meta-left { display: flex; align-items: center; gap: 0.5rem; }
@@ -143,7 +143,7 @@
 
     /* CTA */
     .cta-section { text-align: center; padding: 2rem 2rem 6rem; border-top: 1px solid var(--border); }
-    .cta-section h2 { font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; margin-bottom: 1rem; }
+    .cta-section h2 { font-family: 'Hahmlet', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; margin-bottom: 1rem; }
     .cta-section h2 em { font-style: italic; color: var(--primary); }
     .cta-section p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
