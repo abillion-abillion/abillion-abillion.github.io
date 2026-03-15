@@ -198,6 +198,14 @@
     .btn-submit:hover { background: var(--primary-dark); transform: translateY(-1px); }
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .form-privacy { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.5rem; }
+    .btn-preview-report {
+      display: block; text-align: center; text-decoration: none;
+      padding: 1rem 1.5rem; margin-bottom: 0.6rem;
+      background: transparent; border: 2px solid var(--primary);
+      color: var(--primary); font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 0.05em; transition: all 0.2s;
+    }
+    .btn-preview-report:hover { background: var(--primary); color: #fff; }
 
     /* 성공 상태 */
     .success-box {
@@ -343,6 +351,9 @@
         </div>
 
         <!-- 진단 시작 버튼 -->
+        <a href="diagnosis_demo.html" class="btn-preview-report" target="_blank">
+          📄 보고서 미리보기 (샘플 확인)
+        </a>
         <a href="diagnosis.html" class="btn-submit" style="display:block; text-align:center; text-decoration:none; margin-top:1.2rem; background:var(--primary); color:#fff; font-weight:700;">
           🔍 30초 재무진단 후 보고서 받기 →
         </a>
@@ -415,6 +426,7 @@
             <input class="form-input" type="text" id="ebookName" placeholder="이름" autocomplete="name" />
             <input class="form-input" type="tel" id="ebookPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
           </div>
+          <input class="form-input" type="email" id="ebookEmail" placeholder="이메일 (전자책 발송용)" autocomplete="email" style="width:100%; margin-top:0.5rem;" />
           <button class="btn-submit" onclick="submitEbook()">📚 무료 전자책 받기 →</button>
           <div class="form-privacy">✦ 입력하신 정보는 전자책 발송 외 다른 용도로 사용되지 않습니다.</div>
         </div>
@@ -467,6 +479,7 @@
   const CHAT_ID   = '6234327488';   // 텔레그램 Chat ID
   const PDF_URL   = 'https://drive.google.com/uc?export=download&id=15NmHseu0q-KP06m3EyVMLCBQQYIsmwUO';
   const KAKAO_JS_KEY = '16d606622c9c20a6f8650870f439d9e9'; // 카카오 JavaScript 키
+  const EBOOK_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   Kakao.init(KAKAO_JS_KEY);
@@ -475,8 +488,10 @@
   async function submitEbook() {
     const name  = document.getElementById('ebookName').value.trim();
     const phone = document.getElementById('ebookPhone').value.trim();
+    const email = document.getElementById('ebookEmail').value.trim();
     if (!name) { highlight('ebookName'); return; }
     if (!phone) { highlight('ebookPhone'); return; }
+    if (!email || !email.includes('@')) { alert('이메일을 올바르게 입력해주세요.'); return; }
 
     const btn = document.querySelector('#ebookFormWrap .btn-submit');
     btn.textContent = '처리 중...'; btn.disabled = true;
@@ -496,6 +511,13 @@
         body: JSON.stringify({ chat_id: CHAT_ID, text: message })
       });
     } catch (e) { console.warn('Telegram 전송 실패:', e); }
+
+    // Apps Script 전송 (DB 저장 + 이메일 발송)
+    fetch(EBOOK_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'ebook', name, phone, email })
+    }).catch(function(){});
 
     // PDF 다운로드
     const a = document.createElement('a');

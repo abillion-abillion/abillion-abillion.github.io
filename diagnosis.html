@@ -29,6 +29,11 @@
     --text-secondary: #5A5A5A;
     --text-muted: #8A8A8A;
     --border: #DDD9D0;
+    --gold: #C9A96E;
+    --green: #4caf7d;
+    --red: #e05a5a;
+    --text-main: #2C2C2C;
+    --text-sub: #5A5A5A;
   }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -341,6 +346,19 @@
       .result-actions { flex-direction: column; }
       #reportCard { padding: 1.5rem; }
     }
+    .report-swot { margin: 1.5rem 0; }
+    .swot-title { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .swot-cell { padding: 0.9rem; border: 1px solid var(--border); }
+    .swot-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .swot-content { font-size: 0.78rem; line-height: 1.6; color: var(--text-sub); }
+    .swot-s .swot-label { color: #4caf7d; }
+    .swot-w .swot-label { color: #e05a5a; }
+    .swot-o .swot-label { color: #c9a96e; }
+    .swot-t .swot-label { color: #888; }
+    .personal-cta { background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(201,169,110,0.03)); border: 1px solid rgba(201,169,110,0.3); padding: 1.2rem 1.4rem; margin: 1.2rem 0 0.5rem; }
+    .personal-cta-message { font-size: 0.85rem; line-height: 1.8; color: var(--text-main); }
+    .personal-cta-message strong { color: var(--gold); }
     p, li, span, td, th, label { font-weight: 600; }
     button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
     .nav-links a { font-weight: 700; }
@@ -401,6 +419,10 @@
       <div class="info-field">
         <label>연락처</label>
         <input class="form-input" type="tel" id="infoPhone" placeholder="010-xxxx-xxxx" />
+      </div>
+      <div class="info-field">
+        <label>이메일 <span class="req">*</span></label>
+        <input class="info-input form-input" type="email" id="diagEmail" placeholder="보고서 발송용 이메일" autocomplete="email" />
       </div>
       <div class="info-field">
         <label>성별</label>
@@ -505,9 +527,37 @@
         </div>
       </div>
 
+      <!-- SWOT 재무 분석 -->
+      <div class="report-swot">
+        <div class="swot-title">▸ SWOT 재무 분석</div>
+        <div class="swot-grid">
+          <div class="swot-cell swot-s">
+            <div class="swot-label">S · 강점</div>
+            <div class="swot-content" id="swotStrength"></div>
+          </div>
+          <div class="swot-cell swot-w">
+            <div class="swot-label">W · 약점</div>
+            <div class="swot-content" id="swotWeakness"></div>
+          </div>
+          <div class="swot-cell swot-o">
+            <div class="swot-label">O · 기회</div>
+            <div class="swot-content" id="swotOpportunity"></div>
+          </div>
+          <div class="swot-cell swot-t">
+            <div class="swot-label">T · 위협</div>
+            <div class="swot-content" id="swotThreat"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- 맞춤 메시지 -->
       <div class="report-message">
         <div class="report-message-text" id="customMessage"></div>
+      </div>
+
+      <!-- 개인화 CTA -->
+      <div class="personal-cta" id="personalCta">
+        <div class="personal-cta-message" id="personalCtaMsg"></div>
       </div>
 
       <!-- 컨설팅 유도 -->
@@ -734,17 +784,19 @@ let radarChart = null;
 function startQuiz() {
   const name   = document.getElementById('infoName').value.trim();
   const phone  = document.getElementById('infoPhone').value.trim();
+  const email  = document.getElementById('diagEmail').value.trim();
   const gender = document.getElementById('infoGender').value;
   const age    = document.getElementById('infoAge').value;
   const job    = document.getElementById('infoJob').value;
 
   if (!name) { alert('이름을 입력해주세요.'); return; }
   if (!phone) { alert('연락처를 입력해주세요.'); return; }
+  if (!email || !email.includes('@')) { alert('이메일을 올바르게 입력해주세요.'); return; }
   if (!gender) { alert('성별을 선택해주세요.'); return; }
   if (!age) { alert('연령대를 선택해주세요.'); return; }
   if (!job) { alert('직업 유형을 선택해주세요.'); return; }
 
-  userInfo = { name, phone, gender, age, job };
+  userInfo = { name, phone, email, gender, age, job };
   answers = new Array(10).fill(null);
   currentQ = 0;
 
@@ -867,6 +919,25 @@ function calcResult() {
     // 텔레그램 전송
     try { await sendTelegram(scores, total, areaResults); } catch(e) {}
 
+    // Apps Script로 진단 결과 전송 (DB 저장 + 이메일 발송)
+    try {
+      fetch('https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec', {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'diagnosis',
+          name: userInfo.name,
+          phone: userInfo.phone,
+          email: userInfo.email,
+          age: userInfo.age,
+          gender: userInfo.gender,
+          job: userInfo.job,
+          totalScore: total,
+          areaResults: areaResults.map(a => `${a.area}:${a.score}점(평균${a.avg}점)`).join(', ')
+        })
+      }).catch(()=>{});
+    } catch(e) {}
+
     hideLoading();
     document.getElementById('quizSection').style.display = 'none';
     document.getElementById('resultSection').style.display = 'block';
@@ -942,6 +1013,36 @@ function renderResult(scores, total, areaResults) {
   weakEl.innerHTML = weaknesses.length
     ? weaknesses.map(w => `<div class="analysis-item"><div class="analysis-dot" style="background:var(--red);"></div><span><b style="color:var(--red);">${w.area}</b> — 동일 그룹 평균 대비 부족. 우선 개선 대상입니다.</span></div>`).join('')
     : `<div class="analysis-item"><div class="analysis-dot" style="background:var(--green);"></div><span>모든 영역이 평균 이상입니다. 훌륭합니다!</span></div>`;
+
+  // SWOT 생성
+  const topStrengths = areaResults.filter(a => a.diff >= 1).sort((a,b) => b.score - a.score).slice(0,2);
+  const topWeaknesses = areaResults.filter(a => a.diff <= -1).sort((a,b) => a.score - b.score).slice(0,2);
+
+  document.getElementById('swotStrength').textContent =
+    topStrengths.length > 0
+      ? topStrengths.map(a => `${a.area} 영역에서 동일 그룹 대비 우위`).join(' · ')
+      : '전반적으로 평균 수준을 유지하고 있습니다.';
+
+  document.getElementById('swotWeakness').textContent =
+    topWeaknesses.length > 0
+      ? topWeaknesses.map(a => `${a.area} 영역 개선 필요 (평균 대비 ${Math.abs(a.diff)}점 미달)`).join(' · ')
+      : '뚜렷한 약점 없음 · 세부 조정 권장';
+
+  document.getElementById('swotOpportunity').textContent =
+    topWeaknesses.length > 0
+      ? `${topWeaknesses[0].area} 전략 개선 시 연간 실질 자산 효과 상승 가능 · 절세·연금 최적화로 추가 수익 여력`
+      : '포트폴리오 고도화로 추가 수익 여력 존재';
+
+  document.getElementById('swotThreat').textContent =
+    '물가 상승·금리 변화 영향 · 지금 전략 없이 방치 시 기회비용 증가';
+
+  // 개인화 CTA 메시지
+  const strengthNames = topStrengths.map(a => a.area).join('·') || '전반적 재무 관리';
+  const weaknessNames = topWeaknesses.map(a => a.area).join('·') || '세부 전략';
+  document.getElementById('personalCtaMsg').innerHTML =
+    `<strong>${userInfo.name} 님</strong>은 <strong>${strengthNames}</strong>이 강점이고, <strong>${weaknessNames}</strong> 부분의 개선 여지가 있습니다.<br/>
+    강점은 더 적극적으로 활용하고, 약점은 전문가와 함께 보완하면 지금보다 훨씬 빠르게 목표에 도달할 수 있습니다.<br/>
+    <strong>지금 바로 무료 상담을 신청</strong>해서 맞춤 실행 계획을 받아보세요.`;
 
   // 맞춤 메시지
   const topWeak = weaknesses[0];
@@ -1102,6 +1203,7 @@ async function sendTelegram(scores, total, areaResults) {
     `────────────────────\n` +
     `👤 ${userInfo.name} | ${userInfo.age} ${userInfo.gender} ${userInfo.job}\n` +
     `📱 ${userInfo.phone}\n` +
+    `📧 ${userInfo.email}\n` +
     `📊 총점: ${total}점 / 100점\n` +
     `\n영역별 점수:\n${areaLines}\n` +
     `🕐 ${now}`;
