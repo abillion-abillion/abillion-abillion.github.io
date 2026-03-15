@@ -8,24 +8,27 @@
   <meta name="description" content="재무 진단·설계, 투자 상품 컨설팅, 절세 전략까지. 자산관리사 허머니(남진우)의 1:1 맞춤 금융 컨설팅 서비스를 소개합니다. JW Financial Consulting." />
   <meta name="keywords" content="재무설계, 절세 전략, 투자 컨설팅, IRP, ISA, 자산관리사, 허머니, 남진우" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gold: #c9a96e;
-      --gold-light: #e8d5b0;
-      --dark: #0e0e0e;
-      --dark-2: #161616;
-      --dark-3: #1f1f1f;
-      --text: #e8e4dc;
-      --text-muted: #9a9a9a;
-      --border: rgba(201,169,110,0.15);
-    }
+    --primary: #5C7A3E;
+    --primary-light: #7A9E58;
+    --primary-dark: #3F5B28;
+    --accent: #A8B89A;
+    --bg: #FAF8F4;
+    --bg-section: #F2EFE8;
+    --surface: #FFFFFF;
+    --text-primary: #2C2C2C;
+    --text-secondary: #5A5A5A;
+    --text-muted: #8A8A8A;
+    --border: #DDD9D0;
+  }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--dark);
-      color: var(--text);
+      background: var(--bg);
+      color: var(--text-primary);
       font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 300;
+      font-weight: 500;
       overflow-x: hidden;
     }
 
@@ -38,15 +41,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(14,14,14,0.92);
+      background: rgba(250,248,244,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 1.1rem;
       letter-spacing: 0.15em;
-      color: var(--gold);
+      color: var(--primary);
       text-decoration: none;
       flex-shrink: 0;
       z-index: 2;
@@ -61,13 +64,13 @@
       z-index: 1;
     }
     .nav-links a {
-      color: #e2e2e2;
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
@@ -87,7 +90,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,169,110,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(92,122,62,0.07) 0%, transparent 70%);
     }
     /* diagonal line accent */
     .hero::after {
@@ -96,19 +99,19 @@
       top: 0; right: 0;
       width: 1px;
       height: 100%;
-      background: linear-gradient(to bottom, transparent, rgba(201,169,110,0.2), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(92,122,62,0.2), transparent);
     }
     .hero-label {
       font-size: 0.7rem;
       letter-spacing: 0.28em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1.4rem;
       opacity: 0;
       animation: fadeUp 0.7s 0.2s forwards;
     }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2.4rem, 5vw, 4.2rem);
       font-weight: 400;
       line-height: 1.12;
@@ -116,9 +119,9 @@
       opacity: 0;
       animation: fadeUp 0.7s 0.35s forwards;
     }
-    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p {
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.95rem;
       line-height: 1.9;
       max-width: 520px;
@@ -135,14 +138,14 @@
       margin-top: 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      background: var(--dark-2);
+      background: var(--bg-section);
       position: sticky;
       top: 60px;
       z-index: 90;
     }
     .service-nav a {
       padding: 1.1rem 2.5rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.78rem;
       letter-spacing: 0.1em;
@@ -151,8 +154,8 @@
       white-space: nowrap;
     }
     .service-nav a:hover, .service-nav a.active {
-      color: var(--gold);
-      border-bottom-color: var(--gold);
+      color: var(--primary);
+      border-bottom-color: var(--primary);
     }
 
     /* INTRO STRIP */
@@ -165,7 +168,7 @@
       gap: 2px;
     }
     .intro-item {
-      background: var(--dark-2);
+      background: var(--bg-section);
       border: 1px solid var(--border);
       padding: 2rem 1.8rem;
       text-align: center;
@@ -176,13 +179,13 @@
     .intro-item:nth-child(2) { animation-delay: 0.2s; }
     .intro-item:nth-child(3) { animation-delay: 0.3s; }
     .intro-num {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 2.4rem;
-      color: var(--gold);
+      color: var(--primary);
       display: block;
       margin-bottom: 0.3rem;
     }
-    .intro-label { font-size: 0.78rem; color: #e2e2e2; }
+    .intro-label { font-size: 0.78rem; color: var(--text-secondary); }
 
     /* SERVICE BLOCK */
     .service-block {
@@ -205,9 +208,9 @@
 
     .service-meta { }
     .service-number {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 5rem;
-      color: rgba(201,169,110,0.12);
+      color: rgba(92,122,62,0.12);
       line-height: 1;
       margin-bottom: -1.5rem;
       display: block;
@@ -215,22 +218,22 @@
     .service-eyebrow {
       font-size: 0.68rem;
       letter-spacing: 0.22em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1rem;
     }
     .service-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(1.8rem, 3vw, 2.6rem);
       font-weight: 400;
       line-height: 1.2;
       margin-bottom: 1.5rem;
     }
-    .service-title em { font-style: italic; color: var(--gold); }
+    .service-title em { font-style: italic; color: var(--primary); }
     .service-desc {
       font-size: 0.92rem;
       line-height: 1.9;
-      color: #d0ccc6;
+      color: var(--text-secondary);
       font-family: 'Noto Serif KR', serif;
       font-weight: 300;
     }
@@ -239,7 +242,7 @@
       position: relative;
     }
     .service-box {
-      background: var(--dark-2);
+      background: var(--bg-section);
       border: 1px solid var(--border);
       padding: 2.5rem;
       position: relative;
@@ -251,12 +254,12 @@
       top: 0; left: 0;
       width: 3px;
       height: 100%;
-      background: linear-gradient(to bottom, var(--gold), transparent);
+      background: linear-gradient(to bottom, var(--primary), transparent);
     }
     .service-box-title {
       font-size: 0.7rem;
       letter-spacing: 0.18em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
     }
@@ -269,14 +272,14 @@
       border-bottom: 1px solid var(--border);
       font-size: 0.86rem;
       line-height: 1.6;
-      color: #ccc;
+      color: var(--text-secondary);
     }
     .service-list li:last-child { border-bottom: none; }
     .service-list li::before {
       content: '';
       width: 5px; height: 5px;
       border-radius: 50%;
-      background: var(--gold);
+      background: var(--primary);
       flex-shrink: 0;
       margin-top: 0.55rem;
     }
@@ -288,7 +291,7 @@
     .process-title {
       font-size: 0.7rem;
       letter-spacing: 0.2em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 2rem;
     }
@@ -299,38 +302,38 @@
       background: var(--border);
     }
     .step {
-      background: var(--dark);
+      background: var(--bg);
       padding: 1.8rem 1.5rem;
       position: relative;
     }
     .step-num {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 1.6rem;
-      color: rgba(201,169,110,0.25);
+      color: rgba(92,122,62,0.25);
       display: block;
       margin-bottom: 0.6rem;
     }
     .step-name {
       font-size: 0.82rem;
-      color: var(--text);
+      color: var(--text-primary);
       font-weight: 500;
       margin-bottom: 0.5rem;
     }
-    .step-desc { font-size: 0.76rem; color: #e2e2e2; line-height: 1.65; }
+    .step-desc { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; }
 
     /* MINI REVIEW */
     .mini-review {
       margin-top: 3.5rem;
-      background: var(--dark-3);
-      border-left: 2px solid var(--gold);
+      background: var(--surface);
+      border-left: 2px solid var(--primary);
       padding: 1.8rem 2rem;
       position: relative;
     }
     .mini-review::before {
       content: '\201C';
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 3rem;
-      color: var(--gold);
+      color: var(--primary);
       opacity: 0.2;
       position: absolute;
       top: 0.5rem;
@@ -341,16 +344,16 @@
       font-family: 'Noto Serif KR', serif;
       font-size: 0.86rem;
       line-height: 1.85;
-      color: #c0bab0;
+      color: var(--text-secondary);
       margin-bottom: 1rem;
       padding-left: 0.5rem;
     }
     .mini-review-author {
       font-size: 0.72rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       letter-spacing: 0.05em;
     }
-    .mini-review-author span { color: var(--gold); }
+    .mini-review-author span { color: var(--primary); }
 
     /* COMPARISON TABLE */
     .compare-section {
@@ -359,7 +362,7 @@
     .compare-title {
       font-size: 0.7rem;
       letter-spacing: 0.2em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
     }
@@ -371,27 +374,27 @@
     .compare-table th {
       padding: 0.9rem 1.2rem;
       text-align: left;
-      background: var(--dark-2);
-      color: #e2e2e2;
+      background: var(--bg-section);
+      color: var(--text-secondary);
       font-weight: 400;
       font-size: 0.72rem;
       letter-spacing: 0.1em;
       border-bottom: 1px solid var(--border);
     }
-    .compare-table th.highlight { color: var(--gold); }
+    .compare-table th.highlight { color: var(--primary); }
     .compare-table td {
       padding: 0.9rem 1.2rem;
       border-bottom: 1px solid var(--border);
-      color: #d0ccc6;
+      color: var(--text-secondary);
       vertical-align: middle;
     }
     .compare-table tr:last-child td { border-bottom: none; }
     .compare-table td.highlight {
-      color: var(--text);
+      color: var(--text-primary);
       font-weight: 500;
     }
-    .check { color: var(--gold); font-size: 1rem; }
-    .cross { color: #555; font-size: 1rem; }
+    .check { color: var(--primary); font-size: 1rem; }
+    .cross { color: var(--text-muted); font-size: 1rem; }
 
     /* DIVIDER */
     .section-divider {
@@ -413,25 +416,25 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(201,169,110,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(92,122,62,0.06) 0%, transparent 70%);
     }
     .cta-eyebrow {
       font-size: 0.7rem;
       letter-spacing: 0.25em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
     }
     .cta-section h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 400;
       line-height: 1.2;
       margin-bottom: 1.5rem;
     }
-    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section h2 em { font-style: italic; color: var(--primary); }
     .cta-section p {
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.92rem;
       line-height: 1.85;
       max-width: 480px;
@@ -441,31 +444,31 @@
     .btn-gold {
       display: inline-block;
       padding: 0.95rem 3rem;
-      background: var(--gold);
-      color: var(--dark);
+      background: var(--primary);
+      color: #ffffff;
       font-size: 0.82rem;
       letter-spacing: 0.14em;
       text-decoration: none;
       font-weight: 500;
       transition: background 0.25s, transform 0.2s;
     }
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-gold:hover { background: var(--primary-dark); transform: translateY(-2px); }
     .btn-outline {
       display: inline-block;
       padding: 0.95rem 3rem;
-      border: 1px solid rgba(201,169,110,0.4);
-      color: var(--gold);
+      border: 1px solid var(--border);
+      color: var(--primary);
       font-size: 0.82rem;
       letter-spacing: 0.14em;
       text-decoration: none;
       transition: all 0.25s;
     }
-    .btn-outline:hover { border-color: var(--gold); background: rgba(201,169,110,0.05); transform: translateY(-2px); }
+    .btn-outline:hover { border-color: var(--primary); background: rgba(92,122,62,0.05); transform: translateY(-2px); }
 
     footer {
       text-align: center;
       padding: 2rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.75rem;
       border-top: 1px solid var(--border);
       letter-spacing: 0.05em;
@@ -506,7 +509,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--text);
+      background: var(--text-primary);
       transition: all 0.3s;
       border-radius: 0;
     }
@@ -520,8 +523,8 @@
   
     /* 후기 하이라이트 */
     .hl {
-      background: rgba(201,169,110,0.13);
-      color: #e8d5b0;
+      background: rgba(92,122,62,0.13);
+      color: var(--primary-light);
       padding: 0 3px;
       border-radius: 2px;
     }
@@ -529,9 +532,9 @@
     /* 대표 후기 (안명진님) */
     .featured-review {
       margin: 4rem 0 0;
-      background: linear-gradient(135deg, rgba(201,169,110,0.07) 0%, rgba(14,14,14,0) 100%);
-      border: 1px solid rgba(201,169,110,0.25);
-      border-left: 3px solid var(--gold);
+      background: linear-gradient(135deg, rgba(92,122,62,0.07) 0%, rgba(250,248,244,0) 100%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
       padding: 2.5rem 2.8rem;
       position: relative;
     }
@@ -540,16 +543,16 @@
       font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,169,110,0.4);
+      color: var(--primary);
+      border: 1px solid var(--border);
       padding: 3px 10px;
       margin-bottom: 1.4rem;
     }
     .featured-review::before {
       content: '\201C';
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 5rem;
-      color: var(--gold);
+      color: var(--primary);
       opacity: 0.12;
       position: absolute;
       top: 1rem;
@@ -560,34 +563,34 @@
       font-family: 'Noto Serif KR', serif;
       font-size: 0.88rem;
       line-height: 2;
-      color: #d0cac0;
+      color: var(--text-secondary);
       margin-bottom: 1.5rem;
       padding-left: 0.5rem;
     }
     .featured-review-text p { margin-bottom: 1rem; }
     .featured-review-author {
       font-size: 0.78rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       letter-spacing: 0.05em;
     }
-    .featured-review-author span { color: var(--gold); }
+    .featured-review-author span { color: var(--primary); }
 
   
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(14,14,14,.97); z-index: 99;
+    background: rgba(250,248,244,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
   .mobile-menu.open { display: flex; }
   .mobile-link {
-    color: #c9a96e; text-decoration: none;
+    color: var(--primary); text-decoration: none;
     font-family: 'Playfair Display','Cormorant Garamond',serif;
     font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
     transition: color .3s;
   }
-  .mobile-link:hover { color: #fff; }
+  .mobile-link:hover { color: var(--primary-dark); }
 </style>
 </head>
 <body>
@@ -735,7 +738,7 @@
       부부가 함께 재무제표를 작성해보니 <span class="hl">서로 몰랐던 소비 패턴과 불필요한 지출</span>을 함께 확인하게 됐어요. 보유 중인 자산 중 변환이 필요한 부분도 짚어주셨고, <span class="hl">둘이 같이 재테크 목표와 방향을 구체적으로 세우니</span> 훨씬 실천하기 좋은 계획이 만들어졌어요.
     </p>
     <div class="mini-review-author">
-      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">30대</span>
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--primary);font-size:0.7rem;margin-right:8px;">30대</span>
       <span>실제 고객 후기</span> · 대기업 직장인 부부
     </div>
   </div>
@@ -822,7 +825,7 @@
       자산 관리 능력을 키우고 싶지만 막연했는데, <span class="hl">현재 재정 상황부터 은퇴까지 단계별로 명확하고 실질적인 가이드</span>를 주셔서 정말 유익했습니다. 설명해주신 방법들이 모두 <span class="hl">바로 실천하기 좋은 실용적인 팁과 전략</span>들이어서 더더욱 도움이 됐어요.
     </p>
     <div class="mini-review-author">
-      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">20대</span>
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--primary);font-size:0.7rem;margin-right:8px;">20대</span>
       <span>실제 고객 후기</span> · 20대 직장인
     </div>
   </div>
@@ -895,7 +898,7 @@
       부부 각각 신경 안 쓰고 있던 <span class="hl">보험 관련 부분을 둘 다 한번에 정리</span>해주셔서 정말 좋았습니다. 연말정산도 함께 살펴봐 주셨고, <span class="hl">부부 공동 자산 분배와 관리 방향에 대한 큰 틀</span>을 잡을 수 있게 되었어요. 같이 오길 잘했다는 생각이 들었습니다.
     </p>
     <div class="mini-review-author">
-      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--gold);font-size:0.7rem;margin-right:8px;">40대</span>
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(201,169,110,0.18);color:var(--primary);font-size:0.7rem;margin-right:8px;">40대</span>
       <span>실제 고객 후기</span> · 대기업 직장인 부부
     </div>
   </div>

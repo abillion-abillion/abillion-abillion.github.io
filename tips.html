@@ -7,24 +7,27 @@
   <meta name="description" content="자산관리사 허머니(남진우)의 실전 재테크·금융 팁. 직장인 절세, 연금 활용, 투자 전략을 유튜브 영상과 함께 쉽게 알려드립니다." />
   <meta name="keywords" content="재테크 팁, 금융 팁, 직장인 절세, 연금 활용, 허머니, 자산관리사" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gold: #c9a96e;
-      --gold-light: #e8d5b0;
-      --dark: #0e0e0e;
-      --dark-2: #161616;
-      --dark-3: #1f1f1f;
-      --text: #e8e4dc;
-      --text-muted: #888;
-      --border: rgba(201,169,110,0.15);
-    }
+    --primary: #5C7A3E;
+    --primary-light: #7A9E58;
+    --primary-dark: #3F5B28;
+    --accent: #A8B89A;
+    --bg: #FAF8F4;
+    --bg-section: #F2EFE8;
+    --surface: #FFFFFF;
+    --text-primary: #2C2C2C;
+    --text-secondary: #5A5A5A;
+    --text-muted: #8A8A8A;
+    --border: #DDD9D0;
+  }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--dark);
-      color: var(--text);
+      background: var(--bg);
+      color: var(--text-primary);
       font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 300;
+      font-weight: 500;
       overflow-x: hidden;
     }
 
@@ -37,15 +40,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.2rem 3rem;
-      background: rgba(14,14,14,0.92);
+      background: rgba(250,248,244,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 1.1rem;
       letter-spacing: 0.15em;
-      color: var(--gold);
+      color: var(--primary);
       text-decoration: none;
       flex-shrink: 0;
       z-index: 2;
@@ -60,13 +63,13 @@
       z-index: 1;
     }
     .nav-links a {
-      color: #e2e2e2;
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
@@ -86,19 +89,19 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(201,169,110,0.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(92,122,62,0.08) 0%, transparent 70%);
     }
     .hero-label {
       font-size: 0.72rem;
       letter-spacing: 0.28em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 1.4rem;
       opacity: 0;
       animation: fadeUp 0.7s 0.2s forwards;
     }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(2.4rem, 5vw, 4rem);
       font-weight: 400;
       line-height: 1.15;
@@ -106,9 +109,9 @@
       opacity: 0;
       animation: fadeUp 0.7s 0.35s forwards;
     }
-    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero h1 em { font-style: italic; color: var(--primary); }
     .hero p {
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.95rem;
       line-height: 1.85;
       max-width: 500px;
@@ -118,7 +121,7 @@
     .hero-divider {
       width: 40px;
       height: 1px;
-      background: var(--gold);
+      background: var(--primary);
       margin: 2rem auto 0;
       opacity: 0;
       animation: fadeUp 0.7s 0.65s forwards;
@@ -136,36 +139,36 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      background: var(--dark-2);
+      background: var(--bg-section);
       border: 1px solid var(--border);
       padding: 1.5rem 2rem;
     }
     .channel-icon {
       width: 52px; height: 52px;
       border-radius: 50%;
-      background: var(--dark-3);
-      border: 1px solid rgba(201,169,110,0.4);
+      background: var(--surface);
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .channel-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .channel-icon svg { width: 22px; height: 22px; fill: var(--primary); }
     .channel-info { flex: 1; }
     .channel-name {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: 1rem;
-      color: var(--text);
+      color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
-    .channel-handle { font-size: 0.75rem; color: #e2e2e2; letter-spacing: 0.05em; }
+    .channel-handle { font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.05em; }
     .btn-subscribe {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.6rem 1.6rem;
-      background: var(--gold);
-      color: var(--dark);
+      background: var(--primary);
+      color: #ffffff;
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.78rem;
       font-weight: 500;
@@ -174,7 +177,7 @@
       transition: background 0.25s, transform 0.2s;
       white-space: nowrap;
     }
-    .btn-subscribe:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-subscribe:hover { background: var(--primary-dark); transform: translateY(-1px); }
     .btn-subscribe svg { width: 18px; height: 18px; fill: #FF0000; }
 
     /* FILTER */
@@ -189,7 +192,7 @@
       padding: 0.45rem 1.3rem;
       border: 1px solid var(--border);
       background: transparent;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.76rem;
       letter-spacing: 0.06em;
@@ -198,9 +201,9 @@
       border-radius: 2px;
     }
     .filter-btn:hover, .filter-btn.active {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201,169,110,0.06);
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(92,122,62,0.08);
     }
 
     /* VIDEO SECTION */
@@ -213,19 +216,19 @@
     .section-eyebrow {
       font-size: 0.68rem;
       letter-spacing: 0.22em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 0.7rem;
     }
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 400;
       margin-bottom: 2.5rem;
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-    .section-title em { font-style: italic; color: var(--gold); }
+    .section-title em { font-style: italic; color: var(--primary); }
 
     .videos-grid {
       display: grid;
@@ -235,7 +238,7 @@
 
     /* VIDEO CARD */
     .video-card {
-      background: var(--dark-2);
+      background: var(--bg-section);
       border: 1px solid var(--border);
       overflow: hidden;
       cursor: pointer;
@@ -245,7 +248,7 @@
       animation: fadeUp 0.6s forwards;
       position: relative;
     }
-    .video-card:hover { border-color: rgba(201,169,110,0.4); transform: translateY(-4px); }
+    .video-card:hover { border-color: rgba(92,122,62,0.4); transform: translateY(-4px); }
     .video-card:nth-child(1) { animation-delay: 0.05s; }
     .video-card:nth-child(2) { animation-delay: 0.12s; }
     .video-card:nth-child(3) { animation-delay: 0.19s; }
@@ -258,7 +261,7 @@
       width: 100%;
       aspect-ratio: 16/9;
       overflow: hidden;
-      background: var(--dark-3);
+      background: var(--surface);
     }
     .video-thumb img {
       width: 100%;
@@ -284,13 +287,13 @@
     .play-circle {
       width: 52px; height: 52px;
       border-radius: 50%;
-      background: rgba(201,169,110,0.9);
+      background: rgba(92,122,62,0.9);
       display: flex;
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(4px);
     }
-    .play-circle svg { width: 18px; height: 18px; fill: var(--dark); margin-left: 3px; }
+    .play-circle svg { width: 18px; height: 18px; fill: var(--bg); margin-left: 3px; }
 
     /* gold line at top */
     .video-card::before {
@@ -298,7 +301,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--gold);
+      background: var(--primary);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.35s ease;
@@ -310,7 +313,7 @@
     .video-tag {
       font-size: 0.65rem;
       letter-spacing: 0.12em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 0.6rem;
     }
@@ -319,12 +322,12 @@
       font-size: 0.88rem;
       font-weight: 400;
       line-height: 1.6;
-      color: var(--text);
+      color: var(--text-primary);
       margin-bottom: 0.9rem;
     }
     .video-meta {
       font-size: 0.7rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -333,7 +336,7 @@
       content: '';
       display: inline-block;
       width: 16px; height: 1px;
-      background: var(--gold);
+      background: var(--primary);
       opacity: 0.5;
     }
 
@@ -367,7 +370,7 @@
       right: 0;
       background: none;
       border: none;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.8rem;
       letter-spacing: 0.1em;
       cursor: pointer;
@@ -376,7 +379,7 @@
       gap: 0.4rem;
       transition: color 0.2s;
     }
-    .modal-close:hover { color: var(--gold); }
+    .modal-close:hover { color: var(--primary); }
     .modal-iframe-wrap {
       position: relative;
       width: 100%;
@@ -394,7 +397,7 @@
       padding: 1rem 0 0;
       font-family: 'Noto Serif KR', serif;
       font-size: 0.9rem;
-      color: var(--text);
+      color: var(--text-primary);
       line-height: 1.6;
     }
 
@@ -405,42 +408,42 @@
       border-top: 1px solid var(--border);
     }
     .cta-section h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 400;
       margin-bottom: 1rem;
     }
-    .cta-section h2 em { font-style: italic; color: var(--gold); }
-    .cta-section p { color: #e2e2e2; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
+    .cta-section h2 em { font-style: italic; color: var(--primary); }
+    .cta-section p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn-gold {
       display: inline-block;
       padding: 0.9rem 2.6rem;
-      background: var(--gold);
-      color: var(--dark);
+      background: var(--primary);
+      color: #ffffff;
       font-size: 0.82rem;
       letter-spacing: 0.12em;
       text-decoration: none;
       font-weight: 500;
       transition: background 0.25s, transform 0.2s;
     }
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-gold:hover { background: var(--primary-dark); transform: translateY(-2px); }
     .btn-outline {
       display: inline-block;
       padding: 0.9rem 2.6rem;
-      border: 1px solid var(--gold);
-      color: var(--gold);
+      border: 1px solid var(--primary);
+      color: var(--primary);
       font-size: 0.82rem;
       letter-spacing: 0.12em;
       text-decoration: none;
       transition: background 0.25s, transform 0.2s;
     }
-    .btn-outline:hover { background: rgba(201,169,110,0.08); transform: translateY(-2px); }
+    .btn-outline:hover { background: rgba(92,122,62,0.08); transform: translateY(-2px); }
 
     footer {
       text-align: center;
       padding: 2rem;
-      color: #e2e2e2;
+      color: var(--text-secondary);
       font-size: 0.75rem;
       border-top: 1px solid var(--border);
       letter-spacing: 0.05em;
@@ -458,7 +461,7 @@
       position: relative;
       overflow: hidden;
       background: linear-gradient(135deg, #0e1a2b 0%, #111823 40%, #0e0e0e 100%);
-      border: 1px solid rgba(201,169,110,0.35);
+      border: 1px solid var(--border);
       padding: 2.8rem 2.8rem 2.8rem 2.8rem;
       display: grid;
       grid-template-columns: 160px 1fr;
@@ -470,7 +473,7 @@
       position: absolute;
       top: -60px; right: -60px;
       width: 240px; height: 240px;
-      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(92,122,62,0.12) 0%, transparent 70%);
       pointer-events: none;
     }
     .ebook-inner::after {
@@ -478,7 +481,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
     }
 
     /* 책 커버 */
@@ -490,7 +493,7 @@
       width: 130px;
       aspect-ratio: 3/4;
       background: linear-gradient(160deg, #1a3a5c 0%, #0d2240 100%);
-      border: 1px solid rgba(201,169,110,0.4);
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -498,19 +501,19 @@
       padding: 1rem 0.8rem;
       text-align: center;
       position: relative;
-      box-shadow: 8px 12px 32px rgba(0,0,0,0.6), -2px 0 0 rgba(201,169,110,0.2);
+      box-shadow: 8px 12px 32px rgba(0,0,0,0.6), -2px 0 0 rgba(92,122,62,0.2);
     }
     .ebook-cover::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: var(--gold);
+      background: var(--primary);
     }
     .ebook-cover-year {
       font-size: 0.58rem;
       letter-spacing: 0.2em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 0.4rem;
     }
@@ -524,13 +527,13 @@
     }
     .ebook-cover-sub {
       font-size: 0.6rem;
-      color: var(--gold-light);
+      color: var(--primary-light);
       letter-spacing: 0.05em;
       margin-bottom: 0.7rem;
     }
     .ebook-cover-divider {
       width: 24px; height: 1px;
-      background: var(--gold);
+      background: var(--primary);
       margin: 0 auto 0.6rem;
     }
     .ebook-cover-author {
@@ -542,23 +545,23 @@
       position: absolute;
       top: -10px; right: -10px;
       width: 44px; height: 44px;
-      background: var(--gold);
+      background: var(--primary);
       border-radius: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(201,169,110,0.4);
+      box-shadow: 0 4px 12px rgba(92,122,62,0.4);
     }
     .ebook-badge span:first-child {
       font-size: 0.52rem;
       font-weight: 700;
-      color: var(--dark);
+      color: #ffffff;
       line-height: 1;
     }
     .ebook-badge span:last-child {
       font-size: 0.48rem;
-      color: var(--dark);
+      color: #ffffff;
       line-height: 1;
     }
 
@@ -567,21 +570,21 @@
     .ebook-eyebrow {
       font-size: 0.65rem;
       letter-spacing: 0.25em;
-      color: var(--gold);
+      color: var(--primary);
       text-transform: uppercase;
       margin-bottom: 0.7rem;
     }
     .ebook-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
       font-size: clamp(1.1rem, 2.5vw, 1.55rem);
       font-weight: 400;
       line-height: 1.35;
       margin-bottom: 0.8rem;
     }
-    .ebook-title em { font-style: italic; color: var(--gold); }
+    .ebook-title em { font-style: italic; color: var(--primary); }
     .ebook-desc {
       font-size: 0.82rem;
-      color: #aaa;
+      color: var(--text-muted);
       line-height: 1.75;
       margin-bottom: 1.4rem;
     }
@@ -598,8 +601,8 @@
     }
     .ebook-stat-icon {
       width: 28px; height: 28px;
-      background: rgba(201,169,110,0.1);
-      border: 1px solid rgba(201,169,110,0.25);
+      background: rgba(92,122,62,0.1);
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -610,7 +613,7 @@
     .ebook-stat-val {
       font-size: 0.8rem;
       font-weight: 500;
-      color: var(--text);
+      color: var(--text-primary);
       line-height: 1.1;
     }
     .ebook-stat-label {
@@ -636,19 +639,19 @@
       min-width: 0;
       padding: 0.7rem 1rem;
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(201,169,110,0.2);
-      color: var(--text);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.8rem;
       outline: none;
       transition: border-color 0.25s;
     }
-    .ebook-input::placeholder { color: #555; }
-    .ebook-input:focus { border-color: rgba(201,169,110,0.6); }
+    .ebook-input::placeholder { color: var(--text-muted); }
+    .ebook-input:focus { border-color: rgba(92,122,62,0.6); }
     .btn-ebook {
       padding: 0.7rem 1.6rem;
-      background: var(--gold);
-      color: var(--dark);
+      background: var(--primary);
+      color: #ffffff;
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.78rem;
       font-weight: 700;
@@ -659,11 +662,11 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .btn-ebook:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ebook:hover { background: var(--primary-dark); transform: translateY(-1px); }
     .btn-ebook:active { transform: translateY(0); }
     .ebook-privacy {
       font-size: 0.65rem;
-      color: #555;
+      color: var(--text-muted);
       margin-top: 0.6rem;
       width: 100%;
     }
@@ -674,13 +677,13 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem 1.2rem;
-      background: rgba(201,169,110,0.08);
-      border: 1px solid rgba(201,169,110,0.3);
+      background: rgba(92,122,62,0.08);
+      border: 1px solid var(--border);
       margin-top: 0.5rem;
     }
     .ebook-success.show { display: flex; }
     .ebook-success-icon { font-size: 1.4rem; }
-    .ebook-success-text { font-size: 0.82rem; color: var(--gold-light); line-height: 1.6; }
+    .ebook-success-text { font-size: 0.82rem; color: var(--primary-light); line-height: 1.6; }
 
     @media (max-width: 640px) {
       .ebook-inner {
@@ -724,7 +727,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--text);
+      background: var(--text-primary);
       transition: all 0.3s;
       border-radius: 0;
     }
@@ -739,18 +742,18 @@
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(14,14,14,.97); z-index: 99;
+    background: rgba(250,248,244,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
   .mobile-menu.open { display: flex; }
   .mobile-link {
-    color: #c9a96e; text-decoration: none;
+    color: var(--primary); text-decoration: none;
     font-family: 'Playfair Display','Cormorant Garamond',serif;
     font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
     transition: color .3s;
   }
-  .mobile-link:hover { color: #fff; }
+  .mobile-link:hover { color: var(--primary-dark); }
 </style>
 </head>
 <body>
@@ -880,7 +883,7 @@
         <div class="ebook-success-icon">✓</div>
         <div class="ebook-success-text">
           다운로드가 시작되었습니다! 📥<br/>
-          저장이 안 됐다면 <a href="#" id="retryDownload" style="color:var(--gold);text-decoration:underline;">여기를 클릭</a>해주세요.
+          저장이 안 됐다면 <a href="#" id="retryDownload" style="color:var(--primary);text-decoration:underline;">여기를 클릭</a>해주세요.
         </div>
       </div>
     </div>

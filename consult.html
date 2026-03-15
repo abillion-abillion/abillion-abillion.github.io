@@ -7,28 +7,29 @@
 <title>무료 상담 신청 | 자산관리사 허머니 남진우 JW Financial Consulting</title>
 <meta name="description" content="자산관리사 허머니(남진우)에게 무료 재무 상담을 신청하세요. 절세·투자·연금·보험 1:1 맞춤 컨설팅. jwfinancial.co.kr">
 <meta name="keywords" content="자산관리 상담, 무료 재무상담, 허머니 상담, 남진우 자산관리, JW Financial Consulting">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --gold: #B8973A;
-    --gold-light: #D4AF5A;
-    --gold-pale: #F5EDD6;
-    --dark: #0E0E0E;
-    --dark-2: #1A1A1A;
-    --dark-3: #252525;
-    --mid: #6B6B6B;
-    --light: #F0EBE1;
-    --white: #FDFAF5;
-    --border: rgba(184,151,58,0.2);
-    --error: #c0392b;
+    --primary: #5C7A3E;
+    --primary-light: #7A9E58;
+    --primary-dark: #3F5B28;
+    --accent: #A8B89A;
+    --bg: #FAF8F4;
+    --bg-section: #F2EFE8;
+    --surface: #FFFFFF;
+    --text-primary: #2C2C2C;
+    --text-secondary: #5A5A5A;
+    --text-muted: #8A8A8A;
+    --border: #DDD9D0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--dark);
-    color: var(--light);
+    background: var(--bg);
+    color: var(--text-primary);
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 300;
+    font-weight: 500;
     min-height: 100vh;
   }
 
@@ -41,15 +42,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(14,14,14,0.95);
-    border-bottom: 1px solid var(--border);
+    background: rgba(250,248,244,0.95);
     backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
   }
   .nav-logo {
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
     letter-spacing: 0.15em;
-    color: var(--gold-light);
+    color: var(--primary-light);
     text-decoration: none;
     flex-shrink: 0;
     z-index: 2;
@@ -64,13 +65,13 @@
     z-index: 1;
   }
   .nav-links a {
-    color: #e2e2e2;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     transition: color 0.3s;
   }
-  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover, .nav-links a.active { color: var(--primary-light); }
   .nav-back {
     display: flex;
     align-items: center;
@@ -78,11 +79,11 @@
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #9a9a9a;
+    color: var(--text-muted);
     text-decoration: none;
     transition: color 0.3s;
   }
-  .nav-back:hover { color: var(--gold-light); }
+  .nav-back:hover { color: var(--primary-light); }
 
   /* HERO */
   .hero {
@@ -95,7 +96,7 @@
     font-size: 10px;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--primary);
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -108,21 +109,21 @@
     display: block;
     width: 30px;
     height: 1px;
-    background: var(--gold);
+    background: var(--primary);
   }
   .hero h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(28px, 5vw, 44px);
     font-weight: 300;
     line-height: 1.2;
-    color: var(--white);
+    color: var(--text-primary);
     margin-bottom: 20px;
   }
-  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero h1 em { font-style: italic; color: var(--primary-light); }
   .hero-intro {
-    background: var(--dark-2);
+    background: var(--bg-section);
     border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
+    border-left: 3px solid var(--primary);
     padding: 28px 36px;
     text-align: left;
     margin-top: 40px;
@@ -131,15 +132,15 @@
     font-family: 'Noto Serif KR', serif;
     font-size: 13.5px;
     line-height: 2.1;
-    color: rgba(240,235,225,0.92);
+    color: var(--text-primary);
     font-weight: 300;
   }
   .hero-intro p + p { margin-top: 16px; }
-  .hero-intro strong { color: var(--gold-light); font-weight: 400; }
+  .hero-intro strong { color: var(--primary-light); font-weight: 400; }
   .hero-intro .sign {
     margin-top: 24px;
     font-size: 12px;
-    color: #9a9a9a;
+    color: var(--text-muted);
     letter-spacing: 0.05em;
     border-top: 1px solid var(--border);
     padding-top: 16px;
@@ -147,10 +148,10 @@
   .hero-intro .promise {
     margin-top: 20px;
     padding: 16px 20px;
-    background: rgba(184,151,58,0.06);
-    border: 1px solid rgba(184,151,58,0.2);
+    background: rgba(92,122,62,0.08);
+    border: 1px solid var(--border);
     font-size: 13px;
-    color: var(--gold-light);
+    color: var(--primary-light);
     font-style: italic;
     font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
@@ -176,15 +177,15 @@
     gap: 8px;
     font-size: 11px;
     letter-spacing: 0.1em;
-    color: #9a9a9a;
+    color: var(--text-muted);
     transition: color 0.3s;
   }
-  .step-dot.active { color: var(--gold-light); }
-  .step-dot.done { color: var(--gold); }
+  .step-dot.active { color: var(--primary-light); }
+  .step-dot.done { color: var(--primary); }
   .step-circle {
     width: 28px; height: 28px;
     border-radius: 50%;
-    border: 1px solid var(--mid);
+    border: 1px solid var(--text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,14 +194,14 @@
     transition: all 0.3s;
   }
   .step-dot.active .step-circle {
-    border-color: var(--gold-light);
-    background: var(--gold);
-    color: var(--dark);
+    border-color: var(--primary-light);
+    background: var(--primary);
+    color: #ffffff;
   }
   .step-dot.done .step-circle {
-    border-color: var(--gold);
-    background: rgba(184,151,58,0.15);
-    color: var(--gold);
+    border-color: var(--primary);
+    background: rgba(92,122,62,0.15);
+    color: var(--primary);
   }
   .step-line {
     flex: 1;
@@ -209,16 +210,16 @@
     margin: 0 12px;
     transition: background 0.3s;
   }
-  .step-line.done { background: var(--gold); }
+  .step-line.done { background: var(--primary); }
   .progress-bar {
     height: 2px;
-    background: var(--dark-3);
+    background: var(--surface);
     margin-top: 16px;
     overflow: hidden;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(to right, var(--gold), var(--gold-light));
+    background: linear-gradient(to right, var(--primary), var(--primary-light));
     transition: width 0.5s ease;
     width: 0%;
   }
@@ -243,7 +244,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     font-weight: 300;
-    color: var(--white);
+    color: var(--text-primary);
     margin-bottom: 32px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--border);
@@ -255,7 +256,7 @@
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--primary);
     border: 1px solid var(--border);
     padding: 4px 10px;
   }
@@ -263,12 +264,12 @@
   /* QUESTION */
   .q-block {
     margin-bottom: 36px;
-    background: var(--dark-2);
+    background: var(--bg-section);
     border: 1px solid var(--border);
     padding: 24px 28px;
     transition: border-color 0.2s;
   }
-  .q-block:focus-within { border-color: rgba(184,151,58,0.5); }
+  .q-block:focus-within { border-color: rgba(92,122,62,0.5); }
 
   .q-label {
     display: flex;
@@ -276,13 +277,13 @@
     gap: 8px;
     font-size: 14px;
     font-weight: 400;
-    color: var(--white);
+    color: var(--text-primary);
     margin-bottom: 18px;
     line-height: 1.5;
     font-family: 'Noto Serif KR', serif;
   }
   .q-label .req {
-    color: var(--gold);
+    color: var(--primary);
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
@@ -290,7 +291,7 @@
   }
   .q-sub {
     font-size: 11px;
-    color: #9a9a9a;
+    color: var(--text-muted);
     margin-bottom: 16px;
     letter-spacing: 0.05em;
   }
@@ -318,7 +319,7 @@
     padding: 10px 14px;
     cursor: pointer;
     font-size: 13px;
-    color: rgba(240,235,225,0.88);
+    color: var(--text-primary);
     border: 1px solid transparent;
     transition: all 0.2s;
     line-height: 1.4;
@@ -327,7 +328,7 @@
     content: '';
     width: 14px; height: 14px;
     border-radius: 50%;
-    border: 1px solid var(--mid);
+    border: 1px solid var(--text-muted);
     flex-shrink: 0;
     transition: all 0.2s;
   }
@@ -335,49 +336,49 @@
     content: '';
     width: 14px; height: 14px;
     border-radius: 2px;
-    border: 1px solid var(--mid);
+    border: 1px solid var(--text-muted);
     flex-shrink: 0;
     transition: all 0.2s;
   }
   .radio-item input:checked + label,
   .check-item input:checked + label {
-    color: var(--white);
-    border-color: rgba(184,151,58,0.3);
-    background: rgba(184,151,58,0.06);
+    color: var(--text-primary);
+    border-color: rgba(92,122,62,0.3);
+    background: rgba(92,122,62,0.08);
   }
   .radio-item input:checked + label::before {
-    background: var(--gold);
-    border-color: var(--gold);
-    box-shadow: inset 0 0 0 3px var(--dark-2);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: inset 0 0 0 3px var(--bg-section);
   }
   .check-item input:checked + label::before {
-    background: var(--gold);
-    border-color: var(--gold);
+    background: var(--primary);
+    border-color: var(--primary);
   }
   .radio-item label:hover, .check-item label:hover {
-    color: var(--light);
-    border-color: rgba(184,151,58,0.2);
+    color: var(--text-primary);
+    border-color: rgba(92,122,62,0.2);
   }
 
   /* TEXT INPUT */
   .text-input, .textarea-input {
     width: 100%;
-    background: var(--dark-3);
-    border: 1px solid rgba(184,151,58,0.15);
-    color: var(--light);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     padding: 12px 16px;
     font-size: 13px;
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 300;
+    font-weight: 500;
     outline: none;
     transition: border-color 0.2s;
     resize: none;
   }
   .text-input:focus, .textarea-input:focus {
-    border-color: rgba(184,151,58,0.5);
+    border-color: rgba(92,122,62,0.5);
   }
   .text-input::placeholder, .textarea-input::placeholder {
-    color: #9a9a9a;
+    color: var(--text-muted);
   }
   .textarea-input { min-height: 80px; }
 
@@ -391,34 +392,34 @@
     transition: all 0.2s;
   }
   .other-wrap:focus-within {
-    border-color: rgba(184,151,58,0.2);
-    background: rgba(184,151,58,0.04);
+    border-color: rgba(92,122,62,0.2);
+    background: rgba(92,122,62,0.04);
   }
   .other-wrap::before {
     content: '';
     width: 14px; height: 14px;
     border-radius: 2px;
-    border: 1px solid var(--mid);
+    border: 1px solid var(--text-muted);
     flex-shrink: 0;
   }
   .other-wrap.has-value::before {
-    background: var(--gold);
-    border-color: var(--gold);
+    background: var(--primary);
+    border-color: var(--primary);
   }
   .other-text {
     flex: 1;
     background: none;
     border: none;
-    border-bottom: 1px solid rgba(184,151,58,0.2);
-    color: var(--light);
+    border-bottom: 1px solid rgba(92,122,62,0.2);
+    color: var(--text-primary);
     font-size: 13px;
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 300;
+    font-weight: 500;
     padding: 4px 0;
     outline: none;
   }
-  .other-text::placeholder { color: #9a9a9a; }
-  .other-label { font-size: 13px; color: rgba(240,235,225,0.88); white-space: nowrap; }
+  .other-text::placeholder { color: var(--text-muted); }
+  .other-label { font-size: 13px; color: var(--text-primary); white-space: nowrap; }
 
   /* ERROR */
   .q-error {
@@ -444,8 +445,8 @@
     align-items: center;
     gap: 8px;
     padding: 14px 28px;
-    border: 1px solid rgba(184,151,58,0.3);
-    color: #9a9a9a;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
     background: none;
     font-size: 12px;
     letter-spacing: 0.15em;
@@ -454,15 +455,15 @@
     transition: all 0.3s;
     font-family: 'Noto Sans KR', sans-serif;
   }
-  .btn-prev:hover { color: var(--gold-light); border-color: var(--gold); }
+  .btn-prev:hover { color: var(--primary-light); border-color: var(--primary); }
 
   .btn-next {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 14px 40px;
-    background: var(--gold);
-    color: var(--dark);
+    background: var(--primary);
+    color: #ffffff;
     font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -473,7 +474,7 @@
     transition: all 0.3s;
     margin-left: auto;
   }
-  .btn-next:hover { background: var(--gold-light); gap: 16px; }
+  .btn-next:hover { background: var(--primary-light); gap: 16px; }
   .btn-next svg { transition: transform 0.3s; }
   .btn-next:hover svg { transform: translateX(3px); }
 
@@ -482,8 +483,8 @@
     align-items: center;
     gap: 10px;
     padding: 16px 48px;
-    background: var(--gold);
-    color: var(--dark);
+    background: var(--primary);
+    color: #ffffff;
     font-size: 13px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -494,7 +495,7 @@
     transition: all 0.3s;
     margin: 0 auto;
   }
-  .btn-submit:hover { background: var(--gold-light); }
+  .btn-submit:hover { background: var(--primary-dark); }
   .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* COMPLETE PAGE */
@@ -510,31 +511,31 @@
   .complete-icon {
     width: 72px; height: 72px;
     border-radius: 50%;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 32px;
-    color: var(--gold);
+    color: var(--primary);
   }
   #page-complete h2 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
     font-weight: 300;
-    color: var(--white);
+    color: var(--text-primary);
     margin-bottom: 16px;
   }
-  #page-complete h2 em { font-style: italic; color: var(--gold-light); }
+  #page-complete h2 em { font-style: italic; color: var(--primary-light); }
   #page-complete p {
     font-size: 14px;
-    color: #9a9a9a;
+    color: var(--text-muted);
     line-height: 1.9;
     margin-bottom: 40px;
   }
   .complete-box {
-    background: var(--dark-2);
+    background: var(--bg-section);
     border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
+    border-left: 3px solid var(--primary);
     padding: 24px 28px;
     text-align: left;
     margin-bottom: 32px;
@@ -543,12 +544,12 @@
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--primary);
     margin-bottom: 12px;
   }
   .complete-box p {
     font-size: 13px;
-    color: rgba(240,235,225,0.90);
+    color: var(--text-primary);
     line-height: 1.8;
     margin-bottom: 0;
   }
@@ -572,25 +573,25 @@
   .kakao-btn:hover { background: #f0d900; transform: translateY(-1px); }
   .copy-notice {
     font-size: 11px;
-    color: #9a9a9a;
+    color: var(--text-muted);
     margin-top: 12px;
     letter-spacing: 0.05em;
   }
-  .copy-notice.copied { color: var(--gold); }
+  .copy-notice.copied { color: var(--primary); }
 
-  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(184,151,58,0.3), transparent); }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(92,122,62,0.3), transparent); }
 
   footer {
-    background: var(--dark);
+    background: var(--bg-section);
     padding: 40px 60px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    border-top: 1px solid rgba(184,151,58,0.1);
+    border-top: 1px solid var(--border);
     margin-top: 80px;
   }
-  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light); }
-  .footer-copy { font-size: 11px; color: #9a9a9a; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--primary-light); }
+  .footer-copy { font-size: 11px; color: var(--text-muted); }
 
       .nav-toggle {
       display: none;
@@ -615,7 +616,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--text);
+      background: var(--text-primary);
       transition: all 0.3s;
       border-radius: 0;
     }
@@ -641,18 +642,18 @@
   /* 모바일 풀스크린 메뉴 */
   .mobile-menu {
     display: none; position: fixed; inset: 0;
-    background: rgba(14,14,14,.97); z-index: 99;
+    background: rgba(250,248,244,0.98); z-index: 99;
     flex-direction: column; align-items: center;
     justify-content: flex-start; padding-top: 5rem; gap: 2rem;
   }
   .mobile-menu.open { display: flex; }
   .mobile-link {
-    color: #c9a96e; text-decoration: none;
+    color: var(--primary); text-decoration: none;
     font-family: 'Playfair Display','Cormorant Garamond',serif;
     font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
     transition: color .3s;
   }
-  .mobile-link:hover { color: #fff; }
+  .mobile-link:hover { color: var(--primary-dark); }
 </style>
 </head>
 <body>
@@ -712,7 +713,7 @@
       나중에는 <strong>저의 도움 없이도 본인 스스로 관리할 수 있는 능력</strong>을 만들어 드릴 겁니다.
     </p>
     <div class="promise">
-  "여기까지 읽으신 분들은 상담에 <span style="font-size:1.15em;font-weight:600;color:var(--gold-light);">200%</span> 이상 만족하실 겁니다. 장담합니다."
+  "여기까지 읽으신 분들은 상담에 <span style="font-size:1.15em;font-weight:600;color:var(--primary);">200%</span> 이상 만족하실 겁니다. 장담합니다."
     </div>
     <p style="margin-top:16px">상담 전 아래 설문을 작성해주시면 <strong>더욱 원활한 상담</strong>이 됩니다.</p>
     <div class="sign">자산관리사 남진우 팀장 드림</div>
@@ -740,7 +741,7 @@
 
   <!-- PAGE 1: 기본 정보 -->
   <div class="form-page active" id="page1">
-    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--white);margin-bottom:28px;letter-spacing:0.05em;">기본 정보</h3>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--text-primary);margin-bottom:28px;letter-spacing:0.05em;">기본 정보</h3>
 
     <!-- 이름 -->
     <div class="q-block" id="q-name">
@@ -875,7 +876,7 @@
   <!-- PAGE 2: 재무 현황 -->
   <div class="form-page active" id="page2">
     <div class="section-divider-inner" style="height:1px;background:rgba(184,151,58,0.2);margin:40px 0 36px;"></div>
-    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--white);margin-bottom:28px;letter-spacing:0.05em;">재무 현황</h3>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--text-primary);margin-bottom:28px;letter-spacing:0.05em;">재무 현황</h3>
 
     <!-- 보유 금융상품 -->
     <div class="q-block" id="q-products">
@@ -1080,14 +1081,14 @@
   <p>
     소중한 답변 감사합니다. 🙏<br>
     잠시 후 카카오톡으로 자동 이동합니다.<br>
-    <strong style="color:var(--gold-light)">"설문 작성했습니다"</strong> 한 마디만 보내주시면 접수 완료입니다.
+    <strong style="color:var(--primary)">"설문 작성했습니다"</strong> 한 마디만 보내주시면 접수 완료입니다.
   </p>
 
   <div class="complete-box">
     <div class="complete-box-title">다음 단계</div>
     <p>
       1. 카카오톡 채팅창이 열립니다.<br>
-      2. <strong style="color:var(--gold-light)">"설문 작성했습니다"</strong> 메시지를 보내주세요.<br>
+      2. <strong style="color:var(--primary)">"설문 작성했습니다"</strong> 메시지를 보내주세요.<br>
       3. 확인 후 빠른 시간 내에 연락드리겠습니다. 😊
     </p>
   </div>
@@ -1099,7 +1100,7 @@
   <div class="copy-notice">자동으로 이동되지 않으면 위 버튼을 눌러주세요.</div>
 
   <div style="margin-top:40px">
-    <a href="index.html" style="font-size:12px; color:var(--mid); text-decoration:none; letter-spacing:0.1em;">← 홈으로 돌아가기</a>
+    <a href="index.html" style="font-size:12px; color:var(--text-muted); text-decoration:none; letter-spacing:0.1em;">← 홈으로 돌아가기</a>
   </div>
 </div>
 
