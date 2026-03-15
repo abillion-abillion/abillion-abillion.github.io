@@ -7,8 +7,8 @@
   <meta name="description" content="자산관리사 허머니의 재테크 칼럼. 금융 트렌드, 절세 전략, 투자 인사이트를 쉽고 명확하게 전달합니다.">
   <meta property="og:title" content="재테크 칼럼 · 허머니 자산관리">
   <meta property="og:description" content="500명 상담 경험에서 나온 실전 재테크 인사이트">
-  <meta property="og:image" content="https://abillion-abillion.github.io/og-image.png">
-  <meta property="og:url" content="https://abillion-abillion.github.io/column.html">
+  <meta property="og:image" content="https://jwfinancial.co.kr/og-image.png">
+  <meta property="og:url" content="https://jwfinancial.co.kr/column.html">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,8 +35,8 @@
       background: rgba(14,14,14,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; flex-shrink: 0; z-index: 2; }
+    .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; z-index: 1; }
     .nav-links a { color: #e2e2e2; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
     .nav-toggle {
@@ -51,8 +51,9 @@
     /* 모바일 메뉴 */
     .mobile-menu {
       display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90;
-      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
-    }
+      flex-direction: column; align-items: center; justify-content: flex-start; gap: 2.5rem;;
+    padding-top: 5rem;
+  }
     .mobile-menu.open { display: flex; }
     .mobile-link { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
     .mobile-link:hover { color: var(--gold); }
@@ -73,32 +74,6 @@
     .hero p { color: #aaa; font-size: 0.95rem; line-height: 1.85; max-width: 500px; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
     .hero-divider { width: 40px; height: 1px; background: var(--gold); margin: 2rem auto 0; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
 
-    /* NAVER BLOG BANNER */
-    .blog-banner {
-      max-width: 860px; margin: 0 auto 1rem; padding: 0 2rem;
-      opacity: 0; animation: fadeUp 0.7s 0.75s forwards;
-    }
-    .blog-inner {
-      display: flex; align-items: center; gap: 1.5rem;
-      background: var(--dark-2); border: 1px solid var(--border); padding: 1.4rem 2rem;
-    }
-    .blog-icon {
-      width: 48px; height: 48px; border-radius: 10px;
-      background: #03C75A; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .blog-icon svg { width: 26px; height: 26px; }
-    .blog-info { flex: 1; }
-    .blog-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
-    .blog-handle { font-size: 0.75rem; color: #e2e2e2; letter-spacing: 0.04em; }
-    .btn-blog {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.6rem 1.5rem; background: #03C75A; color: #fff;
-      font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; font-weight: 500;
-      letter-spacing: 0.06em; text-decoration: none;
-      transition: opacity 0.25s, transform 0.2s; white-space: nowrap; border-radius: 2px;
-    }
-    .btn-blog:hover { opacity: 0.88; transform: translateY(-1px); }
 
     /* COLUMN GRID */
     .columns-section { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 6rem; }
@@ -200,7 +175,6 @@
       .nav-links { display: none; }
       .nav-toggle { display: flex; }
       .columns-grid { grid-template-columns: 1fr; }
-      .blog-inner { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -214,7 +188,7 @@
     <li><a href="reviews.html">후기</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="column.html" class="active">칼럼</a></li>
-    <li><a href="index.html#contact">상담 신청</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
 </nav>
@@ -237,24 +211,7 @@
   <div class="hero-divider"></div>
 </section>
 
-<!-- NAVER BLOG BANNER -->
-<div class="blog-banner">
-  <div class="blog-inner">
-    <div class="blog-icon">
-      <!-- 네이버 N 로고 -->
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z" fill="white"/>
-      </svg>
-    </div>
-    <div class="blog-info">
-      <div class="blog-name">허머니 네이버 블로그</div>
-      <div class="blog-handle">실생활 재테크 · 금융 꿀팁 · 최신 이슈 정리</div>
-    </div>
-    <a href="https://blog.naver.com/moneymustard" target="_blank" class="btn-blog">
-      블로그 구독하기 →
-    </a>
-  </div>
-</div>
+
 
 <!-- COLUMNS SECTION -->
 <section class="columns-section">
@@ -423,25 +380,25 @@
       content: {
         title: '재테크 칼럼 · 허머니 자산관리',
         description: '500명 상담 경험에서 나온 실전 재테크 인사이트를 칼럼으로 정리했습니다.',
-        imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+        imageUrl: 'https://jwfinancial.co.kr/og-image.png',
         link: {
-          mobileWebUrl: 'https://abillion-abillion.github.io/column.html',
-          webUrl: 'https://abillion-abillion.github.io/column.html',
+          mobileWebUrl: 'https://jwfinancial.co.kr/column.html',
+          webUrl: 'https://jwfinancial.co.kr/column.html',
         },
       },
       buttons: [
         {
           title: '칼럼 보러가기',
           link: {
-            mobileWebUrl: 'https://abillion-abillion.github.io/column.html',
-            webUrl: 'https://abillion-abillion.github.io/column.html',
+            mobileWebUrl: 'https://jwfinancial.co.kr/column.html',
+            webUrl: 'https://jwfinancial.co.kr/column.html',
           },
         },
         {
           title: '무료 상담 신청',
           link: {
-            mobileWebUrl: 'https://abillion-abillion.github.io/consult.html',
-            webUrl: 'https://abillion-abillion.github.io/consult.html',
+            mobileWebUrl: 'https://jwfinancial.co.kr/consult.html',
+            webUrl: 'https://jwfinancial.co.kr/consult.html',
           },
         },
       ],
@@ -480,5 +437,6 @@
     });
   }
 </script>
+
 </body>
 </html>

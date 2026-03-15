@@ -7,8 +7,8 @@
   <meta name="description" content="무료 전자책 다운로드 + 무료 자산 진단 서비스. 지금 바로 받아보세요.">
   <meta property="og:title" content="무료 전자책 & 자산 진단 · 허머니">
   <meta property="og:description" content="무료 전자책 다운로드 + 10분 자산 진단으로 내 재무 상태를 점검해보세요.">
-  <meta property="og:image" content="https://abillion-abillion.github.io/og-image.png">
-  <meta property="og:url" content="https://abillion-abillion.github.io/freebie.html">
+  <meta property="og:image" content="https://jwfinancial.co.kr/og-image.png">
+  <meta property="og:url" content="https://jwfinancial.co.kr/freebie.html">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,7 +44,9 @@
     .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
-    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 90; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2.5rem;;
+    padding-top: 5rem;
+  }
     .mobile-menu.open { display: flex; }
     .mobile-link { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
     .mobile-link:hover { color: var(--gold); }
@@ -249,7 +251,7 @@
     <li><a href="reviews.html">후기</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
     <li><a href="freebie.html" class="active">무료 혜택</a></li>
-    <li><a href="index.html#contact">상담 신청</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
 </nav>
@@ -334,8 +336,8 @@
   <div class="freebie-card">
     <div class="card-header">
       <div class="card-eyebrow">Free Asset Diagnosis · 무료 자산 진단</div>
-      <div class="card-title">10분으로 알아보는<br/><em>내 재무 상태</em></div>
-      <div class="card-desc">이름과 연락처만 입력하면 진단 결과를 카카오톡으로 보내드립니다.</div>
+      <div class="card-title">30초로 알아보는<br/><em>내 재무 상태</em></div>
+      <div class="card-desc">10개 문항으로 자산·부채·투자·절세를 나이대·직업 평균과 비교해 진단합니다. 결과는 PDF로 저장할 수 있습니다.</div>
     </div>
     <div class="card-body">
       <!-- 진단 절차 -->
@@ -374,51 +376,11 @@
         </div>
       </div>
 
-      <!-- 진단 폼 -->
-      <div id="diagFormWrap">
-        <div class="form-row">
-          <input class="form-input" type="text" id="diagName" placeholder="이름" autocomplete="name" />
-          <input class="form-input" type="tel" id="diagPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
-        </div>
-        <div class="form-row">
-          <select class="form-select" id="diagAge">
-            <option value="">연령대 선택</option>
-            <option value="20대">20대</option>
-            <option value="30대">30대</option>
-            <option value="40대">40대</option>
-            <option value="50대 이상">50대 이상</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <select class="form-select" id="diagJob">
-            <option value="">직업 유형 선택</option>
-            <option value="직장인">직장인 (근로소득자)</option>
-            <option value="사업자">사업자 / 프리랜서</option>
-            <option value="공무원/교직원">공무원 / 교직원</option>
-            <option value="기타">기타</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <select class="form-select" id="diagGoal">
-            <option value="">주요 관심 분야 선택</option>
-            <option value="종잣돈 만들기">종잣돈 만들기</option>
-            <option value="절세 전략">절세 전략</option>
-            <option value="노후 준비/연금">노후 준비 / 연금</option>
-            <option value="내 집 마련">내 집 마련</option>
-            <option value="투자 포트폴리오">투자 포트폴리오 구성</option>
-          </select>
-        </div>
-        <button class="btn-submit" onclick="submitDiag()">🔍 무료 자산 진단 신청 →</button>
-        <div class="form-privacy">✦ 입력 정보는 진단 목적 외 사용되지 않습니다. 결과는 카카오톡으로 전달됩니다.</div>
-      </div>
-
-      <div class="success-box" id="diagSuccess">
-        <div class="success-icon">✓</div>
-        <div class="success-text">
-          진단 신청이 완료됐습니다! 🔍<br/>
-          1~2 영업일 내 카카오톡으로 결과를 전달드립니다.
-        </div>
-      </div>
+      <!-- 진단 시작 버튼 -->
+      <a href="diagnosis.html" class="btn-submit" style="display:block; text-align:center; text-decoration:none; margin-top:1.2rem;">
+        🔍 30초 재무진단 후 보고서 받기 →
+      </a>
+      <div class="form-privacy">✦ 10개 문항 · 30초 소요 · 결과 즉시 확인</div>
     </div>
   </div>
 
@@ -508,46 +470,6 @@
   }
 
   // ── 자산 진단 제출 ────────────────────────────────
-  async function submitDiag() {
-    const name  = document.getElementById('diagName').value.trim();
-    const phone = document.getElementById('diagPhone').value.trim();
-    const age   = document.getElementById('diagAge').value;
-    const job   = document.getElementById('diagJob').value;
-    const goal  = document.getElementById('diagGoal').value;
-
-    if (!name) { highlight('diagName'); return; }
-    if (!phone) { highlight('diagPhone'); return; }
-    if (!age) { alert('연령대를 선택해주세요.'); return; }
-    if (!job) { alert('직업 유형을 선택해주세요.'); return; }
-    if (!goal) { alert('주요 관심 분야를 선택해주세요.'); return; }
-
-    const btn = document.querySelector('#diagFormWrap .btn-submit');
-    btn.textContent = '신청 중...'; btn.disabled = true;
-
-    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-    const message =
-      `🔍 [무료 자산 진단 신청]\n` +
-      `──────────────────────\n` +
-      `👤 이름: ${name}\n` +
-      `📱 연락처: ${phone}\n` +
-      `🎂 연령대: ${age}\n` +
-      `💼 직업: ${job}\n` +
-      `🎯 관심 분야: ${goal}\n` +
-      `🕐 신청일시: ${now}`;
-
-    try {
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-      });
-    } catch (e) { console.warn('Telegram 전송 실패:', e); }
-
-    // UI 전환
-    document.getElementById('diagFormWrap').style.display = 'none';
-    document.getElementById('diagSuccess').classList.add('show');
-  }
-
   // ── 카카오 공유 ──────────────────────────────────
   function shareKakao() {
     if (!Kakao.isInitialized()) { alert('카카오 공유 초기화 중입니다. 잠시 후 다시 시도해주세요.'); return; }
@@ -556,15 +478,15 @@
       content: {
         title: '무료 전자책 & 자산 진단 · 허머니 자산관리',
         description: '무료 전자책 다운로드 + 10분 자산 진단 서비스를 지금 바로 받아보세요.',
-        imageUrl: 'https://abillion-abillion.github.io/og-image.png',
+        imageUrl: 'https://jwfinancial.co.kr/og-image.png',
         link: {
-          mobileWebUrl: 'https://abillion-abillion.github.io/freebie.html',
-          webUrl: 'https://abillion-abillion.github.io/freebie.html',
+          mobileWebUrl: 'https://jwfinancial.co.kr/freebie.html',
+          webUrl: 'https://jwfinancial.co.kr/freebie.html',
         },
       },
       buttons: [
-        { title: '무료 혜택 받기', link: { mobileWebUrl: 'https://abillion-abillion.github.io/freebie.html', webUrl: 'https://abillion-abillion.github.io/freebie.html' } },
-        { title: '무료 상담 신청', link: { mobileWebUrl: 'https://abillion-abillion.github.io/consult.html', webUrl: 'https://abillion-abillion.github.io/consult.html' } },
+        { title: '무료 혜택 받기', link: { mobileWebUrl: 'https://jwfinancial.co.kr/freebie.html', webUrl: 'https://jwfinancial.co.kr/freebie.html' } },
+        { title: '무료 상담 신청', link: { mobileWebUrl: 'https://jwfinancial.co.kr/consult.html', webUrl: 'https://jwfinancial.co.kr/consult.html' } },
       ],
     });
   }
@@ -593,5 +515,6 @@
     });
   }
 </script>
+
 </body>
 </html>

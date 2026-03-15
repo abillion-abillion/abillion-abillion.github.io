@@ -27,7 +27,7 @@
       overflow-x: hidden;
     }
 
-    /* NAV */
+        /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -46,16 +46,28 @@
       letter-spacing: 0.15em;
       color: var(--gold);
       text-decoration: none;
+      flex-shrink: 0;
+      z-index: 2;
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      z-index: 1;
+    }
     .nav-links a {
       color: #e2e2e2;
       text-decoration: none;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* HERO */
     .hero {
@@ -469,7 +481,37 @@
     @media (max-width: 600px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .nav-toggle { display: flex; }
+          .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      box-shadow: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 8px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .nav-toggle:focus { outline: none; box-shadow: none; }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.3s;
+      border-radius: 0;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
       .steps { grid-template-columns: 1fr; }
       .service-nav { overflow-x: auto; justify-content: flex-start; }
     }
@@ -528,7 +570,23 @@
     }
     .featured-review-author span { color: var(--gold); }
 
-  </style>
+  
+  /* 모바일 풀스크린 메뉴 */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0;
+    background: rgba(14,14,14,.97); z-index: 99;
+    flex-direction: column; align-items: center;
+    justify-content: flex-start; padding-top: 5rem; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-link {
+    color: #c9a96e; text-decoration: none;
+    font-family: 'Playfair Display','Cormorant Garamond',serif;
+    font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
+    transition: color .3s;
+  }
+  .mobile-link:hover { color: #fff; }
+</style>
 </head>
 <body>
 
@@ -539,6 +597,8 @@
     <li><a href="services.html" class="active">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="freebie.html">무료 혜택</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -551,6 +611,9 @@
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -575,7 +638,7 @@
 <!-- STATS -->
 <div class="intro-strip">
   <div class="intro-item">
-    <span class="intro-num">200+</span>
+    <span class="intro-num">500+</span>
     <div class="intro-label">누적 상담 고객</div>
   </div>
   <div class="intro-item">
@@ -890,5 +953,6 @@
   }
 
 </script>
+
 </body>
 </html>

@@ -38,22 +38,62 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
+        .nav-logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
       letter-spacing: 0.15em;
       color: var(--gold);
       text-decoration: none;
+      flex-shrink: 0;
+      z-index: 2;
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      z-index: 1;
+    }
     .nav-links a {
       color: #e2e2e2;
       text-decoration: none;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      box-shadow: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 8px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .nav-toggle:focus { outline: none; box-shadow: none; }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.3s;
+      border-radius: 0;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
     .hero {
       min-height: 42vh;
       display: flex;
@@ -331,7 +371,23 @@
     .featured-name { font-size: 0.82rem; color: var(--text); font-weight: 500; }
     .featured-info { font-size: 0.72rem; color: #e2e2e2; margin-top: 0.1rem; }
 
-  </style>
+  
+  /* 모바일 풀스크린 메뉴 */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0;
+    background: rgba(14,14,14,.97); z-index: 99;
+    flex-direction: column; align-items: center;
+    justify-content: flex-start; padding-top: 5rem; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-link {
+    color: #c9a96e; text-decoration: none;
+    font-family: 'Playfair Display','Cormorant Garamond',serif;
+    font-size: 1.1rem; font-weight: 400; letter-spacing: .15em;
+    transition: color .3s;
+  }
+  .mobile-link:hover { color: #fff; }
+</style>
 </head>
 <body>
 
@@ -342,6 +398,8 @@
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html" class="active">후기</a></li>
     <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="freebie.html">무료 혜택</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -354,6 +412,9 @@
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="tips.html" class="mobile-link">재테크 팁</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -362,7 +423,7 @@
   <h1>실제 고객들의<br /><em>진솔한 이야기</em></h1>
   <p>금융이 처음이었던 분들, 막연했던 재테크 고민을 안고 오셨던 분들.<br/>그분들의 변화를 담았습니다.</p>
   <div class="hero-stats">
-    <div class="stat"><span class="stat-num">200+</span><div class="stat-label">누적 상담 고객</div></div>
+    <div class="stat"><span class="stat-num">500+</span><div class="stat-label">누적 상담 고객</div></div>
     <div class="stat"><span class="stat-num">98%</span><div class="stat-label">고객 만족도</div></div>
     <div class="stat"><span class="stat-num">5년</span><div class="stat-label">전문 경력</div></div>
   </div>
@@ -667,5 +728,6 @@
   }
 
 </script>
+
 </body>
 </html>

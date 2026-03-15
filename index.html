@@ -2,12 +2,31 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<title>자산관리사 허머니 · 남진우 · JW Financial Consulting</title>
+<meta name="description" content="자산관리사 허머니(남진우) — 5년 경력 재무 컨설턴트. 절세·투자·연금·보험 1:1 맞춤 자산관리. JW Financial Consulting.">
+<meta name="keywords" content="자산관리사 허머니, 남진우, JW Financial Consulting, 자산관리, 재무컨설팅, 절세, 투자상담, 연금, 보험컨설팅, 개인자산관리, 재테크">
+<meta name="author" content="남진우 · 허머니 자산관리">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jwfinancial.co.kr/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"남진우","alternateName":["허머니","Heomoney","JW Financial Consulting"],"jobTitle":"자산관리사","url":"https://jwfinancial.co.kr/","sameAs":["https://blog.naver.com/moneymustard","https://www.youtube.com/@honeymoneymustard","https://open.kakao.com/me/Heomoney"],"description":"5년 경력 자산관리사 남진우(허머니). 개인 맞춤 재무 컨설팅, 절세 전략, 연금·투자 포트폴리오 설계."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"JW Financial Consulting","alternateName":"허머니 자산관리","url":"https://jwfinancial.co.kr/","description":"자산관리사 남진우(허머니)의 1:1 맞춤 재무 컨설팅","founder":{"@type":"Person","name":"남진우"}}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/jw_financial_briefcase_icon.svg">
-<title>J. W. Financial Consulting</title>
 
-<!-- SEO -->
-<meta name="description" content="복잡한 금융을 쉽게, 당신의 자산이 당신을 위해 일하도록. 자산관리사 남진우의 1:1 맞춤 재무 컨설팅.">
+<!-- PWA 홈화면 추가 설정 -->
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JW 자산관리">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0a2540">
+
+
+
 
 <!-- Open Graph (카카오톡·SNS 미리보기) -->
 <meta property="og:type"        content="website">
@@ -67,11 +86,18 @@
     font-size: 20px;
     letter-spacing: 0.15em;
     color: var(--gold-light);
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
   }
   .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 40px;
     list-style: none;
+    z-index: 1;
   }
   .nav-links a {
     color: #e2e2e2;
@@ -465,22 +491,33 @@
   .nav-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
     background: none;
     border: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 2;
+    flex-shrink: 0;
   }
+  .nav-toggle:focus { outline: none; box-shadow: none; }
   .nav-toggle span {
     display: block;
     width: 24px;
-    height: 1px;
+    height: 1.5px;
     background: var(--gold-light);
     transition: all 0.3s;
+    border-radius: 0;
   }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
   /* 모바일 메뉴 오버레이 */
   .mobile-menu {
@@ -491,15 +528,16 @@
     z-index: 99;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 40px;
+    justify-content: flex-start;
+    gap: 40px;;
+    padding-top: 5rem;
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
     color: var(--gold-light);
     text-decoration: none;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
+    font-size: 18px;
     font-weight: 300;
     letter-spacing: 0.15em;
     transition: color 0.3s;
@@ -528,7 +566,7 @@
 <body>
 
 <nav>
-  <div class="nav-logo">JW Financial Consulting</div>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
     <li><a href="#about">소개</a></li>
     <li><a href="services.html">서비스</a></li>
@@ -545,6 +583,7 @@
 
 <!-- 모바일 풀스크린 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">홈</a>
   <a href="#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
@@ -561,7 +600,7 @@
   <div class="hero-content">
     <div class="hero-eyebrow">Private Wealth Advisor</div>
     <h1 class="hero-name">남진우<em>.</em></h1>
-    <p class="hero-title">자산관리 컨설턴트 · 5년 경력</p>
+    <p class="hero-title">개인 자산관리 전문가</p>
     <p class="hero-desc">
       복잡한 금융의 세계를 명확하게 설명하고,<br>
       당신의 자산이 당신을 위해 일하도록 설계합니다.<br>
@@ -569,7 +608,7 @@
     </p>
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-num">200<span style="font-size:20px">+</span></div>
+        <div class="stat-num">500<span style="font-size:20px">+</span></div>
         <div class="stat-label">누적 상담 고객</div>
       </div>
       <div class="stat-item">
@@ -752,6 +791,7 @@
     });
   });
 </script>
+
 
 </body>
 </html>
