@@ -137,10 +137,10 @@
     background: linear-gradient(to bottom, transparent, rgba(92,122,62,0.3) 30%, rgba(92,122,62,0.3) 70%, transparent);
     animation: fadeIn 2s ease forwards;
   }
-  .hero-inner { display: flex; align-items: center; gap: 60px; max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  .hero-inner { display: flex; align-items: center; gap: 80px; max-width: 1100px; margin: 0 auto; padding: 80px 60px; }
   .hero-text { flex: 1; }
-  .hero-photo { flex: 0 0 340px; }
-  .hero-photo img { width: 100%; max-width: 340px; filter: grayscale(100%) contrast(1.05); border-radius: 4px; }
+  .hero-photo { flex: 0 0 380px; }
+  .hero-photo img { width: 100%; height: 560px; object-fit: cover; object-position: center top; filter: grayscale(100%) contrast(1.05); border-radius: 4px; display: block; }
   .hero-content {
     position: relative;
     z-index: 2;
@@ -579,11 +579,13 @@
     .nav-links a { font-size: 13px; letter-spacing: 0.05em; text-transform: none; }
     .nav-toggle { display: flex; }
     section { padding: 80px 30px; }
-    .hero { padding: 0 30px; }
+    .hero { padding: 0; }
     .hero-line { display: none; }
-    .hero-inner { flex-direction: column-reverse; gap: 32px; padding: 0; }
-    .hero-photo { flex: none; width: 100%; display: flex; justify-content: center; }
-    .hero-photo img { max-width: 260px; margin: 0 auto; }
+    .hero-inner { flex-direction: row; align-items: flex-start; gap: 20px; padding: 40px 20px; }
+    .hero-text { flex: 1; }
+    .hero-photo { flex: 0 0 140px; }
+    .hero-photo img { height: 200px; object-position: center top; border-radius: 4px; }
+    .hero-name { font-size: 36px; }
     .about-grid { grid-template-columns: 1fr; gap: 50px; }
     .services-grid { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
