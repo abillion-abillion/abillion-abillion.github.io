@@ -1,0 +1,279 @@
+:root {
+  --guide-primary: #5C7A3E;
+  --guide-primary-light: #7A9E58;
+  --guide-primary-dark: #3F5B28;
+  --guide-accent: #A8B89A;
+  --guide-bg: #FAF8F4;
+  --guide-surface: rgba(250, 248, 244, 0.94);
+  --guide-card: #FFFEFB;
+  --guide-text: #2C2C2C;
+  --guide-text-soft: #5A5A5A;
+  --guide-text-muted: #8A8A8A;
+  --guide-border: #DDD9D0;
+  --guide-shadow: 0 24px 60px rgba(63, 91, 40, 0.08);
+}
+
+body {
+  background:
+    radial-gradient(ellipse 65% 75% at 82% 12%, rgba(92, 122, 62, 0.12) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 55% at 12% 86%, rgba(92, 122, 62, 0.08) 0%, transparent 68%),
+    var(--guide-bg) !important;
+  color: var(--guide-text) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 38%),
+    linear-gradient(135deg, rgba(255,255,255,0.35), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+.guide-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2.25rem 1.5rem 0;
+}
+
+.guide-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem clamp(1.25rem, 3vw, 2.75rem);
+  margin: 0 auto 1.4rem;
+  border: 1px solid rgba(92, 122, 62, 0.16);
+  background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(250,248,244,0.94));
+  box-shadow: var(--guide-shadow);
+}
+
+.guide-hero::before {
+  content: '';
+  position: absolute;
+  inset: auto -12% -18% auto;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(92, 122, 62, 0.15) 0%, rgba(92, 122, 62, 0) 70%);
+}
+
+.guide-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--guide-primary), transparent);
+}
+
+.guide-hero .chip {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.95rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(92, 122, 62, 0.18);
+  background: rgba(92, 122, 62, 0.09) !important;
+  color: var(--guide-primary) !important;
+  font-family: 'Hahmlet', serif !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.18em !important;
+  margin-bottom: 1rem !important;
+}
+
+.guide-hero h1 {
+  max-width: 760px;
+  font-family: 'Hahmlet', serif !important;
+  font-size: clamp(2rem, 4.4vw, 3.45rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.18 !important;
+  color: var(--guide-text) !important;
+  margin-bottom: 0.9rem !important;
+}
+
+.guide-hero h1 span {
+  color: var(--guide-primary) !important;
+}
+
+.guide-hero .subtitle {
+  max-width: 720px;
+  font-family: 'Hahmlet', serif !important;
+  font-size: 0.95rem !important;
+  line-height: 1.9 !important;
+  color: var(--guide-text-soft) !important;
+  margin-bottom: 0 !important;
+}
+
+.guide-advisor-note {
+  max-width: 760px;
+  margin-top: 1.3rem;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--guide-primary);
+  background: rgba(92, 122, 62, 0.06);
+}
+
+.guide-advisor-label {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--guide-primary);
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+
+.guide-advisor-note p {
+  font-family: 'Hahmlet', serif;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--guide-text-soft);
+}
+
+.guide-article {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(92, 122, 62, 0.12);
+  background: var(--guide-surface);
+  box-shadow: var(--guide-shadow);
+  backdrop-filter: blur(6px);
+}
+
+.guide-article > .chip,
+.guide-article > h1,
+.guide-article > .subtitle {
+  display: none !important;
+}
+
+.guide-article > * + * {
+  margin-top: 1rem;
+}
+
+.guide-article .section-label,
+.guide-article .cost-title,
+.guide-article .tf-title,
+.guide-article .cy-title,
+.guide-article .ex-title,
+.guide-article .history-label {
+  font-family: 'Hahmlet', serif !important;
+  color: var(--guide-primary) !important;
+}
+
+.guide-article .section-label {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.22em !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.guide-article .analogy,
+.guide-article .tip,
+.guide-article .example,
+.guide-article .cost-box,
+.guide-article .tax-flow,
+.guide-article .checklist-year,
+.guide-article .result-card,
+.guide-article .cmp-card,
+.guide-article .asset-card,
+.guide-article .pf-card,
+.guide-article .ratio-card,
+.guide-article .flow-item,
+.guide-article .tl-item,
+.guide-article .dd-card,
+.guide-article .cy-month,
+.guide-article .swot-cell,
+.guide-article .analysis-box {
+  border: 1px solid rgba(92, 122, 62, 0.12) !important;
+  border-radius: 18px !important;
+  background: var(--guide-card) !important;
+  box-shadow: 0 10px 26px rgba(63, 91, 40, 0.05);
+}
+
+.guide-article .analogy,
+.guide-article .tip,
+.guide-article .example,
+.guide-article .cost-box,
+.guide-article .tax-flow,
+.guide-article .checklist-year {
+  padding: 1.2rem 1.3rem !important;
+}
+
+.guide-article p,
+.guide-article li,
+.guide-article .rc-desc,
+.guide-article .fi-desc,
+.guide-article .tl-desc,
+.guide-article .ac-desc,
+.guide-article .pf-target,
+.guide-article .tf-desc,
+.guide-article .cy-mon-desc {
+  font-family: 'Hahmlet', serif !important;
+  line-height: 1.8 !important;
+  color: var(--guide-text-soft) !important;
+}
+
+.guide-article .tip {
+  background: rgba(92, 122, 62, 0.08) !important;
+}
+
+.guide-article .tip p,
+.guide-article .tip strong {
+  color: var(--guide-text) !important;
+}
+
+.guide-article h2,
+.guide-article h3,
+.guide-article .cmp-title,
+.guide-article .pf-name,
+.guide-article .ac-name,
+.guide-article .tl-title,
+.guide-article .rc-name,
+.guide-article .ddc-title {
+  font-family: 'Hahmlet', serif !important;
+  color: var(--guide-text) !important;
+}
+
+.guide-article [class*='pct'],
+.guide-article [class*='range'],
+.guide-article [class*='val'] {
+  font-weight: 800 !important;
+}
+
+.guide-article .footer {
+  margin-top: 1.6rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(92, 122, 62, 0.12);
+  font-family: 'Hahmlet', serif !important;
+  color: var(--guide-text-muted) !important;
+}
+
+.guide-back-wrap {
+  max-width: 1180px !important;
+  margin-top: 1.2rem !important;
+}
+
+.guide-back-btn {
+  border-radius: 999px !important;
+  box-shadow: 0 12px 30px rgba(63, 91, 40, 0.05);
+}
+
+@media (max-width: 860px) {
+  .guide-shell {
+    padding: 1rem 1rem 0;
+  }
+
+  .guide-hero {
+    padding: 2rem 1.2rem;
+  }
+
+  .guide-article {
+    padding: 1rem;
+  }
+}

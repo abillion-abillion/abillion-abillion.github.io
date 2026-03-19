@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -687,7 +687,7 @@
     </div>
     <div class="guides-grid" id="customerGuidesGrid"></div>
     <div class="tools-note">
-      AI 도구 카테고리에는 빠른 소비 진단과 금융 이슈 자동 요약 도구를 함께 배치했습니다. 고객이 먼저 흐름을 이해하고 상담에 들어올 수 있게 돕는 용도입니다.
+      AI 도구 카테고리에는 빠른 소비 진단 도구를 배치했습니다. 고객이 먼저 흐름을 이해하고 상담에 들어올 수 있게 돕는 용도입니다.
     </div>
   </section>
 
@@ -735,7 +735,7 @@
     { id: 'debt', icon: '💳', title: '지출·부채 관리', desc: '대출vs투자, 수익률, 신용점수, 보험, 프리랜서', guideIds: ['guide03', 'guide12', 'guide15', 'guide13', 'guide14'] },
     { id: 'invest', icon: '📈', title: '투자 시작하기', desc: 'ETF, 적립식투자, 분산투자, 금리와 자산, 포트폴리오', guideIds: ['guide04', 'guide08', 'guide10', 'guide09', 'guide17'] },
     { id: 'life', icon: '🏠', title: '생애 이벤트', desc: '결혼자금, 내집마련, 청약, ISA/IRP/연금저축, 노후준비, 세금', guideIds: ['guide07', 'guide11', 'guide05', 'guide06', 'guide20', 'guide16'] },
-    { id: 'ai', icon: '🤖', title: 'AI 도구', desc: '소비진단기, 금융이슈 자동요약기', guideIds: ['tool01', 'tool02'] }
+    { id: 'ai', icon: '🤖', title: 'AI 도구', desc: '소비진단기', guideIds: ['tool01'] }
   ];
 
   const guides = [
@@ -759,8 +759,7 @@
     { id: 'guide06', title: '지금 집을 사야 할까?', category: '생애 이벤트', href: 'guides/guide06.html', keywords: ['내집마련', '주택', '매수', '생애 이벤트'] },
     { id: 'guide20', title: '청약통장 완전 정복', category: '생애 이벤트', href: 'guides/guide20.html', keywords: ['청약', '청약통장', '주거', '생애 이벤트'] },
     { id: 'guide16', title: '연말정산 완전 정복', category: '생애 이벤트', href: 'guides/guide16.html', keywords: ['연말정산', '세금', '공제', '생애 이벤트'] },
-    { id: 'tool01', title: '내 소비 진단 (3분)', category: 'AI 도구', href: '/spending_diagnosis.html', keywords: ['AI', '소비진단기', '소비', 'AI 도구'] },
-    { id: 'tool02', title: '이번 주 금융 이슈', category: 'AI 도구', href: '/finance_news_auto.html', keywords: ['AI', '금융뉴스', '자동요약', 'AI 도구'] }
+    { id: 'tool01', title: '내 소비 진단 (3분)', category: 'AI 도구', href: '/spending_diagnosis.html', keywords: ['AI', '소비진단기', '소비', 'AI 도구'] }
   ];
 
   const stageMap = Object.fromEntries(stages.map(stage => [stage.id, stage]));
@@ -922,3 +921,5 @@
 </script>
 </body>
 </html>
+
+

@@ -393,6 +393,88 @@
   }
   .error-box.show { display: block; }
 
+  .staff-lock {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10,15,30,0.82);
+    backdrop-filter: blur(8px);
+  }
+  .staff-lock.show { display: flex; }
+  .staff-lock-card {
+    width: min(100%, 460px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: var(--shadow-lg);
+  }
+  .staff-lock-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+  }
+  .staff-lock-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .staff-lock-desc {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .staff-lock-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  .staff-lock-input:focus { border-color: rgba(59,130,246,0.45); }
+  .staff-lock-error {
+    display: none;
+    font-size: 12px;
+    color: #fca5a5;
+    margin-bottom: 12px;
+  }
+  .staff-lock-error.show { display: block; }
+  .staff-lock-btn {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  .staff-locked {
+    overflow: hidden;
+  }
+  .staff-locked .container {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+  }
+
   /* 히스토리 */
   .history-section {
     margin-top: 32px;
@@ -621,6 +703,20 @@
   <a href="consult.html" class="site-mobile-link">상담 신청</a>
 </div>
 
+<div class="staff-lock show" id="staffLock">
+  <div class="staff-lock-card">
+    <div class="staff-lock-eyebrow">Staff Only</div>
+    <div class="staff-lock-title">직원용 금융 이슈 자동요약기</div>
+    <div class="staff-lock-desc">
+      이 페이지는 상담 준비용 내부 도구입니다.<br>
+      직원용 비밀번호를 입력해야 계속 사용할 수 있습니다.
+    </div>
+    <input class="staff-lock-input" id="staffPassword" type="password" placeholder="직원용 비밀번호" autocomplete="current-password">
+    <div class="staff-lock-error" id="staffLockError">비밀번호가 맞지 않습니다.</div>
+    <button class="staff-lock-btn" type="button" onclick="unlockStaffPage()">열고 계속하기</button>
+  </div>
+</div>
+
 <div class="container">
 
   <!-- 헤더 -->
@@ -755,6 +851,134 @@ let selectedFormat = 'kakao';
 let history = [];
 
 // ─── 토픽 선택 ──────────────────────────────────────
+const STAFF_PASSWORD = 'heomoney';
+const STAFF_SESSION_KEY = 'jw_staff_news_access';
+const TOPIC_LIBRARY = {
+  '湲덈━쨌?듯솕?뺤콉': {
+    headline: '금리와 통화정책 변화',
+    issue: '기준금리 방향과 대출·예금 금리 차이가 다시 고객 의사결정에 영향을 주는 구간입니다.',
+    impact: '대출 보유 고객은 고정·변동 구조를 점검해야 하고, 현금성 자산은 예치 기간 전략이 중요해졌습니다.',
+    action: '대출 금리, 예적금 만기, 비상금 위치를 함께 점검하도록 안내하세요.'
+  },
+  '二쇱떇쨌ETF?쒖옣': {
+    headline: '주식·ETF 시장 흐름',
+    issue: '단기 등락보다 적립식 지속 여부와 분산 구조가 더 중요한 시기입니다.',
+    impact: '고객이 최근 수익률에 흔들리기 쉬워 장기 계획 이탈 가능성이 커집니다.',
+    action: '보유 ETF 목적, 적립 주기, 비중 쏠림 여부를 먼저 확인하세요.'
+  },
+  '遺?숈궛쨌泥?빟': {
+    headline: '부동산·청약 환경',
+    issue: '매수 시점보다 자금 여력과 거주 계획의 일치 여부가 더 큰 변수입니다.',
+    impact: '무리한 대출 진입이나 청약 준비 부족이 동시에 나타날 수 있습니다.',
+    action: '현금흐름, 청약통장 상태, 실거주 계획을 같이 점검하세요.'
+  },
+  '?곌툑쨌?덉꽭': {
+    headline: '연금·절세 이슈',
+    issue: 'ISA, IRP, 연금저축 같은 절세 계좌 활용도가 상담 전환 포인트가 됩니다.',
+    impact: '고객이 세액공제나 과세이연 효과를 체감하면 실행 확률이 높아집니다.',
+    action: '소득구간과 기존 계좌 유무를 먼저 확인하고 비교표를 함께 보내세요.'
+  },
+  '?섏쑉쨌?щ윭': {
+    headline: '환율·달러 자산',
+    issue: '환율 뉴스가 커질수록 고객은 불안감으로 단기 추종 매수를 고민하기 쉽습니다.',
+    impact: '달러 자산을 목적 없이 늘리면 전체 포트폴리오 균형이 깨질 수 있습니다.',
+    action: '달러 매수 목적이 여행, 유학, 자산분산 중 무엇인지 먼저 물어보세요.'
+  },
+  '寃쎌젣吏?쑣룸Ъ媛': {
+    headline: '경제지표와 물가',
+    issue: '물가, 고용, 성장지표는 심리를 흔들지만 실제 가계 전략은 현금흐름 관리가 우선입니다.',
+    impact: '고객은 뉴스는 많이 보지만 내 지출 구조와 연결하지 못하는 경우가 많습니다.',
+    action: '뉴스 해석보다 생활비, 비상금, 투자 여력에 어떤 변화가 있는지 설명하세요.'
+  },
+  '湲덉쑖洹쒖젣쨌?뺤콉': {
+    headline: '금융규제와 제도 변경',
+    issue: '대출 규제, 세제, 제도 개편은 고객 행동을 바로 바꾸는 실무형 이슈입니다.',
+    impact: '청약, 대출, 절세 전략이 제도 변화에 따라 빠르게 바뀔 수 있습니다.',
+    action: '변경된 규정이 고객의 실행 일정에 미치는 영향부터 간단히 정리해 주세요.'
+  },
+  '媛?곸옄??': {
+    headline: '가계 자산관리 전반',
+    issue: '큰 뉴스보다 예산, 저축, 보험, 투자 배분을 한 번에 점검하는 니즈가 큽니다.',
+    impact: '고객은 정보가 많을수록 오히려 아무 것도 실행하지 못할 수 있습니다.',
+    action: '이번 주에는 한 가지 행동만 정해서 실행하도록 유도하는 편이 좋습니다.'
+  }
+};
+
+function ensureStaffAccess() {
+  const unlocked = sessionStorage.getItem(STAFF_SESSION_KEY) === 'granted';
+  document.body.classList.toggle('staff-locked', !unlocked);
+  document.getElementById('staffLock').classList.toggle('show', !unlocked);
+}
+
+function unlockStaffPage() {
+  const input = document.getElementById('staffPassword');
+  const error = document.getElementById('staffLockError');
+  if (input.value.trim() !== STAFF_PASSWORD) {
+    error.classList.add('show');
+    input.focus();
+    return;
+  }
+  sessionStorage.setItem(STAFF_SESSION_KEY, 'granted');
+  error.classList.remove('show');
+  input.value = '';
+  ensureStaffAccess();
+}
+
+function buildDigest(topics, format, extraInput) {
+  const audience = extraInput || '30~50대 직장인 고객에게 쉽게 전달할 수 있게, 행동 제안 중심으로 정리';
+  const blocks = topics.map((topic, index) => ({
+    index: index + 1,
+    meta: TOPIC_LIBRARY[topic] || TOPIC_LIBRARY['媛?곸옄??']
+  }));
+  const headerDate = new Date().toLocaleDateString('ko-KR', {
+    month: 'long',
+    day: 'numeric',
+    weekday: 'short'
+  });
+
+  if (format === 'brief') {
+    return [
+      `오늘의 금융 브리프 | ${headerDate}`,
+      '',
+      ...blocks.map(block => `${block.index}. ${block.meta.headline}: ${block.meta.issue} ${block.meta.action}`),
+      '',
+      `공유 메모: ${audience}`
+    ].join('\n');
+  }
+
+  if (format === 'newsletter') {
+    return [
+      `[${headerDate}] 이번 주 금융 체크포인트`,
+      '',
+      `이번 주에는 ${blocks.map(block => block.meta.headline).join(', ')} 이슈를 중심으로 상담 준비를 해두면 좋겠습니다.`,
+      '',
+      ...blocks.flatMap(block => ([
+        `${block.index}. ${block.meta.headline}`,
+        `${block.meta.issue}`,
+        `고객 영향: ${block.meta.impact}`,
+        `상담 포인트: ${block.meta.action}`,
+        ''
+      ])),
+      `전달 톤 가이드: ${audience}`,
+      '마무리 문구: 궁금한 주제가 있으면 이번 주 안에 바로 체크해드리겠습니다.'
+    ].join('\n');
+  }
+
+  return [
+    `이번 주 금융 이슈 빠르게 정리드릴게요. (${headerDate})`,
+    '',
+    ...blocks.flatMap(block => ([
+      `• ${block.meta.headline}`,
+      `${block.meta.issue}`,
+      `고객에게 이렇게 설명하면 좋습니다: ${block.meta.impact}`,
+      `한 줄 행동 제안: ${block.meta.action}`,
+      ''
+    ])),
+    `공유 톤 메모: ${audience}`,
+    '필요하시면 고객 상황에 맞게 더 짧게 다시 정리해드릴게요.'
+  ].join('\n');
+}
+
 document.querySelectorAll('.topic-tag').forEach(tag => {
   tag.addEventListener('click', () => {
     const topic = tag.dataset.topic;
@@ -1003,6 +1227,75 @@ function escapeHtml(str) {
     .replace(/</g,'&lt;')
     .replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;');
+}
+</script>
+
+<script>
+window.__financeNewsLocalPatched = true;
+
+async function generate() {
+  const btn = document.getElementById('generateBtn');
+  const loadingWrap = document.getElementById('loadingWrap');
+  const resultWrap = document.getElementById('resultWrap');
+  const errorBox = document.getElementById('errorBox');
+  const emptyState = document.getElementById('emptyState');
+  const extraInput = document.getElementById('extraInput').value.trim();
+
+  btn.disabled = true;
+  errorBox.classList.remove('show');
+  resultWrap.classList.remove('show');
+  emptyState.style.display = 'none';
+  loadingWrap.classList.add('show');
+
+  const steps = ['step1', 'step2', 'step3', 'step4'];
+  steps.forEach((step) => {
+    document.getElementById(step).classList.remove('visible', 'done');
+  });
+
+  let stepIdx = 0;
+  const stepTimer = setInterval(() => {
+    if (stepIdx > 0) document.getElementById(steps[stepIdx - 1]).classList.add('done');
+    if (stepIdx < steps.length) {
+      document.getElementById(steps[stepIdx]).classList.add('visible');
+      stepIdx += 1;
+    } else {
+      clearInterval(stepTimer);
+    }
+  }, 900);
+
+  try {
+    const topicsStr = selectedTopics.join(', ');
+    const fullText = buildDigest(selectedTopics, selectedFormat, extraInput);
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    clearInterval(stepTimer);
+    steps.forEach((step) => document.getElementById(step).classList.add('visible', 'done'));
+
+    setTimeout(() => {
+      loadingWrap.classList.remove('show');
+      showResult(fullText, topicsStr);
+      btn.disabled = false;
+    }, 300);
+  } catch (err) {
+    clearInterval(stepTimer);
+    loadingWrap.classList.remove('show');
+    errorBox.textContent = `오류가 발생했습니다: ${err.message}`;
+    errorBox.classList.add('show');
+    emptyState.style.display = 'block';
+    btn.disabled = false;
+  }
+}
+
+document.body.classList.add('staff-locked');
+ensureStaffAccess();
+const financeStaffPassword = document.getElementById('staffPassword');
+if (financeStaffPassword) {
+  financeStaffPassword.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      unlockStaffPage();
+    }
+  });
 }
 </script>
 
