@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 소비 진단서 — 상담 전 체크</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf8;
+  --white: #ffffff;
+  --ink: #1a1814;
+  --ink2: #3d3a34;
+  --muted: #9a9488;
+  --border: #e8e4dc;
+  --accent: #c8a96e;
+  --accent-dark: #a8893e;
+  --accent-light: #f5efe3;
+  --danger: #e05c5c;
+  --danger-light: #fdf0f0;
+  --warn: #e09e3c;
+  --warn-light: #fdf6e8;
+  --good: #5c9e7a;
+  --good-light: #edf7f2;
+  --blue: #4a7cc9;
+  --blue-light: #eef3fc;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* 상단 헤더 */
+.top-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+.top-bar-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--accent-dark);
+}
+.top-bar-step {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* 진행 바 */
+.progress-bar-wrap {
+  background: var(--border);
+  height: 3px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+/* 컨테이너 */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 섹션 */
+.section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.section-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.section-icon.gold { background: var(--accent-light); }
+.section-icon.blue { background: var(--blue-light); }
+.section-icon.green { background: var(--good-light); }
+.section-title { font-size: 16px; font-weight: 900; color: var(--ink); }
+.section-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* 인트로 */
+.intro-section {
+  background: linear-gradient(135deg, #1a1814, #2d2920);
+  border-radius: 20px;
+  padding: 36px 28px;
+  margin: 20px 0;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.intro-section::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(200,169,110,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.intro-badge {
+  display: inline-block;
+  background: rgba(200,169,110,0.2);
+  border: 1px solid rgba(200,169,110,0.4);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.intro-title em { font-style: italic; color: var(--accent); }
+.intro-desc {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+.intro-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.intro-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* 입력 필드 */
+.input-group {
+  margin-bottom: 16px;
+}
+.input-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink2);
+  margin-bottom: 8px;
+}
+.input-hint-text {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-prefix {
+  position: absolute;
+  left: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.input-field {
+  width: 100%;
+  padding: 13px 16px 13px 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  outline: none;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+}
+.input-field:focus {
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(200,169,110,0.12);
+}
+.input-unit {
+  position: absolute;
+  right: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* 실시간 수치 표시 */
+.live-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--accent-light);
+  border-radius: 10px;
+  margin-top: 8px;
+}
+.ld-label { font-size: 12px; color: var(--accent-dark); font-weight: 700; }
+.ld-value { font-size: 14px; font-weight: 900; color: var(--accent-dark); }
+
+/* 지출 항목 그리드 */
+.expense-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media(max-width:480px){ .expense-grid { grid-template-columns: 1fr; } }
+
+.expense-item {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  transition: border-color 0.2s;
+}
+.expense-item:focus-within {
+  border-color: var(--accent);
+  background: var(--white);
+}
+.ei-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ei-emoji { font-size: 18px; }
+.ei-name { font-size: 13px; font-weight: 700; color: var(--ink2); }
+.ei-input-wrap { position: relative; }
+.ei-input {
+  width: 100%;
+  padding: 9px 44px 9px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  outline: none;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+}
+.ei-input:focus { border-color: var(--accent); }
+.ei-unit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+  pointer-events: none;
+}
+.ei-pct {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+  text-align: right;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+/* 실시간 요약 바 */
+.live-summary {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 70px;
+  z-index: 50;
+}
+.ls-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.ls-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.ls-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ls-bar-label {
+  font-size: 12px;
+  color: var(--ink2);
+  width: 60px;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.ls-bar-outer {
+  flex: 1;
+  background: var(--border);
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+}
+.ls-bar-inner {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+.ls-bar-pct {
+  font-size: 12px;
+  font-weight: 900;
+  width: 36px;
+  text-align: right;
+}
+.ls-totals {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.lst-item { text-align: center; }
+.lst-label { font-size: 10px; color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+.lst-value { font-size: 15px; font-weight: 900; }
+
+/* 개인 정보 */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media(max-width:480px){ .info-row { grid-template-columns:1fr; } }
+
+.select-field {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%239a9488' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  transition: border-color 0.2s;
+}
+.select-field:focus { border-color: var(--accent); }
+
+/* 걱정/목표 체크박스 */
+.concern-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media(max-width:480px){ .concern-grid { grid-template-columns:1fr; } }
+
+.concern-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.concern-item:hover { border-color: var(--accent); }
+.concern-item.checked {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.concern-check {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.concern-item.checked .concern-check {
+  border-color: var(--accent-dark);
+  background: var(--accent-dark);
+  color: white;
+  font-size: 12px;
+}
+.concern-text { font-size: 13px; font-weight: 700; color: var(--ink2); }
+.concern-item.checked .concern-text { color: var(--accent-dark); }
+
+/* 분석 버튼 */
+.analyze-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, #1a1814, #2d2920);
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+.analyze-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+.analyze-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* 로딩 */
+.loading-section {
+  display: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 28px;
+  text-align: center;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.loading-section.show { display: block; animation: fadeUp 0.3s ease; }
+.loading-spinner {
+  width: 48px; height: 48px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 15px; font-weight: 700; color: var(--ink2); margin-bottom: 6px; }
+.loading-sub { font-size: 13px; color: var(--muted); }
+
+/* 결과 섹션 */
+.result-section {
+  display: none;
+  animation: fadeUp 0.5s ease;
+}
+.result-section.show { display: block; }
+
+/* 점수 카드 */
+.score-hero {
+  background: linear-gradient(135deg, #1a1814, #2d2920);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.score-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(200,169,110,0.15) 0%, transparent 70%);
+}
+.sh-label { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.sh-score-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.sh-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.sh-score-max { font-size: 22px; color: rgba(255,255,255,0.3); align-self: flex-end; padding-bottom: 10px; }
+.sh-grade { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.sh-comment { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+
+/* 항목별 결과 */
+.result-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+.result-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s;
+}
+.result-card:hover { transform: translateX(4px); }
+.result-card.danger { border-left: 4px solid var(--danger); background: var(--danger-light); }
+.result-card.warn { border-left: 4px solid var(--warn); background: var(--warn-light); }
+.result-card.good { border-left: 4px solid var(--good); background: var(--good-light); }
+.rc-emoji { font-size: 28px; flex-shrink:0; }
+.rc-content { flex: 1; }
+.rc-name { font-size: 14px; font-weight: 900; color: var(--ink); margin-bottom: 3px; }
+.rc-detail { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.rc-badge {
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 8px;
+  flex-shrink: 0;
+}
+.rc-badge.danger { background: var(--danger); color: white; }
+.rc-badge.warn { background: var(--warn); color: white; }
+.rc-badge.good { background: var(--good); color: white; }
+
+/* AI 진단 결과 */
+.ai-result {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.ar-header {
+  background: linear-gradient(135deg, #f5efe3, #ede6d6);
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ar-title { font-size: 14px; font-weight: 900; color: var(--accent-dark); }
+.copy-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--accent); color: white; }
+.copy-btn.copied { background: var(--good); border-color: var(--good); color: white; }
+.ar-content {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink2);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 절약 가능 하이라이트 */
+.saving-highlight {
+  background: linear-gradient(135deg, var(--good-light), #d4f0e4);
+  border: 1.5px solid var(--good);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sh-icon { font-size: 36px; flex-shrink: 0; }
+.sh-text-wrap {}
+.sh-text-label { font-size: 12px; font-weight: 700; color: var(--good); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.sh-text-amount { font-size: 28px; font-weight: 900; color: #1e5c3e; margin-bottom: 4px; }
+.sh-text-desc { font-size: 12.5px; color: #2d7a52; line-height: 1.5; }
+
+/* 다시하기 */
+.reset-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--ink2);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.2s;
+}
+.reset-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
+
+/* 에러 */
+.error-box {
+  display: none;
+  background: var(--danger-light);
+  border: 1.5px solid var(--danger);
+  border-radius: 14px;
+  padding: 14px 18px;
+  color: var(--danger);
+  font-size: 13.5px;
+  margin: 12px 0;
+  font-weight: 700;
+}
+.error-box.show { display: block; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="index.html#about">소개</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li><a href="tips.html">재테크 팁</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="guides.html" class="active">금융 가이드</a></li>
+    <li><a href="freebie.html">무료 혜택</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="index.html" class="site-mobile-link">홈</a>
+  <a href="index.html#about" class="site-mobile-link">소개</a>
+  <a href="services.html" class="site-mobile-link">서비스</a>
+  <a href="reviews.html" class="site-mobile-link">후기</a>
+  <a href="tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="column.html" class="site-mobile-link">칼럼</a>
+  <a href="guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+
+<!-- 상단 바 -->
+<div class="top-bar">
+  <div class="top-bar-logo">소비 진단서</div>
+  <div class="top-bar-step" id="topStep">STEP 1 / 3</div>
+</div>
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressBar"></div>
+</div>
+
+<div class="container">
+
+  <!-- 인트로 -->
+  <div class="intro-section">
+    <div class="intro-badge">상담 전 사전 체크</div>
+    <div class="intro-title">내 돈은 어디로<br><em>새고 있을까?</em></div>
+    <div class="intro-desc">
+      지출 내역을 입력하면 AI가 소비 패턴을 분석하고<br>
+      절약 가능한 금액과 맞춤 조언을 알려드립니다
+    </div>
+    <div class="intro-chips">
+      <span class="intro-chip">⏱ 3분이면 완료</span>
+      <span class="intro-chip">🔒 개인정보 저장 안됨</span>
+      <span class="intro-chip">📋 결과 복사해서 상담 시 활용</span>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: 기본 정보 ── -->
+  <div class="section" id="step1Section">
+    <div class="section-header">
+      <div class="section-icon gold">👤</div>
+      <div>
+        <div class="section-title">STEP 1 · 기본 정보</div>
+        <div class="section-sub">분석의 기준이 됩니다</div>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div>
+        <div class="input-label">연령대</div>
+        <select class="select-field" id="ageGroup">
+          <option value="">선택</option>
+          <option value="20대 초반">20대 초반</option>
+          <option value="20대 후반">20대 후반</option>
+          <option value="30대 초반">30대 초반</option>
+          <option value="30대 중반">30대 중반</option>
+          <option value="30대 후반">30대 후반</option>
+          <option value="40대">40대</option>
+        </select>
+      </div>
+      <div>
+        <div class="input-label">결혼 여부</div>
+        <select class="select-field" id="maritalStatus">
+          <option value="">선택</option>
+          <option value="미혼">미혼</option>
+          <option value="기혼(자녀 없음)">기혼 (자녀 없음)</option>
+          <option value="기혼(자녀 있음)">기혼 (자녀 있음)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        월 세후 수입
+        <span class="input-hint-text">실수령액 기준</span>
+      </div>
+      <div class="input-wrap">
+        <span class="input-prefix">₩</span>
+        <input type="number" class="input-field" id="income"
+          placeholder="0" min="0" oninput="updateLive()">
+        <span class="input-unit">만원</span>
+      </div>
+      <div class="live-display" id="incomeDisplay" style="display:none">
+        <span class="ld-label">월 수입</span>
+        <span class="ld-value" id="incomeVal">-</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        주요 재무 고민
+        <span class="input-hint-text">복수 선택 가능</span>
+      </div>
+      <div class="concern-grid">
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="저축이 잘 안됨">
+          <div class="concern-check"></div>
+          <div class="concern-text">💸 저축이 잘 안됨</div>
+        </div>
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="지출이 어디서 나가는지 모름">
+          <div class="concern-check"></div>
+          <div class="concern-text">🕳️ 지출 파악이 안됨</div>
+        </div>
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="대출 부담이 큼">
+          <div class="concern-check"></div>
+          <div class="concern-text">🏦 대출 부담이 큼</div>
+        </div>
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="노후·투자 준비 못함">
+          <div class="concern-check"></div>
+          <div class="concern-text">🌱 노후·투자 준비 부족</div>
+        </div>
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="월말이 되면 항상 빠듯함">
+          <div class="concern-check"></div>
+          <div class="concern-text">📅 월말이 항상 빠듯함</div>
+        </div>
+        <div class="concern-item" onclick="toggleConcern(this)" data-concern="충동구매를 자주 함">
+          <div class="concern-check"></div>
+          <div class="concern-text">🛍️ 충동구매가 잦음</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: 지출 입력 ── -->
+  <div class="section" id="step2Section">
+    <div class="section-header">
+      <div class="section-icon blue">💳</div>
+      <div>
+        <div class="section-title">STEP 2 · 이번 달 지출</div>
+        <div class="section-sub">대략적인 금액도 괜찮습니다</div>
+      </div>
+    </div>
+
+    <div class="expense-grid">
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🏠</span>
+          <span class="ei-name">주거비</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_housing"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_housing">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🍽️</span>
+          <span class="ei-name">식비</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_food"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_food">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🚇</span>
+          <span class="ei-name">교통비</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_transport"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_transport">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">☕</span>
+          <span class="ei-name">카페·술자리</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_cafe"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_cafe">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">📱</span>
+          <span class="ei-name">구독 서비스</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_sub"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_sub">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🛍️</span>
+          <span class="ei-name">쇼핑·의류</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_shopping"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_shopping">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">💊</span>
+          <span class="ei-name">의료·건강</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_health"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_health">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🛡️</span>
+          <span class="ei-name">보험료</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_insurance"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_insurance">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">📚</span>
+          <span class="ei-name">교육·자기계발</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_edu"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_edu">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">🎮</span>
+          <span class="ei-name">여가·취미</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_leisure"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_leisure">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">💳</span>
+          <span class="ei-name">대출 상환</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_loan"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_loan">수입의 -</div>
+      </div>
+
+      <div class="expense-item">
+        <div class="ei-top">
+          <span class="ei-emoji">📦</span>
+          <span class="ei-name">기타 지출</span>
+        </div>
+        <div class="ei-input-wrap">
+          <input type="number" class="ei-input" id="exp_etc"
+            placeholder="0" min="0" oninput="updateLive()">
+          <span class="ei-unit">만원</span>
+        </div>
+        <div class="ei-pct" id="pct_etc">수입의 -</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 실시간 요약 -->
+  <div class="live-summary" id="liveSummary" style="display:none">
+    <div class="ls-title">📊 실시간 현황</div>
+    <div class="ls-bars">
+      <div class="ls-bar-row">
+        <div class="ls-bar-label">지출</div>
+        <div class="ls-bar-outer">
+          <div class="ls-bar-inner" id="expenseBar" style="width:0%;background:#e05c5c;"></div>
+        </div>
+        <div class="ls-bar-pct" id="expensePct" style="color:#e05c5c">0%</div>
+      </div>
+      <div class="ls-bar-row">
+        <div class="ls-bar-label">저축 여력</div>
+        <div class="ls-bar-outer">
+          <div class="ls-bar-inner" id="savingBar" style="width:0%;background:#5c9e7a;"></div>
+        </div>
+        <div class="ls-bar-pct" id="savingPct" style="color:#5c9e7a">0%</div>
+      </div>
+    </div>
+    <div class="ls-totals">
+      <div class="lst-item">
+        <div class="lst-label">총 지출</div>
+        <div class="lst-value" id="totalExpenseDisp" style="color:var(--danger)">-</div>
+      </div>
+      <div class="lst-item">
+        <div class="lst-label">저축 여력</div>
+        <div class="lst-value" id="savingDisp" style="color:var(--good)">-</div>
+      </div>
+      <div class="lst-item">
+        <div class="lst-label">저축률</div>
+        <div class="lst-value" id="savingRateDisp" style="color:var(--blue)">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: 목표 ── -->
+  <div class="section" id="step3Section">
+    <div class="section-header">
+      <div class="section-icon green">🎯</div>
+      <div>
+        <div class="section-title">STEP 3 · 목표 & 현재 저축</div>
+        <div class="section-sub">지금 어떻게 하고 계신가요?</div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        현재 월 저축액
+        <span class="input-hint-text">투자 포함</span>
+      </div>
+      <div class="input-wrap">
+        <span class="input-prefix">₩</span>
+        <input type="number" class="input-field" id="currentSaving"
+          placeholder="0" min="0" oninput="updateLive()">
+        <span class="input-unit">만원</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">목표 월 저축액</div>
+      <div class="input-wrap">
+        <span class="input-prefix">₩</span>
+        <input type="number" class="input-field" id="targetSaving"
+          placeholder="0" min="0">
+        <span class="input-unit">만원</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">가장 줄이고 싶은 지출</div>
+      <select class="select-field" id="wantToReduce">
+        <option value="">선택 (선택사항)</option>
+        <option value="식비">🍽️ 식비</option>
+        <option value="카페·술자리">☕ 카페·술자리</option>
+        <option value="쇼핑">🛍️ 쇼핑</option>
+        <option value="구독 서비스">📱 구독 서비스</option>
+        <option value="여가·취미">🎮 여가·취미</option>
+        <option value="기타">📦 기타</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
+    🔍 &nbsp;내 소비 패턴 AI 분석하기
+  </button>
+
+  <!-- 로딩 -->
+  <div class="loading-section" id="loadingSection">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">소비 패턴을 분석하는 중입니다...</div>
+    <div class="loading-sub">AI가 맞춤 진단서를 작성하고 있습니다 ✍️</div>
+  </div>
+
+  <!-- 결과 -->
+  <div class="result-section" id="resultSection">
+
+    <!-- 점수 히어로 -->
+    <div class="score-hero" id="scoreHero">
+      <div class="sh-label">재무 건강 점수</div>
+      <div class="sh-score-wrap">
+        <div class="sh-score" id="scoreNum">0</div>
+        <div class="sh-score-max">/ 100</div>
+      </div>
+      <div class="sh-grade" id="scoreGrade">-</div>
+      <div class="sh-comment" id="scoreComment">-</div>
+    </div>
+
+    <!-- 절약 가능 금액 -->
+    <div class="saving-highlight" id="savingHighlight" style="display:none">
+      <div class="sh-icon">💰</div>
+      <div class="sh-text-wrap">
+        <div class="sh-text-label">매달 절약 가능 금액</div>
+        <div class="sh-text-amount" id="savingAmount">-</div>
+        <div class="sh-text-desc" id="savingDesc">-</div>
+      </div>
+    </div>
+
+    <!-- 항목별 카드 -->
+    <div class="result-cards" id="resultCards"></div>
+
+    <!-- AI 진단 결과 -->
+    <div class="ai-result">
+      <div class="ar-header">
+        <div class="ar-title">🤖 AI 맞춤 소비 진단서</div>
+        <button class="copy-btn" id="copyBtn" onclick="copyResult()">📋 복사</button>
+      </div>
+      <div class="ar-content" id="aiResult">분석 중...</div>
+    </div>
+
+    <button class="reset-btn" onclick="reset()">↩ 처음부터 다시 입력하기</button>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── 지출 항목 정의 ────────────────────────────
+const EXPENSES = [
+  { id:'housing',    name:'주거비',      emoji:'🏠', recommended:30, warnAt:35, dangerAt:45 },
+  { id:'food',       name:'식비',        emoji:'🍽️', recommended:12, warnAt:18, dangerAt:25 },
+  { id:'transport',  name:'교통비',      emoji:'🚇', recommended:7,  warnAt:12, dangerAt:18 },
+  { id:'cafe',       name:'카페·술자리', emoji:'☕', recommended:4,  warnAt:8,  dangerAt:12 },
+  { id:'sub',        name:'구독 서비스', emoji:'📱', recommended:2,  warnAt:4,  dangerAt:7  },
+  { id:'shopping',   name:'쇼핑·의류',  emoji:'🛍️', recommended:5,  warnAt:10, dangerAt:15 },
+  { id:'health',     name:'의료·건강',  emoji:'💊', recommended:3,  warnAt:6,  dangerAt:10 },
+  { id:'insurance',  name:'보험료',      emoji:'🛡️', recommended:7,  warnAt:10, dangerAt:15 },
+  { id:'edu',        name:'교육·자기계발', emoji:'📚', recommended:4, warnAt:8, dangerAt:12 },
+  { id:'leisure',    name:'여가·취미',   emoji:'🎮', recommended:4,  warnAt:8,  dangerAt:12 },
+  { id:'loan',       name:'대출 상환',   emoji:'💳', recommended:15, warnAt:25, dangerAt:35 },
+  { id:'etc',        name:'기타',        emoji:'📦', recommended:5,  warnAt:10, dangerAt:15 },
+];
+
+// ─── 유틸 ──────────────────────────────────────
+const $ = id => document.getElementById(id);
+const val = id => parseFloat($(id)?.value || 0) || 0;
+const fmt = n => n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '만원';
+
+function getIncome() { return val('income'); }
+function getTotalExpense() {
+  return EXPENSES.reduce((s, e) => s + val('exp_' + e.id), 0);
+}
+
+// ─── 실시간 업데이트 ────────────────────────────
+function updateLive() {
+  const income = getIncome();
+  const total = getTotalExpense();
+  const saving = income - total;
+  const savingRate = income > 0 ? (saving / income * 100) : 0;
+  const expenseRate = income > 0 ? Math.min(total / income * 100, 100) : 0;
+
+  // 수입 표시
+  if (income > 0) {
+    $('incomeDisplay').style.display = 'flex';
+    $('incomeVal').textContent = fmt(income);
+  } else {
+    $('incomeDisplay').style.display = 'none';
+  }
+
+  // 항목별 퍼센트
+  EXPENSES.forEach(e => {
+    const v = val('exp_' + e.id);
+    const pct = income > 0 ? (v / income * 100) : 0;
+    const el = $('pct_' + e.id);
+    if (!el) return;
+    el.textContent = income > 0 ? `수입의 ${pct.toFixed(1)}%` : '수입의 -';
+    el.style.color = pct > e.dangerAt ? 'var(--danger)'
+                   : pct > e.warnAt   ? 'var(--warn)'
+                   : 'var(--muted)';
+  });
+
+  // 실시간 요약
+  if (income > 0 || total > 0) {
+    $('liveSummary').style.display = 'block';
+    $('expenseBar').style.width = expenseRate + '%';
+    $('expensePct').textContent = expenseRate.toFixed(0) + '%';
+    $('savingBar').style.width = Math.max(0, savingRate) + '%';
+    $('savingPct').textContent = Math.max(0, savingRate).toFixed(0) + '%';
+    $('totalExpenseDisp').textContent = income > 0 ? fmt(total) : '-';
+    $('savingDisp').textContent = income > 0 ? (saving >= 0 ? fmt(saving) : '-' + fmt(-saving)) : '-';
+    $('savingDisp').style.color = saving >= 0 ? 'var(--good)' : 'var(--danger)';
+    $('savingRateDisp').textContent = income > 0 ? savingRate.toFixed(1) + '%' : '-';
+  }
+
+  // 진행 바
+  updateProgress();
+}
+
+function updateProgress() {
+  const income = getIncome();
+  const totalExp = getTotalExpense();
+  const curSaving = val('currentSaving');
+  let filled = 0;
+  if (income > 0) filled += 34;
+  if (totalExp > 0) filled += 33;
+  if (curSaving > 0) filled += 33;
+  $('progressBar').style.width = filled + '%';
+  const step = income > 0 && totalExp > 0 && curSaving > 0 ? 3
+             : income > 0 && totalExp > 0 ? 2 : 1;
+  $('topStep').textContent = `STEP ${step} / 3`;
+}
+
+// ─── 체크박스 ──────────────────────────────────
+function toggleConcern(el) {
+  el.classList.toggle('checked');
+  const check = el.querySelector('.concern-check');
+  check.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+function getCheckedConcerns() {
+  return [...document.querySelectorAll('.concern-item.checked')]
+    .map(el => el.dataset.concern);
+}
+
+// ─── 로컬 점수 계산 ────────────────────────────
+function calcScore(income, total, currentSaving) {
+  if (income === 0) return 50;
+  const savingRate = (income - total) / income * 100;
+  let score = 50;
+  // 저축률 기여
+  if (savingRate >= 30) score += 25;
+  else if (savingRate >= 20) score += 18;
+  else if (savingRate >= 10) score += 10;
+  else if (savingRate < 0) score -= 15;
+  // 과다 지출 페널티
+  EXPENSES.forEach(e => {
+    const pct = val('exp_' + e.id) / income * 100;
+    if (pct > e.dangerAt) score -= 4;
+    else if (pct > e.warnAt) score -= 2;
+  });
+  // 현재 저축 여부
+  if (currentSaving > 0) score += 10;
+  if (currentSaving / income >= 0.2) score += 10;
+  return Math.min(100, Math.max(10, Math.round(score)));
+}
+
+function getGrade(score) {
+  if (score >= 85) return { grade:'💎 재무 우등생', comment:'훌륭합니다! 지출 구조가 매우 탄탄합니다.\n조금만 더 최적화하면 완벽한 재무 구조가 됩니다.' };
+  if (score >= 70) return { grade:'✅ 양호한 수준', comment:'전반적으로 괜찮지만 몇 가지 개선 포인트가 있습니다.\n조정하면 저축 여력이 눈에 띄게 늘어납니다.' };
+  if (score >= 55) return { grade:'⚠️ 개선이 필요해요', comment:'지출 구조에 새는 구멍이 보입니다.\n2~3가지만 조정해도 월 저축이 크게 달라질 수 있습니다.' };
+  return { grade:'🚨 즉시 점검이 필요해요', comment:'지출이 수입을 위협하고 있습니다.\n지금 당장 구조 개편이 필요합니다.\n상담을 통해 함께 해결책을 찾아드리겠습니다.' };
+}
+
+// ─── 항목별 결과 카드 생성 ─────────────────────
+function buildResultCards(income) {
+  const cards = [];
+  EXPENSES.forEach(e => {
+    const v = val('exp_' + e.id);
+    if (v <= 0) return;
+    const pct = income > 0 ? (v / income * 100) : 0;
+    const type = pct > e.dangerAt ? 'danger' : pct > e.warnAt ? 'warn' : 'good';
+    const badgeText = type === 'danger' ? '⚠ 과다 지출' : type === 'warn' ? '주의 필요' : '적정 수준';
+    const detail = type === 'danger'
+      ? `권장(${e.recommended}%)보다 ${(pct - e.recommended).toFixed(1)}%p 초과. 월 ${(v - income * e.recommended / 100).toFixed(0)}만원 절감 가능`
+      : type === 'warn'
+      ? `조금 높은 편입니다. 권장 기준 ${e.recommended}% 이내로 관리해보세요`
+      : `적정 범위 안에 있습니다. 잘 관리되고 있어요`;
+    cards.push(`
+      <div class="result-card ${type}">
+        <div class="rc-emoji">${e.emoji}</div>
+        <div class="rc-content">
+          <div class="rc-name">${e.name} — ${fmt(v)} (${pct.toFixed(1)}%)</div>
+          <div class="rc-detail">${detail}</div>
+        </div>
+        <div class="rc-badge ${type}">${badgeText}</div>
+      </div>
+    `);
+  });
+  // 위험→주의→양호 순으로 정렬
+  return cards.join('');
+}
+
+// ─── 절약 가능 금액 계산 ──────────────────────
+function calcSavingPotential(income) {
+  if (income === 0) return 0;
+  let potential = 0;
+  EXPENSES.forEach(e => {
+    const v = val('exp_' + e.id);
+    const pct = v / income * 100;
+    if (pct > e.dangerAt) {
+      potential += v - (income * e.warnAt / 100);
+    }
+  });
+  return Math.max(0, Math.round(potential));
+}
+
+// ─── 메인 분석 함수 ────────────────────────────
+async function analyze() {
+  const income = getIncome();
+  if (income === 0) {
+    showError('월 수입을 입력해주세요.');
+    return;
+  }
+  const total = getTotalExpense();
+  if (total === 0) {
+    showError('지출 항목을 하나 이상 입력해주세요.');
+    return;
+  }
+
+  hideError();
+  $('analyzeBtn').disabled = true;
+  $('loadingSection').classList.add('show');
+  $('resultSection').classList.remove('show');
+
+  // 로컬 계산 먼저
+  const score = calcScore(income, total, val('currentSaving'));
+  const { grade, comment } = getGrade(score);
+  const savingPotential = calcSavingPotential(income);
+  const savingRate = ((income - total) / income * 100).toFixed(1);
+
+  // 데이터 정리
+  const expData = EXPENSES.map(e => {
+    const v = val('exp_' + e.id);
+    const pct = income > 0 ? (v / income * 100).toFixed(1) : 0;
+    return v > 0 ? `${e.name}: ${v}만원 (${pct}%)` : null;
+  }).filter(Boolean).join('\n');
+
+  const concerns = getCheckedConcerns();
+  const age = $('ageGroup').value;
+  const marital = $('maritalStatus').value;
+  const currentSaving = val('currentSaving');
+  const targetSaving = val('targetSaving');
+  const wantReduce = $('wantToReduce').value;
+
+  const prompt = `당신은 경험 많은 자산관리사입니다. 고객의 소비 데이터를 분석하고 진단서를 작성해주세요.
+
+[고객 기본 정보]
+- 연령대: ${age || '미입력'}
+- 결혼 여부: ${marital || '미입력'}
+- 월 수입(세후): ${income}만원
+- 현재 월 저축액: ${currentSaving}만원
+- 목표 월 저축액: ${targetSaving || '미설정'}만원
+- 현재 저축률: ${savingRate}%
+- 재무 고민: ${concerns.length > 0 ? concerns.join(', ') : '미입력'}
+- 줄이고 싶은 지출: ${wantReduce || '미입력'}
+
+[이번 달 지출 내역]
+${expData}
+
+[총계]
+- 총 지출: ${total}만원 (수입의 ${(total/income*100).toFixed(1)}%)
+- 저축 여력: ${income - total}만원
+- 재무 건강 점수: ${score}/100점
+
+---
+
+다음 형식으로 진단서를 작성해주세요:
+
+📋 소비 패턴 진단서
+
+[한 줄 핵심 요약]
+→ 이 고객의 재무 상황을 한 문장으로
+
+🔍 소비 패턴 분석
+지출 구조의 특징과 문제점을 2~3가지 구체적으로 설명
+
+⚠️ 즉시 개선 필요 항목
+가장 시급하게 줄여야 할 지출 1~2가지, 구체적인 절약 방법 제시
+
+💡 이렇게 하면 됩니다
+실천 가능한 3가지 행동 제안 (구체적인 금액 포함)
+
+🎯 목표 달성 시뮬레이션
+제안대로 실천했을 때 월 저축액이 얼마나 늘어나는지
+
+📞 상담 포인트
+자산관리사 상담 시 꼭 다뤄야 할 핵심 주제 2가지
+
+---
+말투: 따뜻하고 솔직하게. 전문용어 없이. 구체적인 숫자 포함.
+길이: 500~700자`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const e = await res.json();
+      throw new Error(e.error?.message || `오류 (${res.status})`);
+    }
+
+    const data = await res.json();
+    const aiText = data.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+
+    $('loadingSection').classList.remove('show');
+
+    // 점수 표시
+    $('scoreNum').textContent = score;
+    $('scoreGrade').textContent = grade;
+    $('scoreComment').textContent = comment;
+
+    // 절약 가능 금액
+    if (savingPotential > 0) {
+      $('savingHighlight').style.display = 'flex';
+      $('savingAmount').textContent = `월 최대 ${savingPotential}만원`;
+      $('savingDesc').textContent = `과다 지출 항목을 권장 수준으로만 조정해도\n연간 ${savingPotential * 12}만원을 더 저축할 수 있습니다`;
+    }
+
+    // 항목별 카드
+    $('resultCards').innerHTML = buildResultCards(income);
+
+    // AI 결과
+    $('aiResult').textContent = aiText;
+
+    $('resultSection').classList.add('show');
+    $('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch(err) {
+    $('loadingSection').classList.remove('show');
+    showError('분석 중 오류가 발생했습니다: ' + err.message);
+    $('analyzeBtn').disabled = false;
+  }
+}
+
+function copyResult() {
+  const text = $('aiResult').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = $('copyBtn');
+    btn.textContent = '✅ 복사됨';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 복사';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function reset() {
+  document.querySelectorAll('input[type=number]').forEach(el => el.value = '');
+  document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+  document.querySelectorAll('.concern-item').forEach(el => {
+    el.classList.remove('checked');
+    el.querySelector('.concern-check').textContent = '';
+  });
+  $('liveSummary').style.display = 'none';
+  $('incomeDisplay').style.display = 'none';
+  $('resultSection').classList.remove('show');
+  $('errorBox').classList.remove('show');
+  $('analyzeBtn').disabled = false;
+  $('progressBar').style.width = '0%';
+  $('topStep').textContent = 'STEP 1 / 3';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  EXPENSES.forEach(e => {
+    const el = $('pct_' + e.id);
+    if (el) { el.textContent = '수입의 -'; el.style.color = 'var(--muted)'; }
+  });
+}
+
+function showError(msg) {
+  $('errorBox').textContent = '⚠️ ' + msg;
+  $('errorBox').classList.add('show');
+}
+function hideError() {
+  $('errorBox').classList.remove('show');
+}
+</script>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분산투자, 왜 해야 하고 어떻게 하나</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#ecfdf5; color:#059669; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#059669; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px; }
+@media(max-width:560px){ .compare-grid { grid-template-columns:1fr; } }
+.cmp-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; }
+.cmp-card.bad { border-top:4px solid #ef4444; }
+.cmp-card.good { border-top:4px solid #059669; box-shadow:0 0 0 3px #ecfdf5; }
+.cmp-title { font-size:14px; font-weight:900; margin-bottom:14px; }
+.cmp-card.bad .cmp-title { color:#ef4444; }
+.cmp-card.good .cmp-title { color:#059669; }
+.cmp-scenario { background:#f8fafc; border-radius:10px; padding:12px; margin-bottom:12px; font-size:12.5px; color:#475569; line-height:1.6; }
+.cmp-result { font-size:13px; font-weight:700; padding:8px 12px; border-radius:8px; }
+.cmp-card.bad .cmp-result { background:#fef2f2; color:#ef4444; }
+.cmp-card.good .cmp-result { background:#ecfdf5; color:#059669; }
+
+.asset-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:26px; }
+@media(max-width:560px){ .asset-grid { grid-template-columns:1fr; } }
+.asset-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:16px; text-align:center; }
+.ac-emoji { font-size:28px; margin-bottom:8px; display:block; }
+.ac-name { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:6px; }
+.ac-desc { font-size:11.5px; color:#64748b; line-height:1.5; margin-bottom:8px; }
+.ac-role { font-size:11px; font-weight:700; padding:3px 10px; border-radius:8px; }
+.role-growth { background:#eff6ff; color:#2563eb; }
+.role-safe { background:#f0fdf4; color:#059669; }
+.role-hedge { background:#fef3c7; color:#d97706; }
+
+.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px; }
+@media(max-width:560px){ .portfolio-grid { grid-template-columns:1fr; } }
+.pf-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px; }
+.pf-type { font-size:11px; font-weight:700; letter-spacing:1px; color:#94a3b8; text-transform:uppercase; margin-bottom:6px; }
+.pf-name { font-size:14px; font-weight:900; color:#0f172a; margin-bottom:12px; }
+.pf-bar-wrap { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.pf-bar-row { display:flex; align-items:center; gap:8px; }
+.pf-bar-label { font-size:11px; color:#64748b; width:60px; flex-shrink:0; }
+.pf-bar { flex:1; height:8px; border-radius:4px; background:#f1f5f9; overflow:hidden; }
+.pf-bar-fill { height:100%; border-radius:4px; }
+.pf-bar-pct { font-size:11px; font-weight:700; color:#0f172a; width:30px; text-align:right; }
+.pf-target { font-size:12px; color:#64748b; }
+
+.tip { background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#064e3b; line-height:1.8; }
+.tip strong { color:#059669; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">투자 원칙</div>
+<h1>분산투자,<br><span>왜 해야 하고 어떻게 할까?</span></h1>
+<p class="subtitle">달걀을 한 바구니에 담지 말라 — 투자의 가장 기본적인 원칙</p>
+
+<div class="analogy">
+  <div class="icon">🧺</div>
+  <p><strong>"달걀을 한 바구니에 담지 마라"</strong> — 바구니를 떨어뜨리면 모두 깨집니다. 여러 바구니에 나눠 담으면 하나를 떨어뜨려도 나머지는 안전합니다. 투자도 같습니다.</p>
+</div>
+
+<div class="section-label">집중 투자 vs 분산 투자 — 실제 시나리오</div>
+<div class="compare-grid">
+  <div class="cmp-card bad">
+    <div class="cmp-title">❌ 집중 투자 (한 종목 올인)</div>
+    <div class="cmp-scenario">1,000만원 전부를 A 회사 주식에 투자<br>→ A 회사 실적 악화 발표<br>→ 주가 -60% 하락<br>→ 자산 400만원 남음</div>
+    <div class="cmp-result">손실: -600만원 (-60%)</div>
+  </div>
+  <div class="cmp-card good">
+    <div class="cmp-title">✅ 분산 투자 (ETF로 500개 기업)</div>
+    <div class="cmp-scenario">1,000만원을 S&P500 ETF에 투자<br>→ 그 중 A 회사 비중 0.2%<br>→ A 회사 -60% 하락해도<br>→ 전체 포트폴리오 영향 미미</div>
+    <div class="cmp-result">영향: 거의 없음 (-0.12%)</div>
+  </div>
+</div>
+
+<div class="section-label">분산의 3가지 축 — 무엇을 나눌까</div>
+<div class="asset-grid">
+  <div class="asset-card">
+    <span class="ac-emoji">🌍</span>
+    <div class="ac-name">지역 분산</div>
+    <div class="ac-desc">미국·한국·유럽·신흥국 등 여러 나라에 투자</div>
+    <div class="ac-role role-growth">리스크 분산</div>
+  </div>
+  <div class="asset-card">
+    <span class="ac-emoji">📦</span>
+    <div class="ac-name">자산 분산</div>
+    <div class="ac-desc">주식·채권·현금·부동산을 함께 보유</div>
+    <div class="ac-role role-safe">변동성 완화</div>
+  </div>
+  <div class="asset-card">
+    <span class="ac-emoji">📅</span>
+    <div class="ac-name">시간 분산</div>
+    <div class="ac-desc">한 번에 사지 않고 매달 나눠서 적립</div>
+    <div class="ac-role role-hedge">타이밍 제거</div>
+  </div>
+</div>
+
+<div class="section-label">상황별 추천 포트폴리오</div>
+<div class="portfolio-grid">
+  <div class="pf-card">
+    <div class="pf-type">20~30대 초반</div>
+    <div class="pf-name">공격형</div>
+    <div class="pf-bar-wrap">
+      <div class="pf-bar-row"><span class="pf-bar-label">미국ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:70%;background:#2563eb;"></div></div><span class="pf-bar-pct">70%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">글로벌ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:20%;background:#059669;"></div></div><span class="pf-bar-pct">20%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">채권ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:10%;background:#f59e0b;"></div></div><span class="pf-bar-pct">10%</span></div>
+    </div>
+    <div class="pf-target">장기 성장 극대화 목표</div>
+  </div>
+  <div class="pf-card">
+    <div class="pf-type">30대 중반~40대</div>
+    <div class="pf-name">중립형</div>
+    <div class="pf-bar-wrap">
+      <div class="pf-bar-row"><span class="pf-bar-label">미국ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:50%;background:#2563eb;"></div></div><span class="pf-bar-pct">50%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">글로벌ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:20%;background:#059669;"></div></div><span class="pf-bar-pct">20%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">채권ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:30%;background:#f59e0b;"></div></div><span class="pf-bar-pct">30%</span></div>
+    </div>
+    <div class="pf-target">성장+안정 균형 목표</div>
+  </div>
+  <div class="pf-card">
+    <div class="pf-type">은퇴 5년 전</div>
+    <div class="pf-name">안정형</div>
+    <div class="pf-bar-wrap">
+      <div class="pf-bar-row"><span class="pf-bar-label">미국ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:30%;background:#2563eb;"></div></div><span class="pf-bar-pct">30%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">채권ETF</span><div class="pf-bar"><div class="pf-bar-fill" style="width:40%;background:#f59e0b;"></div></div><span class="pf-bar-pct">40%</span></div>
+      <div class="pf-bar-row"><span class="pf-bar-label">현금·예금</span><div class="pf-bar"><div class="pf-bar-fill" style="width:30%;background:#94a3b8;"></div></div><span class="pf-bar-pct">30%</span></div>
+    </div>
+    <div class="pf-target">자산 보전 우선 목표</div>
+  </div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>분산투자의 핵심은 상관관계가 낮은 자산끼리 묶는 것입니다.</strong><br>
+  주식이 오를 때 채권은 내리고, 달러가 오를 때 원화 자산은 내립니다. 이렇게 반대로 움직이는 자산을 함께 보유하면 전체 변동성이 줄어듭니다. <strong>ETF 하나로 수백 개 기업에 분산</strong>하는 것이 가장 쉬운 시작점입니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

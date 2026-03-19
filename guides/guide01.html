@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월급쟁이 돈 관리 기본 구조</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f7f8fc;
+    color: #1a1a2e;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 36px 24px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .chip {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: #0f172a;
+  }
+  h1 span { color: #2563eb; }
+  .subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 32px;
+  }
+
+  /* ANALOGY */
+  .analogy {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .analogy .icon { font-size: 28px; flex-shrink: 0; }
+  .analogy p { font-size: 13.5px; color: #475569; line-height: 1.7; }
+  .analogy strong { color: #0f172a; }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .flow-item {
+    flex: 1;
+    min-width: 120px;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-item .fi-emoji { font-size: 28px; margin-bottom: 8px; display: block; }
+  .flow-item .fi-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 4px;
+  }
+  .flow-item .fi-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 6px;
+  }
+  .flow-item .fi-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  .flow-arrow {
+    font-size: 20px;
+    color: #cbd5e1;
+    flex-shrink: 0;
+    padding: 0 6px;
+  }
+  .flow-item.highlight {
+    border-color: #2563eb;
+    background: #eff6ff;
+  }
+  .flow-item.highlight .fi-title { color: #2563eb; }
+
+  /* RATIO SECTION */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 14px;
+  }
+  .ratio-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  @media(max-width:580px){ .ratio-cards { grid-template-columns:1fr; } }
+
+  .ratio-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .ratio-card .rc-pct {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .ratio-card .rc-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .ratio-card .rc-bar {
+    height: 6px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    background: #f1f5f9;
+    overflow: hidden;
+  }
+  .ratio-card .rc-bar-fill { height: 100%; border-radius: 4px; }
+  .ratio-card .rc-items { text-align: left; display: flex; flex-direction: column; gap: 5px; }
+  .ratio-card .rc-item {
+    font-size: 12px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ratio-card .rc-item::before { content: '•'; font-size: 16px; }
+
+  .rc1 .rc-pct { color: #ef4444; }
+  .rc1 .rc-bar-fill { background: #ef4444; width: 50%; }
+  .rc1 .rc-item::before { color: #ef4444; }
+
+  .rc2 .rc-pct { color: #f59e0b; }
+  .rc2 .rc-bar-fill { background: #f59e0b; width: 30%; }
+  .rc2 .rc-item::before { color: #f59e0b; }
+
+  .rc3 .rc-pct { color: #10b981; }
+  .rc3 .rc-bar-fill { background: #10b981; width: 20%; }
+  .rc3 .rc-item::before { color: #10b981; }
+
+  /* ACCOUNTS TABLE */
+  .accounts {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+  .accounts-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 14px;
+  }
+  .account-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .account-row:last-child { border-bottom: none; }
+  .ar-emoji { font-size: 22px; flex-shrink: 0; }
+  .ar-name { font-size: 13px; font-weight: 700; color: #0f172a; min-width: 80px; }
+  .ar-desc { font-size: 12px; color: #64748b; flex: 1; }
+  .ar-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .badge-red { background: #fef2f2; color: #ef4444; }
+  .badge-yellow { background: #fffbeb; color: #d97706; }
+  .badge-green { background: #f0fdf4; color: #10b981; }
+
+  /* TIP */
+  .tip {
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+  .tip .tip-icon { font-size: 22px; flex-shrink: 0; }
+  .tip p { font-size: 13px; color: #1e40af; line-height: 1.8; }
+  .tip strong { color: #1d4ed8; }
+
+  /* EXAMPLE */
+  .example {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+  .example-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 14px; }
+  .ex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+  }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-label { color: #64748b; }
+  .ex-val { font-weight: 700; color: #0f172a; }
+  .ex-val.red { color: #ef4444; }
+  .ex-val.yellow { color: #d97706; }
+  .ex-val.green { color: #10b981; }
+  .ex-val.blue { color: #2563eb; }
+
+  .footer { text-align: center; font-size: 11px; color: #94a3b8; margin-top: 24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+
+<div class="chip">기초 재무 설계</div>
+<h1>월급 받으면<br><span>어떻게 쪼개야 할까?</span></h1>
+<p class="subtitle">30대 직장인을 위한 돈 관리 기본 구조 — 처음 한 번만 제대로 세팅하면 됩니다</p>
+
+<div class="analogy">
+  <div class="icon">🚰</div>
+  <p>월급은 <strong>수도꼭지에서 나오는 물</strong>입니다. 양동이(저축)와 화분(투자)에 먼저 채우고, 나머지를 써야 합니다. 반대로 하면 항상 월말에 물이 없습니다.</p>
+</div>
+
+<!-- FLOW -->
+<div class="section-label">돈의 흐름 — 월급날 순서</div>
+<div class="flow">
+  <div class="flow-item">
+    <span class="fi-emoji">💰</span>
+    <div class="fi-label">STEP 1</div>
+    <div class="fi-title">월급 입금</div>
+    <div class="fi-desc">급여 통장<br>수령</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item highlight">
+    <span class="fi-emoji">🏦</span>
+    <div class="fi-label">STEP 2 (즉시)</div>
+    <div class="fi-title">저축·투자 먼저</div>
+    <div class="fi-desc">자동이체<br>당일 설정</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">
+    <span class="fi-emoji">🛒</span>
+    <div class="fi-label">STEP 3</div>
+    <div class="fi-title">고정비 납부</div>
+    <div class="fi-desc">월세·보험·<br>통신비 등</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">
+    <span class="fi-emoji">☕</span>
+    <div class="fi-label">STEP 4</div>
+    <div class="fi-title">나머지로 생활</div>
+    <div class="fi-desc">남은 돈만<br>소비</div>
+  </div>
+</div>
+
+<!-- RATIO -->
+<div class="section-label">권장 비율 — 50 : 30 : 20 법칙</div>
+<div class="ratio-cards">
+  <div class="ratio-card rc1">
+    <div class="rc-pct">50%</div>
+    <div class="rc-name">필수 지출</div>
+    <div class="rc-bar"><div class="rc-bar-fill"></div></div>
+    <div class="rc-items">
+      <div class="rc-item">주거비 (월세·관리비)</div>
+      <div class="rc-item">식비·교통비</div>
+      <div class="rc-item">통신비·보험료</div>
+    </div>
+  </div>
+  <div class="ratio-card rc2">
+    <div class="rc-pct">30%</div>
+    <div class="rc-name">저축·비상금</div>
+    <div class="rc-bar"><div class="rc-bar-fill"></div></div>
+    <div class="rc-items">
+      <div class="rc-item">비상금 (CMA·파킹통장)</div>
+      <div class="rc-item">목돈 저축 (적금·ISA)</div>
+      <div class="rc-item">결혼·주택 마련 자금</div>
+    </div>
+  </div>
+  <div class="ratio-card rc3">
+    <div class="rc-pct">20%</div>
+    <div class="rc-name">투자·노후</div>
+    <div class="rc-bar"><div class="rc-bar-fill"></div></div>
+    <div class="rc-items">
+      <div class="rc-item">연금저축·IRP 납입</div>
+      <div class="rc-item">ETF 적립식 투자</div>
+      <div class="rc-item">여유 자금 운용</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNTS -->
+<div class="accounts">
+  <div class="accounts-title">💳 통장 3개만 있으면 됩니다</div>
+  <div class="account-row">
+    <div class="ar-emoji">🏧</div>
+    <div class="ar-name">급여 통장</div>
+    <div class="ar-desc">월급 받는 곳. 들어오는 즉시 다른 통장으로 이체. 잔액 최소화.</div>
+    <div class="ar-badge badge-red">소비용</div>
+  </div>
+  <div class="account-row">
+    <div class="ar-emoji">🏦</div>
+    <div class="ar-name">비상금 통장</div>
+    <div class="ar-desc">CMA 또는 파킹통장. 월급의 3~6개월치 목표. 절대 건드리지 않기.</div>
+    <div class="ar-badge badge-yellow">비상용</div>
+  </div>
+  <div class="account-row">
+    <div class="ar-emoji">📈</div>
+    <div class="ar-name">투자 통장</div>
+    <div class="ar-desc">ISA·연금저축 계좌. 매달 자동이체로 ETF 매수. 10년 이상 장기 운용.</div>
+    <div class="ar-badge badge-green">투자용</div>
+  </div>
+</div>
+
+<!-- EXAMPLE -->
+<div class="section-label">실전 예시 — 월급 300만원인 경우</div>
+<div class="example">
+  <div class="example-title">📊 월급 300만원 배분 예시</div>
+  <div class="ex-row"><span class="ex-label">💰 월급 수령</span><span class="ex-val blue">+ 3,000,000원</span></div>
+  <div class="ex-row"><span class="ex-label">🏠 필수 지출 (50%)</span><span class="ex-val red">- 1,500,000원</span></div>
+  <div class="ex-row"><span class="ex-label">🏦 저축·비상금 (30%)</span><span class="ex-val yellow">- 900,000원</span></div>
+  <div class="ex-row"><span class="ex-label">📈 투자·연금 (20%)</span><span class="ex-val green">- 600,000원</span></div>
+  <div class="ex-row"><span class="ex-label">☕ 잔여 생활비</span><span class="ex-val blue">= 0원 (계획 소비 완료)</span></div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p>
+    <strong>핵심은 자동화입니다.</strong><br>
+    월급날 → 저축·투자 자동이체 → 남은 돈으로만 생활<br>
+    이 루틴 한 번만 세팅하면, 의지력 없이도 돈이 쌓입니다.<br>
+    비율이 정확하지 않아도 됩니다. <strong>일단 시작하는 것</strong>이 가장 중요합니다.
+  </p>
+</div>
+
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

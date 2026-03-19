@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>금융사기 예방 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#fef2f2; color:#dc2626; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#dc2626; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.fraud-types { display:flex; flex-direction:column; gap:14px; margin-bottom:26px; }
+.ft-card { background:#fff; border:1.5px solid #fecaca; border-radius:14px; overflow:hidden; }
+.ft-header { background:#fef2f2; padding:14px 18px; display:flex; align-items:center; gap:12px; }
+.ft-emoji { font-size:24px; }
+.ft-name { font-size:14px; font-weight:900; color:#dc2626; }
+.ft-body { padding:16px 18px; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:560px){ .ft-body { grid-template-columns:1fr; } }
+.ft-section-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.ft-section-label.pattern { color:#dc2626; }
+.ft-section-label.defense { color:#059669; }
+.ft-text { font-size:12.5px; color:#475569; line-height:1.6; }
+
+.red-flags { background:#fff; border:1.5px solid #fecaca; border-radius:14px; padding:20px; margin-bottom:26px; }
+.rf-title { font-size:13px; font-weight:700; color:#dc2626; margin-bottom:14px; }
+.rf-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media(max-width:560px){ .rf-grid { grid-template-columns:1fr; } }
+.rf-item { background:#fef2f2; border-radius:10px; padding:12px; display:flex; gap:8px; align-items:flex-start; }
+.rf-icon { font-size:18px; flex-shrink:0; }
+.rf-text { font-size:12.5px; color:#7f1d1d; font-weight:700; line-height:1.4; }
+
+.emergency { background:#0f172a; border-radius:14px; padding:22px; margin-bottom:26px; }
+.em-title { font-size:13px; font-weight:700; color:#fbbf24; margin-bottom:14px; }
+.em-steps { display:flex; flex-direction:column; gap:10px; }
+.em-step { display:flex; gap:12px; align-items:flex-start; }
+.em-num { width:28px; height:28px; border-radius:50%; background:#dc2626; color:#fff; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.em-text { font-size:13px; color:#e2e8f0; line-height:1.6; }
+.em-text strong { color:#fff; }
+.em-phone { background:#1e293b; border-radius:10px; padding:12px; margin-top:12px; }
+.ep-row { display:flex; justify-content:space-between; font-size:13px; padding:6px 0; border-bottom:1px solid #334155; }
+.ep-row:last-child { border-bottom:none; }
+.ep-label { color:#94a3b8; }
+.ep-num { font-weight:900; color:#fbbf24; }
+
+.tip { background:#fef2f2; border:1.5px solid #fecaca; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#7f1d1d; line-height:1.8; }
+.tip strong { color:#dc2626; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">금융사기 예방</div>
+<h1>이것만 알면<br><span>금융사기 99% 예방됩니다</span></h1>
+<p class="subtitle">수익률이 높을수록, 빠를수록, 비밀일수록 — 사기입니다</p>
+
+<div class="analogy">
+  <div class="icon">🚨</div>
+  <p>금융사기는 <strong>"욕심"과 "두려움"을 동시에 자극</strong>합니다. "지금 안 하면 손해", "남들은 다 벌고 있다" — 이런 감정이 느껴지는 순간이 가장 위험한 순간입니다.</p>
+</div>
+
+<div class="section-label">대표적인 금융사기 유형과 대응법</div>
+<div class="fraud-types">
+  <div class="ft-card">
+    <div class="ft-header"><div class="ft-emoji">📱</div><div class="ft-name">리딩방 사기 (SNS 투자 유도)</div></div>
+    <div class="ft-body">
+      <div>
+        <div class="ft-section-label pattern">🔴 패턴</div>
+        <div class="ft-text">카카오톡·텔레그램으로 "VIP 리딩방" 초대. 처음엔 소액 수익을 보여줌. 큰 금액 투자 유도 후 잠적.</div>
+      </div>
+      <div>
+        <div class="ft-section-label defense">✅ 대응</div>
+        <div class="ft-text">모르는 사람이 초대한 투자 채팅방은 즉시 나가기. 금융당국에 등록된 업체인지 반드시 확인.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft-card">
+    <div class="ft-header"><div class="ft-emoji">📞</div><div class="ft-name">보이스피싱 (전화 금융사기)</div></div>
+    <div class="ft-body">
+      <div>
+        <div class="ft-section-label pattern">🔴 패턴</div>
+        <div class="ft-text">검찰·경찰·금감원 사칭. "당신 통장이 범죄에 사용됨". 개인정보·계좌번호·OTP 요구. 현금 이체 유도.</div>
+      </div>
+      <div>
+        <div class="ft-section-label defense">✅ 대응</div>
+        <div class="ft-text">정부기관은 전화로 계좌 이체를 절대 요구하지 않음. 의심되면 전화 끊고 직접 해당 기관에 전화.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft-card">
+    <div class="ft-header"><div class="ft-emoji">💰</div><div class="ft-name">고수익 투자 사기 (폰지 사기)</div></div>
+    <div class="ft-body">
+      <div>
+        <div class="ft-section-label pattern">🔴 패턴</div>
+        <div class="ft-text">"월 10~30% 확정 수익". 초기에 실제 이익 지급으로 신뢰 형성. 지인 소개 유도. 결국 전액 손실.</div>
+      </div>
+      <div>
+        <div class="ft-section-label defense">✅ 대응</div>
+        <div class="ft-text">연 10% 이상 "확정 수익"은 세상에 없음. 원금보장+고수익은 100% 사기. 주변에 소개받아도 의심.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft-card">
+    <div class="ft-header"><div class="ft-emoji">🏦</div><div class="ft-name">대출 빙자 사기</div></div>
+    <div class="ft-body">
+      <div>
+        <div class="ft-section-label pattern">🔴 패턴</div>
+        <div class="ft-text">"저금리 대출 가능". 수수료·보증금 선납 요구. 신용등급 올려준다며 돈 이체 요구.</div>
+      </div>
+      <div>
+        <div class="ft-section-label defense">✅ 대응</div>
+        <div class="ft-text">합법 금융사는 대출 전 수수료를 절대 요구하지 않음. 선입금 요구는 100% 사기.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="red-flags">
+  <div class="rf-title">🚩 이 말이 들리면 즉시 의심하세요</div>
+  <div class="rf-grid">
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"원금 보장 + 고수익"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"지금 안 하면 기회 없어요"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"비밀리에 진행해야 해요"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"OTP·비밀번호 알려주세요"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"선수수료 입금하면 대출 가능"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"금감원이 조사 중이니 이체하세요"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"주변에 소개하면 추가 수익"</div></div>
+    <div class="rf-item"><div class="rf-icon">🚩</div><div class="rf-text">"월 20~30% 수익 보장"</div></div>
+  </div>
+</div>
+
+<div class="emergency">
+  <div class="em-title">🚨 피해 발생 시 즉시 행동 순서</div>
+  <div class="em-steps">
+    <div class="em-step"><div class="em-num">1</div><div class="em-text"><strong>즉시 해당 은행에 전화</strong> — 지급정지 신청 (24시간 가능)</div></div>
+    <div class="em-step"><div class="em-num">2</div><div class="em-text"><strong>경찰청 신고</strong> — 112 또는 사이버범죄신고센터</div></div>
+    <div class="em-step"><div class="em-num">3</div><div class="em-text"><strong>금융감독원 신고</strong> — 1332 (금융사기 피해신고)</div></div>
+    <div class="em-step"><div class="em-num">4</div><div class="em-text"><strong>증거 보관</strong> — 대화내용·계좌이체 내역·연락처 캡처 보관</div></div>
+  </div>
+  <div class="em-phone">
+    <div class="ep-row"><span class="ep-label">금융감독원 불법금융신고</span><span class="ep-num">1332</span></div>
+    <div class="ep-row"><span class="ep-label">경찰청 사이버수사</span><span class="ep-num">182</span></div>
+    <div class="ep-row"><span class="ep-label">금융결제원 계좌정보통합</span><span class="ep-num">1577-5500</span></div>
+  </div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>좋은 투자 기회는 서두르지 않습니다.</strong><br>
+  진짜 좋은 투자는 내일도, 다음 달도 가능합니다. "지금 이 순간만 가능하다"는 말은 사기의 신호입니다.<br>
+  <strong>의심스러우면 가족·지인에게 먼저 이야기하세요.</strong> 사기꾼은 항상 "비밀로 하라"고 합니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

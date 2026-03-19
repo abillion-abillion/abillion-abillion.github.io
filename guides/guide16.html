@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>직장인이 꼭 알아야 할 세금 기초 + 연말정산</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#f3e8ff; color:#7c3aed; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#7c3aed; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.tax-flow { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:22px; margin-bottom:26px; }
+.tf-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:16px; }
+.tf-steps { display:flex; flex-direction:column; gap:8px; }
+.tf-step { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; }
+.tf-step.s1 { background:#fef2f2; }
+.tf-step.s2 { background:#fff7ed; }
+.tf-step.s3 { background:#fefce8; }
+.tf-step.s4 { background:#f0fdf4; }
+.tf-step.s5 { background:#eff6ff; }
+.tf-label { font-size:12px; font-weight:700; min-width:120px; }
+.tf-step.s1 .tf-label { color:#ef4444; }
+.tf-step.s2 .tf-label { color:#ea580c; }
+.tf-step.s3 .tf-label { color:#ca8a04; }
+.tf-step.s4 .tf-label { color:#16a34a; }
+.tf-step.s5 .tf-label { color:#2563eb; }
+.tf-desc { font-size:12px; color:#475569; }
+.tf-arrow { text-align:center; color:#94a3b8; font-size:16px; }
+
+.deduction-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:26px; }
+@media(max-width:560px){ .deduction-grid { grid-template-columns:1fr; } }
+.dd-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px; }
+.ddc-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:4px; }
+.ddc-subtitle { font-size:11px; color:#94a3b8; margin-bottom:12px; }
+.ddc-row { display:flex; justify-content:space-between; font-size:12.5px; padding:7px 0; border-bottom:1px solid #f1f5f9; }
+.ddc-row:last-child { border-bottom:none; }
+.ddc-label { color:#475569; }
+.ddc-val { font-weight:700; color:#7c3aed; }
+
+.checklist-year { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; margin-bottom:26px; }
+.cy-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:14px; }
+.cy-months { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+@media(max-width:560px){ .cy-months { grid-template-columns:1fr; } }
+.cy-month { border-radius:10px; padding:12px; }
+.cy-month.q1 { background:#f0fdf4; }
+.cy-month.q2 { background:#eff6ff; }
+.cy-month.q3 { background:#fef3c7; }
+.cy-month.q4 { background:#fef2f2; }
+.cy-mon-label { font-size:11px; font-weight:700; margin-bottom:6px; }
+.cy-month.q1 .cy-mon-label { color:#16a34a; }
+.cy-month.q2 .cy-mon-label { color:#2563eb; }
+.cy-month.q3 .cy-mon-label { color:#d97706; }
+.cy-month.q4 .cy-mon-label { color:#ef4444; }
+.cy-mon-desc { font-size:11.5px; color:#475569; line-height:1.5; }
+
+.tip { background:#f3e8ff; border:1.5px solid #ddd6fe; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#4c1d95; line-height:1.8; }
+.tip strong { color:#7c3aed; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">세금 & 연말정산</div>
+<h1>직장인이 꼭 알아야 할<br><span>세금 기초 + 연말정산 완전정복</span></h1>
+<p class="subtitle">13월의 월급을 최대로 받으려면 미리 준비해야 합니다</p>
+
+<div class="analogy">
+  <div class="icon">🧾</div>
+  <p>연말정산은 <strong>"1년 동안 낸 세금을 정산하는 것"</strong>입니다. 더 낸 세금은 돌려받고, 덜 낸 세금은 더 냅니다. 공제 항목을 잘 챙기면 수십~수백만원을 돌려받을 수 있습니다.</p>
+</div>
+
+<div class="section-label">소득세 계산 흐름</div>
+<div class="tax-flow">
+  <div class="tf-title">💰 내 세금이 계산되는 과정</div>
+  <div class="tf-steps">
+    <div class="tf-step s1"><span class="tf-label">총급여</span><span class="tf-desc">연봉 전체 (4,000만원)</span></div>
+    <div class="tf-arrow">↓ 근로소득공제 차감</div>
+    <div class="tf-step s2"><span class="tf-label">근로소득금액</span><span class="tf-desc">총급여에서 기본공제 차감 (약 2,775만원)</span></div>
+    <div class="tf-arrow">↓ 소득공제 차감</div>
+    <div class="tf-step s3"><span class="tf-label">과세표준</span><span class="tf-desc">각종 공제 후 세금 계산 기준 금액</span></div>
+    <div class="tf-arrow">↓ 세율 적용</div>
+    <div class="tf-step s4"><span class="tf-label">산출세액</span><span class="tf-desc">과세표준 × 세율 (6~45%)</span></div>
+    <div class="tf-arrow">↓ 세액공제 차감</div>
+    <div class="tf-step s5"><span class="tf-label">최종 납부세액</span><span class="tf-desc">여기서 원천징수세액 빼면 환급/납부 결정</span></div>
+  </div>
+</div>
+
+<div class="section-label">핵심 공제 항목 — 이것만 챙겨도 수백만원</div>
+<div class="deduction-grid">
+  <div class="dd-card">
+    <div class="ddc-title">💰 세액공제 (직접 세금 감소)</div>
+    <div class="ddc-subtitle">납부세액에서 바로 빼주는 것 — 효과 최강</div>
+    <div class="ddc-row"><span class="ddc-label">연금저축 (600만원)</span><span class="ddc-val">최대 99만원</span></div>
+    <div class="ddc-row"><span class="ddc-label">IRP 추가 (300만원)</span><span class="ddc-val">최대 49.5만원</span></div>
+    <div class="ddc-row"><span class="ddc-label">자녀 세액공제</span><span class="ddc-val">1명 15만원~</span></div>
+    <div class="ddc-row"><span class="ddc-label">월세 세액공제</span><span class="ddc-val">최대 90만원</span></div>
+    <div class="ddc-row"><span class="ddc-label">의료비 세액공제</span><span class="ddc-val">15~20%</span></div>
+  </div>
+  <div class="dd-card">
+    <div class="ddc-title">📋 소득공제 (과세표준 감소)</div>
+    <div class="ddc-subtitle">세금 계산 전 소득을 줄여주는 것</div>
+    <div class="ddc-row"><span class="ddc-label">신용카드 공제</span><span class="ddc-val">소득의 25% 초과분</span></div>
+    <div class="ddc-row"><span class="ddc-label">주택청약 납입</span><span class="ddc-val">연 240만원 한도</span></div>
+    <div class="ddc-row"><span class="ddc-label">인적공제 (부양가족)</span><span class="ddc-val">1인당 150만원</span></div>
+    <div class="ddc-row"><span class="ddc-label">교육비 공제</span><span class="ddc-val">15%</span></div>
+    <div class="ddc-row"><span class="ddc-label">기부금 공제</span><span class="ddc-val">15~35%</span></div>
+  </div>
+</div>
+
+<div class="checklist-year">
+  <div class="cy-title">📅 연중 연말정산 준비 타임라인</div>
+  <div class="cy-months">
+    <div class="cy-month q1">
+      <div class="cy-mon-label">1~3월</div>
+      <div class="cy-mon-desc">연말정산 제출. 환급금 확인. 올해 공제 계획 수립.</div>
+    </div>
+    <div class="cy-month q2">
+      <div class="cy-mon-label">4~6월</div>
+      <div class="cy-mon-desc">연금저축·IRP 납입 시작. 청약통장 납입 확인.</div>
+    </div>
+    <div class="cy-month q3">
+      <div class="cy-mon-label">7~9월</div>
+      <div class="cy-mon-label" style="margin-top:4px">월세 계약 시</div>
+      <div class="cy-mon-desc">월세 세액공제 요건 확인. 의료비 영수증 보관.</div>
+    </div>
+    <div class="cy-month q4">
+      <div class="cy-mon-label">10~12월</div>
+      <div class="cy-mon-desc">연금저축·IRP 한도 채우기. 기부금 처리. 신용카드 vs 체크카드 비율 조정.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>연말정산은 12월에 준비하면 늦습니다.</strong><br>
+  연금저축 600만원 + IRP 300만원 = 세액공제 최대 148만원. 이것만 챙겨도 <strong>"13월의 월급"이 달라집니다.</strong><br>
+  월세 거주자는 월세 세액공제(최대 90만원)도 놓치지 마세요. 집주인 동의 없이 신청 가능합니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

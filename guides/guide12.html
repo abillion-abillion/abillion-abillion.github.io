@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투자 수익률이 낮은 이유 TOP 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#fef2f2; color:#ef4444; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#ef4444; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.reason-cards { display:flex; flex-direction:column; gap:16px; margin-bottom:26px; }
+.reason-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; overflow:hidden; }
+.rc-header { padding:14px 20px; display:flex; align-items:center; gap:14px; }
+.rc-header.r1 { background:#fef2f2; }
+.rc-header.r2 { background:#fff7ed; }
+.rc-header.r3 { background:#fefce8; }
+.rc-rank { font-size:28px; font-weight:900; }
+.rc-header.r1 .rc-rank { color:#ef4444; }
+.rc-header.r2 .rc-rank { color:#ea580c; }
+.rc-header.r3 .rc-rank { color:#ca8a04; }
+.rc-title { font-size:15px; font-weight:900; color:#0f172a; }
+.rc-subtitle { font-size:12px; color:#64748b; }
+.rc-body { padding:18px 20px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:560px){ .rc-body { grid-template-columns:1fr; } }
+.rc-problem, .rc-solution { }
+.rcp-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.rc-problem .rcp-label { color:#ef4444; }
+.rc-solution .rcp-label { color:#059669; }
+.rcp-text { font-size:13px; color:#475569; line-height:1.7; }
+.rcp-example { margin-top:8px; padding:10px 12px; border-radius:8px; font-size:12px; }
+.rc-problem .rcp-example { background:#fef2f2; color:#991b1b; }
+.rc-solution .rcp-example { background:#ecfdf5; color:#065f46; }
+
+.cost-box { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; margin-bottom:26px; }
+.cost-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:14px; }
+.cost-table { width:100%; border-collapse:collapse; font-size:13px; }
+.cost-table th { padding:8px 12px; text-align:left; font-size:11px; font-weight:700; color:#94a3b8; border-bottom:2px solid #e2e8f0; }
+.cost-table td { padding:10px 12px; border-bottom:1px solid #f1f5f9; }
+.cost-table tr:last-child td { border-bottom:none; }
+.ct-name { font-weight:700; color:#0f172a; }
+.ct-fee { font-weight:700; }
+.ct-fee.bad { color:#ef4444; }
+.ct-fee.good { color:#059669; }
+
+.tip { background:#fef2f2; border:1.5px solid #fecaca; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#7f1d1d; line-height:1.8; }
+.tip strong { color:#ef4444; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">투자 실수 예방</div>
+<h1>투자 수익률이<br><span>낮은 이유 TOP 3</span></h1>
+<p class="subtitle">시장이 문제가 아닙니다 — 대부분 내 행동이 수익을 갉아먹습니다</p>
+
+<div class="analogy">
+  <div class="icon">🕳️</div>
+  <p>시장 평균 수익률은 연 7~10%인데, 개인 투자자 평균은 2~3%에 불과합니다. 그 차이는 <strong>시장이 아니라 내 행동</strong>에서 옵니다. 3가지 실수만 없애도 수익률이 2배 달라집니다.</p>
+</div>
+
+<div class="section-label">수익률을 갉아먹는 3가지 함정</div>
+<div class="reason-cards">
+  <div class="reason-card">
+    <div class="rc-header r1">
+      <div class="rc-rank">01</div>
+      <div><div class="rc-title">타이밍 매매 — "지금이 바닥이다/고점이다"</div><div class="rc-subtitle">수익률 손실 원인 1위</div></div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-problem">
+        <div class="rcp-label">❌ 문제</div>
+        <div class="rcp-text">오를 것 같을 때 사고, 내릴 것 같을 때 팝니다. 결과적으로 항상 고점에 사고 저점에 팝니다.</div>
+        <div class="rcp-example">코스피 3000 돌파 → 매수 → 2400 하락 → 패닉 매도 → 3200 반등 → 후회</div>
+      </div>
+      <div class="rc-solution">
+        <div class="rcp-label">✅ 해결책</div>
+        <div class="rcp-text">타이밍을 예측하려 하지 말고, 매달 자동으로 적립식 투자를 합니다.</div>
+        <div class="rcp-example">월급날 자동이체 설정 → 시장 안 봐도 됨 → 평균 단가로 수렴</div>
+      </div>
+    </div>
+  </div>
+  <div class="reason-card">
+    <div class="rc-header r2">
+      <div class="rc-rank">02</div>
+      <div><div class="rc-title">높은 수수료 — 모르고 내는 비용</div><div class="rc-subtitle">30년간 수백만원 차이</div></div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-problem">
+        <div class="rcp-label">❌ 문제</div>
+        <div class="rcp-text">펀드 수수료 연 1~2%가 작아 보이지만, 30년 복리 효과로 계산하면 자산의 30~40%가 사라집니다.</div>
+        <div class="rcp-example">1억 × 연 7% × 30년 = 7.6억 vs 연 6% = 5.7억 → 차이 2억원</div>
+      </div>
+      <div class="rc-solution">
+        <div class="rcp-label">✅ 해결책</div>
+        <div class="rcp-text">수수료가 거의 없는 인덱스 ETF를 사용합니다. 연 0.05~0.5%면 충분합니다.</div>
+        <div class="rcp-example">VOO 수수료 연 0.03% / KODEX 200 연 0.15% → 액티브 펀드의 1/10</div>
+      </div>
+    </div>
+  </div>
+  <div class="reason-card">
+    <div class="rc-header r3">
+      <div class="rc-rank">03</div>
+      <div><div class="rc-title">감정적 매도 — 하락장에 팔고 상승장에 사기</div><div class="rc-subtitle">복리를 끊는 가장 치명적 행동</div></div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-problem">
+        <div class="rcp-label">❌ 문제</div>
+        <div class="rcp-text">주가 하락 뉴스를 보면 불안해서 팝니다. 하락장에 팔면 손실이 확정되고 이후 반등을 놓칩니다.</div>
+        <div class="rcp-example">코로나 폭락 시 팔았다가 6개월 후 역대 최고가 → 반등 수익률 0%</div>
+      </div>
+      <div class="rc-solution">
+        <div class="rcp-label">✅ 해결책</div>
+        <div class="rcp-text">자동투자 설정 후 앱을 자주 열지 않습니다. 하락장은 저렴하게 사는 기회로 인식합니다.</div>
+        <div class="rcp-example">자동매수 설정 → 알림 OFF → 1년에 1번만 확인 → 감정 개입 차단</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cost-box">
+  <div class="cost-title">💰 상품별 수수료 비교 — 이것만 봐도 선택이 달라집니다</div>
+  <table class="cost-table">
+    <thead><tr><th>상품</th><th>연 수수료</th><th>1억 투자 시 30년 누적 비용</th><th>추천</th></tr></thead>
+    <tbody>
+      <tr><td class="ct-name">인덱스 ETF (VOO 등)</td><td class="ct-fee good">0.03~0.2%</td><td>약 100~600만원</td><td>⭐ 강력 추천</td></tr>
+      <tr><td class="ct-name">국내 ETF (KODEX 등)</td><td class="ct-fee good">0.15~0.5%</td><td>약 450만~1,500만원</td><td>✅ 추천</td></tr>
+      <tr><td class="ct-name">액티브 펀드</td><td class="ct-fee bad">1.0~2.0%</td><td>약 3,000~6,000만원</td><td>⚠️ 주의</td></tr>
+      <tr><td class="ct-name">저축성 보험(펀드형)</td><td class="ct-fee bad">1.5~3.0%</td><td>약 4,500만~9,000만원</td><td>❌ 비추천</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>수익률을 높이려 하지 말고, 실수를 줄이는 것이 더 효과적입니다.</strong><br>
+  자동 적립식 + 저비용 ETF + 장기 보유 — 이 3가지만 지켜도 대부분의 전문가보다 나은 결과를 냅니다. <strong>복잡한 전략보다 단순한 원칙의 꾸준한 실행</strong>이 훨씬 강합니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

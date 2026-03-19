@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30대가 노후를 지금 준비해야 하는 이유</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#eff6ff; color:#2563eb; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#2563eb; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.compare-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px; }
+@media(max-width:560px){ .compare-cards { grid-template-columns:1fr; } }
+.cc { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; }
+.cc.early { border-top:4px solid #2563eb; box-shadow:0 0 0 3px #eff6ff; }
+.cc.late { border-top:4px solid #94a3b8; }
+.cc-title { font-size:14px; font-weight:900; margin-bottom:14px; }
+.cc.early .cc-title { color:#2563eb; }
+.cc.late .cc-title { color:#64748b; }
+.cc-row { display:flex; justify-content:space-between; font-size:12.5px; padding:8px 0; border-bottom:1px solid #f1f5f9; }
+.cc-row:last-child { border-bottom:none; }
+.cc-label { color:#64748b; }
+.cc-val { font-weight:700; }
+.cc-val.blue { color:#2563eb; } .cc-val.gray { color:#94a3b8; } .cc-val.green { color:#10b981; } .cc-val.red { color:#ef4444; }
+
+.compound-visual { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:22px; margin-bottom:26px; }
+.cv-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:16px; }
+.cv-bars { display:flex; flex-direction:column; gap:14px; }
+.cv-bar-group { display:flex; flex-direction:column; gap:4px; }
+.cv-bar-label { display:flex; justify-content:space-between; font-size:12px; }
+.cv-bar-name { font-weight:700; color:#0f172a; }
+.cv-bar-amount { font-weight:900; }
+.cv-bar-amount.blue { color:#2563eb; }
+.cv-bar-amount.gray { color:#94a3b8; }
+.cv-bar-outer { background:#f1f5f9; border-radius:6px; height:20px; overflow:hidden; }
+.cv-bar-inner { height:100%; border-radius:6px; display:flex; align-items:center; padding-left:8px; }
+.cv-bar-sub { font-size:10px; color:#475569; }
+
+.reason-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:26px; }
+@media(max-width:560px){ .reason-grid { grid-template-columns:1fr; } }
+.reason-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:16px; text-align:center; }
+.rc-emoji { font-size:28px; margin-bottom:8px; display:block; }
+.rc-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:6px; }
+.rc-desc { font-size:12px; color:#64748b; line-height:1.5; }
+
+.action-box { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; margin-bottom:22px; }
+.ab-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:14px; }
+.ab-row { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+.ab-num { width:28px; height:28px; border-radius:50%; background:#eff6ff; color:#2563eb; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ab-text { font-size:13px; color:#475569; line-height:1.6; }
+.ab-text strong { color:#0f172a; }
+
+.tip { background:#eff6ff; border:1.5px solid #bfdbfe; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#1e3a8a; line-height:1.8; }
+.tip strong { color:#2563eb; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">노후 준비</div>
+<h1>30대에 시작해야<br><span>노후가 달라지는 이유</span></h1>
+<p class="subtitle">10년의 차이가 수억 원의 차이를 만든다 — 복리의 진짜 힘</p>
+
+<div class="analogy">
+  <div class="icon">🌱</div>
+  <p>노후 준비는 <strong>나무 심기</strong>와 같습니다. 30대에 심은 나무와 50대에 심은 나무는 은퇴할 때 크기가 완전히 다릅니다. 씨앗의 크기가 아니라 <strong>시간이 결과를 결정</strong>합니다.</p>
+</div>
+
+<div class="section-label">30대 시작 vs 40대 시작 — 얼마나 차이날까?</div>
+<div class="compare-cards">
+  <div class="cc early">
+    <div class="cc-title">🚀 30대 (35세) 시작</div>
+    <div class="cc-row"><span class="cc-label">시작 나이</span><span class="cc-val blue">35세</span></div>
+    <div class="cc-row"><span class="cc-label">월 납입액</span><span class="cc-val">75만원</span></div>
+    <div class="cc-row"><span class="cc-label">투자 기간</span><span class="cc-val blue">25년</span></div>
+    <div class="cc-row"><span class="cc-label">총 납입액</span><span class="cc-val">2억 2,500만원</span></div>
+    <div class="cc-row"><span class="cc-label">60세 예상 자산 (연 7%)</span><span class="cc-val green">약 5억 7,000만원</span></div>
+  </div>
+  <div class="cc late">
+    <div class="cc-title">😰 40대 (45세) 시작</div>
+    <div class="cc-row"><span class="cc-label">시작 나이</span><span class="cc-val gray">45세</span></div>
+    <div class="cc-row"><span class="cc-label">월 납입액</span><span class="cc-val">75만원</span></div>
+    <div class="cc-row"><span class="cc-label">투자 기간</span><span class="cc-val gray">15년</span></div>
+    <div class="cc-row"><span class="cc-label">총 납입액</span><span class="cc-val">1억 3,500만원</span></div>
+    <div class="cc-row"><span class="cc-label">60세 예상 자산 (연 7%)</span><span class="cc-val red">약 2억 3,000만원</span></div>
+  </div>
+</div>
+
+<div class="compound-visual">
+  <div class="cv-title">📊 같은 돈을 넣어도 시작 시기에 따른 자산 격차 (월 50만원, 연 7%)</div>
+  <div class="cv-bars">
+    <div class="cv-bar-group">
+      <div class="cv-bar-label"><span class="cv-bar-name">30세 시작 (30년)</span><span class="cv-bar-amount blue">약 5억 8천만원</span></div>
+      <div class="cv-bar-outer"><div class="cv-bar-inner" style="width:100%;background:#2563eb;"><span class="cv-bar-sub" style="color:#fff">원금 1.8억 + 수익 4억</span></div></div>
+    </div>
+    <div class="cv-bar-group">
+      <div class="cv-bar-label"><span class="cv-bar-name">40세 시작 (20년)</span><span class="cv-bar-amount" style="color:#f59e0b">약 2억 6천만원</span></div>
+      <div class="cv-bar-outer"><div class="cv-bar-inner" style="width:45%;background:#f59e0b;"></div></div>
+    </div>
+    <div class="cv-bar-group">
+      <div class="cv-bar-label"><span class="cv-bar-name">50세 시작 (10년)</span><span class="cv-bar-amount" style="color:#94a3b8">약 8,600만원</span></div>
+      <div class="cv-bar-outer"><div class="cv-bar-inner" style="width:15%;background:#94a3b8;"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">30대에 시작해야 하는 3가지 이유</div>
+<div class="reason-grid">
+  <div class="reason-card">
+    <span class="rc-emoji">⏰</span>
+    <div class="rc-title">복리의 마법</div>
+    <div class="rc-desc">이자에 이자가 붙는 복리는 시간이 길수록 폭발적으로 커집니다. 10년 차이가 자산을 2~3배 가릅니다.</div>
+  </div>
+  <div class="reason-card">
+    <span class="rc-emoji">💸</span>
+    <div class="rc-title">세액공제 30년치</div>
+    <div class="rc-desc">연금저축+IRP 세액공제를 30년 받으면 총 4,455만원 환급. 40대 시작하면 이 혜택을 10년 잃습니다.</div>
+  </div>
+  <div class="reason-card">
+    <span class="rc-emoji">🏛️</span>
+    <div class="rc-title">국민연금만으론 부족</div>
+    <div class="rc-desc">2024년 기준 국민연금 평균 수령액 월 65만원. 노후 생활비 월 250만원 기준으로 185만원이 부족합니다.</div>
+  </div>
+</div>
+
+<div class="action-box">
+  <div class="ab-title">✅ 지금 당장 할 수 있는 노후 준비 3단계</div>
+  <div class="ab-row"><div class="ab-num">1</div><div class="ab-text"><strong>연금저축 월 50만원 + IRP 월 25만원</strong> 자동이체 설정 → 연 900만원 세액공제 달성</div></div>
+  <div class="ab-row"><div class="ab-num">2</div><div class="ab-text"><strong>두 계좌 모두 ETF(미국 S&P500 등)</strong>에 투자 → 예금보다 장기 수익률 훨씬 높음</div></div>
+  <div class="ab-row"><div class="ab-num">3</div><div class="ab-text"><strong>55세까지 절대 건드리지 않기</strong> → 중도 인출 시 세금 + 복리 모두 잃음</div></div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>노후 준비는 '나중에 더 많이' 넣으면 되지 않습니다.</strong><br>
+  45세부터 월 150만원 넣는 것보다 <strong>35세부터 월 75만원 넣는 것이 훨씬 큰 자산</strong>을 만듭니다. 시간은 돈으로 살 수 없습니다. 지금 이 순간이 평생 중 가장 빠른 시작입니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

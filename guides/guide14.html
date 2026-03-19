@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프리랜서·전문직 돈 관리법</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#f0fdf4; color:#16a34a; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#16a34a; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.diff-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:26px; }
+@media(max-width:560px){ .diff-grid { grid-template-columns:1fr; } }
+.diff-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px; }
+.diff-card.challenge { border-top:4px solid #ef4444; }
+.diff-card.solution { border-top:4px solid #16a34a; box-shadow:0 0 0 3px #f0fdf4; }
+.dc-title { font-size:14px; font-weight:900; margin-bottom:12px; }
+.diff-card.challenge .dc-title { color:#ef4444; }
+.diff-card.solution .dc-title { color:#16a34a; }
+.dc-row { font-size:12.5px; color:#475569; display:flex; gap:6px; margin-bottom:7px; line-height:1.5; }
+
+.account-setup { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; margin-bottom:26px; }
+.as-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:14px; }
+.as-accounts { display:flex; flex-direction:column; gap:10px; }
+.as-row { display:flex; gap:14px; align-items:flex-start; padding:12px 14px; border-radius:10px; }
+.as-row.r1 { background:#fef2f2; }
+.as-row.r2 { background:#fffbeb; }
+.as-row.r3 { background:#f0fdf4; }
+.as-row.r4 { background:#eff6ff; }
+.as-emoji { font-size:22px; flex-shrink:0; }
+.as-name { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px; }
+.as-desc { font-size:12px; color:#64748b; }
+.as-ratio { font-size:14px; font-weight:900; flex-shrink:0; margin-top:2px; }
+.r1 .as-ratio { color:#ef4444; }
+.r2 .as-ratio { color:#d97706; }
+.r3 .as-ratio { color:#16a34a; }
+.r4 .as-ratio { color:#2563eb; }
+
+.tax-box { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:20px; margin-bottom:26px; }
+.tb-title { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:14px; }
+.tb-items { display:flex; flex-direction:column; gap:10px; }
+.tb-item { display:flex; gap:12px; align-items:flex-start; }
+.tb-num { width:28px; height:28px; border-radius:50%; background:#f0fdf4; color:#16a34a; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.tb-title2 { font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px; }
+.tb-desc { font-size:12px; color:#64748b; line-height:1.5; }
+
+.tip { background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#14532d; line-height:1.8; }
+.tip strong { color:#16a34a; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">프리랜서 재무</div>
+<h1>소득이 불규칙한<br><span>프리랜서·전문직 돈 관리법</span></h1>
+<p class="subtitle">월급쟁이 공식이 통하지 않는다 — 프리랜서만의 재무 전략</p>
+
+<div class="analogy">
+  <div class="icon">🎢</div>
+  <p>직장인의 수입은 에스컬레이터, 프리랜서의 수입은 롤러코스터입니다. 롤러코스터에서는 <strong>올라갈 때 저축하고, 내려갈 때 버틸 준비</strong>가 되어 있어야 합니다.</p>
+</div>
+
+<div class="section-label">프리랜서의 과제와 해결책</div>
+<div class="diff-grid">
+  <div class="diff-card challenge">
+    <div class="dc-title">😰 프리랜서의 특수한 어려움</div>
+    <div class="dc-row"><span>❌</span> 수입이 달마다 다름</div>
+    <div class="dc-row"><span>❌</span> 국민연금·건강보험 직접 납부</div>
+    <div class="dc-row"><span>❌</span> 퇴직금 없음</div>
+    <div class="dc-row"><span>❌</span> 세금을 직접 신고해야 함</div>
+    <div class="dc-row"><span>❌</span> 공백 기간 수입 0</div>
+  </div>
+  <div class="diff-card solution">
+    <div class="dc-title">✅ 해결 원칙</div>
+    <div class="dc-row"><span>→</span> 수입 평균화: 고정 지출용 별도 통장</div>
+    <div class="dc-row"><span>→</span> 4대 보험 예산 별도 적립</div>
+    <div class="dc-row"><span>→</span> IRP로 셀프 퇴직금 적립</div>
+    <div class="dc-row"><span>→</span> 종합소득세 신고로 절세</div>
+    <div class="dc-row"><span>→</span> 비상금 12개월치로 늘리기</div>
+  </div>
+</div>
+
+<div class="account-setup">
+  <div class="as-title">🏦 프리랜서 통장 4개 시스템</div>
+  <div class="as-accounts">
+    <div class="as-row r1">
+      <div class="as-emoji">💰</div>
+      <div style="flex:1"><div class="as-name">수입 통장 (메인)</div><div class="as-desc">모든 수입이 들어오는 곳. 여기서 분배만. 직접 소비 안 함.</div></div>
+      <div class="as-ratio">100%</div>
+    </div>
+    <div class="as-row r2">
+      <div class="as-emoji">🏛️</div>
+      <div style="flex:1"><div class="as-name">세금·보험료 적립 통장</div><div class="as-desc">수입의 25~30%를 자동이체. 국민연금·건강보험·종합소득세 대비.</div></div>
+      <div class="as-ratio">25~30%</div>
+    </div>
+    <div class="as-row r3">
+      <div class="as-emoji">🏦</div>
+      <div style="flex:1"><div class="as-name">비상금·생활비 통장</div><div class="as-desc">6~12개월치 생활비 확보. 공백 기간 여기서 인출.</div></div>
+      <div class="as-ratio">20%</div>
+    </div>
+    <div class="as-row r4">
+      <div class="as-emoji">📈</div>
+      <div style="flex:1"><div class="as-name">투자·노후 통장</div><div class="as-desc">IRP + 연금저축 + ETF. 세금 납부 후 남은 돈 투자.</div></div>
+      <div class="as-ratio">나머지</div>
+    </div>
+  </div>
+</div>
+
+<div class="tax-box">
+  <div class="tb-title">📋 프리랜서 절세 핵심 4가지</div>
+  <div class="tb-items">
+    <div class="tb-item"><div class="tb-num">1</div><div><div class="tb-title2">연금저축+IRP — 최대 148만원 환급</div><div class="tb-desc">프리랜서도 동일하게 세액공제 가능. 반드시 활용.</div></div></div>
+    <div class="tb-item"><div class="tb-num">2</div><div><div class="tb-title2">업무 관련 비용 경비 처리</div><div class="tb-desc">노트북·통신비·교육비·교통비 등 업무 관련 비용은 종합소득세 신고 시 경비 처리 가능.</div></div></div>
+    <div class="tb-item"><div class="tb-num">3</div><div><div class="tb-title2">단순경비율 vs 기준경비율 선택</div><div class="tb-desc">수입 규모에 따라 유리한 방식이 다름. 세무사 상담 추천.</div></div></div>
+    <div class="tb-item"><div class="tb-num">4</div><div><div class="tb-title2">ISA 계좌 적극 활용</div><div class="tb-desc">금융소득 비과세 혜택. 수입 변동이 큰 프리랜서에게 특히 유리.</div></div></div>
+  </div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>수입이 많은 달에 더 저축하고, 적은 달은 버티는 구조를 만드세요.</strong><br>
+  프리랜서 재무의 핵심은 <strong>"평균 수입"으로 생활하는 것</strong>입니다. 잘 나오는 달에 써버리면 공백기에 무너집니다. 비상금 12개월치가 쌓일 때까지는 소비를 최소화하는 것이 가장 중요합니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>

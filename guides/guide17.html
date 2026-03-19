@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>고객 유형별 포트폴리오 예시</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f7f8fc; color:#1a1a2e; font-family:'Noto Sans KR',sans-serif; padding:36px 24px; max-width:820px; margin:0 auto; }
+.chip { display:inline-block; background:#ecfdf5; color:#059669; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:12px; }
+h1 { font-size:clamp(22px,4vw,32px); font-weight:900; line-height:1.25; margin-bottom:8px; color:#0f172a; }
+h1 span { color:#059669; }
+.subtitle { font-size:14px; color:#64748b; margin-bottom:28px; }
+.section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#94a3b8; margin-bottom:14px; }
+.analogy { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; padding:18px 22px; margin-bottom:26px; display:flex; gap:14px; }
+.analogy .icon { font-size:28px; flex-shrink:0; }
+.analogy p { font-size:13.5px; color:#475569; line-height:1.7; }
+.analogy strong { color:#0f172a; }
+
+.persona-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px; }
+@media(max-width:560px){ .persona-grid { grid-template-columns:1fr; } }
+.persona-card { background:#fff; border:1.5px solid #e2e8f0; border-radius:14px; overflow:hidden; }
+.pc-header { padding:16px 18px; }
+.pc-header.p1 { background:linear-gradient(135deg,#eff6ff,#dbeafe); }
+.pc-header.p2 { background:linear-gradient(135deg,#f0fdf4,#dcfce7); }
+.pc-header.p3 { background:linear-gradient(135deg,#fef3c7,#fde68a); }
+.pc-header.p4 { background:linear-gradient(135deg,#fce7f3,#fbcfe8); }
+.pc-persona { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.pc-header.p1 .pc-persona { color:#2563eb; }
+.pc-header.p2 .pc-persona { color:#16a34a; }
+.pc-header.p3 .pc-persona { color:#d97706; }
+.pc-header.p4 .pc-persona { color:#db2777; }
+.pc-title { font-size:14px; font-weight:900; color:#0f172a; margin-bottom:6px; }
+.pc-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.pc-tag { font-size:10px; padding:2px 8px; border-radius:6px; background:rgba(255,255,255,0.7); color:#475569; font-weight:700; }
+.pc-body { padding:16px 18px; }
+.pc-goal { font-size:12px; color:#64748b; margin-bottom:12px; }
+.pc-goal strong { color:#0f172a; }
+.pc-alloc { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.pc-alloc-row { display:flex; align-items:center; gap:8px; }
+.pc-alloc-label { font-size:11px; color:#64748b; width:80px; flex-shrink:0; }
+.pc-alloc-bar { flex:1; height:8px; border-radius:4px; background:#f1f5f9; overflow:hidden; }
+.pc-alloc-fill { height:100%; border-radius:4px; }
+.pc-alloc-pct { font-size:11px; font-weight:700; color:#0f172a; width:30px; text-align:right; }
+.pc-key { font-size:12px; color:#475569; padding:10px 12px; background:#f8fafc; border-radius:8px; line-height:1.5; }
+
+.tip { background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:14px; padding:18px 22px; display:flex; gap:14px; }
+.tip-icon { font-size:22px; flex-shrink:0; }
+.tip p { font-size:13px; color:#064e3b; line-height:1.8; }
+.tip strong { color:#059669; }
+.footer { text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+  body { padding-top: 96px !important; }
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DDD9D0;
+  }
+  .site-nav-logo {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: #5C7A3E;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    z-index: 1;
+  }
+  .site-nav-links a {
+    color: #5A5A5A;
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .site-nav-links a:hover,
+  .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .site-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #2C2C2C;
+    transition: all 0.3s;
+  }
+  .site-nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  .site-nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .site-nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250,248,244,0.98);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-top: 0;
+  }
+  .site-mobile-menu.open { display: flex; }
+  .site-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid #DDD9D0;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.88rem;
+    color: #5C7A3E;
+    letter-spacing: 0.12em;
+  }
+  .site-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2C2C2C;
+    line-height: 1;
+    padding: 4px;
+  }
+  .site-mobile-link {
+    font-family: 'Hahmlet', serif;
+    font-size: 1.18rem;
+    color: #5C7A3E;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .guide-back-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 24px 56px;
+  }
+  .guide-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid #DDD9D0;
+    color: #5C7A3E;
+    background: rgba(250,248,244,0.9);
+    text-decoration: none;
+    font-family: 'Hahmlet', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .guide-back-btn:hover {
+    background: rgba(92,122,62,0.08);
+    border-color: rgba(92,122,62,0.35);
+  }
+  .top-bar { top: 78px !important; }
+  @media (max-width: 860px) {
+    body { padding-top: 82px !important; }
+    .site-nav { padding: 1rem 1.5rem; }
+    .site-nav-links { display: none; }
+    .site-nav-toggle { display: flex; }
+    .guide-back-wrap { padding: 0 18px 44px; }
+    .top-bar { top: 66px !important; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-logo">JW Financial Consulting</a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html#about">소개</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li><a href="../tips.html">재테크 팁</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../guides.html" class="active">금융 가이드</a></li>
+    <li><a href="../freebie.html">무료 혜택</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</nav>
+<div class="site-mobile-menu">
+  <div class="site-menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="site-menu-close" type="button">×</button>
+  </div>
+  <a href="../index.html" class="site-mobile-link">홈</a>
+  <a href="../index.html#about" class="site-mobile-link">소개</a>
+  <a href="../services.html" class="site-mobile-link">서비스</a>
+  <a href="../reviews.html" class="site-mobile-link">후기</a>
+  <a href="../tips.html" class="site-mobile-link">재테크 팁</a>
+  <a href="../column.html" class="site-mobile-link">칼럼</a>
+  <a href="../guides.html" class="site-mobile-link">금융 가이드</a>
+  <a href="../freebie.html" class="site-mobile-link">무료 혜택</a>
+  <a href="../consult.html" class="site-mobile-link">상담 신청</a>
+</div>
+
+<div class="chip">맞춤 포트폴리오</div>
+<h1>나 같은 사람은<br><span>어떻게 투자해야 할까?</span></h1>
+<p class="subtitle">고객 유형별 맞춤 포트폴리오 예시 — 연령·목적·상황에 따라 다릅니다</p>
+
+<div class="analogy">
+  <div class="icon">👤</div>
+  <p>투자에 정답은 없습니다. 하지만 <strong>나의 나이·목표·위험 감수 능력</strong>에 따라 최적의 비율이 존재합니다. 내 상황에 맞는 포트폴리오를 찾는 것이 시작입니다.</p>
+</div>
+
+<div class="section-label">유형별 추천 포트폴리오</div>
+<div class="persona-grid">
+  <div class="persona-card">
+    <div class="pc-header p1">
+      <div class="pc-persona">유형 A</div>
+      <div class="pc-title">20~30대 미혼 직장인</div>
+      <div class="pc-tags"><span class="pc-tag">장기투자</span><span class="pc-tag">공격형</span><span class="pc-tag">목돈마련</span></div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-goal">목표: <strong>결혼·내 집 마련 + 노후 동시 준비</strong></div>
+      <div class="pc-alloc">
+        <div class="pc-alloc-row"><span class="pc-alloc-label">미국ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:60%;background:#2563eb;"></div></div><span class="pc-alloc-pct">60%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">글로벌ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:20%;background:#059669;"></div></div><span class="pc-alloc-pct">20%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">채권ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:10%;background:#f59e0b;"></div></div><span class="pc-alloc-pct">10%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">현금·적금</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:10%;background:#94a3b8;"></div></div><span class="pc-alloc-pct">10%</span></div>
+      </div>
+      <div class="pc-key">ISA(ETF) + 연금저축 + IRP 3계좌 동시 활용. 적립식 월 자동이체 설정.</div>
+    </div>
+  </div>
+
+  <div class="persona-card">
+    <div class="pc-header p2">
+      <div class="pc-persona">유형 B</div>
+      <div class="pc-title">30대 기혼 맞벌이 (자녀 없음)</div>
+      <div class="pc-tags"><span class="pc-tag">주택마련</span><span class="pc-tag">중립형</span><span class="pc-tag">절세 극대화</span></div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-goal">목표: <strong>내 집 마련 5년 + 노후 준비 병행</strong></div>
+      <div class="pc-alloc">
+        <div class="pc-alloc-row"><span class="pc-alloc-label">미국ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:40%;background:#2563eb;"></div></div><span class="pc-alloc-pct">40%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">글로벌ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:20%;background:#059669;"></div></div><span class="pc-alloc-pct">20%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">채권ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:20%;background:#f59e0b;"></div></div><span class="pc-alloc-pct">20%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">현금·파킹</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:20%;background:#94a3b8;"></div></div><span class="pc-alloc-pct">20%</span></div>
+      </div>
+      <div class="pc-key">부부 각각 ISA·연금저축 활용. 현금 비중 높게 유지해 주택 구매 대비.</div>
+    </div>
+  </div>
+
+  <div class="persona-card">
+    <div class="pc-header p3">
+      <div class="pc-persona">유형 C</div>
+      <div class="pc-title">30대 기혼 (자녀 있음)</div>
+      <div class="pc-tags"><span class="pc-tag">교육자금</span><span class="pc-tag">안정형</span><span class="pc-tag">보장 강화</span></div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-goal">목표: <strong>자녀 교육비 + 노후 준비 + 보험 정비</strong></div>
+      <div class="pc-alloc">
+        <div class="pc-alloc-row"><span class="pc-alloc-label">미국ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:40%;background:#2563eb;"></div></div><span class="pc-alloc-pct">40%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">채권ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:30%;background:#f59e0b;"></div></div><span class="pc-alloc-pct">30%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">현금·적금</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:30%;background:#94a3b8;"></div></div><span class="pc-alloc-pct">30%</span></div>
+      </div>
+      <div class="pc-key">정기보험으로 사망 보장 강화. 자녀용 ISA 또는 주니어 연금 고려.</div>
+    </div>
+  </div>
+
+  <div class="persona-card">
+    <div class="pc-header p4">
+      <div class="pc-persona">유형 D</div>
+      <div class="pc-title">30대 프리랜서·전문직</div>
+      <div class="pc-tags"><span class="pc-tag">불규칙소득</span><span class="pc-tag">절세</span><span class="pc-tag">유동성 확보</span></div>
+    </div>
+    <div class="pc-body">
+      <div class="pc-goal">목표: <strong>소득 안정화 + 절세 극대화 + 노후 준비</strong></div>
+      <div class="pc-alloc">
+        <div class="pc-alloc-row"><span class="pc-alloc-label">현금·파킹</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:35%;background:#db2777;"></div></div><span class="pc-alloc-pct">35%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">미국ETF</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:35%;background:#2563eb;"></div></div><span class="pc-alloc-pct">35%</span></div>
+        <div class="pc-alloc-row"><span class="pc-alloc-label">연금저축·IRP</span><div class="pc-alloc-bar"><div class="pc-alloc-fill" style="width:30%;background:#7c3aed;"></div></div><span class="pc-alloc-pct">30%</span></div>
+      </div>
+      <div class="pc-key">비상금 12개월치 필수. 연금저축·IRP로 세액공제 최대화. ISA도 반드시 활용.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <p><strong>포트폴리오는 정기적으로 리밸런싱하세요.</strong><br>
+  1년에 한 번, 비율이 목표에서 10% 이상 벗어나면 조정합니다. 오른 것을 팔고, 내린 것을 사는 것이 리밸런싱의 핵심입니다.<br>
+  <strong>가장 중요한 것은 내 상황에 맞는 비율을 정하고 꾸준히 유지하는 것</strong>입니다.</p>
+</div>
+<div class="footer">본 자료는 정보 제공 목적이며, 개인별 상황에 따라 전략이 달라질 수 있습니다.</div>
+
+
+<div class="guide-back-wrap">
+  <a class="guide-back-btn" href="../guides.html">← 금융 가이드 목록으로 돌아가기</a>
+</div>
+
+
+<script>
+(function() {
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const mobileMenu = document.querySelector('.site-mobile-menu');
+  const closeBtn = document.querySelector('.site-menu-close');
+  if (!navToggle || !mobileMenu || !closeBtn) return;
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+})();
+</script>
+
+</body>
+</html>
