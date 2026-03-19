@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>금융 가이드 | JW Financial</title>
   <meta name="description" content="고객과 직원이 필요한 금융 자료를 빠르게 찾고 공유할 수 있도록 정리한 금융 지식 허브입니다." />
+  <link rel="canonical" href="https://jwfinancial.co.kr/guides.html" />
   <meta property="og:title" content="금융 가이드 | JW Financial" />
   <meta property="og:description" content="고객과 직원이 필요한 금융 자료를 빠르게 찾고 공유할 수 있도록 정리한 금융 지식 허브입니다." />
   <meta property="og:image" content="https://jwfinancial.co.kr/og-guides-jw.png" />
@@ -72,14 +73,15 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 1.45rem;
+      gap: 1.8rem;
       list-style: none;
       z-index: 1;
     }
+    .nav-links > li { position: relative; }
     .nav-links a {
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 0.74rem;
+      font-size: 0.86rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
       font-weight: 700;
@@ -87,6 +89,33 @@
     }
     .nav-links a:hover,
     .nav-links a.active { color: var(--primary); }
+    .nav-dropdown > a { display: inline-flex; align-items: center; }
+    .nav-submenu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 170px;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid var(--border);
+      background: rgba(250,248,244,0.98);
+      list-style: none;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 30;
+    }
+    .nav-dropdown:hover .nav-submenu,
+    .nav-dropdown:focus-within .nav-submenu { display: flex; }
+    .nav-submenu a {
+      display: block;
+      padding: 0.38rem 0.5rem;
+      font-size: 0.73rem;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+    }
+    .nav-submenu a:hover,
+    .nav-submenu a.active { color: var(--primary); }
     .nav-toggle {
       display: none;
       flex-direction: column;
@@ -147,6 +176,22 @@
       transition: color 0.3s;
       text-align: center;
     }
+    .mobile-submenu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: -0.9rem;
+      margin-bottom: 0.15rem;
+    }
+    .mobile-sublink {
+      font-family: 'Hahmlet', serif;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .mobile-sublink:hover { color: var(--primary); }
     .hero {
       min-height: 48vh;
       display: flex;
@@ -639,13 +684,18 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html#about">소개</a></li>
+    <li><a href="index.html">홈</a></li>
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li><a href="tips.html">재테크 팁</a></li>
+    <li class="nav-dropdown">
+      <a href="freebie.html" class="active">무료 혜택</a>
+      <ul class="nav-submenu">
+        <li><a href="diagnosis.html">diagnosis</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="guides.html" class="active">guides</a></li>
+      </ul>
+    </li>
     <li><a href="column.html">칼럼</a></li>
-    <li><a href="guides.html" class="active">금융 가이드</a></li>
-    <li><a href="freebie.html">무료 혜택</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -657,13 +707,15 @@
     <button class="menu-close" id="menuClose">×</button>
   </div>
   <a href="index.html" class="mobile-link">홈</a>
-  <a href="index.html#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
-  <a href="tips.html" class="mobile-link">재테크 팁</a>
-  <a href="column.html" class="mobile-link">칼럼</a>
-  <a href="guides.html" class="mobile-link">금융 가이드</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
+    <a href="tips.html" class="mobile-sublink">tips</a>
+    <a href="guides.html" class="mobile-sublink">guides</a>
+  </div>
+  <a href="column.html" class="mobile-link">칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -730,7 +782,7 @@
 </main>
 
 <footer>
-  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 허은지 자산관리 컨설팅
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 JW Financial
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -926,7 +978,7 @@
       document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
     });
     document.getElementById('menuClose').addEventListener('click', closeMobileMenu);
-    document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
+document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => link.addEventListener('click', closeMobileMenu));
   });
 </script>
 </body>

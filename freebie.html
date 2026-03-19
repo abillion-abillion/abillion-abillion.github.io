@@ -3,13 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>무료 혜택 · 허머니 자산관리</title>
-  <meta name="description" content="무료 전자책 다운로드 + 무료 자산 진단 서비스. 지금 바로 받아보세요.">
-  <meta property="og:title" content="무료 전자책 & 자산 진단 · 허머니">
-  <meta property="og:description" content="무료 전자책 다운로드 + 10분 자산 진단으로 내 재무 상태를 점검해보세요.">
-  <meta property="og:image" content="https://jwfinancial.co.kr/og-image.png">
-  <meta property="og:url" content="https://jwfinancial.co.kr/freebie.html">
-  <meta property="og:type" content="website">
+  <title>무료 혜택 | JW Financial</title>
+  <meta name="description" content="무료 전자책 다운로드와 재무 진단 도구로 내 자산 상태를 빠르게 점검해보세요." />
+  <link rel="canonical" href="https://jwfinancial.co.kr/freebie.html" />
+  <meta property="og:title" content="무료 혜택 | JW Financial" />
+  <meta property="og:description" content="무료 전자책 다운로드와 재무 진단 도구로 내 자산 상태를 빠르게 점검해보세요." />
+  <meta property="og:image" content="https://jwfinancial.co.kr/og-index-jw.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://jwfinancial.co.kr/freebie.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="JW Financial" />
+  <meta property="kakao:title" content="무료 혜택 | JW Financial" />
+  <meta property="kakao:description" content="무료 전자책 다운로드와 재무 진단 도구로 내 자산 상태를 빠르게 점검해보세요." />
+  <meta property="kakao:image" content="https://jwfinancial.co.kr/og-index-jw.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="무료 혜택 | JW Financial" />
+  <meta name="twitter:description" content="무료 전자책 다운로드와 재무 진단 도구로 내 자산 상태를 빠르게 점검해보세요." />
+  <meta name="twitter:image" content="https://jwfinancial.co.kr/og-index-jw.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -39,9 +50,51 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo { font-family: 'Hahmlet', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.3s; }
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      z-index: 1;
+    }
+    .nav-links > li { position: relative; }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-dropdown > a { display: inline-flex; align-items: center; }
+    .nav-submenu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 170px;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid var(--border);
+      background: rgba(250,248,244,0.98);
+      list-style: none;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 30;
+    }
+    .nav-dropdown:hover .nav-submenu,
+    .nav-dropdown:focus-within .nav-submenu { display: flex; }
+    .nav-submenu a {
+      display: block;
+      padding: 0.38rem 0.5rem;
+      font-size: 0.73rem;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+    }
+    .nav-submenu a:hover, .nav-submenu a.active { color: var(--primary); }
     .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.3s; }
     .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
@@ -62,6 +115,22 @@
     }
     .mobile-link { font-family: 'Hahmlet', serif; font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; text-align: center; }
     .mobile-link:hover { color: var(--primary-dark); }
+    .mobile-submenu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: -0.9rem;
+      margin-bottom: 0.15rem;
+    }
+    .mobile-sublink {
+      font-family: 'Hahmlet', serif;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .mobile-sublink:hover { color: var(--primary); }
 
     /* HERO */
     .hero {
@@ -265,12 +334,18 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html#about">소개</a></li>
+    <li><a href="index.html">홈</a></li>
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li><a href="tips.html">재테크 팁</a></li>
-    <li><a href="guides.html">금융 가이드</a></li>
-    <li><a href="freebie.html" class="active">무료 혜택</a></li>
+    <li class="nav-dropdown">
+      <a href="freebie.html" class="active">무료 혜택</a>
+      <ul class="nav-submenu">
+        <li><a href="diagnosis.html">diagnosis</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="guides.html">guides</a></li>
+      </ul>
+    </li>
+    <li><a href="column.html">칼럼</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -282,14 +357,15 @@
     <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
   </div>
   <a href="index.html" class="mobile-link">홈</a>
-  <a href="index.html#about" class="mobile-link">소개</a>
   <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
-  <a href="tips.html" class="mobile-link">재테크 팁</a>
-  <a href="column.html" class="mobile-link">칼럼</a>
-  <a href="guides.html" class="mobile-link">금융 가이드</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
-  <a href="diagnosis.html" class="mobile-link">무료 자산진단</a>
+  <div class="mobile-submenu">
+    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
+    <a href="tips.html" class="mobile-sublink">tips</a>
+    <a href="guides.html" class="mobile-sublink">guides</a>
+  </div>
+  <a href="column.html" class="mobile-link">칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -407,7 +483,7 @@
             <div class="ebook-cover-ttl">2039<br/>자산관리<br/>지침서</div>
             <div class="ebook-cover-sub">직장인 · 사업자 필독서</div>
             <div class="ebook-cover-line"></div>
-            <div class="ebook-cover-author">허머니 지음</div>
+            <div class="ebook-cover-author">JW Financial 지음</div>
             <div class="ebook-badge-mini">
               <span>★4.8</span>
               <span>100+</span>
@@ -458,7 +534,7 @@
 </div>
 
 <footer>
-  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 허머니 자산관리 컨설팅
+  JW Financial Consulting Wealth Consulting &nbsp;·&nbsp; © 2025 JW Financial
 </footer>
 
 <!-- 카카오톡 공유 플로팅 버튼 -->
@@ -524,7 +600,7 @@
     // PDF 다운로드
     const a = document.createElement('a');
     a.href = PDF_URL;
-    a.download = '2039_자산관리_지침서_허머니.pdf';
+    a.download = '2039_자산관리_지침서_JW_Financial.pdf';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
 
     // UI 전환
@@ -533,7 +609,7 @@
     document.getElementById('retryDownload').addEventListener('click', function(e) {
       e.preventDefault();
       const a2 = document.createElement('a');
-      a2.href = PDF_URL; a2.download = '2039_자산관리_지침서_허머니.pdf';
+      a2.href = PDF_URL; a2.download = '2039_자산관리_지침서_JW_Financial.pdf';
       document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
     });
   }
@@ -545,7 +621,7 @@
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '무료 전자책 & 자산 진단 · 허머니 자산관리',
+      title: '무료 혜택 | JW Financial',
         description: '무료 전자책 다운로드 + 10분 자산 진단 서비스를 지금 바로 받아보세요.',
         imageUrl: 'https://jwfinancial.co.kr/og-image.png',
         link: {
@@ -575,7 +651,7 @@
       mobileMenu.classList.toggle('open');
       document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
     });
-    document.querySelectorAll('.mobile-link').forEach(link => {
+document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => {
       link.addEventListener('click', () => {
         navToggle.classList.remove('open');
         mobileMenu.classList.remove('open');

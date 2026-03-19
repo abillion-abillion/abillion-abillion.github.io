@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>금융 이슈 자동 요약기</title>
+<title>직원용 금융 이슈 요약 | JW Financial</title>
+<meta name="description" content="상담 준비를 위한 직원용 금융 이슈 자동 요약 도구입니다." />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<link rel="canonical" href="https://jwfinancial.co.kr/finance_news_auto.html" />
+<meta property="og:title" content="직원용 금융 이슈 요약 | JW Financial" />
+<meta property="og:description" content="상담 준비를 위한 직원용 금융 이슈 자동 요약 도구입니다." />
+<meta property="og:image" content="https://jwfinancial.co.kr/og-index-jw.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://jwfinancial.co.kr/finance_news_auto.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="JW Financial" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="직원용 금융 이슈 요약 | JW Financial" />
+<meta name="twitter:description" content="상담 준비를 위한 직원용 금융 이슈 자동 요약 도구입니다." />
+<meta name="twitter:image" content="https://jwfinancial.co.kr/og-index-jw.png" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -560,11 +575,12 @@
     list-style: none;
     z-index: 1;
   }
+  .site-nav-links > li { position: relative; }
   .site-nav-links a {
     color: #5A5A5A;
     text-decoration: none;
     font-family: 'Hahmlet', serif;
-    font-size: 0.74rem;
+    font-size: 0.86rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     white-space: nowrap;
@@ -572,6 +588,33 @@
   }
   .site-nav-links a:hover,
   .site-nav-links a.active { color: #5C7A3E; }
+  .site-nav-dropdown > a { display: inline-flex; align-items: center; }
+  .site-nav-submenu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 170px;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid #DDD9D0;
+    background: rgba(250,248,244,0.98);
+    list-style: none;
+    flex-direction: column;
+    gap: 0.35rem;
+    z-index: 30;
+  }
+  .site-nav-dropdown:hover .site-nav-submenu,
+  .site-nav-dropdown:focus-within .site-nav-submenu { display: flex; }
+  .site-nav-submenu a {
+    display: block;
+    padding: 0.38rem 0.5rem;
+    font-size: 0.73rem;
+    letter-spacing: 0.04em;
+    color: #5A5A5A;
+  }
+  .site-nav-submenu a:hover,
+  .site-nav-submenu a.active { color: #5C7A3E; }
   .site-nav-toggle {
     display: none;
     flex-direction: column;
@@ -633,6 +676,22 @@
     letter-spacing: 0.1em;
     text-align: center;
   }
+  .site-mobile-submenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: -0.9rem;
+    margin-bottom: 0.15rem;
+  }
+  .site-mobile-sublink {
+    font-family: 'Hahmlet', serif;
+    font-size: 0.95rem;
+    color: #5A5A5A;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .site-mobile-sublink:hover { color: #5C7A3E; }
   .guide-back-wrap {
     max-width: 860px;
     margin: 48px auto 0;
@@ -676,13 +735,18 @@
 <nav class="site-nav">
   <a href="index.html" class="site-nav-logo">JW Financial Consulting</a>
   <ul class="site-nav-links">
-    <li><a href="index.html#about">소개</a></li>
+    <li><a href="index.html">홈</a></li>
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li><a href="tips.html">재테크 팁</a></li>
+    <li class="site-nav-dropdown">
+      <a href="freebie.html" class="active">무료 혜택</a>
+      <ul class="site-nav-submenu">
+        <li><a href="diagnosis.html">diagnosis</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="guides.html">guides</a></li>
+      </ul>
+    </li>
     <li><a href="column.html">칼럼</a></li>
-    <li><a href="guides.html" class="active">금융 가이드</a></li>
-    <li><a href="freebie.html">무료 혜택</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="site-nav-toggle" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -693,13 +757,15 @@
     <button class="site-menu-close" type="button">×</button>
   </div>
   <a href="index.html" class="site-mobile-link">홈</a>
-  <a href="index.html#about" class="site-mobile-link">소개</a>
   <a href="services.html" class="site-mobile-link">서비스</a>
   <a href="reviews.html" class="site-mobile-link">후기</a>
-  <a href="tips.html" class="site-mobile-link">재테크 팁</a>
-  <a href="column.html" class="site-mobile-link">칼럼</a>
-  <a href="guides.html" class="site-mobile-link">금융 가이드</a>
   <a href="freebie.html" class="site-mobile-link">무료 혜택</a>
+  <div class="site-mobile-submenu">
+    <a href="diagnosis.html" class="site-mobile-sublink">diagnosis</a>
+    <a href="tips.html" class="site-mobile-sublink">tips</a>
+    <a href="guides.html" class="site-mobile-sublink">guides</a>
+  </div>
+  <a href="column.html" class="site-mobile-link">칼럼</a>
   <a href="consult.html" class="site-mobile-link">상담 신청</a>
 </div>
 
@@ -1322,7 +1388,7 @@ if (financeStaffPassword) {
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   });
   closeBtn.addEventListener('click', closeMenu);
-  mobileMenu.querySelectorAll('.site-mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+  mobileMenu.querySelectorAll('.site-mobile-link, .site-mobile-sublink').forEach(link => link.addEventListener('click', closeMenu));
 })();
 </script>
 
