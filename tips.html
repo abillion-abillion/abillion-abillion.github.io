@@ -104,8 +104,7 @@
       gap: 0.35rem;
       z-index: 30;
     }
-    .nav-dropdown:hover .nav-submenu,
-    .nav-dropdown:focus-within .nav-submenu { display: flex; }
+    .nav-dropdown.open .nav-submenu { display: flex; }
     .nav-submenu a {
       display: block;
       padding: 0.38rem 0.5rem;
@@ -847,11 +846,11 @@
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
     <li class="nav-dropdown">
-      <a href="freebie.html" class="active">무료 혜택</a>
-      <ul class="nav-submenu">
-        <li><a href="diagnosis.html">diagnosis</a></li>
-        <li><a href="tips.html" class="active">tips</a></li>
-        <li><a href="guides.html">guides</a></li>
+      <a href="freebie.html" class="active submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="tips.html" class="active">재테크 영상</a></li>
+        <li><a href="guides.html">왕쉬운 금융공부</a></li>
       </ul>
     </li>
     <li><a href="column.html">칼럼</a></li>
@@ -871,9 +870,9 @@
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
   <div class="mobile-submenu">
-    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
-    <a href="tips.html" class="mobile-sublink">tips</a>
-    <a href="guides.html" class="mobile-sublink">guides</a>
+    <a href="diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="guides.html" class="mobile-sublink">왕쉬운 금융공부</a>
   </div>
   <a href="column.html" class="mobile-link">칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
@@ -885,104 +884,6 @@
   <h1>알아야 돈이 된다<br /><em>재테크 & 금융 인사이트</em></h1>
   <p>어렵게만 느껴지던 금융 이야기를<br/>쉽고 명확하게 풀어드립니다.<br/>지식이 쌓이면 선택이 달라집니다.</p>
   <div class="hero-divider"></div>
-</section>
-
-<!-- CHANNEL BANNER -->
-<div class="channel-banner">
-  <div class="channel-inner">
-    <div class="channel-icon">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.82 12l-6.07 3.52z"/>
-      </svg>
-    </div>
-    <div class="channel-info">
-      <div class="channel-name">자산관리사 남진우</div>
-      <div class="channel-handle">@자산관리사남진우 · 재테크 · 금융 · 자산관리</div>
-    </div>
-    <a href="https://www.youtube.com/@honeymoneymustard" target="_blank" class="btn-subscribe">
-      <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.82 12l-6.07 3.52z"/></svg>
-      채널 구독하기
-    </a>
-  </div>
-</div>
-
-<!-- EBOOK DOWNLOAD SECTION -->
-<section class="ebook-section" id="ebook">
-  <div class="ebook-inner">
-
-    <!-- 책 커버 -->
-    <div class="ebook-cover-wrap">
-      <div class="ebook-cover">
-        <div class="ebook-cover-year">월급날마다 꺼내보는</div>
-        <div class="ebook-cover-title">2039<br/>자산관리<br/>지침서</div>
-        <div class="ebook-cover-sub">직장인 · 사업자 필독서</div>
-        <div class="ebook-cover-divider"></div>
-        <div class="ebook-cover-author">남진우 지음</div>
-      </div>
-      <div class="ebook-badge">
-        <span>★ 4.8</span>
-        <span>리뷰 100+</span>
-      </div>
-    </div>
-
-    <!-- 우측 콘텐츠 -->
-    <div class="ebook-content">
-      <div class="ebook-eyebrow">Free E-Book · 무료 전자책</div>
-      <h2 class="ebook-title">
-        컨설팅 3시간 분량을<br/>
-        <em>한 권에 담았습니다</em>
-      </h2>
-      <p class="ebook-desc">
-        500명 이상의 상담 경험에서 나온 핵심만 수록했습니다.<br/>
-        왕초보도 읽으면 혼자 자산관리를 시작할 수 있도록 썼습니다.
-      </p>
-
-      <div class="ebook-stats">
-        <div class="ebook-stat">
-          <div class="ebook-stat-icon">📋</div>
-          <div class="ebook-stat-text">
-            <div class="ebook-stat-val">자가점검 체크리스트</div>
-            <div class="ebook-stat-label">수록</div>
-          </div>
-        </div>
-        <div class="ebook-stat">
-          <div class="ebook-stat-icon">⏱</div>
-          <div class="ebook-stat-text">
-            <div class="ebook-stat-val">3시간 컨설팅 분량</div>
-            <div class="ebook-stat-label">아낌없이 수록</div>
-          </div>
-        </div>
-        <div class="ebook-stat">
-          <div class="ebook-stat-icon">⭐</div>
-          <div class="ebook-stat-text">
-            <div class="ebook-stat-val">평점 4.8 · 100건+</div>
-            <div class="ebook-stat-label">실제 독자 리뷰</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 신청 폼 -->
-      <div id="ebookFormWrap">
-        <div class="ebook-form">
-          <div class="ebook-form-group">
-            <input class="ebook-input" type="text" id="ebookName" placeholder="이름" autocomplete="name" />
-            <input class="ebook-input" type="tel" id="ebookPhone" placeholder="연락처 (010-xxxx-xxxx)" autocomplete="tel" />
-          </div>
-          <button class="btn-ebook" onclick="submitEbook()">무료로 받기 →</button>
-        </div>
-        <div class="ebook-privacy">✦ 입력하신 정보는 전자책 발송 외 다른 용도로 사용되지 않습니다.</div>
-      </div>
-
-      <div class="ebook-success" id="ebookSuccess">
-        <div class="ebook-success-icon">✓</div>
-        <div class="ebook-success-text">
-          다운로드가 시작되었습니다! 📥<br/>
-          저장이 안 됐다면 <a href="#" id="retryDownload" style="color:var(--primary);text-decoration:underline;">여기를 클릭</a>해주세요.
-        </div>
-      </div>
-    </div>
-
-  </div>
 </section>
 
 <!-- VIDEOS -->
@@ -1096,19 +997,6 @@
 
   </div>
 </section>
-
-<!-- 전자책 미니 폼 -->
-<div class="ebook-mini-form" id="ebookMiniSection">
-  <div class="ebook-mini-eyebrow">FREE E-BOOK · 무료 전자책</div>
-  <div class="ebook-mini-title">이 내용을 PDF로 정리해드립니다</div>
-  <div class="ebook-mini-desc">컨설팅 3시간 분량의 핵심을 한 권에 — 이메일로 바로 받아보세요.</div>
-  <input class="ebook-mini-input" type="text" id="tipsEbookName" placeholder="이름" />
-  <input class="ebook-mini-input" type="tel" id="tipsEbookPhone" placeholder="연락처" />
-  <input class="ebook-mini-input" type="email" id="tipsEbookEmail" placeholder="이메일 (전자책 발송용)" />
-  <button class="ebook-mini-btn" onclick="submitTipsEbook()">📚 무료 전자책 받기 →</button>
-  <div class="ebook-mini-privacy">✦ 입력 정보는 전자책 발송 외 사용되지 않습니다.</div>
-  <div class="ebook-mini-success" id="tipsEbookSuccess" style="display:none;">✓ 이메일로 발송되었습니다! 📥</div>
-</div>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -1253,9 +1141,41 @@
   }
 
   // 햄버거 메뉴
-  const navToggle = document.getElementById('navToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (navToggle && mobileMenu) {
+function setupFreebieDropdown() {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const trigger = dropdown.querySelector('.submenu-toggle');
+  const submenu = dropdown.querySelector('.nav-submenu');
+  if (!trigger || !submenu) return;
+
+  const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+    setExpanded(false);
+  };
+  const toggleDropdown = () => {
+    const willOpen = !dropdown.classList.contains('open');
+    dropdown.classList.toggle('open', willOpen);
+    setExpanded(willOpen);
+  };
+
+  trigger.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    toggleDropdown();
+  });
+  document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target)) closeDropdown();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDropdown();
+  });
+  submenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDropdown));
+}
+
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+if (navToggle && mobileMenu) {
     navToggle.addEventListener('click', () => {
       navToggle.classList.toggle('open');
       mobileMenu.classList.toggle('open');
@@ -1267,8 +1187,9 @@ document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => {
         mobileMenu.classList.remove('open');
         document.body.style.overflow = '';
       });
-    });
-  }
+  });
+}
+setupFreebieDropdown();
 
 </script>
 

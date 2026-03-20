@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>소비·지출 진단 결과 리포트 예시 | JW Financial</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #0e0e0e;
+      --dark-2: #161616;
+      --dark-3: #1f1f1f;
+      --text: #e8e4dc;
+      --text-muted: #888;
+      --border: rgba(201,169,110,0.15);
+      --green: #4caf7d;
+      --red: #e05a5a;
+      --blue: #5a8fe0;
+      --amber: #e0a05a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    /* ── 상단 데모 배너 ── */
+    .demo-banner {
+      background: linear-gradient(90deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+      border-bottom: 1px solid rgba(201,169,110,0.3);
+      padding: 0.85rem 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .demo-badge {
+      background: var(--gold); color: var(--dark);
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em;
+      padding: 0.25rem 0.7rem;
+    }
+    .demo-text { font-size: 0.8rem; color: var(--gold-light); }
+    .demo-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1.2rem; background: var(--gold); color: var(--dark);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .demo-btn:hover { background: var(--gold-light); }
+
+    /* ── WRAP ── */
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 2.5rem 2rem 6rem; }
+
+    /* ── 리포트 카드 ── */
+    #reportCard {
+      background: #0a0f18;
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 2.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #reportCard::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 40%, var(--gold-light) 60%, transparent 100%);
+    }
+    #reportCard::after {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── 리포트 헤더 ── */
+    .report-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 2.2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    .brand-logo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+    .brand-emblem {
+      width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 0.8rem; color: var(--gold);
+    }
+    .brand-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--gold); letter-spacing: 0.15em; }
+    .brand-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-left: 40px; }
+    .report-meta { text-align: right; }
+    .meta-name { font-family: 'Noto Serif KR', serif; font-size: 1.15rem; color: var(--text); }
+    .meta-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
+    .meta-date { font-size: 0.62rem; color: #555; margin-top: 0.2rem; }
+
+    /* ── 총점 섹션 ── */
+    .score-section {
+      display: flex; gap: 2.5rem; margin-bottom: 2.5rem; align-items: center;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+    }
+    .score-ring-wrap { flex-shrink: 0; position: relative; }
+    .score-ring {
+      width: 130px; height: 130px; border-radius: 50%;
+      background: conic-gradient(var(--gold) 0deg, var(--gold) calc(3.6deg * 68), rgba(255,255,255,0.07) calc(3.6deg * 68));
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .score-ring-inner {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: #0a0f18;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: absolute;
+    }
+    .score-big { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); line-height: 1; }
+    .score-100 { font-size: 0.6rem; color: var(--text-muted); margin-top: 0.15rem; letter-spacing: 0.05em; }
+    .score-info { flex: 1; }
+    .score-grade-wrap { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .grade-badge {
+      padding: 0.3rem 0.9rem;
+      background: linear-gradient(135deg, rgba(201,169,110,0.2), rgba(201,169,110,0.08));
+      border: 1px solid rgba(201,169,110,0.4);
+      font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold);
+    }
+    .grade-label { font-size: 0.75rem; color: #888; letter-spacing: 0.08em; }
+    .score-desc { font-size: 0.82rem; color: #bbb; line-height: 1.78; }
+
+    /* ── 소비 요약 박스 ── */
+    .budget-summary {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .budget-item {
+      background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+      padding: 1.2rem 1.3rem; text-align: center;
+    }
+    .budget-label { font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .budget-value { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--gold); }
+    .budget-unit { font-size: 0.62rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* ── 영역별 바 ── */
+    .section-block { margin-bottom: 2.5rem; }
+    .section-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .area-row { margin-bottom: 1.1rem; }
+    .area-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.4rem; }
+    .area-name { font-size: 0.8rem; color: var(--text); }
+    .area-nums { font-size: 0.72rem; display: flex; align-items: center; gap: 0.5rem; }
+    .area-mine { font-weight: 500; }
+    .area-sep { color: #444; }
+    .area-avg-lbl { color: #666; font-size: 0.65rem; }
+    .bar-track { height: 9px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: visible; position: relative; }
+    .bar-mine { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(.25,.46,.45,.94); }
+    .bar-avg-line {
+      position: absolute; top: -4px; height: 17px; width: 2px;
+      background: rgba(255,255,255,0.3); border-radius: 1px;
+    }
+    .area-verdict { font-size: 0.68rem; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.35rem; }
+    .up { color: var(--green); }
+    .dn { color: var(--red); }
+    .eq { color: #666; }
+
+    /* ── 도넛 차트 ── */
+    .donut-wrap {
+      display: flex; justify-content: center; align-items: center;
+      gap: 2.5rem; padding: 1rem 0 0.5rem; flex-wrap: wrap;
+    }
+    .donut-legend { display: flex; flex-direction: column; gap: 0.7rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.65rem; font-size: 0.75rem; color: #bbb; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── 강점 / 약점 ── */
+    .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .sw-box { background: rgba(255,255,255,0.025); border: 1px solid var(--border); padding: 1.3rem 1.4rem; }
+    .sw-title { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .sw-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.7rem; font-size: 0.78rem; color: #bbb; line-height: 1.6; }
+    .sw-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
+
+    /* ── 맞춤 메시지 ── */
+    .insight-box {
+      background: linear-gradient(135deg, rgba(201,169,110,0.07), rgba(201,169,110,0.03));
+      border: 1px solid rgba(201,169,110,0.22);
+      padding: 1.8rem 2rem; margin-bottom: 2rem; position: relative; overflow: hidden;
+    }
+    .insight-box::before {
+      content: '❝';
+      font-family: 'Playfair Display', serif; font-size: 4rem;
+      color: var(--gold); opacity: 0.12;
+      position: absolute; top: -0.4rem; left: 0.8rem; line-height: 1;
+      pointer-events: none;
+    }
+    .insight-eyebrow { font-size: 0.6rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .insight-text { font-family: 'Noto Serif KR', serif; font-size: 0.9rem; line-height: 1.9; color: #d0ccc4; padding-left: 1rem; }
+    .insight-highlight { color: var(--gold-light); font-weight: 600; }
+
+    /* ── 컨설팅 CTA ── */
+    .cta-box {
+      background: linear-gradient(135deg, #0d1b2e 0%, #0e1520 50%, #0a0f18 100%);
+      border: 1px solid rgba(201,169,110,0.35);
+      padding: 2.2rem 2.4rem; text-align: center; position: relative; overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .cta-box::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .cta-box::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 65%); }
+    .cta-eyebrow { font-size: 0.62rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .cta-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 400; line-height: 1.45; margin-bottom: 0.9rem; }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-desc { font-size: 0.8rem; color: #999; line-height: 1.85; margin-bottom: 1.6rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn-primary {
+      padding: 0.85rem 2.2rem; background: var(--gold); color: var(--dark);
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+      text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block;
+    }
+    .cta-btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .cta-btn-secondary {
+      padding: 0.85rem 2.2rem; border: 1px solid rgba(201,169,110,0.5); color: var(--gold);
+      font-size: 0.82rem; letter-spacing: 0.08em;
+      text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block;
+    }
+    .cta-btn-secondary:hover { background: rgba(201,169,110,0.08); transform: translateY(-1px); }
+    .cta-disclaimer { font-size: 0.65rem; color: #555; margin-top: 1rem; }
+
+    /* ── 리포트 푸터 ── */
+    .report-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.3rem; display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .rf-left { font-size: 0.63rem; color: #555; line-height: 1.65; }
+    .rf-right { font-family: 'Playfair Display', serif; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.12em; }
+
+    /* ── 액션 버튼 ── */
+    .action-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-dl { flex: 1; min-width: 150px; padding: 0.95rem; background: var(--gold); color: var(--dark); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background 0.2s, transform 0.15s; }
+    .btn-dl:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-consult { flex: 1; min-width: 150px; padding: 0.95rem; border: 1px solid var(--gold); color: var(--gold); background: transparent; font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background 0.2s; }
+    .btn-consult:hover { background: rgba(201,169,110,0.08); }
+
+    /* ── 로딩 ── */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(10,10,10,0.92); z-index: 200; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 1.2rem; }
+    .loading-overlay.active { display: flex; }
+    .loading-spinner { width: 40px; height: 40px; border: 2px solid rgba(201,169,110,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .loading-text { font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.1em; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes barFill { from { width: 0 !important; } }
+
+    @media (max-width: 600px) {
+      #reportCard { padding: 1.5rem; }
+      .score-section { flex-direction: column; text-align: center; gap: 1.5rem; padding: 1.4rem; }
+      .report-header { flex-direction: column; gap: 0.8rem; }
+      .report-meta { text-align: left; }
+      .sw-grid { grid-template-columns: 1fr; }
+      .action-bar { flex-direction: column; }
+      .cta-btns { flex-direction: column; align-items: center; }
+      .budget-summary { grid-template-columns: 1fr; }
+      .donut-wrap { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 데모 배너 -->
+<div class="demo-banner">
+  <span class="demo-badge">SAMPLE</span>
+  <span class="demo-text">이것은 소비·지출 진단 결과 리포트 예시입니다 — 실제 진단을 받으시려면 아래 버튼을 눌러주세요</span>
+  <a href="spending_diagnosis.html" class="demo-btn">소비 진단 받기 →</a>
+</div>
+
+<div class="page-wrap">
+  <div id="reportCard">
+
+    <!-- ── 헤더 ── -->
+    <div class="report-header">
+      <div>
+        <div class="brand-logo">
+          <div class="brand-emblem">JW</div>
+          <div class="brand-name">JW Financial Consulting</div>
+        </div>
+        <div class="brand-sub">JW Financial · 소비·지출 진단 리포트</div>
+      </div>
+      <div class="report-meta">
+        <div class="meta-name">홍길동 님</div>
+        <div class="meta-info">30대 · 남성 · 직장인</div>
+        <div class="meta-date">2025년 3월 11일 기준</div>
+      </div>
+    </div>
+
+    <!-- ── 총점 ── -->
+    <div class="score-section">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <div class="score-ring-inner">
+            <div class="score-big">68</div>
+            <div class="score-100">/ 100점</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-info">
+        <div class="score-grade-wrap">
+          <div class="grade-badge">B &nbsp;양호함</div>
+          <div class="grade-label">상위 약 35%</div>
+        </div>
+        <div class="score-desc">
+          전반적인 소비 구조는 양호한 편입니다.<br/>
+          식비와 외식 지출이 동일 그룹 평균을 웃돌고 있으며,<br/>
+          <span style="color:var(--gold-light);">외식·쇼핑 지출을 조정하면 월 30만 원 이상</span> 저축 여력이 생깁니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 소비 요약 ── -->
+    <div class="budget-summary">
+      <div class="budget-item">
+        <div class="budget-label">월 소득</div>
+        <div class="budget-value">350<span style="font-size:1rem;">만원</span></div>
+        <div class="budget-unit">세후 실수령액 기준</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">월 총 지출</div>
+        <div class="budget-value">285<span style="font-size:1rem;">만원</span></div>
+        <div class="budget-unit">소득 대비 81.4%</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">저축 여력</div>
+        <div class="budget-value">65<span style="font-size:1rem;">만원</span></div>
+        <div class="budget-unit">소득 대비 18.6%</div>
+      </div>
+    </div>
+
+    <!-- ── 항목별 진단 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">항목별 지출 vs 동일 그룹 평균</div>
+
+      <!-- 주거비 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">🏠 주거비</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#c9a96e;">70만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 75만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:70%;background:#c9a96e;"></div>
+          <div class="bar-avg-line" style="left:75%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 낮음 (양호)</span> <span style="color:#444;font-size:0.62rem;">· 흰 선 = 동일 그룹 평균</span></div>
+      </div>
+
+      <!-- 식비 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">🍱 식비</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e05a5a;">55만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 40만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:55%;background:#e05a5a;"></div>
+          <div class="bar-avg-line" style="left:40%;"></div>
+        </div>
+        <div class="area-verdict"><span class="dn">▼ 평균보다 높음 · 조정 권장</span></div>
+      </div>
+
+      <!-- 교통비 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">🚌 교통비</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#4caf7d;">15만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 18만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:15%;background:#4caf7d;"></div>
+          <div class="bar-avg-line" style="left:18%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 평균보다 낮음 (양호)</span></div>
+      </div>
+
+      <!-- 통신비 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">📱 통신비</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e8d5b0;">8만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 8만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:8%;background:#e8d5b0;"></div>
+          <div class="bar-avg-line" style="left:8%;"></div>
+        </div>
+        <div class="area-verdict"><span class="eq">≈ 평균 수준</span></div>
+      </div>
+
+      <!-- 외식·엔터 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">🍻 외식·엔터</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e05a5a;">45만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 28만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:45%;background:#e05a5a;"></div>
+          <div class="bar-avg-line" style="left:28%;"></div>
+        </div>
+        <div class="area-verdict"><span class="dn">▼ 평균 대비 60% 초과 · 즉시 개선 권장</span></div>
+      </div>
+
+      <!-- 의류·쇼핑 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">👗 의류·쇼핑</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#e0a05a;">30만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 20만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:30%;background:#e0a05a;"></div>
+          <div class="bar-avg-line" style="left:20%;"></div>
+        </div>
+        <div class="area-verdict"><span class="dn">▼ 평균보다 높음</span></div>
+      </div>
+
+      <!-- 보험료 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">🛡 보험료</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#5ae0c9;">22만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 25만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:22%;background:#5ae0c9;"></div>
+          <div class="bar-avg-line" style="left:25%;"></div>
+        </div>
+        <div class="area-verdict"><span class="up">▲ 적정 수준</span></div>
+      </div>
+
+      <!-- 저축·투자 -->
+      <div class="area-row">
+        <div class="area-top">
+          <div class="area-name">💰 저축·투자</div>
+          <div class="area-nums">
+            <span class="area-mine" style="color:#7de0a0;">40만원</span>
+            <span class="area-sep">/</span>
+            <span class="area-avg-lbl">평균 50만원</span>
+          </div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-mine" style="width:40%;background:#7de0a0;"></div>
+          <div class="bar-avg-line" style="left:50%;"></div>
+        </div>
+        <div class="area-verdict"><span class="dn">▼ 평균보다 낮음 · 지출 조정으로 개선 가능</span></div>
+      </div>
+    </div>
+
+    <!-- ── 소비 구성 차트 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">소비 구성 비율</div>
+      <div class="donut-wrap">
+        <canvas id="donutChart" width="220" height="220"></canvas>
+        <div class="donut-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#c9a96e;"></div>주거비 24.6%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e05a5a;"></div>식비 19.3%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e05a9a;"></div>외식·엔터 15.8%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e0a05a;"></div>의류·쇼핑 10.5%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#5ae0c9;"></div>보험료 7.7%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#7de0a0;"></div>저축·투자 14.0%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#888;"></div>교통·통신·기타 8.1%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 절약 포인트 / 유지 포인트 ── -->
+    <div class="section-block">
+      <div class="section-eyebrow">절약 포인트 & 잘하고 있는 부분</div>
+      <div class="sw-grid">
+        <div class="sw-box">
+          <div class="sw-title" style="color:var(--red);">▲ &nbsp;줄여야 할 지출</div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--red);"></div>
+            <span><b style="color:var(--red);">외식·엔터</b> — 평균 대비 17만원 초과. 월 10만원만 줄여도 연 120만원 절약 효과.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:#e09050;"></div>
+            <span><b style="color:#e09050;">식비</b> — 월 식비 55만원은 30대 평균보다 15만원 높습니다. 주 1회 도시락으로 월 4만원 절감 가능.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:#888;"></div>
+            <span><b style="color:#aaa;">의류·쇼핑</b> — 충동 구매 패턴 의심. 장바구니 24시간 유지 규칙 도입을 권장합니다.</span>
+          </div>
+        </div>
+        <div class="sw-box">
+          <div class="sw-title" style="color:var(--green);">✦ &nbsp;잘하고 있는 부분</div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">주거비</b> — 평균보다 5만원 낮게 유지. 합리적인 주거 선택이 재무 여력을 만들고 있습니다.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">교통비</b> — 대중교통 위주의 이동으로 평균 이하 유지. 현재 수준을 유지하세요.</span>
+          </div>
+          <div class="sw-item">
+            <div class="sw-dot" style="background:var(--green);"></div>
+            <span><b style="color:var(--green);">보험료</b> — 적정 보장 수준을 유지하고 있습니다. 과잉 가입 없이 균형 잡혀 있습니다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 맞춤 인사이트 ── -->
+    <div class="insight-box">
+      <div class="insight-eyebrow">JW Financial 코멘트</div>
+      <div class="insight-text">
+        홍길동 님의 소비 구조에서 가장 눈에 띄는 부분은 <span class="insight-highlight">외식·엔터와 식비의 과지출</span>입니다. 이 두 항목이 월 평균 대비 32만원을 초과하고 있어, 여기서만 절반을 줄여도 저축 여력이 현재의 두 배(월 81만원)로 늘어납니다. 현재 소득 대비 저축률 18.6%는 동일 그룹 평균인 22.5%보다 낮습니다. <span class="insight-highlight">지출 구조 하나만 바꿔도 5년 뒤 자산이 달라집니다.</span>
+      </div>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="cta-box">
+      <div class="cta-eyebrow">Next Step · 다음 단계</div>
+      <div class="cta-title">
+        소비 패턴을 바탕으로<br/><em>실행 가능한 예산 계획을 만들어드립니다</em>
+      </div>
+      <div class="cta-desc">
+        진단은 현재 상태를 파악하는 첫 걸음입니다.<br/>
+        같은 지출이라도 소득·목표·시기에 따라 조정 방향이 완전히 달라집니다.<br/>
+        1:1 상담에서 나에게 맞는 예산 로드맵을 함께 그려보세요.
+      </div>
+      <div class="cta-btns">
+        <a href="consult.html" class="cta-btn-primary">무료 상담 신청하기</a>
+        <a href="https://open.kakao.com/me/Heomoney" target="_blank" class="cta-btn-secondary">카카오톡 문의</a>
+      </div>
+      <div class="cta-disclaimer">* 상담은 무료이며, 별도 계약 의무가 없습니다.</div>
+    </div>
+
+    <!-- ── 리포트 푸터 ── -->
+    <div class="report-footer">
+      <div class="rf-left">
+        본 진단은 입력하신 정보를 기반으로 한 참고 자료입니다.<br/>
+        실제 재무 전략은 전문 자산관리사와의 상담을 권장합니다.
+      </div>
+      <div class="rf-right">JW Financial Consulting</div>
+    </div>
+
+  </div><!-- /#reportCard -->
+
+  <!-- 액션 버튼 -->
+  <div class="action-bar">
+    <button class="btn-dl" onclick="downloadPDF()">⬇ PDF 저장하기</button>
+    <a href="consult.html" class="btn-consult">📋 1:1 상담 신청</a>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<!-- 로딩 -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">PDF 생성 중...</div>
+</div>
+
+<script>
+// ── 도넛 차트 ──────────────────────────────────────────────────
+const ctx = document.getElementById('donutChart').getContext('2d');
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['주거비', '식비', '외식·엔터', '의류·쇼핑', '보험료', '저축·투자', '교통·통신·기타'],
+    datasets: [{
+      data: [70, 55, 45, 30, 22, 40, 23],
+      backgroundColor: [
+        'rgba(201,169,110,0.85)',
+        'rgba(224,90,90,0.85)',
+        'rgba(224,90,154,0.85)',
+        'rgba(224,160,90,0.85)',
+        'rgba(90,224,201,0.85)',
+        'rgba(125,224,160,0.85)',
+        'rgba(136,136,136,0.65)',
+      ],
+      borderColor: '#0a0f18',
+      borderWidth: 2,
+      hoverOffset: 6,
+    }],
+  },
+  options: {
+    responsive: false,
+    cutout: '62%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#161616',
+        borderColor: 'rgba(201,169,110,0.3)',
+        borderWidth: 1,
+        titleColor: '#c9a96e',
+        bodyColor: '#ccc',
+        titleFont: { family: "'Noto Sans KR', sans-serif" },
+        bodyFont: { family: "'Noto Sans KR', sans-serif" },
+        callbacks: {
+          label: function(context) {
+            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+            const pct = ((context.parsed / total) * 100).toFixed(1);
+            return ` ${context.parsed}만원 (${pct}%)`;
+          }
+        }
+      },
+    },
+  },
+});
+
+// ── 바 애니메이션 ─────────────────────────────────────────────
+const bars = document.querySelectorAll('.bar-mine');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'none';
+      void entry.target.offsetWidth;
+      entry.target.style.animation = 'barFill 1.2s cubic-bezier(.25,.46,.45,.94) forwards';
+    }
+  });
+}, { threshold: 0.3 });
+bars.forEach(b => observer.observe(b));
+
+// ── PDF 다운로드 ──────────────────────────────────────────────
+async function downloadPDF() {
+  const overlay = document.getElementById('loadingOverlay');
+  overlay.classList.add('active');
+  try {
+    const { jsPDF } = window.jspdf;
+    const card = document.getElementById('reportCard');
+    await new Promise(r => setTimeout(r, 200));
+
+    const canvas = await html2canvas(card, {
+      scale: 2, useCORS: true,
+      backgroundColor: '#0a0f18',
+      logging: false,
+      onclone: (doc) => {
+        const banner = doc.querySelector('.demo-banner');
+        if (banner) banner.style.display = 'none';
+      }
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgH  = (canvas.height / canvas.width) * pageW;
+
+    if (imgH <= pageH) {
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, imgH);
+    } else {
+      let yPos = 0;
+      while (yPos < imgH) {
+        if (yPos > 0) pdf.addPage();
+        const sliceH = Math.min(pageH, imgH - yPos);
+        const srcY   = (yPos / imgH) * canvas.height;
+        const srcH   = (sliceH / imgH) * canvas.height;
+        const sc = document.createElement('canvas');
+        sc.width = canvas.width; sc.height = srcH;
+        sc.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
+        pdf.addImage(sc.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pageW, sliceH);
+        yPos += pageH;
+      }
+    }
+    pdf.save('JW_Financial_소비지출_진단_리포트_예시.pdf');
+  } catch(e) {
+    console.error(e);
+    alert('PDF 생성 중 오류가 발생했습니다.');
+  }
+  overlay.classList.remove('active');
+}
+</script>
+</body>
+</html>

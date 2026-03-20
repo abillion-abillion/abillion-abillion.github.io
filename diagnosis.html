@@ -99,8 +99,7 @@
       gap: 0.35rem;
       z-index: 30;
     }
-    .nav-dropdown:hover .nav-submenu,
-    .nav-dropdown:focus-within .nav-submenu { display: flex; }
+    .nav-dropdown.open .nav-submenu { display: flex; }
     .nav-submenu a {
       display: block;
       padding: 0.38rem 0.5rem;
@@ -238,6 +237,41 @@
       display: flex;
       gap: 0.7rem;
       flex-wrap: wrap;
+    }
+    .demo-preview-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      margin-bottom: 1rem;
+      background: rgba(92,122,62,0.06);
+      border: 1px dashed rgba(92,122,62,0.35);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .demo-preview-link:hover {
+      background: rgba(92,122,62,0.12);
+      border-color: rgba(92,122,62,0.6);
+    }
+    .demo-preview-badge {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--primary);
+      background: rgba(92,122,62,0.12);
+      border: 1px solid rgba(92,122,62,0.25);
+      padding: 0.15rem 0.45rem;
+    }
+    .demo-preview-text {
+      flex: 1;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+    .demo-preview-arrow {
+      font-size: 0.8rem;
+      color: var(--primary);
     }
     .tool-btn,
     .tool-btn-secondary {
@@ -602,11 +636,11 @@
     <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
     <li class="nav-dropdown">
-      <a href="freebie.html" class="active">무료 혜택</a>
-      <ul class="nav-submenu">
-        <li><a href="diagnosis.html" class="active">diagnosis</a></li>
-        <li><a href="tips.html">tips</a></li>
-        <li><a href="guides.html">guides</a></li>
+      <a href="freebie.html" class="active submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="diagnosis.html" class="active">무료진단 보고서</a></li>
+        <li><a href="tips.html">재테크 영상</a></li>
+        <li><a href="guides.html">왕쉬운 금융공부</a></li>
       </ul>
     </li>
     <li><a href="column.html">칼럼</a></li>
@@ -625,9 +659,9 @@
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
   <div class="mobile-submenu">
-    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
-    <a href="tips.html" class="mobile-sublink">tips</a>
-    <a href="guides.html" class="mobile-sublink">guides</a>
+    <a href="diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="guides.html" class="mobile-sublink">왕쉬운 금융공부</a>
   </div>
   <a href="column.html" class="mobile-link">칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
@@ -654,26 +688,34 @@
 
     <div class="tool-grid">
       <article class="tool-card">
-        <div class="tool-card-label">Core Tool</div>
-        <div class="tool-card-title">재무 진단 시작</div>
+        <div class="tool-card-label">30초 재무진단</div>
+        <div class="tool-card-title">자산·부채·투자·절세 종합 진단</div>
         <div class="tool-card-desc">
-          현재 페이지에서 자산·부채·투자·절세 상태를 종합 진단하고, 맞춤형 리포트를 바로 확인할 수 있습니다.
+          10개 문항으로 현재 재무 상태를 점검하고, 동일 그룹 평균과 비교한 맞춤 리포트를 바로 확인할 수 있습니다.
         </div>
+        <a class="demo-preview-link" href="diagnosis_demo.html" target="_blank">
+          <span class="demo-preview-badge">SAMPLE</span>
+          <span class="demo-preview-text">진단 보고서 예시 보기</span>
+          <span class="demo-preview-arrow">→</span>
+        </a>
         <div class="tool-card-actions">
           <a class="tool-btn" href="#infoSection">재무 진단 시작하기</a>
-          <a class="tool-btn-secondary" href="guides.html">금융 가이드 함께 보기</a>
         </div>
       </article>
 
       <article class="tool-card">
-        <div class="tool-card-label">Customer Tool</div>
-        <div class="tool-card-title">내 소비 진단</div>
+        <div class="tool-card-label">소비, 지출 진단</div>
+        <div class="tool-card-title">소비 패턴 · 지출 구조 진단</div>
         <div class="tool-card-desc">
-          월 소득과 지출만 입력하면 현재 소비 구조, 저축 여력, 바로 손봐야 할 항목까지 빠르게 정리해드립니다.
+          월 소득과 항목별 지출만 입력하면 현재 소비 구조, 저축 여력, 바로 손봐야 할 지출 항목까지 빠르게 정리해드립니다.
         </div>
+        <a class="demo-preview-link" href="spending_diagnosis_demo.html" target="_blank">
+          <span class="demo-preview-badge">SAMPLE</span>
+          <span class="demo-preview-text">진단 보고서 예시 보기</span>
+          <span class="demo-preview-arrow">→</span>
+        </a>
         <div class="tool-card-actions">
           <a class="tool-btn" href="spending_diagnosis.html">소비 진단 열기</a>
-          <a class="tool-btn-secondary" href="guides.html">금융 가이드 함께 보기</a>
         </div>
       </article>
     </div>
@@ -1509,6 +1551,38 @@ function hideLoading() {
 }
 
 // ─── 햄버거 메뉴 ─────────────────────────────────────────────
+function setupFreebieDropdown() {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const trigger = dropdown.querySelector('.submenu-toggle');
+  const submenu = dropdown.querySelector('.nav-submenu');
+  if (!trigger || !submenu) return;
+
+  const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+    setExpanded(false);
+  };
+  const toggleDropdown = () => {
+    const willOpen = !dropdown.classList.contains('open');
+    dropdown.classList.toggle('open', willOpen);
+    setExpanded(willOpen);
+  };
+
+  trigger.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    toggleDropdown();
+  });
+  document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target)) closeDropdown();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDropdown();
+  });
+  submenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDropdown));
+}
+
 const navToggle = document.getElementById('navToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 if (navToggle && mobileMenu) {
@@ -1525,6 +1599,7 @@ if (navToggle && mobileMenu) {
     });
   });
 }
+setupFreebieDropdown();
 </script>
 </body>
 </html>
