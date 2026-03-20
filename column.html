@@ -42,9 +42,9 @@
     /* ── NAV ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; background: rgba(250,248,244,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
     .nav-logo { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; }
-    .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.2rem; list-style: none; }
+    .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; }
     .nav-links > li { position: relative; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.76rem; letter-spacing: 0.08em; transition: color 0.3s; font-weight: 700; white-space: nowrap; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.86rem; letter-spacing: 0.08em; transition: color 0.3s; font-weight: 700; white-space: nowrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
     .nav-dropdown > a { display: inline-flex; align-items: center; }
     .nav-submenu {
@@ -62,8 +62,7 @@
       gap: 0.35rem;
       z-index: 30;
     }
-    .nav-dropdown:hover .nav-submenu,
-    .nav-dropdown:focus-within .nav-submenu { display: flex; }
+    .nav-dropdown.open .nav-submenu { display: flex; }
     .nav-submenu a {
       display: block;
       padding: 0.38rem 0.5rem;
@@ -291,13 +290,18 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html">소개</a></li>
-    <li><a href="services.html">자산관리 프로세스</a></li>
+    <li><a href="index.html">홈</a></li>
+    <li><a href="services.html">서비스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li><a href="diagnosis.html">30초 재무진단</a></li>
-    <li><a href="guides.html">왕초보 금융교육</a></li>
-    <li><a href="tips.html">자산관리 영상교육</a></li>
-    <li><a href="column.html" class="active">경제 칼럼</a></li>
+    <li class="nav-dropdown">
+      <a href="freebie.html" class="submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="tips.html">재테크 영상</a></li>
+        <li><a href="guides.html">왕쉬운 금융공부</a></li>
+      </ul>
+    </li>
+    <li><a href="column.html" class="active">칼럼</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -309,13 +313,16 @@
     <span>JW Financial Consulting</span>
     <button class="menu-close" onclick="closeMobile()">✕</button>
   </div>
-  <a href="index.html" class="mobile-link">소개</a>
-  <a href="services.html" class="mobile-link">자산관리 프로세스</a>
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="services.html" class="mobile-link">서비스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
-  <a href="diagnosis.html" class="mobile-link">30초 재무진단</a>
-  <a href="guides.html" class="mobile-link">왕초보 금융교육</a>
-  <a href="tips.html" class="mobile-link">자산관리 영상교육</a>
-  <a href="column.html" class="mobile-link">경제 칼럼</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="guides.html" class="mobile-sublink">왕쉬운 금융공부</a>
+  </div>
+  <a href="column.html" class="mobile-link">칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -808,6 +815,38 @@ function submitCard() {
 // ────────────────────────────────────────
 //  햄버거 메뉴
 // ────────────────────────────────────────
+function setupFreebieDropdown() {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const trigger = dropdown.querySelector('.submenu-toggle');
+  const submenu = dropdown.querySelector('.nav-submenu');
+  if (!trigger || !submenu) return;
+
+  const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+    setExpanded(false);
+  };
+  const toggleDropdown = () => {
+    const willOpen = !dropdown.classList.contains('open');
+    dropdown.classList.toggle('open', willOpen);
+    setExpanded(willOpen);
+  };
+
+  trigger.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    toggleDropdown();
+  });
+  document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target)) closeDropdown();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDropdown();
+  });
+  submenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDropdown));
+}
+
 function closeMobile() {
   document.getElementById('navToggle').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
@@ -824,6 +863,7 @@ function initNav() {
   });
 m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
 }
+setupFreebieDropdown();
 
 // ────────────────────────────────────────
 //  카카오 공유
