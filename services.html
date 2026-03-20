@@ -75,7 +75,7 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 1.8rem;
+      gap: 1.2rem;
       list-style: none;
       z-index: 1;
     }
@@ -83,7 +83,7 @@
     .nav-links a {
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 0.86rem;
+      font-size: 0.76rem;
       letter-spacing: 0.08em;
       transition: color 0.3s;
       white-space: nowrap;
@@ -683,18 +683,13 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html">홈</a></li>
-    <li><a href="services.html" class="active">서비스</a></li>
+    <li><a href="index.html">소개</a></li>
+    <li><a href="services.html" class="active">자산관리 프로세스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li class="nav-dropdown">
-      <a href="freebie.html">무료 혜택</a>
-      <ul class="nav-submenu">
-        <li><a href="diagnosis.html">diagnosis</a></li>
-        <li><a href="tips.html">tips</a></li>
-        <li><a href="guides.html">guides</a></li>
-      </ul>
-    </li>
-    <li><a href="column.html">칼럼</a></li>
+    <li><a href="diagnosis.html">30초 재무진단</a></li>
+    <li><a href="guides.html">왕초보 금융교육</a></li>
+    <li><a href="tips.html">자산관리 영상교육</a></li>
+    <li><a href="column.html">경제 칼럼</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
@@ -706,16 +701,13 @@
     <span>JW Financial Consulting</span>
     <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
   </div>
-  <a href="index.html" class="mobile-link">홈</a>
-  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="index.html" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">자산관리 프로세스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
-  <a href="freebie.html" class="mobile-link">무료 혜택</a>
-  <div class="mobile-submenu">
-    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
-    <a href="tips.html" class="mobile-sublink">tips</a>
-    <a href="guides.html" class="mobile-sublink">guides</a>
-  </div>
-  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="diagnosis.html" class="mobile-link">30초 재무진단</a>
+  <a href="guides.html" class="mobile-link">왕초보 금융교육</a>
+  <a href="tips.html" class="mobile-link">자산관리 영상교육</a>
+  <a href="column.html" class="mobile-link">경제 칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -745,19 +737,7 @@
 
 
 
-<!-- ★ 대표 후기 · 안명진님 -->
-<section class="service-block" style="padding-bottom:2rem;">
-  <div class="featured-review">
-    <div class="featured-review-badge">★ 대표 고객 후기</div>
-    <div class="featured-review-text">
-      <p>자산관리를 받고자 마음먹고 여기저기 많이 알아보게 되었고 최종적으로는 남진우님께 관리를 받게 되었습니다. 남진우님을 선택한 이유는 <span class="hl">단순 상품 판매 권유가 아닌 전체적인 자산관리의 목표와 방향성을 기본으로 설계 및 노하우를 알려주신다</span>는데에 있었습니다.</p>
-      <p>자산관리는 흔히 자산 많은 사람만 받는다거나, 상품만 판매한다는 부정적인 인식도 있었으나 상담을 하고 계획을 세우면서 이런 부분은 많이 없어진 것 같습니다. <span class="hl">실제 본인의 경험과 실제 사례들도 보면서 저도 희망을 가지게 되었</span>구요. 전문적인 지식을 바탕으로 많은 설명과 경험담도 도움이 되는 것 같습니다. 유익한 자료도 공유해주셔서 더 좋은 것 같습니다.</p>
-      <p>가장 좋았던 점은 <span class="hl">대응을 정말 죄송할정도로 잘해주십니다.</span> 한번은 제 거주지 근처로 오셔서 미팅을 해주신적도 있고, 퇴근하고 자료를 송부드렸는데 바로 답장 및 피드백이 오시는 등 정말 진심을 다 해 주십니다. 비유하자면 <span class="hl">헬스장 PT 2시간 3회 끊었는데 트레이너쌤이 3회 끝나는 기간 내내 24시간 밀착케어 해주시는 것 같습니다.</span> 이러면 반강제적으로 자산 및 본인 경제상황에 있어서 자기 객관화가 정말 잘 되게 됩니다.</p>
-      <p>이후로는 <span class="hl">단/중/장기 플랜을 만들어 가며 제가 놓쳤던 부분들을 쏙쏙 집어주십니다.</span> 앞으로 저는 계속 자산관리를 받기로 했습니다. 지금이라도 만나서 다행이라 생각하며 보시는 분들이 참고가 되셨으면 좋겠습니다. 상담을 준비하는 과정 자체도 도움이 많이 되니 단순 상담 권유 가입 이런 부분이 걱정이 되신다면 해당 클래스를 진행하는 것이 큰 도움이 될 것 같습니다.</p>
-    </div>
-    <div class="featured-review-author"><span>안명진</span> 님 · 실제 고객 후기</div>
-  </div>
-</section>
+
 
 <!-- ────────────────────────────────────────────
      SERVICE 01 · 재무 진단 & 설계

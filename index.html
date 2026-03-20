@@ -101,7 +101,7 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 1.9rem;
+    gap: 1.2rem;
     list-style: none;
     z-index: 1;
   }
@@ -109,7 +109,7 @@
   .nav-links a {
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 0.86rem;
+    font-size: 0.76rem;
     letter-spacing: 0.08em;
     transition: color 0.3s;
     white-space: nowrap;
@@ -178,7 +178,7 @@
     object-fit: cover;
     object-position: center top;
     display: block;
-    filter: grayscale(100%) contrast(1.08) brightness(0.92);
+    filter: grayscale(100%) contrast(1.02) brightness(1.05);
     mix-blend-mode: luminosity;
     mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 8%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%),
                 linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
@@ -339,7 +339,7 @@
     color: var(--text-primary);
     margin-bottom: 24px;
   }
-  .about-text p strong { color: var(--primary); font-weight: 700; }
+  .about-text p strong { color: var(--primary); font-weight: 400; }
   .career-list { list-style: none; }
   .career-item {
     padding: 24px 0;
@@ -628,8 +628,29 @@
     text-align: center;
   }
   .mobile-menu a:hover { color: var(--primary-dark); }
+  .mobile-freebie-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary);
+    font-family: 'Hahmlet', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+    text-align: center;
+    padding: 0;
+  }
+  .mobile-freebie-btn:hover { color: var(--primary-dark); }
+  .mobile-freebie-btn::after {
+    content: ' ›';
+    display: inline-block;
+    transition: transform 0.25s;
+    font-size: 18px;
+  }
+  .mobile-freebie-btn.open::after { transform: rotate(90deg); }
   .mobile-submenu {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: 0.55rem;
@@ -716,18 +737,13 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">홈</a></li>
-    <li><a href="services.html">서비스</a></li>
+    <li><a href="index.html" class="active">소개</a></li>
+    <li><a href="services.html">자산관리 프로세스</a></li>
     <li><a href="reviews.html">후기</a></li>
-    <li class="nav-dropdown">
-      <a href="freebie.html">무료 혜택</a>
-      <ul class="nav-submenu">
-        <li><a href="diagnosis.html">diagnosis</a></li>
-        <li><a href="tips.html">tips</a></li>
-        <li><a href="guides.html">guides</a></li>
-      </ul>
-    </li>
-    <li><a href="column.html">칼럼</a></li>
+    <li><a href="diagnosis.html">30초 재무진단</a></li>
+    <li><a href="guides.html">왕초보 금융교육</a></li>
+    <li><a href="tips.html">자산관리 영상교육</a></li>
+    <li><a href="column.html">경제 칼럼</a></li>
     <li><a href="consult.html">상담 신청</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
@@ -741,16 +757,13 @@
     <span>JW Financial Consulting</span>
     <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
   </div>
-  <a href="index.html" class="mobile-link">홈</a>
-  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="index.html" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">자산관리 프로세스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
-  <a href="freebie.html" class="mobile-link">무료 혜택</a>
-  <div class="mobile-submenu">
-    <a href="diagnosis.html" class="mobile-sublink">diagnosis</a>
-    <a href="tips.html" class="mobile-sublink">tips</a>
-    <a href="guides.html" class="mobile-sublink">guides</a>
-  </div>
-  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="diagnosis.html" class="mobile-link">30초 재무진단</a>
+  <a href="guides.html" class="mobile-link">왕초보 금융교육</a>
+  <a href="tips.html" class="mobile-link">자산관리 영상교육</a>
+  <a href="column.html" class="mobile-link">경제 칼럼</a>
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
@@ -771,8 +784,8 @@
         <div class="stat-badge">5년째 곁에 있습니다</div>
         <div class="stat-badge">10명 중 9명이 추천해요</div>
       </div>
-      <a href="consult.html" class="btn-primary">
-        지금 바로 상담 신청하기
+      <a href="diagnosis.html" class="btn-primary">
+        30초 무료진단 먼저해보기
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -938,7 +951,7 @@
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   });
   // 메뉴 링크 클릭 시 닫기
-document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => {
+  document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => {
     link.addEventListener('click', () => {
       navToggle.classList.remove('open');
       mobileMenu.classList.remove('open');

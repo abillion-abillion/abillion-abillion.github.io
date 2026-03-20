@@ -22,19 +22,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #5C7A3E;
-      --primary-light: #7A9E58;
-      --primary-dark: #3F5B28;
-      --accent: #A8B89A;
-      --bg: #FAF8F4;
-      --bg-section: #FAF8F4;
-      --surface: #FFFFFF;
-      --surface-soft: #F0F4ED;
-      --text-primary: #2C2C2C;
-      --text-secondary: #5A5A5A;
-      --text-muted: #8A8A8A;
+      --primary: #5C7A3E; --primary-light: #7A9E58; --primary-dark: #3F5B28;
+      --bg: #FAF8F4; --bg-section: #FAF8F4; --surface: #FAF8F4;
+      --text-primary: #2C2C2C; --text-secondary: #5A5A5A; --text-muted: #8A8A8A;
       --border: #DDD9D0;
-      --border-light: #EDE8DE;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -323,6 +314,8 @@
       .ebook-body { padding: 1.5rem; }
       .ebook-card-soon { flex-direction: column; text-align: center; }
     }
+    p, li, span, td, th, label { font-weight: 600; }
+    button, .btn-gold, .btn-outline, .btn-submit { font-weight: 700; }
   </style>
 </head>
 <body>
@@ -330,8 +323,8 @@
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
   <ul class="nav-links">
-    <li><a href="index.html">홈</a></li>
-    <li><a href="services.html">서비스</a></li>
+    <li><a href="index.html">소개</a></li>
+    <li><a href="services.html">자산관리 프로세스</a></li>
     <li><a href="reviews.html">후기</a></li>
     <li class="nav-dropdown">
       <a href="freebie.html" class="active submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
@@ -350,10 +343,10 @@
 <div class="mobile-menu" id="mobileMenu">
   <div class="menu-header">
     <span>JW Financial Consulting</span>
-    <button class="menu-close" id="menuClose">×</button>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
   </div>
-  <a href="index.html" class="mobile-link">홈</a>
-  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="index.html" class="mobile-link">소개</a>
+  <a href="services.html" class="mobile-link">자산관리 프로세스</a>
   <a href="reviews.html" class="mobile-link">후기</a>
   <a href="freebie.html" class="mobile-link">무료 혜택</a>
   <div class="mobile-submenu">
@@ -371,6 +364,11 @@
   <h1>상담 3시간 분량을<br /><em>무료 전자책에 담았습니다</em></h1>
   <p>500명 이상의 실전 상담에서 나온 핵심만 골라 시리즈로 정리했습니다.<br/>읽고 나면 혼자서도 금융 결정을 내릴 수 있습니다.</p>
   <div class="hero-divider"></div>
+  <div class="hero-badges">
+    <div class="hero-badge">📚 전자책 3권 시리즈</div>
+    <div class="hero-badge">⚡ 즉시 발송</div>
+    <div class="hero-badge">✦ 무료 제공</div>
+  </div>
 </section>
 
 <main class="page-shell">
@@ -382,6 +380,7 @@
     </div>
     <p class="series-copy">각 권은 독립적으로 읽을 수 있습니다. 관심 있는 주제부터 시작해도 됩니다.</p>
   </div>
+</div>
 
   <div class="ebook-list">
 
@@ -560,6 +559,30 @@
     document.querySelectorAll('.mobile-link, .mobile-sublink').forEach(link => link.addEventListener('click', closeMobileMenu));
     setupFreebieDropdown();
   });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  function shareKakao() {
+    if (!Kakao.isInitialized()) { alert('카카오 공유 초기화 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '왕초보 금융교육 · JW Financial',
+        description: '절세·투자·연금 핵심을 쉽게 담은 전자책 3권 무료 시리즈',
+        imageUrl: 'https://jwfinancial.co.kr/og-index-jw.png',
+        link: { mobileWebUrl: 'https://jwfinancial.co.kr/guides.html', webUrl: 'https://jwfinancial.co.kr/guides.html' }
+      },
+      buttons: [
+        { title: '전자책 받기', link: { mobileWebUrl: 'https://jwfinancial.co.kr/guides.html', webUrl: 'https://jwfinancial.co.kr/guides.html' } },
+        { title: '무료 상담 신청', link: { mobileWebUrl: 'https://jwfinancial.co.kr/consult.html', webUrl: 'https://jwfinancial.co.kr/consult.html' } }
+      ]
+    });
+  }
 </script>
 </body>
 </html>
