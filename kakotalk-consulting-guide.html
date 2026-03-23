@@ -26,9 +26,7 @@
       --border: rgba(255,255,255,0.08);
       --radius: 16px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--navy);
@@ -36,7 +34,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
     /* ── Background texture ── */
     body::before {
       content: '';
@@ -48,7 +45,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
     .page-wrap {
       position: relative;
       z-index: 1;
@@ -56,14 +52,12 @@
       margin: 0 auto;
       padding: 0 20px 80px;
     }
-
     /* ── Hero ── */
     .hero {
       padding: 56px 0 40px;
       text-align: center;
       animation: fadeUp 0.7s ease both;
     }
-
     .hero-badge {
       display: inline-block;
       font-size: 11px;
@@ -76,7 +70,6 @@
       padding: 5px 16px;
       margin-bottom: 20px;
     }
-
     .hero h1 {
       font-family: 'Noto Serif KR', serif;
       font-size: clamp(26px, 6vw, 36px);
@@ -84,18 +77,15 @@
       line-height: 1.4;
       margin-bottom: 12px;
     }
-
     .hero h1 em {
       font-style: normal;
       color: var(--accent-bright);
     }
-
     .hero p {
       font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.8;
     }
-
     /* ── Section title ── */
     .section-label {
       display: flex;
@@ -104,28 +94,24 @@
       margin: 40px 0 16px;
       animation: fadeUp 0.6s ease both;
     }
-
     .section-label .dot {
       width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--gold);
       flex-shrink: 0;
     }
-
     .section-label h2 {
       font-family: 'Noto Serif KR', serif;
       font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
-
     /* ── Meeting steps ── */
     .steps {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
-
     .step-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -139,17 +125,14 @@
       animation: fadeUp 0.6s ease both;
       cursor: default;
     }
-
     .step-card:nth-child(1) { animation-delay: 0.05s; }
     .step-card:nth-child(2) { animation-delay: 0.12s; }
     .step-card:nth-child(3) { animation-delay: 0.19s; }
-
     .step-card:hover {
       background: var(--surface-hover);
       border-color: rgba(79,124,220,0.3);
       transform: translateY(-2px);
     }
-
     .step-num {
       width: 52px; height: 52px;
       border-radius: 12px;
@@ -161,14 +144,12 @@
       justify-content: center;
       flex-shrink: 0;
     }
-
     .step-num .ord {
       font-size: 9px;
       color: var(--text-muted);
       font-weight: 500;
       letter-spacing: 0.05em;
     }
-
     .step-num .num {
       font-family: 'Noto Serif KR', serif;
       font-size: 22px;
@@ -176,21 +157,18 @@
       color: var(--accent-bright);
       line-height: 1;
     }
-
     .step-body h3 {
       font-size: 15px;
       font-weight: 700;
       margin-bottom: 8px;
       color: var(--text-primary);
     }
-
     .step-body p {
       font-size: 13.5px;
       color: var(--text-secondary);
       line-height: 1.85;
       word-break: keep-all;
     }
-
     .step-tag {
       display: inline-block;
       font-size: 11px;
@@ -202,7 +180,6 @@
       padding: 2px 8px;
       margin-bottom: 8px;
     }
-
     /* Notice */
     .notice-box {
       background: rgba(79,124,220,0.08);
@@ -215,16 +192,13 @@
       margin-top: 14px;
       animation: fadeUp 0.6s 0.25s ease both;
     }
-
     .notice-box strong { font-weight: 700; }
-
     /* ── Prep items ── */
     .prep-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-
     .prep-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -232,11 +206,9 @@
       padding: 20px 22px;
       animation: fadeUp 0.6s ease both;
     }
-
     .prep-item:nth-child(1) { animation-delay: 0.05s; }
     .prep-item:nth-child(2) { animation-delay: 0.1s; }
     .prep-item:nth-child(3) { animation-delay: 0.15s; }
-
     .prep-num {
       font-size: 11px;
       font-weight: 700;
@@ -244,14 +216,12 @@
       letter-spacing: 0.1em;
       margin-bottom: 8px;
     }
-
     .prep-item p {
       font-size: 13.5px;
       color: var(--text-secondary);
       line-height: 1.8;
       word-break: keep-all;
     }
-
     /* Buttons */
     .btn-row {
       display: flex;
@@ -259,7 +229,6 @@
       gap: 8px;
       margin-top: 14px;
     }
-
     .btn {
       display: flex;
       align-items: center;
@@ -272,30 +241,25 @@
       transition: background 0.2s, transform 0.15s;
       cursor: pointer;
     }
-
     .btn:hover { transform: translateX(3px); }
-
     .btn-download {
       background: rgba(201,168,76,0.12);
       border: 1px solid rgba(201,168,76,0.35);
       color: var(--gold-light);
     }
     .btn-download:hover { background: rgba(201,168,76,0.2); }
-
     .btn-youtube {
       background: rgba(220, 60, 60, 0.1);
       border: 1px solid rgba(220, 60, 60, 0.3);
       color: #ff8080;
     }
     .btn-youtube:hover { background: rgba(220, 60, 60, 0.18); }
-
     .btn-web {
       background: rgba(79,124,220,0.1);
       border: 1px solid rgba(79,124,220,0.3);
       color: var(--accent-bright);
     }
     .btn-web:hover { background: rgba(79,124,220,0.18); }
-
     .btn-icon {
       width: 28px; height: 28px;
       border-radius: 6px;
@@ -303,14 +267,12 @@
       flex-shrink: 0;
       font-size: 16px;
     }
-
     /* ── Schedule ── */
     .sched-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-
     .sched-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -318,10 +280,8 @@
       padding: 18px 18px;
       animation: fadeUp 0.6s ease both;
     }
-
     .sched-box:nth-child(1) { animation-delay: 0.05s; }
     .sched-box:nth-child(2) { animation-delay: 0.12s; }
-
     .sched-box h4 {
       font-size: 12px;
       font-weight: 700;
@@ -330,13 +290,11 @@
       text-transform: uppercase;
       margin-bottom: 12px;
     }
-
     .sched-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
-
     .tag {
       font-size: 12px;
       font-weight: 500;
@@ -346,14 +304,12 @@
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--text-secondary);
     }
-
     .location-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 12px;
     }
-
     .location-item {
       display: flex;
       align-items: flex-start;
@@ -362,13 +318,11 @@
       color: var(--text-secondary);
       line-height: 1.6;
     }
-
     .location-item .ico {
       font-size: 16px;
       flex-shrink: 0;
       margin-top: 1px;
     }
-
     .location-item a {
       color: var(--accent-bright);
       text-decoration: none;
@@ -376,7 +330,6 @@
       display: block;
     }
     .location-item a:hover { text-decoration: underline; }
-
     /* ── CTA ── */
     .cta-box {
       margin-top: 40px;
@@ -387,20 +340,17 @@
       text-align: center;
       animation: fadeUp 0.6s 0.1s ease both;
     }
-
     .cta-box h3 {
       font-family: 'Noto Serif KR', serif;
       font-size: 18px;
       margin-bottom: 8px;
     }
-
     .cta-box p {
       font-size: 13px;
       color: var(--text-secondary);
       margin-bottom: 20px;
       line-height: 1.7;
     }
-
     .sched-time-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -408,14 +358,12 @@
       margin-bottom: 16px;
       text-align: left;
     }
-
     .sched-time-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 12px 14px;
     }
-
     .sched-time-box .label {
       font-size: 10px;
       font-weight: 700;
@@ -424,19 +372,16 @@
       text-transform: uppercase;
       margin-bottom: 6px;
     }
-
     .sched-time-box .options {
       font-size: 12px;
       color: var(--text-secondary);
       line-height: 1.8;
     }
-
     .cta-hint {
       font-size: 12px;
       color: var(--text-muted);
       margin-top: 12px;
     }
-
     /* Footer */
     .footer {
       margin-top: 48px;
@@ -444,7 +389,6 @@
       border-top: 1px solid var(--border);
       padding-top: 24px;
     }
-
     .footer .brand {
       font-family: 'Noto Serif KR', serif;
       font-size: 15px;
@@ -452,26 +396,22 @@
       color: var(--text-primary);
       margin-bottom: 4px;
     }
-
     .footer .sub {
       font-size: 11px;
       color: var(--text-muted);
       letter-spacing: 0.05em;
     }
-
     /* Divider */
     .divider {
       height: 1px;
       background: var(--border);
       margin: 32px 0;
     }
-
     /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     /* ── Thumbnail link cards ── */
     .thumb-card {
       display: flex;
@@ -488,15 +428,62 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
-
     .thumb-card:hover, .thumb-card:active {
       transform: translateY(-2px);
       border-color: rgba(79,124,220,0.35);
       box-shadow: 0 6px 24px rgba(0,0,0,0.25);
     }
-
     .thumb-card + .thumb-card { margin-top: 10px; }
-
+    /* ── Download tip box ── */
+    .download-tip {
+      margin-top: 14px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .download-tip-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+    .download-tip-steps {
+      list-style: none;
+      counter-reset: tip-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .download-tip-steps li {
+      counter-increment: tip-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .download-tip-steps li::before {
+      content: counter(tip-counter);
+      min-width: 20px;
+      height: 20px;
+      background: rgba(201,168,76,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold-light);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .download-tip-steps li strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
     .thumb-visual {
       width: 100px;
       min-width: 100px;
@@ -509,11 +496,9 @@
       position: relative;
       overflow: hidden;
     }
-
     .thumb-visual.red   { background: linear-gradient(135deg, #c0392b, #922b21); }
     .thumb-visual.gold  { background: linear-gradient(135deg, #7d6008, #9a7d0a); }
     .thumb-visual.blue  { background: linear-gradient(135deg, #1e3560, #253d6b); }
-
     .thumb-visual .play-badge {
       position: absolute;
       bottom: 7px; right: 7px;
@@ -525,7 +510,6 @@
       letter-spacing: 0.05em;
       padding: 2px 5px;
     }
-
     .thumb-meta {
       padding: 13px 15px;
       display: flex;
@@ -534,7 +518,6 @@
       flex: 1;
       min-width: 0;
     }
-
     .thumb-meta .thumb-domain {
       font-size: 10px;
       font-weight: 600;
@@ -543,7 +526,6 @@
       color: var(--text-muted);
       margin-bottom: 5px;
     }
-
     .thumb-meta .thumb-title {
       font-size: 13px;
       font-weight: 700;
@@ -554,7 +536,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     .thumb-meta .thumb-desc {
       font-size: 11.5px;
       color: var(--text-secondary);
@@ -564,7 +545,6 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-
     .thumb-arrow {
       display: flex;
       align-items: center;
@@ -574,7 +554,6 @@
       flex-shrink: 0;
     }
 
-  
     @media (max-width: 480px) {
       .sched-grid { grid-template-columns: 1fr; }
       .sched-time-grid { grid-template-columns: 1fr; }
@@ -584,20 +563,17 @@
 </head>
 <body>
 <div class="page-wrap">
-
   <!-- Hero -->
   <div class="hero">
     <div class="hero-badge">JW Financial · 남진우 팀장</div>
     <h1>3번의 미팅으로 완성되는<br /><em>나만의 자산관리 플랜</em></h1>
     <p>현금흐름 진단부터 포트폴리오 실행, 사후관리까지<br />전 과정을 함께합니다.</p>
   </div>
-
   <!-- 컨설팅 안내 -->
   <div class="section-label">
     <div class="dot"></div>
     <h2>컨설팅 안내</h2>
   </div>
-
   <div class="steps">
     <div class="step-card">
       <div class="step-num">
@@ -610,7 +586,6 @@
         <p>선생님의 현금흐름, 자산, 부채를 파악하고 효율성을 높여드리는 작업을 해요! 더 중요한 건 재무목표를 명확히 하는 거예요. 언제까지 얼마를 모아야 원하는 집, 결혼, 자녀양육, 노후 준비가 가능한지 함께 이야기하고 계획을 세울 거예요 :)</p>
       </div>
     </div>
-
     <div class="step-card">
       <div class="step-num">
         <span class="ord">2nd</span>
@@ -622,7 +597,6 @@
         <p>1차에서 계획을 세웠으니 이제 실행해야겠죠! 저축 및 투자 방법들을 설명드리고, 선생님께 가장 적합한 방법으로 돈을 모으고 불려나가는 포트폴리오를 드릴 거예요. 금융상품이나 저축·투자 금액을 조정하는 시기입니다 :)</p>
       </div>
     </div>
-
     <div class="step-card">
       <div class="step-num">
         <span class="ord">3rd</span>
@@ -635,21 +609,16 @@
       </div>
     </div>
   </div>
-
   <div class="notice-box">
     ⏱ 미팅당 소요 시간 <strong>1~2시간</strong> &nbsp;|&nbsp; 💍 기혼자는 <strong>부부 동반 상담</strong>을 원칙으로 합니다 &nbsp;|&nbsp; 🛡 사후 관리비용은 <strong>무료</strong>입니다
   </div>
-
   <div class="divider"></div>
-
   <!-- 준비사항 -->
   <div class="section-label">
     <div class="dot"></div>
     <h2>준비사항</h2>
   </div>
-
   <div class="prep-list">
-
     <div class="prep-item">
       <div class="prep-num">STEP 01</div>
       <p>아래 재무제표를 작성해서 보내주세요! 이 표를 기반으로 디테일한 컨설팅이 이뤄져요. 작성만으로도 도움이 많이 되실 거예요 :)</p>
@@ -658,12 +627,20 @@
         <div class="thumb-meta">
           <div class="thumb-domain">Google Sheets · docs.google.com</div>
           <div class="thumb-title">개인 재무제표 — JW Financial</div>
-          <div class="thumb-desc">현금흐름·자산·부채·보험 현황을 한눈에 정리하는 맞춤 재무제표입니다. 탭을 눌러 다운로드하세요.</div>
+          <div class="thumb-desc">현금흐름·자산·부채·보험 현황을 한눈에 정리하는 맞춤 재무제표입니다. 아래 방법으로 다운로드하세요.</div>
         </div>
         <div class="thumb-arrow">›</div>
       </a>
+      <div class="download-tip">
+        <div class="download-tip-title">📥 다운로드 방법</div>
+        <ol class="download-tip-steps">
+          <li>위 링크를 눌러 구글 시트를 열어요</li>
+          <li>상단 메뉴 <strong>파일</strong> 클릭</li>
+          <li><strong>다운로드</strong> → <strong>Microsoft Excel(.xlsx)</strong> 선택</li>
+          <li>다운받은 파일을 열어 작성 후 카카오톡으로 보내주세요 😊</li>
+        </ol>
+      </div>
     </div>
-
     <div class="prep-item">
       <div class="prep-num">STEP 02</div>
       <p>컨설팅 전에 300만 재테크 유튜버 <strong>슈카월드</strong> 영상 2편을 보고 오시면 2배 더 효율적으로 상담이 가능합니다! 영상이 정말 재밌어요 😄</p>
@@ -686,7 +663,6 @@
         <div class="thumb-arrow">›</div>
       </a>
     </div>
-
     <div class="prep-item">
       <div class="prep-num">STEP 03</div>
       <p>홈페이지를 살펴보시면서 궁금하신 부분 편하게 말씀해 주세요!</p>
@@ -700,17 +676,13 @@
         <div class="thumb-arrow">›</div>
       </a>
     </div>
-
   </div>
-
   <div class="divider"></div>
-
   <!-- 일정 & 위치 -->
   <div class="section-label">
     <div class="dot"></div>
     <h2>일정 &amp; 위치</h2>
   </div>
-
   <div class="sched-grid">
     <div class="sched-box">
       <h4>📅 가능 일정</h4>
@@ -723,7 +695,6 @@
         <span class="tag">저녁</span>
       </div>
     </div>
-
     <div class="sched-box">
       <h4>📍 가능 위치</h4>
       <div class="location-list">
@@ -745,7 +716,6 @@
       </div>
     </div>
   </div>
-
   <!-- CTA -->
   <div class="cta-box">
     <h3>일정 조율 안내</h3>
@@ -770,13 +740,11 @@
     </div>
     <p class="cta-hint">궁금한 점이 있으시면 언제든지 편하게 문의해 주세요 😊</p>
   </div>
-
   <!-- Footer -->
   <div class="footer">
     <div class="brand">JW Financial · 남진우 팀장</div>
     <div class="sub">J.W. Financial Consulting &nbsp;|&nbsp; jwfinancial.co.kr</div>
   </div>
-
 </div>
 </body>
 </html>
