@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>컨설팅 안내 | JW Financial</title>
+  <meta property="og:title" content="컨설팅 안내 | JW Financial" />
+  <meta property="og:description" content="3번의 미팅으로 완성되는 나만의 자산관리 플랜" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f1f3d;
+      --navy-mid: #162645;
+      --navy-light: #1e3560;
+      --accent: #4f7cdc;
+      --accent-bright: #6e9bff;
+      --gold: #c9a84c;
+      --gold-light: #e5c97e;
+      --text-primary: #f0f4ff;
+      --text-secondary: #a8b8d8;
+      --text-muted: #6a80a8;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--navy);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,124,220,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(201,168,76,0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 56px 0 40px;
+      text-align: center;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 999px;
+      padding: 5px 16px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(26px, 6vw, 36px);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-bright);
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ── Section title ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 40px 0 16px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .section-label .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .section-label h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Meeting steps ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 18px;
+      align-items: start;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      animation: fadeUp 0.6s ease both;
+      cursor: default;
+    }
+
+    .step-card:nth-child(1) { animation-delay: 0.05s; }
+    .step-card:nth-child(2) { animation-delay: 0.12s; }
+    .step-card:nth-child(3) { animation-delay: 0.19s; }
+
+    .step-card:hover {
+      background: var(--surface-hover);
+      border-color: rgba(79,124,220,0.3);
+      transform: translateY(-2px);
+    }
+
+    .step-num {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy-light), #253d6b);
+      border: 1px solid rgba(79,124,220,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-num .ord {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .step-num .num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-bright);
+      line-height: 1;
+    }
+
+    .step-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .step-body p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      word-break: keep-all;
+    }
+
+    .step-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-bottom: 8px;
+    }
+
+    /* Notice */
+    .notice-box {
+      background: rgba(79,124,220,0.08);
+      border: 1px solid rgba(79,124,220,0.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--accent-bright);
+      line-height: 1.7;
+      margin-top: 14px;
+      animation: fadeUp 0.6s 0.25s ease both;
+    }
+
+    .notice-box strong { font-weight: 700; }
+
+    /* ── Prep items ── */
+    .prep-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .prep-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .prep-item:nth-child(1) { animation-delay: 0.05s; }
+    .prep-item:nth-child(2) { animation-delay: 0.1s; }
+    .prep-item:nth-child(3) { animation-delay: 0.15s; }
+
+    .prep-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .prep-item p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateX(3px); }
+
+    .btn-download {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--gold-light);
+    }
+    .btn-download:hover { background: rgba(201,168,76,0.2); }
+
+    .btn-youtube {
+      background: rgba(220, 60, 60, 0.1);
+      border: 1px solid rgba(220, 60, 60, 0.3);
+      color: #ff8080;
+    }
+    .btn-youtube:hover { background: rgba(220, 60, 60, 0.18); }
+
+    .btn-web {
+      background: rgba(79,124,220,0.1);
+      border: 1px solid rgba(79,124,220,0.3);
+      color: var(--accent-bright);
+    }
+    .btn-web:hover { background: rgba(79,124,220,0.18); }
+
+    .btn-icon {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    /* ── Schedule ── */
+    .sched-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .sched-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .sched-box:nth-child(1) { animation-delay: 0.05s; }
+    .sched-box:nth-child(2) { animation-delay: 0.12s; }
+
+    .sched-box h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .sched-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary);
+    }
+
+    .location-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .location-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .location-item .ico {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .location-item a {
+      color: var(--accent-bright);
+      text-decoration: none;
+      font-size: 12px;
+      display: block;
+    }
+    .location-item a:hover { text-decoration: underline; }
+
+    /* ── CTA ── */
+    .cta-box {
+      margin-top: 40px;
+      padding: 30px 28px;
+      background: linear-gradient(135deg, rgba(79,124,220,0.15), rgba(201,168,76,0.08));
+      border: 1px solid rgba(79,124,220,0.25);
+      border-radius: var(--radius);
+      text-align: center;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .cta-box h3 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .cta-box p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .sched-time-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .sched-time-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .sched-time-box .label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .sched-time-box .options {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .cta-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .footer .brand {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .footer .sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Thumbnail link cards ── */
+    .thumb-card {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+      margin-top: 14px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .thumb-card:hover, .thumb-card:active {
+      transform: translateY(-2px);
+      border-color: rgba(79,124,220,0.35);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+
+    .thumb-card + .thumb-card { margin-top: 10px; }
+
+    .thumb-visual {
+      width: 100px;
+      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb-visual.red   { background: linear-gradient(135deg, #c0392b, #922b21); }
+    .thumb-visual.gold  { background: linear-gradient(135deg, #7d6008, #9a7d0a); }
+    .thumb-visual.blue  { background: linear-gradient(135deg, #1e3560, #253d6b); }
+
+    .thumb-visual .play-badge {
+      position: absolute;
+      bottom: 7px; right: 7px;
+      background: rgba(0,0,0,0.55);
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      padding: 2px 5px;
+    }
+
+    .thumb-meta {
+      padding: 13px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .thumb-meta .thumb-domain {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .thumb-meta .thumb-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .thumb-meta .thumb-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .thumb-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 12px 0 4px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+  
+    @media (max-width: 480px) {
+      .sched-grid { grid-template-columns: 1fr; }
+      .sched-time-grid { grid-template-columns: 1fr; }
+      .step-card { grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">JW Financial · 남진우 팀장</div>
+    <h1>3번의 미팅으로 완성되는<br /><em>나만의 자산관리 플랜</em></h1>
+    <p>현금흐름 진단부터 포트폴리오 실행, 사후관리까지<br />전 과정을 함께합니다.</p>
+  </div>
+
+  <!-- 컨설팅 안내 -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>컨설팅 안내</h2>
+  </div>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">
+        <span class="ord">1st</span>
+        <span class="num">1</span>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">진단 · 목표 설정</span>
+        <h3>현금흐름 분석 &amp; 재무목표 수립</h3>
+        <p>선생님의 현금흐름, 자산, 부채를 파악하고 효율성을 높여드리는 작업을 해요! 더 중요한 건 재무목표를 명확히 하는 거예요. 언제까지 얼마를 모아야 원하는 집, 결혼, 자녀양육, 노후 준비가 가능한지 함께 이야기하고 계획을 세울 거예요 :)</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">
+        <span class="ord">2nd</span>
+        <span class="num">2</span>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">포트폴리오 설계</span>
+        <h3>저축 · 투자 방법 &amp; 맞춤 포트폴리오 제안</h3>
+        <p>1차에서 계획을 세웠으니 이제 실행해야겠죠! 저축 및 투자 방법들을 설명드리고, 선생님께 가장 적합한 방법으로 돈을 모으고 불려나가는 포트폴리오를 드릴 거예요. 금융상품이나 저축·투자 금액을 조정하는 시기입니다 :)</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">
+        <span class="ord">3rd</span>
+        <span class="num">3</span>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">실행 · 사후관리</span>
+        <h3>포트폴리오 실행 &amp; 정기 사후관리</h3>
+        <p>2차에서 보여드렸던 포트폴리오를 실제로 실행하는 마지막 미팅이에요! 실행 후에는 3~6개월에 한 번씩 정기 미팅을 가지며 사후관리를 해드립니다. 관리비용은 따로 발생하지 않아요 :)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-box">
+    ⏱ 미팅당 소요 시간 <strong>1~2시간</strong> &nbsp;|&nbsp; 💍 기혼자는 <strong>부부 동반 상담</strong>을 원칙으로 합니다 &nbsp;|&nbsp; 🛡 사후 관리비용은 <strong>무료</strong>입니다
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 준비사항 -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>준비사항</h2>
+  </div>
+
+  <div class="prep-list">
+
+    <div class="prep-item">
+      <div class="prep-num">STEP 01</div>
+      <p>아래 재무제표를 작성해서 보내주세요! 이 표를 기반으로 디테일한 컨설팅이 이뤄져요. 작성만으로도 도움이 많이 되실 거예요 :)</p>
+      <a class="thumb-card" href="https://docs.google.com/spreadsheets/d/1s1utJIUSENwHZADxLiCprPIow7ipRR9N/edit?usp=sharing&ouid=113258116443110189326&rtpof=true&sd=true" target="_blank" rel="noopener">
+        <div class="thumb-visual gold">📊</div>
+        <div class="thumb-meta">
+          <div class="thumb-domain">Google Sheets · docs.google.com</div>
+          <div class="thumb-title">개인 재무제표 — JW Financial</div>
+          <div class="thumb-desc">현금흐름·자산·부채·보험 현황을 한눈에 정리하는 맞춤 재무제표입니다. 탭을 눌러 다운로드하세요.</div>
+        </div>
+        <div class="thumb-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="prep-item">
+      <div class="prep-num">STEP 02</div>
+      <p>컨설팅 전에 300만 재테크 유튜버 <strong>슈카월드</strong> 영상 2편을 보고 오시면 2배 더 효율적으로 상담이 가능합니다! 영상이 정말 재밌어요 😄</p>
+      <a class="thumb-card" href="https://youtu.be/SpWz5Q4OS1A?si=HLVytRjSt0AiRQ7I" target="_blank" rel="noopener">
+        <div class="thumb-visual red">▶<span class="play-badge">YouTube</span></div>
+        <div class="thumb-meta">
+          <div class="thumb-domain">슈카월드 · youtube.com</div>
+          <div class="thumb-title">재테크, 지금도 늦었다</div>
+          <div class="thumb-desc">구독자 300만 슈카월드의 재테크 입문 필수 영상. 지금 시작해도 될까? 솔직하게 풀어드립니다.</div>
+        </div>
+        <div class="thumb-arrow">›</div>
+      </a>
+      <a class="thumb-card" href="https://youtu.be/7VDvW1zCZ8c?si=KeMbsp49sm3jX0VV" target="_blank" rel="noopener">
+        <div class="thumb-visual red">▶<span class="play-badge">YouTube</span></div>
+        <div class="thumb-meta">
+          <div class="thumb-domain">슈카월드 · youtube.com</div>
+          <div class="thumb-title">재테크, 지금도 안늦었다</div>
+          <div class="thumb-desc">위 영상의 후속편. 지금 시작하면 어떻게 달라지는지 데이터로 보여줍니다.</div>
+        </div>
+        <div class="thumb-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="prep-item">
+      <div class="prep-num">STEP 03</div>
+      <p>홈페이지를 살펴보시면서 궁금하신 부분 편하게 말씀해 주세요!</p>
+      <a class="thumb-card" href="https://jwfinancial.co.kr/services.html" target="_blank" rel="noopener">
+        <div class="thumb-visual blue">🌐</div>
+        <div class="thumb-meta">
+          <div class="thumb-domain">jwfinancial.co.kr</div>
+          <div class="thumb-title">JW Financial — 서비스 안내</div>
+          <div class="thumb-desc">컨설팅 서비스 상세 소개, 자산관리 철학, 사례 등을 확인하실 수 있습니다.</div>
+        </div>
+        <div class="thumb-arrow">›</div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 일정 & 위치 -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>일정 &amp; 위치</h2>
+  </div>
+
+  <div class="sched-grid">
+    <div class="sched-box">
+      <h4>📅 가능 일정</h4>
+      <div class="sched-tags">
+        <span class="tag">평일</span>
+        <span class="tag">주말</span>
+        <span class="tag">오전</span>
+        <span class="tag">점심</span>
+        <span class="tag">오후</span>
+        <span class="tag">저녁</span>
+      </div>
+    </div>
+
+    <div class="sched-box">
+      <h4>📍 가능 위치</h4>
+      <div class="location-list">
+        <div class="location-item">
+          <span class="ico">🏢</span>
+          <div>
+            여의도 사무실
+            <a href="https://naver.me/G5k3BGMF" target="_blank" rel="noopener">네이버 지도 보기 →</a>
+          </div>
+        </div>
+        <div class="location-item">
+          <span class="ico">🏬</span>
+          <div>현 직장 회의실 / 사무실 / 근처 카페</div>
+        </div>
+        <div class="location-item">
+          <span class="ico">☕</span>
+          <div>거주지 근처 카페</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>일정 조율 안내</h3>
+    <p>아래 조합에서 가능한 시간을 알려주시면<br />스케줄을 조율해 일정을 잡겠습니다!</p>
+    <div class="sched-time-grid">
+      <div class="sched-time-box">
+        <div class="label">📅 요일</div>
+        <div class="options">평일 / 주말</div>
+      </div>
+      <div class="sched-time-box">
+        <div class="label">⏰ 시간대</div>
+        <div class="options">오전 / 점심 / 오후 / 저녁</div>
+      </div>
+      <div class="sched-time-box">
+        <div class="label">📍 위치</div>
+        <div class="options">여의도 / 직장 근처 / 거주지 근처</div>
+      </div>
+      <div class="sched-time-box">
+        <div class="label">📎 제출</div>
+        <div class="options">재무제표 작성 후 전송</div>
+      </div>
+    </div>
+    <p class="cta-hint">궁금한 점이 있으시면 언제든지 편하게 문의해 주세요 😊</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">JW Financial · 남진우 팀장</div>
+    <div class="sub">J.W. Financial Consulting &nbsp;|&nbsp; jwfinancial.co.kr</div>
+  </div>
+
+</div>
+</body>
+</html>
