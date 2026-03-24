@@ -463,7 +463,8 @@
             <div class="ebook-success-desc">아래 버튼을 눌러 오픈카톡으로 이동하신 후,<br><strong>'전자책 신청완료입니다'</strong>라고 메시지를 보내주시면 전자책을 발송해 드리겠습니다.</div>
             <a class="btn-kakao-go" href="https://open.kakao.com/me/jwfinancial" target="_blank">카카오톡으로 이동하기 →</a>
           </div>
-          <a class="btn-preview" href="diagnosis.html">📋 재무 진단도 받아보기</a>
+          <a class="btn-preview" href="diagnosis.html">📊 30초 총자산 진단</a>
+          <a class="btn-preview" href="spending_diagnosis.html">💰 무료 소비/지출 진단</a>
         </div>
       </div>
     </article>
@@ -511,7 +512,8 @@
             <div class="ebook-success-desc">아래 버튼을 눌러 오픈카톡으로 이동하신 후,<br><strong>'전자책 신청완료입니다'</strong>라고 메시지를 보내주시면 전자책을 발송해 드리겠습니다.</div>
             <a class="btn-kakao-go" href="https://open.kakao.com/me/jwfinancial" target="_blank">카카오톡으로 이동하기 →</a>
           </div>
-          <a class="btn-preview" href="diagnosis.html">📋 재무 진단도 받아보기</a>
+          <a class="btn-preview" href="diagnosis.html">📊 30초 총자산 진단</a>
+          <a class="btn-preview" href="spending_diagnosis.html">💰 무료 소비/지출 진단</a>
         </div>
       </div>
     </article>
@@ -559,7 +561,8 @@
             <div class="ebook-success-desc">아래 버튼을 눌러 오픈카톡으로 이동하신 후,<br><strong>'전자책 신청완료입니다'</strong>라고 메시지를 보내주시면 전자책을 발송해 드리겠습니다.</div>
             <a class="btn-kakao-go" href="https://open.kakao.com/me/jwfinancial" target="_blank">카카오톡으로 이동하기 →</a>
           </div>
-          <a class="btn-preview" href="diagnosis.html">📋 재무 진단도 받아보기</a>
+          <a class="btn-preview" href="diagnosis.html">📊 30초 총자산 진단</a>
+          <a class="btn-preview" href="spending_diagnosis.html">💰 무료 소비/지출 진단</a>
         </div>
       </div>
     </article>
@@ -639,7 +642,17 @@
     });
   });
 
-  function submitEbookRequest(event, volId) {
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
+  const BOT_TOKEN = '8720572160:AAF8kYdv8PceDfQxDtrD4mRme2IC820dwOc';
+  const CHAT_ID = '6234327488';
+
+  const VOL_NAMES = {
+    vol1: 'Vol.1 2039 자산관리 지침서',
+    vol2: 'Vol.2 머니레서피',
+    vol3: 'Vol.3 재테크 실수 5가지'
+  };
+
+  async function submitEbookRequest(event, volId) {
     event.preventDefault();
     const form = event.target;
     const name = form.querySelector('[name="ebook-name"]').value.trim();
@@ -656,6 +669,28 @@
       form.querySelector('[name="ebook-phone"]').focus();
       return;
     }
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '전송 중...';
+
+    const volName = VOL_NAMES[volId] || volId;
+    const now = new Date().toLocaleString('ko-KR');
+
+    // Google Sheets 저장
+    fetch(SHEET_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'ebook_request', name, phone, ebook: volName, timestamp: now })
+    }).catch(() => {});
+
+    // Telegram 알림
+    const msg = `📚 [전자책 신청]\n────────────────\n👤 ${name}\n📱 ${phone}\n📖 ${volName}\n🕐 ${now}`;
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+    }).catch(() => {});
 
     form.style.display = 'none';
     const successDiv = document.getElementById('success-' + volId);
