@@ -119,8 +119,8 @@
     .section-title { font-size: clamp(1.25rem, 2.5vw, 1.65rem); font-weight: 700; letter-spacing: -0.01em; }
     .section-title em { font-style: italic; color: var(--primary); font-weight: 500; }
 
-    /* ── 글쓰기 버튼 (잠금) ── */
-    .btn-write { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1.1rem; border: 1.5px solid var(--primary); background: transparent; color: var(--primary); font-family: 'Hahmlet', serif; font-size: 0.75rem; letter-spacing: 0.07em; cursor: pointer; transition: all 0.2s; border-radius: 2px; font-weight: 700; white-space: nowrap; }
+    /* ── 글쓰기 버튼 ── */
+    .btn-write { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1.1rem; border: 1.5px solid var(--primary); background: transparent; color: var(--primary); font-family: 'Hahmlet', serif; font-size: 0.75rem; letter-spacing: 0.07em; cursor: pointer; transition: all 0.2s; border-radius: 2px; font-weight: 700; white-space: nowrap; text-decoration: none; }
     .btn-write:hover { background: var(--primary); color: #fff; }
     .btn-write svg { width: 12px; height: 12px; flex-shrink: 0; }
 
@@ -170,12 +170,6 @@
     .mc-body .mc-excerpt { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .mc-body .mc-meta { margin-top: 0.5rem; }
 
-    /* 삭제 버튼 (동적 카드) */
-    .mc-delete-btn { position: absolute; top: 1rem; right: 0; background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 3px; font-size: 0.65rem; padding: 0.2rem 0.5rem; cursor: pointer; display: none; font-family: inherit; transition: background 0.2s; }
-    .media-card:hover .mc-delete-btn,
-    .media-card-feature:hover .mc-delete-btn { display: block; }
-    .mc-delete-btn:hover { background: rgba(180,40,40,0.85); }
-
     /* ── BLOG GRID (기존 3열 카드) ── */
     .blog-grid { margin-top: 1.4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
 
@@ -198,51 +192,6 @@
     .col-meta-left { display: flex; align-items: center; gap: 0.4rem; }
     .col-meta-left::before { content: ''; display: inline-block; width: 12px; height: 1px; background: var(--primary); opacity: 0.5; }
     .col-naver-badge { font-size: 0.58rem; color: #03C75A; border: 1px solid rgba(3,199,90,0.3); padding: 0.12rem 0.45rem; border-radius: 2px; }
-
-    /* 블로그 카드 삭제 */
-    .col-delete-btn { position: absolute; top: 0.5rem; left: 0.5rem; z-index: 10; background: rgba(0,0,0,0.52); color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 0.68rem; cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1; transition: background 0.2s; }
-    .col-card:hover .col-delete-btn { display: flex; }
-    .col-delete-btn:hover { background: rgba(180,40,40,0.88); }
-
-    /* ── PASSWORD MODAL ── */
-    .pw-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 300; align-items: center; justify-content: center; }
-    .pw-overlay.open { display: flex; }
-    .pw-box { background: var(--bg); border: 1px solid var(--border); padding: 2rem; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); text-align: center; }
-    .pw-box h3 { font-size: 0.9rem; letter-spacing: 0.08em; margin-bottom: 0.4rem; color: var(--primary); }
-    .pw-box p { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.2rem; }
-    .pw-input { width: 100%; padding: 0.65rem 0.9rem; border: 1px solid var(--border); font-family: 'Hahmlet', serif; font-size: 0.88rem; font-weight: 600; background: #fff; outline: none; margin-bottom: 0.8rem; border-radius: 2px; text-align: center; letter-spacing: 0.12em; }
-    .pw-input:focus { border-color: var(--primary); }
-    .pw-error { font-size: 0.72rem; color: #c0392b; margin-bottom: 0.6rem; display: none; }
-    .pw-actions { display: flex; gap: 0.6rem; }
-    .pw-cancel { flex: 1; padding: 0.55rem; border: 1px solid var(--border); background: transparent; font-family: 'Hahmlet', serif; font-size: 0.8rem; cursor: pointer; border-radius: 2px; }
-    .pw-confirm { flex: 1; padding: 0.55rem; background: var(--primary); color: #fff; border: none; font-family: 'Hahmlet', serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
-    .pw-confirm:hover { background: var(--primary-dark); }
-
-    /* ── WRITE MODAL ── */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
-    .modal-overlay.open { display: flex; }
-    .modal { background: var(--bg); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 24px 64px rgba(0,0,0,0.18); }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); }
-    .modal-title { font-size: 0.88rem; letter-spacing: 0.1em; color: var(--primary); font-weight: 700; }
-    .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-muted); line-height: 1; padding: 2px 6px; }
-    .modal-body { padding: 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .form-label { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase; }
-    .form-input, .form-select, .form-textarea { font-family: 'Hahmlet', serif; font-size: 0.84rem; font-weight: 600; padding: 0.6rem 0.82rem; border: 1px solid var(--border); background: #fff; color: var(--text-primary); outline: none; transition: border-color 0.2s; border-radius: 2px; width: 100%; }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--primary); }
-    .form-textarea { resize: vertical; min-height: 76px; }
-    .img-upload-area { border: 1.5px dashed var(--border); border-radius: 2px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
-    .img-upload-area:hover { border-color: var(--primary); background: rgba(92,122,62,0.03); }
-    .img-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .img-upload-hint { font-size: 0.75rem; color: var(--text-muted); pointer-events: none; }
-    .img-upload-hint strong { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.18rem; }
-    .img-preview-wrap { margin-top: 0.7rem; display: none; }
-    .img-preview-wrap img { width: 100%; max-height: 140px; object-fit: cover; border: 1px solid var(--border); border-radius: 2px; }
-    .img-remove-btn { font-size: 0.7rem; color: #c0392b; cursor: pointer; margin-top: 0.28rem; display: inline-block; background: none; border: none; font-family: inherit; font-weight: 700; }
-    .modal-footer { padding: 0.9rem 1.5rem 1.3rem; display: flex; gap: 0.7rem; justify-content: flex-end; border-top: 1px solid var(--border); }
-    .btn-cancel { padding: 0.55rem 1.3rem; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-family: 'Hahmlet', serif; font-size: 0.78rem; cursor: pointer; border-radius: 2px; }
-    .btn-submit { padding: 0.55rem 1.7rem; background: var(--primary); color: #fff; border: none; font-family: 'Hahmlet', serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
-    .btn-submit:hover { background: var(--primary-dark); }
 
     /* ── CTA ── */
     .cta-section { text-align: center; padding: 2rem 2rem 6rem; border-top: 1px solid var(--border); }
@@ -345,10 +294,10 @@
       <div class="section-eyebrow">Media Column · 언론사 기고</div>
       <h2 class="section-title">언론사 칼럼,<em> 전문가로 말합니다</em></h2>
     </div>
-    <button class="btn-write" onclick="askPassword('media')">
+    <a class="btn-write" href="admin.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      칼럼 추가
-    </button>
+      칼럼 관리
+    </a>
   </div>
 
   <!-- 뷰어스 스타일 목록 -->
@@ -385,10 +334,10 @@
       <div class="section-eyebrow">Blog Column · 네이버 블로그</div>
       <h2 class="section-title">재테크 칼럼,<em> 쉽게 풀어드립니다</em></h2>
     </div>
-    <button class="btn-write" onclick="askPassword('blog')">
+    <a class="btn-write" href="admin.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      칼럼 추가
-    </button>
+      칼럼 관리
+    </a>
   </div>
 
   <!-- 블로그 3열 카드 -->
@@ -497,402 +446,198 @@
   <div class="kakao-float-label">카카오 공유</div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     비밀번호 확인 모달
-════════════════════════════════════════════ -->
-<div class="pw-overlay" id="pwOverlay">
-  <div class="pw-box">
-    <h3>🔒 관리자 확인</h3>
-    <p>칼럼을 추가하려면 비밀번호를 입력하세요.</p>
-    <input class="pw-input" id="pwInput" type="password" placeholder="••••••••"
-           onkeydown="if(event.key==='Enter') confirmPassword()">
-    <div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div>
-    <div class="pw-actions">
-      <button class="pw-cancel" onclick="closePw()">취소</button>
-      <button class="pw-confirm" onclick="confirmPassword()">확인</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     글쓰기 모달
-════════════════════════════════════════════ -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modalTitle">칼럼 추가</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body">
-
-      <div class="form-group">
-        <label class="form-label">제목 *</label>
-        <input class="form-input" id="fTitle" type="text" placeholder="칼럼 제목">
-      </div>
-      <div class="form-group">
-        <label class="form-label">한줄 요약</label>
-        <textarea class="form-textarea" id="fExcerpt" placeholder="독자가 클릭하고 싶어지는 한두 문장"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">링크 *</label>
-        <input class="form-input" id="fLink" type="url" placeholder="https://">
-      </div>
-      <div class="form-group">
-        <label class="form-label">태그</label>
-        <select class="form-select" id="fTag">
-          <option value="투자">투자</option>
-          <option value="절세">절세</option>
-          <option value="연금">연금</option>
-          <option value="부동산">부동산</option>
-          <option value="금융상품">금융상품</option>
-          <option value="기타">기타</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">날짜</label>
-        <input class="form-input" id="fDate" type="text" placeholder="예: 2026.03">
-      </div>
-      <div class="form-group">
-        <label class="form-label">썸네일 이미지 업로드 (선택)</label>
-        <div class="img-upload-area">
-          <input type="file" accept="image/*" id="fImgFile" onchange="handleImgSelect(event)">
-          <div class="img-upload-hint">
-            <strong>이미지 선택하기</strong>
-            JPG · PNG · WEBP — 클릭하여 업로드
-          </div>
-        </div>
-        <div class="img-preview-wrap" id="imgPreviewWrap">
-          <img id="imgPreview" src="" alt="미리보기">
-          <button class="img-remove-btn" onclick="removeImg()">✕ 이미지 제거</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">또는 이미지 URL</label>
-        <input class="form-input" id="fImgUrl" type="url" placeholder="https://... (업로드 시 무시됨)">
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">취소</button>
-      <button class="btn-submit" onclick="submitCard()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- 카카오 SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 <script>
-// ────────────────────────────────────────
-//  설정
-// ────────────────────────────────────────
-const KAKAO_JS_KEY    = '16d606622c9c20a6f8650870f439d9e9';
-const ADMIN_PASSWORD  = 'heomoney';   // ← 비밀번호 변경 시 여기만 수정
-const STORAGE_BLOG    = 'jw_col_blog_v2';
-const STORAGE_MEDIA   = 'jw_col_media_v2';
+const KAKAO_JS_KEY = "16d606622c9c20a6f8650870f439d9e9";
+const db = window.db;
 
-let currentSection    = 'blog';
-let currentImgDataUrl = null;
-
-// ────────────────────────────────────────
-//  초기화
-// ────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", async () => {
   Kakao.init(KAKAO_JS_KEY);
-  loadSaved('blog');
-  loadSaved('media');
-  applyDelays('gridBlog');
+  await loadRemoteColumns();
+  applyDelays("gridBlog");
   initNav();
-  document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
-  document.getElementById('pwOverlay').addEventListener('click', e => { if (e.target === document.getElementById('pwOverlay')) closePw(); });
+  setupFreebieDropdown();
 });
 
 function applyDelays(gridId) {
-  document.querySelectorAll(`#${gridId} .col-card`).forEach((c,i) => { c.style.animationDelay = (0.04 + i*0.07)+'s'; });
+  document.querySelectorAll(`#${gridId} .col-card`).forEach((c, i) => {
+    c.style.animationDelay = (0.04 + i * 0.07) + "s";
+  });
 }
 
-// ────────────────────────────────────────
-//  localStorage
-// ────────────────────────────────────────
-function sKey(s)    { return s === 'blog' ? STORAGE_BLOG : STORAGE_MEDIA; }
-function getSaved(s){ try { return JSON.parse(localStorage.getItem(sKey(s)) || '[]'); } catch { return []; } }
-function setSaved(s,arr){ localStorage.setItem(sKey(s), JSON.stringify(arr)); }
-
-function loadSaved(section) {
-  getSaved(section).forEach(d => renderCard(section, d, false));
-}
-
-// ────────────────────────────────────────
-//  카드 렌더 — 섹션별 다른 레이아웃
-// ────────────────────────────────────────
-function renderCard(section, d, prepend) {
-  if (section === 'media') {
-    renderMediaCard(d, prepend);
-  } else {
-    renderBlogCard(d, prepend);
+async function loadRemoteColumns() {
+  if (!db) {
+    console.error("supabase-config.js 설정이 필요합니다.");
+    return;
   }
+
+  const { data, error } = await db
+    .from("columns")
+    .select("id, section, title, excerpt, link, tag, date_text, image_url, published")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  data.forEach((row) => {
+    const card = {
+      id: row.id,
+      title: row.title,
+      excerpt: row.excerpt || "",
+      link: row.link || "#",
+      tag: row.tag || "기타",
+      date: row.date_text || "",
+      imgSrc: row.image_url || "",
+    };
+    renderCard(row.section, card, false);
+  });
 }
 
-/* 언론사: 뷰어스 리스트형 */
-function renderMediaCard(d, prepend) {
-  const list = document.getElementById('listMedia');
-  const thumbHtml = d.imgSrc
-    ? `<img src="${esc(d.imgSrc)}" alt="${esc(d.title)}" loading="lazy">`
-    : '';
-  const thumbBlock = d.imgSrc
-    ? `<div class="mc-thumb"><img src="${esc(d.imgSrc)}" alt="${esc(d.title)}" loading="lazy"></div>`
+function renderCard(section, card, prepend) {
+  if (section === "media") renderMediaCard(card, prepend);
+  else renderBlogCard(card, prepend);
+}
+
+function renderMediaCard(card, prepend) {
+  const list = document.getElementById("listMedia");
+  const thumbBlock = card.imgSrc
+    ? `<div class="mc-thumb"><img src="${esc(card.imgSrc)}" alt="${esc(card.title)}" loading="lazy"></div>`
     : `<div class="mc-thumb-placeholder">📄</div>`;
 
-  const el = document.createElement('a');
-  el.className = 'media-card';
-  el.href      = d.link || '#';
-  el.target    = '_blank';
-  el.dataset.id = d.id;
-
+  const el = document.createElement("a");
+  el.className = "media-card";
+  el.href = card.link || "#";
+  el.target = "_blank";
+  el.rel = "noopener";
   el.innerHTML = `
-    <button class="mc-delete-btn" onclick="deleteMC('${d.id}',event)">✕ 삭제</button>
     ${thumbBlock}
     <div class="mc-body">
-      <div class="mc-category">${esc(d.tag)} · 언론사</div>
-      <div class="mc-title">${esc(d.title)}</div>
-      <div class="mc-excerpt">${esc(d.excerpt)}</div>
+      <div class="mc-category">${esc(card.tag)} · 언론사</div>
+      <div class="mc-title">${esc(card.title)}</div>
+      <div class="mc-excerpt">${esc(card.excerpt)}</div>
       <div class="mc-meta">
-        <span>${esc(d.date)}</span>
+        <span>${esc(card.date)}</span>
         <span class="mc-meta-dot"></span>
-        <span style="color:var(--primary);">${esc(d.tag)}</span>
+        <span style="color:var(--primary);">${esc(card.tag)}</span>
       </div>
     </div>`;
 
-  // 고정 피처 카드 다음에 삽입 (prepend면 피처 바로 다음, 아니면 append)
-  const feature = list.querySelector('.media-card-feature');
-  if (prepend && feature && feature.nextSibling) {
-    list.insertBefore(el, feature.nextSibling);
-  } else if (prepend && feature) {
-    list.appendChild(el);
-  } else {
-    list.appendChild(el);
-  }
+  const feature = list.querySelector(".media-card-feature");
+  if (prepend && feature && feature.nextSibling) list.insertBefore(el, feature.nextSibling);
+  else if (prepend && feature) list.appendChild(el);
+  else list.appendChild(el);
 }
 
-function deleteMC(id, e) {
-  e.preventDefault(); e.stopPropagation();
-  if (!confirm('이 칼럼을 삭제하시겠습니까?')) return;
-  setSaved('media', getSaved('media').filter(c => c.id !== id));
-  document.querySelector(`[data-id="${id}"]`)?.remove();
-}
+function renderBlogCard(card, prepend) {
+  const grid = document.getElementById("gridBlog");
+  const thumbInner = card.imgSrc
+    ? `<img src="${esc(card.imgSrc)}" alt="${esc(card.title)}" loading="lazy"><div class="col-thumb-label">${esc(card.tag)}</div>`
+    : `<div class="col-thumb-placeholder">📄</div><div class="col-thumb-label">${esc(card.tag)}</div>`;
 
-/* 블로그: 3열 카드 */
-function renderBlogCard(d, prepend) {
-  const grid = document.getElementById('gridBlog');
-  const thumbInner = d.imgSrc
-    ? `<img src="${esc(d.imgSrc)}" alt="${esc(d.title)}" loading="lazy"><div class="col-thumb-label">${esc(d.tag)}</div>`
-    : `<div class="col-thumb-placeholder">📄</div><div class="col-thumb-label">${esc(d.tag)}</div>`;
-
-  const el = document.createElement('a');
-  el.className   = 'col-card';
-  el.href        = d.link || '#';
-  el.target      = '_blank';
-  el.dataset.tags = d.tag || '';
-  el.dataset.id   = d.id;
-
+  const el = document.createElement("a");
+  el.className = "col-card";
+  el.href = card.link || "#";
+  el.target = "_blank";
+  el.rel = "noopener";
   el.innerHTML = `
-    <button class="col-delete-btn" onclick="deleteBlog('${d.id}',event)">✕</button>
     <div class="col-thumb">${thumbInner}</div>
     <div class="col-info">
-      <div class="col-tag">${esc(d.tag)}</div>
-      <div class="col-title">${esc(d.title)}</div>
-      <div class="col-excerpt">${esc(d.excerpt)}</div>
+      <div class="col-tag">${esc(card.tag)}</div>
+      <div class="col-title">${esc(card.title)}</div>
+      <div class="col-excerpt">${esc(card.excerpt)}</div>
       <div class="col-meta">
-        <div class="col-meta-left">${esc(d.date)}</div>
+        <div class="col-meta-left">${esc(card.date)}</div>
         <div class="col-naver-badge">N 블로그</div>
       </div>
     </div>`;
 
-  prepend && grid.firstChild ? grid.insertBefore(el, grid.firstChild) : grid.appendChild(el);
+  if (prepend && grid.firstChild) grid.insertBefore(el, grid.firstChild);
+  else grid.appendChild(el);
 }
 
-function deleteBlog(id, e) {
-  e.preventDefault(); e.stopPropagation();
-  if (!confirm('이 칼럼을 삭제하시겠습니까?')) return;
-  setSaved('blog', getSaved('blog').filter(c => c.id !== id));
-  document.querySelector(`[data-id="${id}"]`)?.remove();
-}
-
-// ────────────────────────────────────────
-//  비밀번호 모달
-// ────────────────────────────────────────
-function askPassword(section) {
-  currentSection = section;
-  document.getElementById('pwInput').value = '';
-  document.getElementById('pwError').style.display = 'none';
-  document.getElementById('pwOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('pwInput').focus(), 80);
-}
-
-function closePw() {
-  document.getElementById('pwOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function confirmPassword() {
-  const val = document.getElementById('pwInput').value;
-  if (val === ADMIN_PASSWORD) {
-    closePw();
-    openModal(currentSection);
-  } else {
-    document.getElementById('pwError').style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-  }
-}
-
-// ────────────────────────────────────────
-//  글쓰기 모달
-// ────────────────────────────────────────
-function openModal(section) {
-  currentSection    = section;
-  currentImgDataUrl = null;
-  ['fTitle','fExcerpt','fLink','fDate','fImgUrl'].forEach(id => { document.getElementById(id).value = ''; });
-  document.getElementById('fTag').value = '투자';
-  removeImg();
-  document.getElementById('modalTitle').textContent = section === 'media' ? '언론사 칼럼 추가' : '재테크 칼럼 추가';
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ────────────────────────────────────────
-//  이미지
-// ────────────────────────────────────────
-function handleImgSelect(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    currentImgDataUrl = ev.target.result;
-    document.getElementById('imgPreview').src = currentImgDataUrl;
-    document.getElementById('imgPreviewWrap').style.display = 'block';
-  };
-  reader.readAsDataURL(file);
-}
-
-function removeImg() {
-  currentImgDataUrl = null;
-  document.getElementById('imgPreview').src = '';
-  document.getElementById('imgPreviewWrap').style.display = 'none';
-  document.getElementById('fImgFile').value = '';
-}
-
-// ────────────────────────────────────────
-//  저장
-// ────────────────────────────────────────
-function submitCard() {
-  const title = document.getElementById('fTitle').value.trim();
-  const link  = document.getElementById('fLink').value.trim();
-  if (!title) { alert('제목을 입력해주세요.'); return; }
-  if (!link)  { alert('링크를 입력해주세요.'); return; }
-
-  const d = {
-    id:      Date.now().toString(),
-    title,
-    excerpt: document.getElementById('fExcerpt').value.trim(),
-    link,
-    tag:     document.getElementById('fTag').value,
-    date:    document.getElementById('fDate').value.trim() || new Date().toISOString().slice(0,7).replace('-','.'),
-    imgSrc:  currentImgDataUrl || document.getElementById('fImgUrl').value.trim() || '',
-  };
-
-  const arr = getSaved(currentSection);
-  arr.unshift(d);
-  setSaved(currentSection, arr);
-  renderCard(currentSection, d, true);
-  if (currentSection === 'blog') applyDelays('gridBlog');
-  closeModal();
-}
-
-// ────────────────────────────────────────
-//  햄버거 메뉴
-// ────────────────────────────────────────
 function setupFreebieDropdown() {
-  const dropdown = document.querySelector('.nav-dropdown');
+  const dropdown = document.querySelector(".nav-dropdown");
   if (!dropdown) return;
-  const trigger = dropdown.querySelector('.submenu-toggle');
-  const submenu = dropdown.querySelector('.nav-submenu');
+  const trigger = dropdown.querySelector(".submenu-toggle");
+  const submenu = dropdown.querySelector(".nav-submenu");
   if (!trigger || !submenu) return;
 
-  const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  const setExpanded = (isOpen) => trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
   const closeDropdown = () => {
-    dropdown.classList.remove('open');
+    dropdown.classList.remove("open");
     setExpanded(false);
   };
   const toggleDropdown = () => {
-    const willOpen = !dropdown.classList.contains('open');
-    dropdown.classList.toggle('open', willOpen);
+    const willOpen = !dropdown.classList.contains("open");
+    dropdown.classList.toggle("open", willOpen);
     setExpanded(willOpen);
   };
 
-  trigger.addEventListener('click', (event) => {
+  trigger.addEventListener("click", (event) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     toggleDropdown();
   });
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     if (!dropdown.contains(event.target)) closeDropdown();
   });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeDropdown();
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDropdown();
   });
-  submenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDropdown));
+  submenu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeDropdown));
 }
 
 function closeMobile() {
-  document.getElementById('navToggle').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.body.style.overflow = '';
+  document.getElementById("navToggle").classList.remove("open");
+  document.getElementById("mobileMenu").classList.remove("open");
+  document.body.style.overflow = "";
 }
-function initNav() {
-  const t = document.getElementById('navToggle');
-  const m = document.getElementById('mobileMenu');
-  if (!t||!m) return;
-  t.addEventListener('click', () => {
-    t.classList.toggle('open');
-    m.classList.toggle('open');
-    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
-  });
-m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
-}
-setupFreebieDropdown();
 
-// ────────────────────────────────────────
-//  카카오 공유
-// ────────────────────────────────────────
+function initNav() {
+  const t = document.getElementById("navToggle");
+  const m = document.getElementById("mobileMenu");
+  if (!t || !m) return;
+  t.addEventListener("click", () => {
+    t.classList.toggle("open");
+    m.classList.toggle("open");
+    document.body.style.overflow = m.classList.contains("open") ? "hidden" : "";
+  });
+  m.querySelectorAll(".mobile-link, .mobile-sublink").forEach((l) => l.addEventListener("click", closeMobile));
+}
+
 function shareKakao() {
-  if (!Kakao.isInitialized()) { alert('카카오 초기화 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+  if (!Kakao.isInitialized()) {
+    alert("카카오 초기화 중입니다. 잠시 후 다시 시도해주세요.");
+    return;
+  }
+
   Kakao.Share.sendDefault({
-    objectType: 'feed',
+    objectType: "feed",
     content: {
-      title: '재테크 칼럼 | JW Financial',
-      description: '500명 상담 경험에서 나온 실전 재테크 인사이트를 칼럼으로 정리했습니다.',
-      imageUrl: 'https://jwfinancial.co.kr/og-image.png',
-      link: { mobileWebUrl: 'https://jwfinancial.co.kr/column.html', webUrl: 'https://jwfinancial.co.kr/column.html' },
+      title: "재테크 칼럼 | JW Financial",
+      description: "500명 상담 경험에서 나온 실전 재테크 인사이트를 칼럼으로 정리했습니다.",
+      imageUrl: "https://jwfinancial.co.kr/og-image.png",
+      link: { mobileWebUrl: "https://jwfinancial.co.kr/column.html", webUrl: "https://jwfinancial.co.kr/column.html" },
     },
     buttons: [
-      { title: '칼럼 보러가기', link: { mobileWebUrl: 'https://jwfinancial.co.kr/column.html', webUrl: 'https://jwfinancial.co.kr/column.html' } },
-      { title: '무료 상담 신청', link: { mobileWebUrl: 'https://jwfinancial.co.kr/consult.html', webUrl: 'https://jwfinancial.co.kr/consult.html' } },
+      { title: "칼럼 보러가기", link: { mobileWebUrl: "https://jwfinancial.co.kr/column.html", webUrl: "https://jwfinancial.co.kr/column.html" } },
+      { title: "무료 상담 신청", link: { mobileWebUrl: "https://jwfinancial.co.kr/consult.html", webUrl: "https://jwfinancial.co.kr/consult.html" } },
     ],
   });
 }
 
-// ────────────────────────────────────────
-//  유틸
-// ────────────────────────────────────────
 function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  if (!s) return "";
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 </script>
 
