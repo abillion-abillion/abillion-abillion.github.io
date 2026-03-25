@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커버드콜 ETF 분배금 시뮬레이터</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --primary:#3b5bdb; --primary-light:#e7f0ff; --accent:#f76707; --green:#2f9e44;
+    --gray-50:#f8f9fa; --gray-100:#f1f3f5; --gray-200:#e9ecef; --gray-400:#ced4da;
+    --gray-600:#868e96; --gray-800:#343a40; --border-r:12px; --shadow:0 2px 12px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--gray-50);color:var(--gray-800);min-height:100vh}
+
+  /* Header */
+  .header{background:linear-gradient(135deg,#1a237e 0%,#3b5bdb 60%,#5c7cfa 100%);color:#fff;padding:32px 24px 28px;text-align:center}
+  .header h1{font-size:1.7rem;font-weight:800;letter-spacing:-.5px}
+  .header p{margin-top:6px;font-size:.9rem;opacity:.85}
+  .badge-row{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:4px 12px;font-size:.75rem;font-weight:600}
+
+  .container{max-width:1160px;margin:0 auto;padding:24px 16px 60px}
+
+  /* Card */
+  .card{background:#fff;border-radius:var(--border-r);box-shadow:var(--shadow);padding:24px;margin-bottom:20px}
+  .card-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .card-title::before{content:'';display:inline-block;width:4px;height:18px;background:var(--primary);border-radius:2px}
+
+  /* Amount */
+  .invest-section{display:flex;flex-direction:column;gap:16px}
+  .amount-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .amount-label{font-size:.88rem;color:var(--gray-600);white-space:nowrap}
+  .amount-input-wrap{display:flex;align-items:center;border:2px solid var(--primary);border-radius:8px;overflow:hidden;flex:1;max-width:320px}
+  .amount-input-wrap input{border:none;outline:none;padding:10px 12px;font-size:1.1rem;font-weight:700;color:var(--primary);width:100%;text-align:right}
+  .amount-unit{background:var(--primary-light);padding:10px 14px;font-size:.88rem;font-weight:600;color:var(--primary);white-space:nowrap}
+  .preset-btns{display:flex;gap:8px;flex-wrap:wrap}
+  .preset-btn{border:1.5px solid var(--primary);background:#fff;color:var(--primary);border-radius:20px;padding:6px 16px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
+  .preset-btn:hover,.preset-btn.active{background:var(--primary);color:#fff}
+  .slider-wrap{padding:4px 0}
+  input[type=range]{width:100%;height:6px;border-radius:3px;accent-color:var(--primary);cursor:pointer}
+  .slider-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--gray-600);margin-top:4px}
+
+  /* ETF Table */
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  thead tr{background:var(--gray-100)}
+  th{padding:9px 10px;text-align:center;font-weight:600;color:var(--gray-600);font-size:.78rem;white-space:nowrap;border-bottom:2px solid var(--gray-200)}
+  td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--gray-200);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--primary-light)}
+  .etf-name-cell{text-align:left!important}
+  .etf-name{font-weight:600;font-size:.82rem;line-height:1.3}
+  .etf-code{font-size:.7rem;color:var(--gray-600)}
+  .etf-dates{font-size:.68rem;color:#666;margin-top:3px;line-height:1.5;background:var(--gray-100);border-radius:4px;padding:2px 6px;display:inline-block}
+  .etf-dates span{color:var(--primary);font-weight:600}
+  .etf-dates .red{color:#e03131;font-weight:600}
+  .editable{border:1.5px solid var(--gray-400);border-radius:6px;padding:5px 7px;width:82px;text-align:right;font-size:.82rem;outline:none;transition:border-color .15s}
+  .editable:focus{border-color:var(--primary)}
+  .weight-input{width:52px}
+  .tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:.7rem;font-weight:600;white-space:nowrap}
+  .tag-domestic{background:#dbe4ff;color:#364fc7}
+  .tag-global{background:#fff3bf;color:#e67700}
+  .tag-bond{background:#d3f9d8;color:#2b8a3e}
+  .tag-asset{background:#f3d9fa;color:#862e9c}
+  .result-green{color:var(--green);font-weight:700}
+  .result-accent{color:var(--accent);font-weight:700}
+  .weight-total-row{background:var(--gray-100)}
+  .weight-total-row td{font-weight:700;font-size:.85rem}
+  .weight-warn{color:#fa5252;font-weight:700}
+  .weight-ok{color:var(--green);font-weight:700}
+
+  /* Summary */
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+  .summary-card{background:#fff;border-radius:var(--border-r);box-shadow:var(--shadow);padding:20px;text-align:center;border-top:4px solid var(--primary)}
+  .summary-card.green{border-top-color:var(--green)}
+  .summary-card.accent{border-top-color:var(--accent)}
+  .summary-card.purple{border-top-color:#9c36b5}
+  .s-label{font-size:.78rem;color:var(--gray-600);font-weight:600;margin-bottom:8px}
+  .s-value{font-size:1.5rem;font-weight:800;color:var(--gray-800);line-height:1}
+  .s-sub{font-size:.75rem;color:var(--gray-600);margin-top:4px}
+  .s-value.highlight{color:var(--primary)}
+  .s-value.green{color:var(--green)}
+  .s-value.accent{color:var(--accent)}
+
+  /* Charts */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:680px){.charts-grid{grid-template-columns:1fr}}
+  .chart-box{background:#fff;border-radius:var(--border-r);box-shadow:var(--shadow);padding:20px}
+  .chart-title{font-size:.88rem;font-weight:700;color:var(--gray-800);margin-bottom:14px}
+  .chart-wrap{position:relative;height:220px}
+
+  /* Buttons */
+  .btn-add{border:1.5px dashed var(--gray-400);background:#fff;color:var(--gray-600);border-radius:8px;padding:8px 16px;font-size:.82rem;cursor:pointer;margin-top:12px;transition:all .15s}
+  .btn-add:hover{border-color:var(--primary);color:var(--primary)}
+  .btn-del{border:none;background:none;color:#fa5252;cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:background .15s}
+  .btn-del:hover{background:#fff0f0}
+
+  /* ── 분배금 구조 ── */
+  .formula-box{background:linear-gradient(135deg,#f0f4ff,#fff);border:1.5px solid #c5cfe8;border-radius:12px;padding:20px;margin-bottom:20px}
+  .formula-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;font-size:1rem;font-weight:700}
+  .f-total{background:var(--primary);color:#fff;padding:8px 18px;border-radius:8px;font-size:1.05rem}
+  .f-eq{color:var(--gray-600);font-size:1.2rem}
+  .f-free{background:#e8f5e9;color:#1b5e20;border:1.5px solid #a5d6a7;padding:8px 16px;border-radius:8px}
+  .f-plus{color:var(--gray-600);font-size:1.2rem}
+  .f-tax{background:#fff3e0;color:#bf360c;border:1.5px solid #ffcc80;padding:8px 16px;border-radius:8px}
+  .formula-note{margin-top:14px;font-size:.78rem;color:var(--gray-600);line-height:1.7;background:#fff;border-radius:8px;padding:10px 14px;border-left:3px solid var(--primary)}
+  .formula-note strong{color:var(--primary)}
+
+  /* 분배금 구조 테이블 */
+  .tax-table th{background:#f0f4ff}
+  .tax-table .tax-free-col{color:#2f9e44;font-weight:700}
+  .tax-table .tax-col{color:#e03131;font-weight:700}
+  .tax-table .net-col{color:var(--primary);font-weight:700}
+  .pct-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:3px}
+  .pct-free{background:#69db7c}
+  .pct-taxed{background:#ffa94d}
+  .tax-total-row{background:#f0f4ff;font-weight:700}
+
+  /* ── 선정 상품 요약 ── */
+  .product-grid{display:flex;flex-direction:column;gap:14px}
+  .product-card{border:1.5px solid var(--gray-200);border-radius:10px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
+  .product-card:hover{border-color:var(--primary);background:var(--primary-light)}
+  .product-check{width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;color:#fff;font-weight:700;margin-top:2px}
+  .product-body{flex:1}
+  .product-name{font-size:.95rem;font-weight:700;color:var(--gray-800);line-height:1.3}
+  .product-type{font-size:.72rem;color:var(--gray-600);margin-top:2px}
+  .product-bullets{margin-top:8px;display:flex;flex-direction:column;gap:3px}
+  .product-bullet{font-size:.8rem;color:var(--gray-800);display:flex;gap:6px}
+  .product-bullet::before{content:'·';color:var(--primary);font-weight:700;flex-shrink:0}
+  .product-meta{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+  .product-badge{font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--primary-light);color:var(--primary)}
+  .product-badge.green{background:#d3f9d8;color:#2b8a3e}
+  .product-badge.orange{background:#fff3bf;color:#d9480f}
+
+  /* Modal */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:16px;width:95%;max-width:680px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center}
+  .modal-header h3{font-size:1.05rem;font-weight:700}
+  .modal-close{border:none;background:none;font-size:1.4rem;cursor:pointer;color:var(--gray-600);line-height:1;padding:4px}
+  .modal-body{padding:20px 24px;overflow-y:auto;flex:1}
+  .modal-search-wrap{position:relative;margin-bottom:14px}
+  .modal-search{width:100%;border:2px solid var(--primary);border-radius:8px;padding:10px 16px 10px 38px;font-size:.95rem;outline:none}
+  .modal-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:.9rem;pointer-events:none}
+  .modal-meta{font-size:.75rem;color:var(--gray-600);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .funetf-link{font-size:.75rem;color:var(--primary);text-decoration:none;font-weight:600}
+  .funetf-link:hover{text-decoration:underline}
+  .etf-list{display:flex;flex-direction:column;gap:6px}
+  .etf-list-item{border:1.5px solid var(--gray-200);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .etf-list-item:hover{border-color:var(--primary);background:var(--primary-light)}
+  .eli-left .eli-name{font-weight:600;font-size:.88rem}
+  .eli-left .eli-meta{font-size:.72rem;color:var(--gray-600);margin-top:2px}
+  .eli-left .eli-dates{font-size:.68rem;color:#555;margin-top:3px}
+  .eli-right{text-align:right}
+  .eli-rate{font-size:1rem;font-weight:800;color:var(--accent)}
+  .eli-price{font-size:.72rem;color:var(--gray-600);margin-top:2px}
+  .no-results{text-align:center;padding:32px;color:var(--gray-600);font-size:.88rem}
+
+  .disclaimer{background:var(--gray-100);border-radius:8px;padding:14px 16px;font-size:.75rem;color:var(--gray-600);line-height:1.6;margin-top:20px}
+
+  @media(max-width:600px){
+    .header h1{font-size:1.35rem}
+    .card{padding:16px}
+    .summary-grid{grid-template-columns:1fr 1fr}
+    .s-value{font-size:1.2rem}
+    th,td{padding:7px 5px}
+    .editable{width:65px}
+    .formula-row{font-size:.9rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div style="background:#1e293b;display:flex;align-items:center;justify-content:space-between;padding:8px 24px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="width:32px;height:32px;background:linear-gradient(135deg,#c0392b,#e67e22);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.8rem;letter-spacing:-0.5px;">JW</div>
+    <span style="color:#fff;font-weight:700;font-size:.92rem;">JW Financial</span>
+    <span style="color:rgba(255,255,255,.5);font-size:.82rem;margin-left:2px;">· 커버드콜 ETF 분배금 시뮬레이터</span>
+  </div>
+  <div style="background:rgba(220,53,69,.15);border:1px solid rgba(220,53,69,.4);border-radius:6px;padding:4px 14px;display:flex;align-items:center;gap:6px;">
+    <span style="font-size:.78rem;">🔒</span>
+    <span style="color:#ff6b6b;font-size:.78rem;font-weight:700;">대외비 — 사내 전용 자료 · 고객 배포 금지</span>
+  </div>
+</div>
+
+<div class="header">
+  <h1>📈 커버드콜 ETF 분배금 시뮬레이터</h1>
+  <p>목돈을 커버드콜 ETF에 투자했을 때 받을 수 있는 월 분배금을 계산합니다</p>
+  <div class="badge-row">
+    <span class="badge">월배당 ETF</span>
+    <span class="badge">FunETF 데이터</span>
+    <span class="badge">분배금 시뮬레이션</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- STEP 1 -->
+<div class="card">
+  <div class="card-title">STEP 1 &nbsp;투자 금액 설정</div>
+  <div class="invest-section">
+    <div class="amount-row">
+      <span class="amount-label">투자 목돈</span>
+      <div class="amount-input-wrap">
+        <input type="number" id="totalAmount" value="100000000" min="1000000" max="10000000000" step="1000000" oninput="onAmountInput(this.value)">
+        <span class="amount-unit">원</span>
+      </div>
+      <span id="amountKorean" style="font-weight:700;color:var(--primary);font-size:1rem;">1억 원</span>
+    </div>
+    <div class="preset-btns">
+      <button class="preset-btn" onclick="setAmount(30000000)">3,000만</button>
+      <button class="preset-btn" onclick="setAmount(50000000)">5,000만</button>
+      <button class="preset-btn active" onclick="setAmount(100000000)">1억</button>
+      <button class="preset-btn" onclick="setAmount(200000000)">2억</button>
+      <button class="preset-btn" onclick="setAmount(300000000)">3억</button>
+      <button class="preset-btn" onclick="setAmount(500000000)">5억</button>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" id="amountSlider" min="10000000" max="1000000000" step="10000000" value="100000000" oninput="onSliderInput(this.value)">
+      <div class="slider-labels"><span>1,000만</span><span>2억 5천만</span><span>5억</span><span>7억 5천만</span><span>10억</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="card">
+  <div class="card-title">STEP 2 &nbsp;ETF 포트폴리오 설정</div>
+  <p style="font-size:.82rem;color:var(--gray-600);margin-bottom:14px;">현재가·월평균 분배금을 수정하거나 비중을 조정하세요. 비중 합계는 100%여야 합니다.</p>
+  <div class="table-wrap">
+    <table id="etfTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="text-align:left;min-width:200px;">ETF명 / 분배 일정</th>
+          <th>유형</th>
+          <th>현재가(원)</th>
+          <th>월평균<br>분배금(원/주)</th>
+          <th>연환산<br>분배율(%)</th>
+          <th>비중(%)</th>
+          <th>월 분배금</th>
+          <th>연 분배금</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="etfBody"></tbody>
+      <tfoot>
+        <tr class="weight-total-row">
+          <td colspan="6" style="text-align:right;padding-right:12px;color:var(--gray-600);">비중 합계</td>
+          <td id="weightTotal" class="weight-ok">100%</td>
+          <td id="totalMonthlyDisp" class="result-green">—</td>
+          <td id="totalAnnualDisp" class="result-accent">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <button class="btn-add" onclick="openModal()">＋ FunETF에서 ETF 추가</button>
+</div>
+
+<!-- STEP 3 결과 -->
+<div style="margin-bottom:8px;font-size:.9rem;font-weight:700;color:var(--gray-800);">STEP 3 &nbsp;분배금 시뮬레이션 결과</div>
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="s-label">💰 투자 원금</div>
+    <div class="s-value highlight" id="s-invest">—</div>
+    <div class="s-sub" id="s-invest-sub">—</div>
+  </div>
+  <div class="summary-card green">
+    <div class="s-label">📅 월 분배금 (예상)</div>
+    <div class="s-value green" id="s-monthly">—</div>
+    <div class="s-sub" id="s-monthly-sub">—</div>
+  </div>
+  <div class="summary-card accent">
+    <div class="s-label">📆 연 분배금 (예상)</div>
+    <div class="s-value accent" id="s-annual">—</div>
+    <div class="s-sub" id="s-annual-sub">—</div>
+  </div>
+  <div class="summary-card purple">
+    <div class="s-label">📊 연환산 분배율</div>
+    <div class="s-value" style="color:#9c36b5;" id="s-rate">—</div>
+    <div class="s-sub">투자금 대비</div>
+  </div>
+</div>
+
+<div class="charts-grid">
+  <div class="chart-box">
+    <div class="chart-title">ETF별 월 분배금 (원)</div>
+    <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">ETF별 투자 비중</div>
+    <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+  </div>
+</div>
+
+<!-- STEP 4: 분배금 구조 분석 -->
+<div class="card" style="margin-top:20px;">
+  <div class="card-title">STEP 4 &nbsp;분배금 구조 이해 &amp; 세금 계산</div>
+
+  <div class="formula-box">
+    <div class="formula-row">
+      <span class="f-total">📦 분배금</span>
+      <span class="f-eq">=</span>
+      <span class="f-free">🟢 옵션 프리미엄 (비과세)</span>
+      <span class="f-plus">+</span>
+      <span class="f-tax">🟠 배당금 (과세 15.4%)</span>
+    </div>
+    <div class="formula-note">
+      커버드콜 ETF의 분배금은 <strong>옵션 프리미엄(비과세)</strong>과 <strong>배당금(과세 15.4%)</strong>으로 구성됩니다.<br>
+      FunETF 분배금 상세 페이지의 <strong>주당 과세표준액</strong>이 배당금(과세) 부분이며, 분배금에서 이를 차감한 금액이 비과세 옵션 프리미엄입니다.<br>
+      ※ 과세표준액은 <strong>매월 결산 후</strong>에만 확인 가능하며 매달 달라질 수 있습니다. 아래 표에 직접 입력하세요.
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="tax-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;min-width:160px;">ETF명</th>
+          <th>직전월<br>분배금(원/주)</th>
+          <th>과세표준액<br>(원/주)</th>
+          <th>옵션프리미엄<br>(비과세)</th>
+          <th>비과세<br>비율</th>
+          <th>총 분배금</th>
+          <th class="tax-col">총 세금<br>(15.4%)</th>
+          <th class="net-col">세후 실수령</th>
+        </tr>
+      </thead>
+      <tbody id="taxBody"></tbody>
+      <tfoot>
+        <tr class="tax-total-row">
+          <td colspan="5" style="text-align:right;padding-right:12px;color:var(--gray-600);">합계 (직전월 기준)</td>
+          <td id="tax-total-gross" class="result-green">—</td>
+          <td id="tax-total-tax" class="tax-col">—</td>
+          <td id="tax-total-net" class="net-col">—</td>
+        </tr>
+        <tr class="tax-total-row">
+          <td colspan="5" style="text-align:right;padding-right:12px;color:var(--gray-600);">연간 환산 (× 12)</td>
+          <td id="tax-annual-gross" class="result-accent">—</td>
+          <td id="tax-annual-tax" style="color:#e03131;font-weight:700;">—</td>
+          <td id="tax-annual-net" style="color:var(--primary);font-weight:700;">—</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <p style="font-size:.75rem;color:var(--gray-600);margin-top:10px;">
+    ※ 총 분배금·세금은 투자비중별 보유주수(투자금액÷현재가) 기준으로 계산됩니다.
+  </p>
+</div>
+
+<!-- STEP 5: 선정 상품 요약 -->
+<div class="card">
+  <div class="card-title">선정 상품 요약</div>
+  <p style="font-size:.82rem;color:var(--gray-600);margin-bottom:16px;">
+    현재 포트폴리오에 담긴 ETF의 주요 특징입니다.
+  </p>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<div class="disclaimer">
+  ※ 본 시뮬레이터는 과거 분배금 실적을 기반으로 한 단순 추정이며, 미래 수익을 보장하지 않습니다.<br>
+  ※ 실제 분배금·과세표준액은 시장 상황 및 ETF 운용 전략에 따라 매월 달라질 수 있습니다.<br>
+  ※ ETF 투자 시 원금 손실(0~100%)이 발생할 수 있으며, 손실은 투자자에게 귀속됩니다.<br>
+  ※ 이 자료는 투자 권유를 목적으로 하지 않으며 참고 용도로만 활용하시기 바랍니다.
+</div>
+
+</div><!-- /container -->
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="onOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🔍 FunETF 커버드콜 ETF 검색</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-search-wrap">
+        <span class="modal-search-icon">🔍</span>
+        <input class="modal-search" id="modalSearch" type="text" placeholder="ETF 이름 또는 종목코드 검색..." oninput="filterEtfList(this.value)">
+      </div>
+      <div class="modal-meta">
+        <span id="searchCount">53개 ETF</span>
+        <a class="funetf-link" href="https://www.funetf.co.kr/product/etf/distribution" target="_blank">🔗 FunETF 분배금 페이지</a>
+      </div>
+      <div class="etf-list" id="etfListContainer"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── FunETF DB (2026.03.25) - 53개 커버드콜 ETF ───
+// [code, name, price, lastDiv, monthlyAvgDiv, annualRate, gijunYmd, paymentYmd, type]
+// [code, name, price, lastDiv, monthlyAvgDiv, annualRate, gijunYmd, paymentYmd, type, taxBase]
+// taxBase: FunETF 직전월 과세표준액 (KODEX만 확인 가능, 비KODEX는 0)
+const FUNETF_DB = [
+  ['0040Y0','SOL 팔란티어커버드콜OTM채권혼합',9320,185,176,22.72,'20260225','20260227','자산배분',0],
+  ['489030','PLUS 고배당주위클리커버드콜',8785,156,147,20.12,'20260225','20260227','국내주식',0],
+  ['491620','RISE 미국테크100데일리고정커버드콜',10350,126,172,19.86,'20260225','20260227','해외주식',0],
+  ['494300','KODEX 미국나스닥100데일리커버드콜OTM',9825,161,161,19.58,'20260225','20260227','해외주식',161],
+  ['490590','RISE 미국AI밸류체인데일리고정커버드콜',12755,152,195,18.21,'20260225','20260227','해외주식',0],
+  ['0040X0','SOL 팔란티어미국채커버드콜혼합',10855,205,161,17.78,'20260225','20260227','자산배분',0],
+  ['490600','RISE 미국배당100데일리고정커버드콜',9380,103,129,16.55,'20260225','20260227','해외주식',0],
+  ['0013R0','RISE 테슬라미국채타겟커버드콜혼합(합성)',9415,120,124,15.79,'20260225','20260227','자산배분',0],
+  ['475080','KODEX 테슬라커버드콜채권혼합액티브',8610,108,111,15.51,'20260225','20260227','자산배분',17],
+  ['493810','TIGER 미국AI빅테크10타겟데일리커버드콜',11090,143,139,15.03,'20260311','20260313','해외주식',0],
+  ['486290','TIGER 미국나스닥100타겟데일리커버드콜',10165,127,127,14.89,'20260225','20260227','해외주식',0],
+  ['480030','ACE 미국500데일리타겟커버드콜(합성)',10440,134,130,14.84,'20260311','20260313','해외주식',0],
+  ['480020','ACE 미국빅테크7+데일리타겟커버드콜(합성)',11750,151,146,14.77,'20260311','20260313','해외주식',0],
+  ['475720','RISE 200위클리커버드콜',12250,200,150,14.75,'20260225','20260227','국내주식',0],
+  ['0005A0','KODEX 미국S&P500데일리커버드콜OTM',9620,119,117,14.53,'20260225','20260227','해외주식',119],
+  ['483280','KODEX 미국AI테크TOP10타겟커버드콜',11840,149,143,14.48,'20260225','20260227','해외주식',149],
+  ['472150','TIGER 배당커버드콜액티브',17505,375,211,14.46,'20260225','20260227','국내주식',0],
+  ['498410','KODEX 금융고배당TOP10타겟위클리커버드콜',12690,189,151,14.33,'20260225','20260227','국내주식',13],
+  ['0018C0','PLUS 고배당주위클리고정커버드콜',12820,159,146,13.67,'20260311','20260313','국내주식',0],
+  ['494420','PLUS 미국배당증가성장주데일리커버드콜',9325,100,106,13.59,'20260311','20260313','해외주식',0],
+  ['473330','SOL 미국30년국채커버드콜(합성)',9310,75,104,13.31,'20260225','20260227','채권',0],
+  ['476550','TIGER 미국30년국채커버드콜액티브(H)',7385,77,80,12.95,'20260225','20260227','채권',0],
+  ['481060','KODEX 미국30년국채타겟커버드콜(합성 H)',7950,82,86,12.94,'20260311','20260313','채권',0],
+  ['498400','KODEX 200타겟위클리커버드콜',17310,252,182,12.60,'20260311','20260313','국내주식',33],
+  ['480040','ACE 미국반도체데일리타겟커버드콜(합성)',13670,167,139,12.10,'20260311','20260313','해외주식',0],
+  ['0000D0','TIGER 엔비디아미국채커버드콜밸런스(합성)',9785,100,97,11.91,'20260225','20260227','자산배분',0],
+  ['494210','SOL 미국500타겟데일리커버드콜액티브',10550,108,105,11.87,'20260225','20260227','해외주식',0],
+  ['472830','RISE 미국30년국채커버드콜(합성)',9205,72,88,11.50,'20260225','20260227','채권',0],
+  ['441680','TIGER 미국나스닥100커버드콜(합성)',11135,110,106,11.34,'20260225','20260227','해외주식',0],
+  ['0008S0','TIGER 미국배당다우존스타겟데일리커버드콜',10020,101,92,10.98,'20260311','20260313','해외주식',0],
+  ['483290','KODEX 미국배당다우존스타겟커버드콜',10700,106,95,10.67,'20260225','20260227','해외주식',106],
+  ['474220','TIGER 미국테크TOP10타겟커버드콜',14810,126,122,9.83,'20260311','20260313','해외주식',0],
+  ['482730','TIGER 미국S&P500타겟데일리커버드콜',11490,97,94,9.77,'20260225','20260227','해외주식',0],
+  ['290080','RISE 200고배당커버드콜ATM',8285,60,66,9.56,'20260225','20260227','국내주식',0],
+  ['458760','TIGER 미국배당다우존스타겟커버드콜2호',11165,94,87,9.39,'20260225','20260227','해외주식',0],
+  ['441640','KODEX 미국배당커버드콜액티브',12610,99,94,8.95,'20260311','20260313','해외주식',99],
+  ['0094M0','RISE 코리아밸류업위클리고정커버드콜',15875,400,112,8.44,'20260311','20260313','국내주식',0],
+  ['0073X0','FOCUS 알리바바미국채커버드콜혼합',10685,112,75,8.37,'20260225','20260227','자산배분',0],
+  ['289480','TIGER 200커버드콜',10420,71,64,7.31,'20260225','20260227','국내주식',0],
+  ['0132K0','PLUS 테슬라위클리커버드콜채권혼합',9190,195,53,6.87,'20260311','20260313','해외주식',0],
+  ['0094L0','RISE 차이나테크TOP10위클리타겟커버드콜',9285,87,49,6.37,'20260225','20260227','해외주식',0],
+  ['276970','KODEX 미국S&P500배당귀족커버드콜(합성 H)',7745,117,39,6.08,'20260323','20260325','해외주식',0],
+  ['458750','TIGER 미국배당다우존스타겟커버드콜1호',12770,74,61,5.69,'20260311','20260313','해외주식',0],
+  ['0049M0','ACE 미국배당퀄리티+커버드콜액티브',11380,69,53,5.58,'20260225','20260227','해외주식',0],
+  ['0104P0','TIGER 코리아배당다우존스위클리커버드콜',11765,114,43,4.36,'20260225','20260227','국내주식',0],
+  ['0128D0','PLUS 차이나항셍테크위클리타겟커버드콜',8150,108,29,4.29,'20260225','20260227','해외주식',0],
+  ['166400','TIGER 200커버드콜OTM',19460,78,61,3.70,'20260225','20260227','국내주식',0],
+  ['0022T0','SOL 국제금커버드콜액티브',14435,56,40,3.27,'20260225','20260227','원자재',0],
+  ['0104N0','TIGER 200타겟위클리커버드콜',16650,97,40,2.86,'20260311','20260313','국내주식',0],
+  ['0138T0','RISE 미국S&P500데일리고정커버드콜',9550,92,17,2.14,'20260225','20260227','해외주식',0],
+  ['0144L0','KODEX 미국성장커버드콜액티브',9295,94,16,2.05,'20260225','20260227','해외주식',0],
+  ['0089C0','KODEX 미국S&P500변동성확대시커버드콜',10985,10,5,0.57,'20260225','20260227','해외주식',0],
+  ['0167B0','SOL 200타겟위클리커버드콜',9935,0,0,0,'20260311','20260313','국내주식',0],
+];
+const DB_MAP = {};
+FUNETF_DB.forEach(r => { DB_MAP[r[0]] = r; });
+
+// ─── ETF 상품 설명 DB ───
+const ETF_DESC = {
+  '498410': {
+    bullets:['고배당 금융주 10종목(은행·보험·증권) 집중 투자','목표 수준의 옵션 프리미엄 추구 (위클리 커버드콜)','국내 주식 매매차익 & 코스피200 옵션 프리미엄 비과세'],
+    badges:[{t:'국내주식 비과세',c:'green'},{t:'위클리 커버드콜',c:''}]
+  },
+  '498400': {
+    bullets:['비과세 혜택으로 주목받는 국내 대표 커버드콜 ETF','코스피200 전체 시장 투자 + 위클리 커버드콜 실행','국내 주식 매매차익 & 코스피200 옵션 프리미엄 비과세'],
+    badges:[{t:'국내주식 비과세',c:'green'},{t:'국내 최대 규모',c:'orange'}]
+  },
+  '490590': {
+    bullets:['AI 핵심 기업(NVIDIA·Google·Oracle·Micron 등) 집중 투자','매일 고정 수준의 커버드콜로 안정적 프리미엄 수취','환노출형 — 달러 강세 시 환차익 추가 가능'],
+    badges:[{t:'AI 밸류체인',c:'orange'},{t:'데일리 고정',c:''},{t:'환노출',c:''}]
+  },
+  '494300': {
+    bullets:['나스닥100 지수 추종 + OTM 옵션으로 업사이드 일부 보존','매일(데일리) 커버드콜 실행으로 꾸준한 프리미엄 수취','OTM 구조 — 지수 상승 시 일정 수준까지 수익 참여'],
+    badges:[{t:'나스닥100',c:'orange'},{t:'데일리 OTM',c:''},{t:'환노출',c:''}]
+  },
+  '475080': {
+    bullets:['테슬라 주식 + 미국 국채 혼합으로 변동성 완화','채권 비중(약 60%)으로 안정적 분배금 기반 확보','IRP·퇴직연금(DC) 계좌에서도 활용 가능'],
+    badges:[{t:'채권혼합',c:'green'},{t:'IRP/퇴직연금 가능',c:'green'},{t:'낮은 변동성',c:''}]
+  },
+  '491620': {
+    bullets:['미국 기술주 100종목 + 매일 고정 커버드콜 전략','테크 성장성 + 안정적 분배금 동시 추구','환노출형'],
+    badges:[{t:'미국 테크100',c:'orange'},{t:'데일리 고정',c:''}]
+  },
+  '486290': {
+    bullets:['나스닥100 + 타겟 수익률 기반 데일리 커버드콜','업사이드 제한하면서 높은 분배율 유지','환노출형'],
+    badges:[{t:'나스닥100',c:'orange'},{t:'데일리 타겟',c:''}]
+  },
+  '483280': {
+    bullets:['미국 AI 빅테크 10종목 집중 투자','타겟 수준의 프리미엄 수취로 안정적 분배','환노출형'],
+    badges:[{t:'AI 테크TOP10',c:'orange'},{t:'타겟 커버드콜',c:''}]
+  },
+  '480030': {
+    bullets:['S&P500 + 타겟 데일리 커버드콜 (합성ETF)','미국 시장 전체 분산 투자 + 매일 프리미엄','환노출형'],
+    badges:[{t:'S&P500',c:'orange'},{t:'데일리 타겟',c:''}]
+  },
+  '480020': {
+    bullets:['미국 빅테크 7종목(매그니피센트7) + 데일리 커버드콜','집중 투자 구조로 높은 변동성 주의','환노출형'],
+    badges:[{t:'빅테크7+',c:'orange'},{t:'데일리 타겟',c:''}]
+  },
+  '489030': {
+    bullets:['코스피 고배당 종목 + 위클리 커버드콜 전략','국내 배당 + 옵션 프리미엄으로 높은 분배율 추구','국내주식 비과세 혜택'],
+    badges:[{t:'국내 고배당',c:'green'},{t:'위클리 커버드콜',c:''}]
+  },
+  '475720': {
+    bullets:['KOSPI 200 추종 + 위클리 커버드콜','국내 주식 매매차익 및 옵션 프리미엄 비과세'],
+    badges:[{t:'국내주식 비과세',c:'green'},{t:'위클리 커버드콜',c:''}]
+  },
+  '472150': {
+    bullets:['고배당주 선별 + 액티브 커버드콜 전략','배당소득과 옵션 프리미엄의 복합 수익 추구'],
+    badges:[{t:'배당+커버드콜',c:'green'},{t:'액티브 운용',c:''}]
+  },
+  '473330': {
+    bullets:['미국 30년 장기국채 + 커버드콜 전략','금리 하락 시 채권 가격 상승 + 옵션 프리미엄','환노출형'],
+    badges:[{t:'미국 장기채',c:'green'},{t:'환노출',c:''}]
+  },
+  '476550': {
+    bullets:['미국 30년 장기국채 커버드콜 + 환헤지','달러/원 환율 영향 최소화','안정적 분배금 추구'],
+    badges:[{t:'미국 장기채',c:'green'},{t:'환헤지(H)',c:''}]
+  },
+  '0040Y0': {
+    bullets:['팔란티어 주식 + 미국 채권 혼합 + OTM 커버드콜','AI 관련 성장성 + 채권 안정성 결합'],
+    badges:[{t:'팔란티어+채권',c:''},{t:'자산배분형',c:'green'}]
+  },
+  '0040X0': {
+    bullets:['팔란티어 + 미국 국채 혼합 커버드콜','자산배분 구조로 변동성 완충'],
+    badges:[{t:'팔란티어+채권',c:''},{t:'자산배분형',c:'green'}]
+  },
+  '0005A0': {
+    bullets:['S&P500 지수 추종 + OTM 데일리 커버드콜','업사이드 일부 보존하면서 프리미엄 수취','환노출형'],
+    badges:[{t:'S&P500',c:'orange'},{t:'데일리 OTM',c:''}]
+  },
+  '0018C0': {
+    bullets:['고배당주 + 위클리 고정 커버드콜','국내주식 비과세 혜택'],
+    badges:[{t:'국내 고배당',c:'green'},{t:'위클리 고정',c:''}]
+  },
+};
+
+// 기본 설명 (개별 설명 없는 ETF용)
+function getDefaultDesc(name, type) {
+  const isBond = type === '채권';
+  const isAsset = type === '자산배분';
+  const isDomestic = type === '국내주식';
+  if (isDomestic) return { bullets: ['국내 주식 + 커버드콜 전략', '국내 주식 매매차익 & 옵션 프리미엄 비과세'], badges: [{t:'국내주식 비과세',c:'green'}] };
+  if (isBond) return { bullets: ['채권 + 커버드콜 전략', '안정적 분배금 기반 추구'], badges: [{t:'채권형',c:'green'}] };
+  if (isAsset) return { bullets: ['자산배분형 커버드콜 ETF', 'IRP·퇴직연금 계좌 활용 가능'], badges: [{t:'자산배분형',c:'green'}] };
+  return { bullets: ['해외주식 + 커버드콜 전략', '매일 또는 매주 옵션 프리미엄 수취'], badges: [{t:'해외주식',c:'orange'}] };
+}
+
+// ─── 포트폴리오 데이터 ───
+// lastDiv: 직전월 실제 분배금(원/주), taxBase: 주당 과세표준액(원/주, FunETF 확인 필요)
+let etfData = [
+  { code:'489030', name:'PLUS 고배당주위클리커버드콜',               type:'국내주식', price:8785,  divPerShare:147, lastDiv:156, taxBase:0, gijunYmd:'20260225', paymentYmd:'20260227', weight:20 },
+  { code:'475720', name:'RISE 200위클리커버드콜',                     type:'국내주식', price:12250, divPerShare:150, lastDiv:200, taxBase:0, gijunYmd:'20260225', paymentYmd:'20260227', weight:20 },
+  { code:'494300', name:'KODEX 미국나스닥100데일리커버드콜OTM',      type:'해외주식', price:9825,  divPerShare:161, lastDiv:161, taxBase:161, gijunYmd:'20260225', paymentYmd:'20260227', weight:20 },
+  { code:'490590', name:'RISE 미국AI밸류체인데일리고정커버드콜',    type:'해외주식', price:12755, divPerShare:195, lastDiv:152, taxBase:0, gijunYmd:'20260225', paymentYmd:'20260227', weight:10 },
+  { code:'0040Y0', name:'SOL 팔란티어커버드콜OTM채권혼합',          type:'자산배분', price:9320,  divPerShare:176, lastDiv:185, taxBase:0, gijunYmd:'20260225', paymentYmd:'20260227', weight:30 },
+];
+
+const COLORS=['#3b5bdb','#f76707','#2f9e44','#9c36b5','#1098ad','#d6336c','#495057','#e67700','#0c8599','#862e9c'];
+
+// ─── 날짜 헬퍼 ───
+function prevBizDay(ymd) {
+  if (!ymd) return '—';
+  const d = new Date(ymd.slice(0,4)+'-'+ymd.slice(4,6)+'-'+ymd.slice(6,8));
+  d.setDate(d.getDate()-1);
+  if (d.getDay()===0) d.setDate(d.getDate()-2);
+  else if (d.getDay()===6) d.setDate(d.getDate()-1);
+  return (d.getMonth()+1)+'.'+d.getDate();
+}
+function fmtYmd(ymd) { return ymd ? parseInt(ymd.slice(4,6))+'.'+parseInt(ymd.slice(6,8)) : '—'; }
+function makeDateLabel(g,p) {
+  if (!g) return '';
+  return `락일 <span class="red">${prevBizDay(g)}</span> · 기준일 ${fmtYmd(g)} · 지급일 <span>${fmtYmd(p)}</span>`;
+}
+
+// ─── Helpers ───
+function toKorean(n) {
+  if (!n) return '0원';
+  const eok=Math.floor(n/100000000), man=Math.floor((n%100000000)/10000);
+  let s='';
+  if(eok>0) s+=eok+'억 ';
+  if(man>0) s+=man.toLocaleString()+'만 ';
+  const rem=n%10000;
+  if(rem>0) s+=rem.toLocaleString();
+  return s.trim()+'원';
+}
+function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+function getTypeTag(t) {
+  const m={'국내주식':'tag-domestic','해외주식':'tag-global','채권':'tag-bond','자산배분':'tag-asset','원자재':'tag-asset'};
+  return `<span class="tag ${m[t]||'tag-global'}">${t}</span>`;
+}
+
+// ─── Amount ───
+function getTotalAmount(){ return parseInt(document.getElementById('totalAmount').value)||0; }
+function onAmountInput(v){ const a=parseInt(v)||0; document.getElementById('amountSlider').value=Math.min(a,1000000000); document.getElementById('amountKorean').textContent=toKorean(a); updatePresetButtons(a); render(); }
+function onSliderInput(v){ const a=parseInt(v)||0; document.getElementById('totalAmount').value=a; document.getElementById('amountKorean').textContent=toKorean(a); updatePresetButtons(a); render(); }
+function setAmount(v){ document.getElementById('totalAmount').value=v; document.getElementById('amountSlider').value=Math.min(v,1000000000); document.getElementById('amountKorean').textContent=toKorean(v); updatePresetButtons(v); render(); }
+function updatePresetButtons(v){ const p=[30000000,50000000,100000000,200000000,300000000,500000000]; document.querySelectorAll('.preset-btn').forEach((b,i)=>b.classList.toggle('active',p[i]===v)); }
+
+// ─── ETF Table ───
+function buildEtfTable() {
+  const tbody=document.getElementById('etfBody');
+  tbody.innerHTML='';
+  etfData.forEach((etf,i) => {
+    const ar=etf.price>0?((etf.divPerShare*12)/etf.price*100).toFixed(2):'0.00';
+    const dl=makeDateLabel(etf.gijunYmd,etf.paymentYmd);
+    const row=document.createElement('tr');
+    row.innerHTML=`
+      <td style="color:var(--gray-600);font-size:.78rem;">${i+1}</td>
+      <td class="etf-name-cell">
+        <div class="etf-name">${etf.name}</div>
+        <div class="etf-code">${etf.code}</div>
+        ${dl?`<div class="etf-dates">${dl}</div>`:''}
+      </td>
+      <td>${getTypeTag(etf.type)}</td>
+      <td><input class="editable" type="number" value="${etf.price}" min="100" oninput="updateEtf(${i},'price',this.value)"></td>
+      <td><input class="editable" type="number" value="${etf.divPerShare}" min="0" oninput="updateEtf(${i},'divPerShare',this.value)"></td>
+      <td id="rate-${i}" style="color:var(--gray-600);">${ar}%</td>
+      <td><input class="editable weight-input" type="number" value="${etf.weight}" min="0" max="100" oninput="updateEtf(${i},'weight',this.value)"></td>
+      <td class="result-green" id="monthly-${i}">—</td>
+      <td class="result-accent" id="annual-${i}">—</td>
+      <td><button class="btn-del" onclick="deleteEtf(${i})" title="삭제">✕</button></td>`;
+    tbody.appendChild(row);
+  });
+}
+function updateEtf(i,field,val){
+  etfData[i][field]=parseFloat(val)||0;
+  if(field==='price'||field==='divPerShare'){
+    const r=etfData[i].price>0?((etfData[i].divPerShare*12)/etfData[i].price*100).toFixed(2):'0.00';
+    const el=document.getElementById('rate-'+i);
+    if(el) el.textContent=r+'%';
+  }
+  render();
+}
+function deleteEtf(i){ etfData.splice(i,1); buildEtfTable(); render(); }
+
+// ─── Tax Table ───
+function buildTaxTable() {
+  const tbody=document.getElementById('taxBody');
+  tbody.innerHTML='';
+  const total=getTotalAmount();
+  let sumGross=0, sumTax=0, sumNet=0;
+  etfData.forEach((etf,i) => {
+    const investAmt=total*(etf.weight/100);
+    const shares=etf.price>0?investAmt/etf.price:0;
+    const gross=shares*etf.lastDiv;
+    const taxAmt=shares*etf.taxBase*0.154;
+    const net=gross-taxAmt;
+    const optPremium=etf.lastDiv-etf.taxBase;
+    const freePct=etf.lastDiv>0?(optPremium/etf.lastDiv*100):0;
+    sumGross+=gross; sumTax+=taxAmt; sumNet+=net;
+    const barFree=Math.max(0,Math.min(100,freePct)).toFixed(1);
+    const barTax=(100-parseFloat(barFree)).toFixed(1);
+    const row=document.createElement('tr');
+    row.innerHTML=`
+      <td class="etf-name-cell" style="font-size:.8rem;">
+        <div style="font-weight:600;line-height:1.3;">${etf.name}</div>
+        <div style="font-size:.68rem;color:var(--gray-600);">${etf.code}</div>
+      </td>
+      <td><input class="editable" type="number" value="${etf.lastDiv}" min="0" oninput="updateTaxField(${i},'lastDiv',this.value)" title="직전월 분배금(원/주)"></td>
+      <td><input class="editable" type="number" value="${etf.taxBase}" min="0" oninput="updateTaxField(${i},'taxBase',this.value)" title="주당 과세표준액(원/주)"></td>
+      <td class="tax-free-col" id="tax-free-${i}">${fmt(optPremium)}원<div class="pct-bar"><div class="pct-free" style="width:${barFree}%"></div><div class="pct-taxed" style="width:${barTax}%"></div></div></td>
+      <td id="tax-pct-${i}">${freePct.toFixed(0)}%<span style="font-size:.68rem;color:var(--gray-600);margin-left:2px;">비과세</span></td>
+      <td class="result-green" id="tax-gross-${i}">${fmt(gross)}원</td>
+      <td class="tax-col" id="tax-amt-${i}">${fmt(taxAmt)}원</td>
+      <td class="net-col" id="tax-net-${i}">${fmt(net)}원</td>`;
+    tbody.appendChild(row);
+  });
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('tax-total-gross', fmt(sumGross)+'원');
+  el('tax-total-tax',   fmt(sumTax)+'원');
+  el('tax-total-net',   fmt(sumNet)+'원');
+  el('tax-annual-gross',toKorean(Math.round(sumGross*12)));
+  el('tax-annual-tax',  fmt(sumTax*12)+'원');
+  el('tax-annual-net',  toKorean(Math.round(sumNet*12)));
+}
+function updateTaxField(i,field,val){
+  etfData[i][field]=parseFloat(val)||0;
+  // 테이블 재생성 없이 해당 행 계산값만 업데이트 (input 포커스 유지)
+  const etf=etfData[i], total=getTotalAmount();
+  const investAmt=total*(etf.weight/100);
+  const shares=etf.price>0?investAmt/etf.price:0;
+  const gross=shares*etf.lastDiv;
+  const taxAmt=shares*etf.taxBase*0.154;
+  const net=gross-taxAmt;
+  const optPremium=etf.lastDiv-etf.taxBase;
+  const freePct=etf.lastDiv>0?(optPremium/etf.lastDiv*100):0;
+  const barFree=Math.max(0,Math.min(100,freePct)).toFixed(1);
+  const barTax=(100-parseFloat(barFree)).toFixed(1);
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.innerHTML=v;};
+  s('tax-free-'+i, fmt(optPremium)+'원<div class="pct-bar"><div class="pct-free" style="width:'+barFree+'%"></div><div class="pct-taxed" style="width:'+barTax+'%"></div></div>');
+  s('tax-pct-'+i, freePct.toFixed(0)+'%<span style="font-size:.68rem;color:var(--gray-600);margin-left:2px;">비과세</span>');
+  s('tax-gross-'+i, fmt(gross)+'원');
+  s('tax-amt-'+i, fmt(taxAmt)+'원');
+  s('tax-net-'+i, fmt(net)+'원');
+  // 합계 재계산
+  let sumGross=0,sumTax=0,sumNet=0;
+  etfData.forEach(e=>{
+    const inv=total*(e.weight/100), sh=e.price>0?inv/e.price:0;
+    sumGross+=sh*e.lastDiv; sumTax+=sh*e.taxBase*0.154; sumNet+=sh*e.lastDiv-sh*e.taxBase*0.154;
+  });
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('tax-total-gross', fmt(sumGross)+'원');
+  el('tax-total-tax',   fmt(sumTax)+'원');
+  el('tax-total-net',   fmt(sumNet)+'원');
+  el('tax-annual-gross',toKorean(Math.round(sumGross*12)));
+  el('tax-annual-tax',  fmt(sumTax*12)+'원');
+  el('tax-annual-net',  toKorean(Math.round(sumNet*12)));
+}
+
+// ─── Product Summary ───
+function buildProductGrid() {
+  const grid=document.getElementById('productGrid');
+  grid.innerHTML='';
+  etfData.forEach((etf,i) => {
+    const desc=ETF_DESC[etf.code]||getDefaultDesc(etf.name,etf.type);
+    const badges=desc.badges.map(b=>`<span class="product-badge ${b.c}">${b.t}</span>`).join('');
+    const bullets=desc.bullets.map(b=>`<div class="product-bullet">${b}</div>`).join('');
+    const card=document.createElement('div');
+    card.className='product-card';
+    card.innerHTML=`
+      <div class="product-check" style="background:${COLORS[i%COLORS.length]}">✓</div>
+      <div class="product-body">
+        <div class="product-name">${etf.name}</div>
+        <div class="product-type">${etf.type} · ${etf.code}</div>
+        <div class="product-bullets">${bullets}</div>
+        <div class="product-meta">${badges}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ─── Main Render ───
+let barChartInst=null, pieChartInst=null;
+function render() {
+  const total=getTotalAmount();
+  const wTotal=etfData.reduce((s,e)=>s+(e.weight||0),0);
+  const wtEl=document.getElementById('weightTotal');
+  wtEl.textContent=wTotal.toFixed(1)+'%';
+  wtEl.className=Math.abs(wTotal-100)<0.1?'weight-ok':'weight-warn';
+  let sumMonthly=0, sumAnnual=0;
+  const labels=[], mVals=[], wVals=[];
+  etfData.forEach((etf,i) => {
+    const inv=total*(etf.weight/100);
+    const sh=etf.price>0?inv/etf.price:0;
+    const mo=sh*etf.divPerShare, an=mo*12;
+    sumMonthly+=mo; sumAnnual+=an;
+    const mEl=document.getElementById('monthly-'+i);
+    const aEl=document.getElementById('annual-'+i);
+    if(mEl) mEl.textContent=fmt(mo)+'원';
+    if(aEl) aEl.textContent=fmt(an)+'원';
+    labels.push(etf.name.length>14?etf.name.slice(0,13)+'…':etf.name);
+    mVals.push(Math.round(mo)); wVals.push(etf.weight);
+  });
+  document.getElementById('totalMonthlyDisp').textContent=fmt(sumMonthly)+'원';
+  document.getElementById('totalAnnualDisp').textContent=fmt(sumAnnual)+'원';
+  document.getElementById('s-invest').textContent=toKorean(total);
+  document.getElementById('s-invest-sub').textContent=total.toLocaleString()+'원';
+  document.getElementById('s-monthly').textContent=fmt(sumMonthly)+'원';
+  document.getElementById('s-monthly-sub').textContent='= 연 '+toKorean(Math.round(sumAnnual));
+  document.getElementById('s-annual').textContent=toKorean(Math.round(sumAnnual));
+  document.getElementById('s-annual-sub').textContent='= 월 평균 '+fmt(sumMonthly)+'원';
+  const rv=total>0?(sumAnnual/total*100):0;
+  document.getElementById('s-rate').textContent=rv.toFixed(2)+'%';
+  updateBarChart(labels,mVals);
+  updatePieChart(labels,wVals);
+  buildTaxTable();
+  buildProductGrid();
+}
+function updateBarChart(labels,data){
+  if(barChartInst) barChartInst.destroy();
+  barChartInst=new Chart(document.getElementById('barChart').getContext('2d'),{
+    type:'bar', data:{labels,datasets:[{data,backgroundColor:COLORS.slice(0,data.length),borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)+'원'}}},
+      scales:{y:{ticks:{callback:v=>fmt(v)+'원',font:{size:10}},grid:{color:'#f1f3f5'}},x:{ticks:{font:{size:10}}}}}
+  });
+}
+function updatePieChart(labels,data){
+  if(pieChartInst) pieChartInst.destroy();
+  pieChartInst=new Chart(document.getElementById('pieChart').getContext('2d'),{
+    type:'doughnut', data:{labels,datasets:[{data,backgroundColor:COLORS.slice(0,data.length),borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:10}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}},cutout:'60%'}
+  });
+}
+
+// ─── Modal ───
+function openModal(){ document.getElementById('modalOverlay').classList.add('open'); document.getElementById('modalSearch').value=''; renderEtfList(FUNETF_DB); setTimeout(()=>document.getElementById('modalSearch').focus(),100); }
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+function onOverlayClick(e){ if(e.target===document.getElementById('modalOverlay')) closeModal(); }
+function filterEtfList(q){ const f=q.trim().toLowerCase(); const list=f?FUNETF_DB.filter(r=>r[1].toLowerCase().includes(f)||r[0].includes(f)):FUNETF_DB; document.getElementById('searchCount').textContent=list.length+'개 ETF'; renderEtfList(list); }
+function renderEtfList(list){
+  const c=document.getElementById('etfListContainer');
+  if(!list.length){ c.innerHTML='<div class="no-results">검색 결과가 없습니다</div>'; return; }
+  c.innerHTML=list.map(r=>{
+    const [code,name,price,lastDiv,monthlyAvg,annualRate,gijunYmd,paymentYmd,type]=r;
+    const added=etfData.some(e=>e.code===code);
+    return `<div class="etf-list-item" onclick="addEtfFromDB('${code}')">
+      <div class="eli-left">
+        <div class="eli-name">${name} ${added?'<span style="color:#2f9e44;font-size:.7rem;">✓ 추가됨</span>':''}</div>
+        <div class="eli-meta">${code} · ${type} · ${price.toLocaleString()}원</div>
+        <div class="eli-dates">락일 ${prevBizDay(gijunYmd)} · 기준일 ${fmtYmd(gijunYmd)} · 지급일 ${fmtYmd(paymentYmd)} | 직전월 ${lastDiv}원 · 월평균 ${monthlyAvg}원/주</div>
+      </div>
+      <div class="eli-right"><div class="eli-rate">${annualRate.toFixed(2)}%</div><div class="eli-price">연환산</div></div>
+    </div>`;
+  }).join('');
+}
+function addEtfFromDB(code){
+  const r=DB_MAP[code];
+  if(!r) return;
+  const [c,name,price,lastDiv,monthlyAvg,annualRate,gijunYmd,paymentYmd,type,taxBase]=r;
+  etfData.push({code:c,name,type,price,divPerShare:monthlyAvg,lastDiv,taxBase:taxBase||0,gijunYmd,paymentYmd,weight:0});
+  buildEtfTable(); render(); closeModal();
+}
+
+// ─── Init ───
+document.addEventListener('DOMContentLoaded',()=>{ buildEtfTable(); render(); });
+</script>
+</body>
+</html>
