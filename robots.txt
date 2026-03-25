@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /admin-jw-7n4k2p.html
+Disallow: /admin
+Disallow: /admin-
 Sitemap: https://jwfinancial.co.kr/sitemap.xml

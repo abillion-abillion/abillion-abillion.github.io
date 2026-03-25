@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="referrer" content="no-referrer" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>칼럼 관리자 | JW Financial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #5c7a3e;
+      --primary-dark: #3f5b28;
+      --bg: #faf8f4;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #707070;
+      --border: #ddd9d0;
+      --danger: #8f2d2d;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Hahmlet", serif;
+      background:
+        radial-gradient(ellipse at top right, rgba(92, 122, 62, 0.08), transparent 45%),
+        radial-gradient(ellipse at left center, rgba(92, 122, 62, 0.05), transparent 35%),
+        var(--bg);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      letter-spacing: -0.02em;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.04);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .hidden { display: none; }
+
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+      border-radius: 2px;
+      padding: 11px 12px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .actions > button {
+      width: auto;
+      min-width: 96px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+    .danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    .list-item {
+      border-top: 1px solid #ede9e0;
+      padding: 12px 0;
+    }
+
+    .list-title {
+      display: block;
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-right: 6px;
+    }
+
+    .status {
+      margin-bottom: 10px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 16px; }
+      .row { grid-template-columns: 1fr; }
+      .top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>칼럼 관리자</h1>
+
+    <section class="card" id="loginCard">
+      <div class="top">
+        <h2 class="title">로그인</h2>
+      </div>
+      <div class="status">Supabase Auth 관리자 계정으로 로그인하세요.</div>
+      <form id="loginForm">
+        <div class="row">
+          <input type="email" name="email" placeholder="관리자 이메일" required />
+          <input type="password" name="password" placeholder="비밀번호" required />
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">로그인</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card hidden" id="appCard">
+      <div class="top">
+        <div>
+          <h2 class="title">칼럼 등록</h2>
+          <div id="me" class="muted"></div>
+        </div>
+        <div class="actions">
+          <button type="button" id="refreshBtn">새로고침</button>
+          <button type="button" id="logoutBtn">로그아웃</button>
+        </div>
+      </div>
+      <div id="formStatus" class="status"></div>
+      <form id="postForm">
+        <div class="row">
+          <select name="section">
+            <option value="blog">블로그 칼럼</option>
+            <option value="media">언론사 칼럼</option>
+          </select>
+          <select name="tag">
+            <option value="투자">투자</option>
+            <option value="절세">절세</option>
+            <option value="연금">연금</option>
+            <option value="부동산">부동산</option>
+            <option value="금융상품">금융상품</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <input type="text" name="title" placeholder="제목" required />
+        <textarea name="excerpt" placeholder="한줄 요약"></textarea>
+        <input type="url" name="link" placeholder="링크 URL" required />
+        <div class="row">
+          <input type="text" name="date_text" placeholder="예: 2026.03" />
+          <input type="url" name="image_url" placeholder="이미지 URL (선택)" />
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">저장</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card hidden" id="listCard">
+      <div class="top">
+        <h2 class="title">등록된 칼럼</h2>
+      </div>
+      <div id="listStatus" class="status"></div>
+      <div id="list"></div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const db = window.db;
+    const loginCard = document.getElementById("loginCard");
+    const appCard = document.getElementById("appCard");
+    const listCard = document.getElementById("listCard");
+    const me = document.getElementById("me");
+    const list = document.getElementById("list");
+    const formStatus = document.getElementById("formStatus");
+    const listStatus = document.getElementById("listStatus");
+
+    function esc(v) {
+      return String(v || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function setStatus(el, msg) {
+      el.textContent = msg || "";
+    }
+
+    function toMonthLabel(v) {
+      if (v && v.trim()) return v.trim();
+      return new Date().toISOString().slice(0, 7).replace("-", ".");
+    }
+
+    async function boot() {
+      if (!db) {
+        alert("supabase-config.js에 SUPABASE_URL, SUPABASE_ANON_KEY를 입력하세요.");
+        return;
+      }
+
+      const { data: sessionData } = await db.auth.getSession();
+      const loggedIn = Boolean(sessionData.session);
+      loginCard.classList.toggle("hidden", loggedIn);
+      appCard.classList.toggle("hidden", !loggedIn);
+      listCard.classList.toggle("hidden", !loggedIn);
+
+      if (!loggedIn) return;
+
+      const { data: userData } = await db.auth.getUser();
+      me.textContent = userData.user ? `로그인 계정: ${userData.user.email}` : "";
+      await loadPosts();
+    }
+
+    async function loadPosts() {
+      setStatus(listStatus, "목록을 불러오는 중...");
+      const { data, error } = await db
+        .from("columns")
+        .select("id, section, title, excerpt, link, tag, date_text, published, created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        setStatus(listStatus, "불러오기 실패: " + error.message);
+        return;
+      }
+
+      if (!data.length) {
+        list.innerHTML = '<div class="muted">등록된 칼럼이 없습니다.</div>';
+        setStatus(listStatus, "");
+        return;
+      }
+
+      list.innerHTML = data.map((row) => `
+        <div class="list-item">
+          <a class="list-title" href="${esc(row.link)}" target="_blank" rel="noopener">${esc(row.title)}</a>
+          <div class="muted">
+            <span class="pill">${esc(row.section)}</span>
+            <span class="pill">${esc(row.tag)}</span>
+            <span class="pill">${esc(row.date_text)}</span>
+            <span class="pill">${row.published ? "공개" : "비공개"}</span>
+          </div>
+          <div class="actions" style="margin-top:8px;">
+            <button type="button" class="danger" data-del-id="${row.id}">삭제</button>
+          </div>
+        </div>
+      `).join("");
+      setStatus(listStatus, `총 ${data.length}건`);
+    }
+
+    async function removePost(id) {
+      if (!confirm("이 칼럼을 삭제하시겠습니까?")) return;
+      const { error } = await db.from("columns").delete().eq("id", id);
+      if (error) {
+        alert("삭제 실패: " + error.message);
+        return;
+      }
+      await loadPosts();
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const { error } = await db.auth.signInWithPassword({
+        email: form.get("email"),
+        password: form.get("password"),
+      });
+
+      if (error) {
+        alert("로그인 실패: " + error.message);
+        return;
+      }
+
+      event.currentTarget.reset();
+      await boot();
+    });
+
+    document.getElementById("postForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const payload = {
+        section: form.get("section"),
+        title: String(form.get("title") || "").trim(),
+        excerpt: String(form.get("excerpt") || "").trim(),
+        link: String(form.get("link") || "").trim(),
+        tag: String(form.get("tag") || "").trim() || "기타",
+        date_text: toMonthLabel(String(form.get("date_text") || "")),
+        image_url: String(form.get("image_url") || "").trim(),
+        published: true,
+      };
+
+      if (!payload.title || !payload.link) {
+        alert("제목과 링크는 필수입니다.");
+        return;
+      }
+
+      setStatus(formStatus, "저장 중...");
+      const { error } = await db.from("columns").insert(payload);
+      if (error) {
+        setStatus(formStatus, "저장 실패: " + error.message);
+        return;
+      }
+
+      setStatus(formStatus, "저장 완료");
+      event.currentTarget.reset();
+      await loadPosts();
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await db.auth.signOut();
+      await boot();
+    });
+
+    document.getElementById("refreshBtn").addEventListener("click", loadPosts);
+
+    document.getElementById("list").addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-del-id]");
+      if (!button) return;
+      await removePost(button.getAttribute("data-del-id"));
+    });
+
+    boot();
+  </script>
+</body>
+</html>
