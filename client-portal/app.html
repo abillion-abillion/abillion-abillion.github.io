@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>고객 자산관리 포털</title>
+  <link rel="stylesheet" href="./portal.css">
+</head>
+<body class="app-body">
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">JW Client Portal</p>
+      <h1>고객 자산관리</h1>
+    </div>
+    <div class="header-actions">
+      <p id="session-meta" class="session-meta"></p>
+      <button id="logout-button" class="ghost-button" type="button">로그아웃</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="admin-tools" class="panel hidden">
+      <h2>관리자 도구</h2>
+      <div class="admin-grid">
+        <form id="excel-upload-form" class="card-form">
+          <h3>재무제표 업로드</h3>
+          <label class="field">
+            <span>스냅샷 라벨</span>
+            <select id="snapshot-label">
+              <option value="컨설팅 전">컨설팅 전</option>
+              <option value="컨설팅 후">컨설팅 후</option>
+              <option value="1차 점검">1차 점검</option>
+              <option value="2차 점검">2차 점검</option>
+              <option value="3차 점검">3차 점검</option>
+              <option value="분기 점검">분기 점검</option>
+              <option value="연간 점검">연간 점검</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>엑셀 파일</span>
+            <input id="excel-file" type="file" accept=".xlsx,.xls" required>
+          </label>
+          <button type="submit">업로드 저장</button>
+          <p id="excel-upload-message" class="message"></p>
+        </form>
+
+        <form id="portfolio-upload-form" class="card-form">
+          <h3>포트폴리오 파일 업로드</h3>
+          <label class="field">
+            <span>대상 고객</span>
+            <select id="portfolio-customer-select" required></select>
+          </label>
+          <label class="field">
+            <span>연결 스냅샷</span>
+            <select id="portfolio-snapshot-select">
+              <option value="">연결 안함</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>메모</span>
+            <input id="portfolio-note" type="text" maxlength="200" placeholder="예: 2026년 3월 리밸런싱 보고서">
+          </label>
+          <label class="field">
+            <span>파일</span>
+            <input id="portfolio-file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif" required>
+          </label>
+          <button type="submit">파일 업로드</button>
+          <p id="portfolio-upload-message" class="message"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>고객 검색</h2>
+        <form id="customer-search-form" class="search-form">
+          <input id="customer-search-input" type="search" placeholder="이름 또는 라벨 검색">
+          <button type="submit">검색</button>
+        </form>
+      </div>
+      <div id="customer-list" class="customer-list"></div>
+    </section>
+
+    <section id="customer-detail" class="panel hidden">
+      <div class="panel-head">
+        <h2 id="customer-title">고객 상세</h2>
+      </div>
+
+      <div id="summary-cards" class="summary-grid"></div>
+
+      <div class="chart-card">
+        <canvas id="trend-chart" height="120"></canvas>
+      </div>
+
+      <div class="insight-grid">
+        <article class="insight-card good">
+          <h3>칭찬 포인트</h3>
+          <ul id="praise-list"></ul>
+        </article>
+        <article class="insight-card warn">
+          <h3>개선 포인트</h3>
+          <ul id="improve-list"></ul>
+        </article>
+      </div>
+
+      <div class="insight-grid">
+        <article class="insight-card swot-s">
+          <h3>Strength</h3>
+          <ul id="swot-s"></ul>
+        </article>
+        <article class="insight-card swot-w">
+          <h3>Weakness</h3>
+          <ul id="swot-w"></ul>
+        </article>
+        <article class="insight-card swot-o">
+          <h3>Opportunity</h3>
+          <ul id="swot-o"></ul>
+        </article>
+        <article class="insight-card swot-t">
+          <h3>Threat</h3>
+          <ul id="swot-t"></ul>
+        </article>
+      </div>
+
+      <article class="table-wrap">
+        <h3>스냅샷 로그</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>일시</th>
+              <th>라벨</th>
+              <th>월소득</th>
+              <th>월지출</th>
+              <th>총자산</th>
+              <th>부채</th>
+              <th>순자산</th>
+              <th>수익률</th>
+            </tr>
+          </thead>
+          <tbody id="snapshot-table-body"></tbody>
+        </table>
+      </article>
+
+      <article class="table-wrap">
+        <h3>포트폴리오 파일</h3>
+        <div id="portfolio-list" class="portfolio-list"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./supabase-portal.js"></script>
+  <script src="./parser.js"></script>
+  <script src="./swot.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

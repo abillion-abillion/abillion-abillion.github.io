@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>고객 포털 로그인</title>
+  <link rel="stylesheet" href="./portal.css">
+</head>
+<body class="portal-bg">
+  <main class="login-shell">
+    <section class="login-card">
+      <p class="eyebrow">JW Client Portal</p>
+      <h1>고객 자산관리 포털</h1>
+      <p class="help-text">아이디는 고객 라벨 또는 등록된 이메일을 입력하세요.</p>
+
+      <form id="login-form" class="stack">
+        <label class="field">
+          <span>아이디</span>
+          <input id="login-id" type="text" autocomplete="username" placeholder="예: 92_남_홍길동_26.03" required>
+        </label>
+
+        <label class="field">
+          <span>비밀번호</span>
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="비밀번호" required>
+        </label>
+
+        <button type="submit" id="login-submit">로그인</button>
+      </form>
+
+      <p id="login-message" class="message" aria-live="polite"></p>
+      <p class="caption">개인정보 보호를 위해 로그인 후에만 데이터가 표시됩니다.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./supabase-portal.js"></script>
+  <script src="./login.js"></script>
+</body>
+</html>
