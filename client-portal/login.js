@@ -157,7 +157,16 @@
         return;
       }
 
-      const { error } = await db.auth.signUp({ email, password });
+      const { error } = await db.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+            display_name: name,
+          },
+        },
+      });
       if (error) {
         setMessage(signupMessage, error.message || "회원가입에 실패했습니다.", true);
         return;

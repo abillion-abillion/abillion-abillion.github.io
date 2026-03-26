@@ -75,8 +75,21 @@
           <h3>미승인 고객 목록</h3>
         </div>
         <p class="help-text pending-help">회원가입 후 관리자 승인 대기 중인 계정입니다.</p>
-        <div id="pending-user-list" class="pending-user-list"></div>
-        <p id="pending-user-message" class="message"></p>
+        <details id="pending-toggle" class="customer-approval-toggle" open>
+          <summary>미승인 고객 목록</summary>
+          <div class="approval-panel">
+            <p class="help-text pending-help">등록일시와 고객명을 확인한 뒤 승인 가능합니다.</p>
+            <div id="pending-user-list" class="pending-user-list"></div>
+            <p id="pending-user-message" class="message"></p>
+          </div>
+        </details>
+        <details id="approved-toggle" class="customer-approval-toggle">
+          <summary>승인 고객 목록</summary>
+          <div class="approval-panel">
+            <div id="approved-user-list" class="pending-user-list"></div>
+            <p id="approved-user-message" class="message"></p>
+          </div>
+        </details>
       </article>
     </section>
 

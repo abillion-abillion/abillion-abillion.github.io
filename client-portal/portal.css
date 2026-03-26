@@ -228,6 +228,46 @@ button:hover {
   background: var(--surface-soft);
 }
 
+.customer-approval-toggle {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 8px 10px;
+}
+
+.customer-approval-toggle + .customer-approval-toggle {
+  margin-top: 10px;
+}
+
+.customer-approval-toggle summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customer-approval-toggle summary::after {
+  content: "▸";
+  font-size: 14px;
+  transition: transform 0.15s ease;
+}
+
+.customer-approval-toggle[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.customer-approval-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.approval-panel {
+  margin-top: 10px;
+}
+
 .pending-head {
   margin-bottom: 8px;
 }

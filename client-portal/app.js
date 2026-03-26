@@ -8,6 +8,7 @@
     activeCustomerId: null,
     customers: [],
     pendingUsers: [],
+    approvedUsers: [],
     snapshots: [],
     trendChart: null,
   };
@@ -43,6 +44,8 @@
     portfolioMessage: document.getElementById("portfolio-upload-message"),
     pendingUserList: document.getElementById("pending-user-list"),
     pendingUserMessage: document.getElementById("pending-user-message"),
+    approvedUserList: document.getElementById("approved-user-list"),
+    approvedUserMessage: document.getElementById("approved-user-message"),
   };
 
   function setMessage(target, text, isError) {
@@ -59,6 +62,10 @@
   function fmtDate(value) {
     if (!value) return "-";
     return String(value).replace("T", " ").slice(0, 16);
+  }
+
+  function getUserDisplayName(user) {
+    return String(user?.display_name || "").trim() || user?.auth_user_id || "미입력";
   }
 
   function sanitizeFileName(name) {
@@ -232,7 +239,7 @@
         (user) => `
           <article class="pending-user-item">
             <div class="pending-user-meta">
-              <strong>${user.auth_user_id}</strong>
+              <strong>${getUserDisplayName(user)}</strong>
               <small>가입일: ${fmtDate(user.created_at)}</small>
               <small>${user.customer_id ? `고객 ID: ${user.customer_id}` : "고객 정보 미연결"}</small>
             </div>
@@ -248,7 +255,7 @@
 
     const { data, error } = await db
       .from("portal_users")
-      .select("id, auth_user_id, customer_id, created_at")
+      .select("id, auth_user_id, customer_id, display_name, created_at")
       .eq("role", "customer")
       .eq("is_active", false)
       .order("created_at", { ascending: false });
@@ -263,6 +270,51 @@
     state.pendingUsers = data || [];
     renderPendingUsers();
     setMessage(elements.pendingUserMessage, "", false);
+  }
+
+  function renderApprovedUsers() {
+    if (state.profile.role !== "admin" || !elements.approvedUserList) return;
+
+    if (!state.approvedUsers.length) {
+      elements.approvedUserList.innerHTML = `<p class="message">승인 고객 목록이 비어 있습니다.</p>`;
+      return;
+    }
+
+    elements.approvedUserList.innerHTML = state.approvedUsers
+      .map(
+        (user) => `
+          <article class="pending-user-item">
+            <div class="pending-user-meta">
+              <strong>${getUserDisplayName(user)}</strong>
+              <small>승인일시: ${fmtDate(user.created_at)}</small>
+              <small>${user.customer_id ? `고객 ID: ${user.customer_id}` : "고객 매핑 없음"}</small>
+            </div>
+          </article>
+        `,
+      )
+      .join("");
+  }
+
+  async function loadApprovedCustomers() {
+    if (state.profile.role !== "admin" || !elements.approvedUserList) return;
+
+    const { data, error } = await db
+      .from("portal_users")
+      .select("id, auth_user_id, customer_id, display_name, created_at")
+      .eq("role", "customer")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      state.approvedUsers = [];
+      renderApprovedUsers();
+      setMessage(elements.approvedUserMessage, `승인 고객 목록 조회 실패: ${error.message}`, true);
+      return;
+    }
+
+    state.approvedUsers = data || [];
+    renderApprovedUsers();
+    setMessage(elements.approvedUserMessage, "", false);
   }
 
   async function activatePendingCustomer(userId, button) {
@@ -290,7 +342,7 @@
     }
 
     setMessage(elements.pendingUserMessage, "고객 계정을 활성화했습니다.", false);
-    await loadPendingCustomers();
+    await Promise.all([loadPendingCustomers(), loadApprovedCustomers()]);
   }
 
   async function loadCustomerDetail(customerId) {
@@ -679,7 +731,7 @@
     if (profile.role === "admin") {
       elements.adminTools.classList.remove("hidden");
       bindEvents();
-      await Promise.all([loadCustomers(""), loadPendingCustomers()]);
+      await Promise.all([loadCustomers(""), loadPendingCustomers(), loadApprovedCustomers()]);
       if (state.customers[0]) {
         await loadCustomerDetail(state.customers[0].id);
       }
