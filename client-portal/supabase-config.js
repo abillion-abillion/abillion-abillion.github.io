@@ -1,2 +1,2 @@
-const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://vmfookihftmxxhvtpzpn.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtZm9va2loZnRteHhodnRwenBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MDc4NjMsImV4cCI6MjA4OTk4Mzg2M30.lH4U6s4f8tmHreLkXNpP-5VDR_oFdt24Xv0DGDo06nQ";
