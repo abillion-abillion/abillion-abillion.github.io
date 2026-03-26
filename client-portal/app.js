@@ -7,6 +7,7 @@
     profile: null,
     activeCustomerId: null,
     customers: [],
+    pendingUsers: [],
     snapshots: [],
     trendChart: null,
   };
@@ -40,6 +41,8 @@
     portfolioCustomerSelect: document.getElementById("portfolio-customer-select"),
     portfolioSnapshotSelect: document.getElementById("portfolio-snapshot-select"),
     portfolioMessage: document.getElementById("portfolio-upload-message"),
+    pendingUserList: document.getElementById("pending-user-list"),
+    pendingUserMessage: document.getElementById("pending-user-message"),
   };
 
   function setMessage(target, text, isError) {
@@ -135,6 +138,16 @@
       event.preventDefault();
       await handlePortfolioUpload();
     });
+
+    elements.pendingUserList?.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-pending-user-id]");
+      if (!button) return;
+
+      const userId = Number(button.dataset.pendingUserId);
+      if (!userId) return;
+
+      await activatePendingCustomer(userId, button);
+    });
   }
 
   async function loadCustomers(searchText) {
@@ -204,6 +217,80 @@
     if (state.activeCustomerId) {
       elements.portfolioCustomerSelect.value = String(state.activeCustomerId);
     }
+  }
+
+  function renderPendingUsers() {
+    if (state.profile.role !== "admin" || !elements.pendingUserList) return;
+
+    if (!state.pendingUsers.length) {
+      elements.pendingUserList.innerHTML = `<p class="message">미승인 고객이 없습니다.</p>`;
+      return;
+    }
+
+    elements.pendingUserList.innerHTML = state.pendingUsers
+      .map(
+        (user) => `
+          <article class="pending-user-item">
+            <div class="pending-user-meta">
+              <strong>${user.auth_user_id}</strong>
+              <small>가입일: ${fmtDate(user.created_at)}</small>
+              <small>${user.customer_id ? `고객 ID: ${user.customer_id}` : "고객 정보 미연결"}</small>
+            </div>
+            <button type="button" class="ghost-button pending-activate-button" data-pending-user-id="${user.id}">활성화</button>
+          </article>
+        `,
+      )
+      .join("");
+  }
+
+  async function loadPendingCustomers() {
+    if (state.profile.role !== "admin" || !elements.pendingUserList) return;
+
+    const { data, error } = await db
+      .from("portal_users")
+      .select("id, auth_user_id, customer_id, created_at")
+      .eq("role", "customer")
+      .eq("is_active", false)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      state.pendingUsers = [];
+      renderPendingUsers();
+      setMessage(elements.pendingUserMessage, `미승인 고객 조회 실패: ${error.message}`, true);
+      return;
+    }
+
+    state.pendingUsers = data || [];
+    renderPendingUsers();
+    setMessage(elements.pendingUserMessage, "", false);
+  }
+
+  async function activatePendingCustomer(userId, button) {
+    if (state.profile.role !== "admin") return;
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "처리 중...";
+    }
+
+    const { error } = await db
+      .from("portal_users")
+      .update({ is_active: true })
+      .eq("id", userId)
+      .eq("role", "customer")
+      .eq("is_active", false);
+
+    if (error) {
+      setMessage(elements.pendingUserMessage, `활성화 실패: ${error.message}`, true);
+      if (button?.isConnected) {
+        button.disabled = false;
+        button.textContent = "활성화";
+      }
+      return;
+    }
+
+    setMessage(elements.pendingUserMessage, "고객 계정을 활성화했습니다.", false);
+    await loadPendingCustomers();
   }
 
   async function loadCustomerDetail(customerId) {
@@ -592,7 +679,7 @@
     if (profile.role === "admin") {
       elements.adminTools.classList.remove("hidden");
       bindEvents();
-      await loadCustomers("");
+      await Promise.all([loadCustomers(""), loadPendingCustomers()]);
       if (state.customers[0]) {
         await loadCustomerDetail(state.customers[0].id);
       }

@@ -12,23 +12,56 @@
     <section class="login-card">
       <p class="eyebrow">JW Client Portal</p>
       <h1>고객 자산관리 포털</h1>
-      <p class="help-text">아이디는 고객 라벨 또는 등록된 이메일을 입력하세요.</p>
+      <p class="help-text">고객 라벨 또는 등록된 이메일로 로그인할 수 있습니다.</p>
 
-      <form id="login-form" class="stack">
-        <label class="field">
-          <span>아이디</span>
-          <input id="login-id" type="text" autocomplete="username" placeholder="예: 92_남_홍길동_26.03" required>
-        </label>
+      <div id="login-view">
+        <form id="login-form" class="stack">
+          <label class="field">
+            <span>아이디 또는 이메일</span>
+            <input id="login-id" type="text" autocomplete="username" placeholder="예: 92_기혼남_홍길동_26.03" required>
+          </label>
 
-        <label class="field">
-          <span>비밀번호</span>
-          <input id="login-password" type="password" autocomplete="current-password" placeholder="비밀번호" required>
-        </label>
+          <label class="field">
+            <span>비밀번호</span>
+            <input id="login-password" type="password" autocomplete="current-password" placeholder="비밀번호" required>
+          </label>
 
-        <button type="submit" id="login-submit">로그인</button>
-      </form>
+          <button type="submit" id="login-submit">로그인</button>
+        </form>
 
-      <p id="login-message" class="message" aria-live="polite"></p>
+        <p id="login-message" class="message" aria-live="polite"></p>
+        <button type="button" id="show-signup" class="ghost-button auth-toggle-button">고객 등록</button>
+      </div>
+
+      <div id="signup-view" class="hidden">
+        <form id="signup-form" class="stack">
+          <label class="field">
+            <span>이름</span>
+            <input id="signup-name" type="text" autocomplete="name" placeholder="이름" required>
+          </label>
+
+          <label class="field">
+            <span>이메일</span>
+            <input id="signup-email" type="email" autocomplete="email" placeholder="name@example.com" required>
+          </label>
+
+          <label class="field">
+            <span>비밀번호</span>
+            <input id="signup-password" type="password" autocomplete="new-password" placeholder="비밀번호" required>
+          </label>
+
+          <label class="field">
+            <span>비밀번호 확인</span>
+            <input id="signup-password-confirm" type="password" autocomplete="new-password" placeholder="비밀번호 확인" required>
+          </label>
+
+          <button type="submit" id="signup-submit">가입하기</button>
+        </form>
+
+        <p id="signup-message" class="message" aria-live="polite"></p>
+        <button type="button" id="show-login" class="ghost-button auth-toggle-button">로그인으로 돌아가기</button>
+      </div>
+
       <p class="caption">개인정보 보호를 위해 로그인 후에만 데이터가 표시됩니다.</p>
     </section>
   </main>

@@ -41,7 +41,7 @@
             <span>엑셀 파일</span>
             <input id="excel-file" type="file" accept=".xlsx,.xls" required>
           </label>
-          <button type="submit">업로드 저장</button>
+          <button type="submit">업로드 시작</button>
           <p id="excel-upload-message" class="message"></p>
         </form>
 
@@ -69,6 +69,15 @@
           <p id="portfolio-upload-message" class="message"></p>
         </form>
       </div>
+
+      <article class="pending-approval-wrap">
+        <div class="panel-head pending-head">
+          <h3>미승인 고객 목록</h3>
+        </div>
+        <p class="help-text pending-help">회원가입 후 관리자 승인 대기 중인 계정입니다.</p>
+        <div id="pending-user-list" class="pending-user-list"></div>
+        <p id="pending-user-message" class="message"></p>
+      </article>
     </section>
 
     <section class="panel">
@@ -130,10 +139,10 @@
             <tr>
               <th>일시</th>
               <th>라벨</th>
-              <th>월소득</th>
-              <th>월지출</th>
+              <th>총소득</th>
+              <th>총지출</th>
               <th>총자산</th>
-              <th>부채</th>
+              <th>총부채</th>
               <th>순자산</th>
               <th>수익률</th>
             </tr>
