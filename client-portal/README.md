@@ -15,6 +15,11 @@
 2. Authentication에서 관리자 계정 1개 생성
 3. `portal_users`에 관리자 연결
 
+기존 운영 DB에 점진 반영할 경우(이미 기본 스키마를 실행한 경우) 아래 migration 파일을 추가 실행합니다.
+
+- `supabase-add-portal-execution-tasks.sql`
+- `supabase-add-portal-strategy-configs.sql`
+
 ```sql
 insert into public.portal_users (auth_user_id, role, is_active)
 values ('<ADMIN_AUTH_USER_UUID>', 'admin', true);
@@ -129,6 +134,9 @@ SQL 실행 시 private bucket `portfolio-files`가 같이 생성됩니다.
 - 라벨 규칙: `년생_성별_이름_첫업로드년월`
 - 추세 그래프 + SWOT + 칭찬/개선 포인트
 - 포트폴리오 파일 업로드/조회 (Supabase Storage private bucket)
+- 사고 -> 설계 -> 자산관리 -> 실행 단계 진행률 보드
+- 실행 체크리스트 완료 상태 저장 (`portal_execution_tasks`)
+- 고객별 전략 프리셋/목표 비중 저장 (`portal_customer_strategy_configs`)
 
 ## 10. 개인정보/보안
 

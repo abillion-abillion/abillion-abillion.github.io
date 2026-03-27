@@ -9,9 +9,9 @@
 </head>
 <body class="app-body">
   <header class="app-header">
-    <div>
+    <div class="brand-block">
       <p class="eyebrow">JW Client Portal</p>
-      <h1>고객 자산관리</h1>
+      <h1>고객 자산관리 대시보드</h1>
     </div>
     <div class="header-actions">
       <p id="session-meta" class="session-meta"></p>
@@ -19,153 +19,338 @@
     </div>
   </header>
 
-  <main class="app-shell">
-    <section id="admin-tools" class="panel hidden">
-      <h2>관리자 도구</h2>
-      <div class="admin-grid">
-        <form id="excel-upload-form" class="card-form">
-          <h3>재무제표 업로드</h3>
-          <label class="field">
-            <span>스냅샷 라벨</span>
-            <select id="snapshot-label">
-              <option value="컨설팅 전">컨설팅 전</option>
-              <option value="컨설팅 후">컨설팅 후</option>
-              <option value="1차 점검">1차 점검</option>
-              <option value="2차 점검">2차 점검</option>
-              <option value="3차 점검">3차 점검</option>
-              <option value="분기 점검">분기 점검</option>
-              <option value="연간 점검">연간 점검</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>엑셀 파일</span>
-            <input id="excel-file" type="file" accept=".xlsx,.xls" required>
-          </label>
-          <button type="submit">업로드 시작</button>
-          <p id="excel-upload-message" class="message"></p>
-        </form>
-
-        <form id="portfolio-upload-form" class="card-form">
-          <h3>포트폴리오 파일 업로드</h3>
-          <label class="field">
-            <span>대상 고객</span>
-            <select id="portfolio-customer-select" required></select>
-          </label>
-          <label class="field">
-            <span>연결 스냅샷</span>
-            <select id="portfolio-snapshot-select">
-              <option value="">연결 안함</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>메모</span>
-            <input id="portfolio-note" type="text" maxlength="200" placeholder="예: 2026년 3월 리밸런싱 보고서">
-          </label>
-          <label class="field">
-            <span>파일</span>
-            <input id="portfolio-file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif" required>
-          </label>
-          <button type="submit">파일 업로드</button>
-          <p id="portfolio-upload-message" class="message"></p>
-        </form>
-      </div>
-
-      <article class="pending-approval-wrap">
-        <div class="panel-head pending-head">
-          <h3>미승인 고객 목록</h3>
+  <main class="dashboard-shell">
+    <aside class="sidebar-column">
+      <section id="admin-tools" class="dashboard-card admin-card hidden">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Control Desk</p>
+            <h2>관리 도구</h2>
+          </div>
+          <p class="panel-note">업로드, 승인, 실행 자료 관리</p>
         </div>
-        <p class="help-text pending-help">회원가입 후 관리자 승인 대기 중인 계정입니다.</p>
-        <details id="pending-toggle" class="customer-approval-toggle" open>
-          <summary>미승인 고객 목록</summary>
-          <div class="approval-panel">
-            <p class="help-text pending-help">등록일시와 고객명을 확인한 뒤 승인 가능합니다.</p>
-            <div id="pending-user-list" class="pending-user-list"></div>
-            <p id="pending-user-message" class="message"></p>
-          </div>
-        </details>
-        <details id="approved-toggle" class="customer-approval-toggle">
-          <summary>승인 고객 목록</summary>
-          <div class="approval-panel">
-            <div id="approved-user-list" class="pending-user-list"></div>
-            <p id="approved-user-message" class="message"></p>
-          </div>
-        </details>
-      </article>
-    </section>
 
-    <section class="panel">
-      <div class="panel-head">
-        <h2>고객 검색</h2>
+        <div class="admin-grid">
+          <form id="excel-upload-form" class="card-form">
+            <h3>재무제표 업로드</h3>
+            <label class="field">
+              <span>스냅샷 라벨</span>
+              <select id="snapshot-label">
+                <option value="컨설팅 전">컨설팅 전</option>
+                <option value="컨설팅 후">컨설팅 후</option>
+                <option value="1차 점검">1차 점검</option>
+                <option value="2차 점검">2차 점검</option>
+                <option value="3차 점검">3차 점검</option>
+                <option value="분기 점검">분기 점검</option>
+                <option value="연간 점검">연간 점검</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>엑셀 파일</span>
+              <input id="excel-file" type="file" accept=".xlsx,.xls" required>
+            </label>
+            <button type="submit">업로드 시작</button>
+            <p id="excel-upload-message" class="message"></p>
+          </form>
+
+          <form id="portfolio-upload-form" class="card-form">
+            <h3>포트폴리오 파일 업로드</h3>
+            <label class="field">
+              <span>대상 고객</span>
+              <select id="portfolio-customer-select" required></select>
+            </label>
+            <label class="field">
+              <span>연결 스냅샷</span>
+              <select id="portfolio-snapshot-select">
+                <option value="">연결 안함</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>메모</span>
+              <input id="portfolio-note" type="text" maxlength="200" placeholder="예: 2026년 3월 리밸런싱 보고서">
+            </label>
+            <label class="field">
+              <span>파일</span>
+              <input id="portfolio-file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif" required>
+            </label>
+            <button type="submit">파일 업로드</button>
+            <p id="portfolio-upload-message" class="message"></p>
+          </form>
+        </div>
+
+        <article class="approval-board">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Account Queue</p>
+              <h3>고객 승인 관리</h3>
+            </div>
+          </div>
+          <p class="help-text pending-help">회원가입 후 승인 대기 중인 고객을 확인하고 즉시 활성화합니다.</p>
+          <details id="pending-toggle" class="customer-approval-toggle" open>
+            <summary>미승인 고객 목록</summary>
+            <div class="approval-panel">
+              <div id="pending-user-list" class="pending-user-list"></div>
+              <p id="pending-user-message" class="message"></p>
+            </div>
+          </details>
+          <details id="approved-toggle" class="customer-approval-toggle">
+            <summary>승인 고객 목록</summary>
+            <div class="approval-panel">
+              <div id="approved-user-list" class="pending-user-list"></div>
+              <p id="approved-user-message" class="message"></p>
+            </div>
+          </details>
+        </article>
+      </section>
+
+      <section class="dashboard-card directory-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Client Index</p>
+            <h2>고객 목록</h2>
+          </div>
+        </div>
         <form id="customer-search-form" class="search-form">
           <input id="customer-search-input" type="search" placeholder="이름 또는 라벨 검색">
           <button type="submit">검색</button>
         </form>
-      </div>
-      <div id="customer-list" class="customer-list"></div>
-    </section>
+        <div id="customer-list" class="customer-list"></div>
+      </section>
+    </aside>
 
-    <section id="customer-detail" class="panel hidden">
-      <div class="panel-head">
-        <h2 id="customer-title">고객 상세</h2>
-      </div>
+    <section id="customer-detail" class="content-column hidden">
+      <section class="hero-card">
+        <div class="hero-main">
+          <p class="section-kicker">Portfolio Command Center</p>
+          <div class="hero-topline">
+            <div>
+              <h2 id="customer-title">고객 상세</h2>
+              <p id="customer-subtitle" class="hero-subtitle"></p>
+            </div>
+            <div class="hero-badges">
+              <span class="hero-badge">활성 고객</span>
+              <span id="customer-last-updated" class="hero-badge subtle"></span>
+            </div>
+          </div>
+          <div id="customer-meta" class="meta-chips"></div>
+        </div>
 
-      <div id="summary-cards" class="summary-grid"></div>
+        <aside class="score-card">
+          <p class="score-label">재무 건전성</p>
+          <div id="health-score-ring" class="score-ring" style="--score: 0%;">
+            <span id="health-score-value">0</span>
+          </div>
+          <p id="health-score-caption" class="score-caption">스냅샷이 등록되면 점수를 계산합니다.</p>
+        </aside>
+      </section>
 
-      <div class="chart-card">
-        <canvas id="trend-chart" height="120"></canvas>
-      </div>
+      <section id="summary-cards" class="summary-grid"></section>
 
-      <div class="insight-grid">
-        <article class="insight-card good">
-          <h3>칭찬 포인트</h3>
-          <ul id="praise-list"></ul>
+      <section class="strategy-grid">
+        <article class="dashboard-card diagnosis-panel">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Thinking Brief</p>
+              <h3>고객 진단</h3>
+            </div>
+            <p class="panel-note">상태 해석과 우선순위</p>
+          </div>
+          <div id="diagnostic-highlights" class="diagnostic-highlights"></div>
+          <div class="priority-block">
+            <h4>지금 먼저 볼 포인트</h4>
+            <div id="priority-list" class="priority-list"></div>
+          </div>
         </article>
-        <article class="insight-card warn">
-          <h3>개선 포인트</h3>
-          <ul id="improve-list"></ul>
-        </article>
-      </div>
 
-      <div class="insight-grid">
-        <article class="insight-card swot-s">
-          <h3>Strength</h3>
-          <ul id="swot-s"></ul>
+        <article class="dashboard-card roadmap-panel">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Planning Flow</p>
+              <h3>사고 -> 설계 -> 자산관리 -> 실행</h3>
+            </div>
+            <p class="panel-note">상담 진행 로드맵</p>
+          </div>
+          <div id="stage-progress-board" class="stage-progress-board"></div>
+          <div id="roadmap-list" class="roadmap-list"></div>
         </article>
-        <article class="insight-card swot-w">
-          <h3>Weakness</h3>
-          <ul id="swot-w"></ul>
-        </article>
-        <article class="insight-card swot-o">
-          <h3>Opportunity</h3>
-          <ul id="swot-o"></ul>
-        </article>
-        <article class="insight-card swot-t">
-          <h3>Threat</h3>
-          <ul id="swot-t"></ul>
-        </article>
-      </div>
+      </section>
 
-      <article class="table-wrap">
-        <h3>스냅샷 로그</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>일시</th>
-              <th>라벨</th>
-              <th>총소득</th>
-              <th>총지출</th>
-              <th>총자산</th>
-              <th>총부채</th>
-              <th>순자산</th>
-              <th>수익률</th>
-            </tr>
-          </thead>
-          <tbody id="snapshot-table-body"></tbody>
-        </table>
-      </article>
+      <section class="primary-grid">
+        <article class="dashboard-card chart-panel">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Trend Monitor</p>
+              <h3>재무 추이</h3>
+            </div>
+            <p id="trend-caption" class="panel-note"></p>
+          </div>
+          <div class="chart-shell">
+            <canvas id="trend-chart" height="120"></canvas>
+          </div>
+        </article>
 
-      <article class="table-wrap">
-        <h3>포트폴리오 파일</h3>
+        <div class="side-stack">
+          <article class="dashboard-card">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Allocation</p>
+                <h3>자산 구성</h3>
+              </div>
+            </div>
+            <div id="allocation-list" class="allocation-list"></div>
+          </article>
+
+          <article class="dashboard-card">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Health Monitor</p>
+                <h3>핵심 지표</h3>
+              </div>
+            </div>
+            <div id="health-metrics" class="health-metrics"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="asset-management-grid">
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Asset Management</p>
+              <h3>포트폴리오 전략</h3>
+            </div>
+            <p class="panel-note">현재 배분과 목표 배분 비교</p>
+          </div>
+          <div id="portfolio-strategy-board" class="asset-board"></div>
+        </article>
+
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Debt Control</p>
+              <h3>부채 관리</h3>
+            </div>
+            <p class="panel-note">상환 우선순위와 기간 추정</p>
+          </div>
+          <div id="debt-control-board" class="asset-board"></div>
+        </article>
+
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Protection Design</p>
+              <h3>보험/보장 점검</h3>
+            </div>
+            <p class="panel-note">소득 대비 보험료 적정성</p>
+          </div>
+          <div id="protection-board" class="asset-board"></div>
+        </article>
+
+        <article class="dashboard-card checklist-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Execution Actions</p>
+              <h3>실행 체크리스트</h3>
+            </div>
+            <p class="panel-note">다음 점검 전 완료 항목</p>
+          </div>
+          <div id="execution-checklist" class="execution-checklist"></div>
+        </article>
+      </section>
+
+      <section class="insight-layout">
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Consulting Signal</p>
+              <h3>칭찬 / 개선 포인트</h3>
+            </div>
+          </div>
+          <div class="signal-grid">
+            <section class="signal-card signal-positive">
+              <h4>칭찬 포인트</h4>
+              <ul id="praise-list" class="signal-list"></ul>
+            </section>
+            <section class="signal-card signal-warning">
+              <h4>개선 포인트</h4>
+              <ul id="improve-list" class="signal-list"></ul>
+            </section>
+          </div>
+        </article>
+
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Strategy Frame</p>
+              <h3>SWOT 분석</h3>
+            </div>
+          </div>
+          <div class="swot-grid">
+            <section class="swot-card swot-s">
+              <h4>Strength</h4>
+              <ul id="swot-s" class="signal-list"></ul>
+            </section>
+            <section class="swot-card swot-w">
+              <h4>Weakness</h4>
+              <ul id="swot-w" class="signal-list"></ul>
+            </section>
+            <section class="swot-card swot-o">
+              <h4>Opportunity</h4>
+              <ul id="swot-o" class="signal-list"></ul>
+            </section>
+            <section class="swot-card swot-t">
+              <h4>Threat</h4>
+              <ul id="swot-t" class="signal-list"></ul>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section class="lower-grid">
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Execution Timeline</p>
+              <h3>실행 이력</h3>
+            </div>
+          </div>
+          <div id="activity-timeline" class="activity-timeline"></div>
+        </article>
+
+        <article class="dashboard-card table-panel">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Snapshot Archive</p>
+              <h3>스냅샷 로그</h3>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>일시</th>
+                  <th>라벨</th>
+                  <th>총소득</th>
+                  <th>총지출</th>
+                  <th>총자산</th>
+                  <th>총부채</th>
+                  <th>순자산</th>
+                  <th>수익률</th>
+                </tr>
+              </thead>
+              <tbody id="snapshot-table-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <article class="dashboard-card file-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Execution Assets</p>
+            <h3>포트폴리오 파일</h3>
+          </div>
+        </div>
         <div id="portfolio-list" class="portfolio-list"></div>
       </article>
     </section>
