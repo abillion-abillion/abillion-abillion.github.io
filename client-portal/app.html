@@ -8,10 +8,13 @@
   <link rel="stylesheet" href="./portal.css">
 </head>
 <body class="app-body">
-  <header class="app-header">
-    <div class="brand-block">
-      <p class="eyebrow">JW Client Portal</p>
-      <h1>고객 자산관리 대시보드</h1>
+  <header class="app-header" role="banner">
+    <div class="brand-block" aria-label="JW Financial Client Portal">
+      <span class="brand-mark" aria-hidden="true">JW</span>
+      <div class="brand-copy">
+        <p class="eyebrow">JW Client Portal</p>
+        <h1>고객 자산관리 대시보드</h1>
+      </div>
     </div>
     <div class="header-actions">
       <p id="session-meta" class="session-meta"></p>
@@ -20,7 +23,7 @@
   </header>
 
   <main class="dashboard-shell">
-    <aside class="sidebar-column">
+    <aside class="sidebar-column" aria-label="고객 선택 및 관리자 도구">
       <section id="admin-tools" class="dashboard-card admin-card hidden">
         <div class="section-heading">
           <div>
@@ -118,7 +121,7 @@
       </section>
     </aside>
 
-    <section id="customer-detail" class="content-column hidden">
+    <section id="customer-detail" class="content-column hidden" aria-live="polite">
       <section class="hero-card">
         <div class="hero-main">
           <p class="section-kicker">Portfolio Command Center</p>
