@@ -146,6 +146,115 @@
 
       <section id="summary-cards" class="summary-grid"></section>
 
+      <section id="admin-edit-grid" class="admin-edit-grid hidden">
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Direct Edit</p>
+              <h3>고객 기본정보 수정</h3>
+            </div>
+          </div>
+          <form id="customer-edit-form" class="card-form">
+            <div class="edit-form-grid">
+              <label class="field">
+                <span>이름</span>
+                <input id="customer-edit-name" type="text" maxlength="50" required>
+              </label>
+              <label class="field">
+                <span>출생연도</span>
+                <input id="customer-edit-birth-year" type="number" min="1900" max="2100">
+              </label>
+              <label class="field">
+                <span>성별</span>
+                <input id="customer-edit-gender" type="text" maxlength="20">
+              </label>
+              <label class="field">
+                <span>직업</span>
+                <input id="customer-edit-job" type="text" maxlength="50">
+              </label>
+              <label class="field">
+                <span>연락처</span>
+                <input id="customer-edit-phone" type="text" maxlength="30">
+              </label>
+              <label class="field">
+                <span>이메일</span>
+                <input id="customer-edit-email" type="email" maxlength="120">
+              </label>
+              <label class="field">
+                <span>재무 목표</span>
+                <input id="customer-edit-goal" type="text" maxlength="150">
+              </label>
+              <label class="field">
+                <span>주소</span>
+                <input id="customer-edit-address" type="text" maxlength="200">
+              </label>
+            </div>
+            <button type="submit">고객정보 저장</button>
+            <p id="customer-edit-message" class="message"></p>
+          </form>
+        </article>
+
+        <article class="dashboard-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Direct Edit</p>
+              <h3>최신 스냅샷 값 수정</h3>
+            </div>
+          </div>
+          <form id="snapshot-edit-form" class="card-form">
+            <input id="snapshot-edit-id" type="hidden">
+            <div class="edit-form-grid">
+              <label class="field">
+                <span>월 소득(만원)</span>
+                <input id="snapshot-edit-income" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>월 지출(만원)</span>
+                <input id="snapshot-edit-expense" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>저축 가능액(만원)</span>
+                <input id="snapshot-edit-savings" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>안전자산(만원)</span>
+                <input id="snapshot-edit-safe-assets" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>투자자산(만원)</span>
+                <input id="snapshot-edit-invest-assets" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>부동산(만원)</span>
+                <input id="snapshot-edit-real-estate" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>총자산(만원)</span>
+                <input id="snapshot-edit-total-assets" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>총부채(만원)</span>
+                <input id="snapshot-edit-total-debt" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>순자산(만원)</span>
+                <input id="snapshot-edit-net-assets" type="number" step="0.01" min="0">
+              </label>
+              <label class="field">
+                <span>총 수익률(%)</span>
+                <input id="snapshot-edit-return-rate" type="number" step="0.01">
+              </label>
+              <label class="field">
+                <span>보험료(만원)</span>
+                <input id="snapshot-edit-insurance" type="number" step="0.01" min="0">
+              </label>
+            </div>
+            <button type="submit">스냅샷 저장</button>
+            <p id="snapshot-edit-message" class="message"></p>
+          </form>
+        </article>
+      </section>
+
       <section class="strategy-grid">
         <article class="dashboard-card diagnosis-panel">
           <div class="section-heading">
@@ -213,6 +322,40 @@
       </section>
 
       <section class="asset-management-grid">
+        <article class="dashboard-card consult-note-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Consult Note</p>
+              <h3>상담 메모 / 다음 상담일</h3>
+            </div>
+          </div>
+          <form id="consulting-note-form" class="card-form">
+            <input id="consulting-note-id" name="consulting_note_id" type="hidden">
+            <label class="field">
+              <span>상담일</span>
+              <input id="consulting-note-date" name="consulting_note_date" type="date">
+            </label>
+            <label class="field">
+              <span>상담 메모</span>
+              <textarea id="consulting-note-text" name="consulting_note_text" rows="3" maxlength="1000" required></textarea>
+            </label>
+            <label class="field">
+              <span>다음 액션</span>
+              <input id="consulting-note-next-action" name="consulting_note_next_action" type="text" maxlength="200">
+            </label>
+            <label class="field">
+              <span>다음 상담일</span>
+              <input id="consulting-note-followup" name="consulting_note_followup" type="date">
+            </label>
+            <div class="form-action-row">
+              <button id="consulting-note-submit" type="submit">상담 메모 저장</button>
+              <button id="consulting-note-cancel" class="ghost-button hidden" type="button">수정 취소</button>
+            </div>
+            <p id="consulting-note-message" class="message"></p>
+          </form>
+          <div id="consulting-note-list" class="consulting-note-list"></div>
+        </article>
+
         <article class="dashboard-card">
           <div class="section-heading">
             <div>

@@ -15,6 +15,10 @@
     executionTasks: {},
     executionStorageAvailable: true,
     executionStorageMessage: "",
+    consultingNotes: [],
+    consultingEditingId: null,
+    consultingStorageAvailable: true,
+    consultingStorageMessage: "",
     strategyConfig: null,
     strategyStorageAvailable: true,
     strategyStorageMessage: "",
@@ -34,6 +38,31 @@
     customerMeta: document.getElementById("customer-meta"),
     customerLastUpdated: document.getElementById("customer-last-updated"),
     summaryCards: document.getElementById("summary-cards"),
+    adminEditGrid: document.getElementById("admin-edit-grid"),
+    customerEditForm: document.getElementById("customer-edit-form"),
+    customerEditName: document.getElementById("customer-edit-name"),
+    customerEditBirthYear: document.getElementById("customer-edit-birth-year"),
+    customerEditGender: document.getElementById("customer-edit-gender"),
+    customerEditJob: document.getElementById("customer-edit-job"),
+    customerEditPhone: document.getElementById("customer-edit-phone"),
+    customerEditEmail: document.getElementById("customer-edit-email"),
+    customerEditGoal: document.getElementById("customer-edit-goal"),
+    customerEditAddress: document.getElementById("customer-edit-address"),
+    customerEditMessage: document.getElementById("customer-edit-message"),
+    snapshotEditForm: document.getElementById("snapshot-edit-form"),
+    snapshotEditId: document.getElementById("snapshot-edit-id"),
+    snapshotEditIncome: document.getElementById("snapshot-edit-income"),
+    snapshotEditExpense: document.getElementById("snapshot-edit-expense"),
+    snapshotEditSavings: document.getElementById("snapshot-edit-savings"),
+    snapshotEditSafeAssets: document.getElementById("snapshot-edit-safe-assets"),
+    snapshotEditInvestAssets: document.getElementById("snapshot-edit-invest-assets"),
+    snapshotEditRealEstate: document.getElementById("snapshot-edit-real-estate"),
+    snapshotEditTotalAssets: document.getElementById("snapshot-edit-total-assets"),
+    snapshotEditTotalDebt: document.getElementById("snapshot-edit-total-debt"),
+    snapshotEditNetAssets: document.getElementById("snapshot-edit-net-assets"),
+    snapshotEditReturnRate: document.getElementById("snapshot-edit-return-rate"),
+    snapshotEditInsurance: document.getElementById("snapshot-edit-insurance"),
+    snapshotEditMessage: document.getElementById("snapshot-edit-message"),
     diagnosticHighlights: document.getElementById("diagnostic-highlights"),
     priorityList: document.getElementById("priority-list"),
     roadmapList: document.getElementById("roadmap-list"),
@@ -68,6 +97,16 @@
     portfolioCustomerSelect: document.getElementById("portfolio-customer-select"),
     portfolioSnapshotSelect: document.getElementById("portfolio-snapshot-select"),
     portfolioMessage: document.getElementById("portfolio-upload-message"),
+    consultingNoteForm: document.getElementById("consulting-note-form"),
+    consultingNoteDate: document.getElementById("consulting-note-date"),
+    consultingNoteText: document.getElementById("consulting-note-text"),
+    consultingNoteNextAction: document.getElementById("consulting-note-next-action"),
+    consultingNoteFollowup: document.getElementById("consulting-note-followup"),
+    consultingNoteId: document.getElementById("consulting-note-id"),
+    consultingNoteSubmit: document.getElementById("consulting-note-submit"),
+    consultingNoteCancel: document.getElementById("consulting-note-cancel"),
+    consultingNoteMessage: document.getElementById("consulting-note-message"),
+    consultingNoteList: document.getElementById("consulting-note-list"),
     pendingUserList: document.getElementById("pending-user-list"),
     pendingUserMessage: document.getElementById("pending-user-message"),
     approvedUserList: document.getElementById("approved-user-list"),
@@ -129,6 +168,25 @@
           }
         : {}),
     }).format(date);
+  }
+
+  function fmtDateInput(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleDateString("en-CA");
+  }
+
+  function parseOptionalNumber(value, fallback = null) {
+    if (value === null || value === undefined || value === "") return fallback;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+
+  function parseOptionalInteger(value, fallback = null) {
+    const parsed = parseOptionalNumber(value, fallback);
+    if (parsed === null || parsed === undefined) return parsed;
+    return Number.isFinite(parsed) ? Math.trunc(parsed) : fallback;
   }
 
   function getUserDisplayName(user) {
@@ -872,6 +930,48 @@
       await handlePortfolioUpload();
     });
 
+    elements.consultingNoteForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await saveConsultingNote(event.currentTarget || elements.consultingNoteForm);
+    });
+
+    elements.consultingNoteCancel?.addEventListener("click", () => {
+      resetConsultingNoteForm();
+      renderConsultingNotes();
+      setMessage(elements.consultingNoteMessage, "", false);
+    });
+
+    elements.consultingNoteList?.addEventListener("click", async (event) => {
+      const editButton = event.target.closest("button[data-consult-edit-id]");
+      if (editButton) {
+        const noteId = Number(editButton.dataset.consultEditId);
+        if (noteId) {
+          startConsultingNoteEdit(noteId);
+          renderConsultingNotes();
+        }
+        return;
+      }
+
+      const deleteButton = event.target.closest("button[data-consult-delete-id]");
+      if (deleteButton) {
+        const noteId = Number(deleteButton.dataset.consultDeleteId);
+        if (!noteId) return;
+        deleteButton.disabled = true;
+        await deleteConsultingNote(noteId);
+        deleteButton.disabled = false;
+      }
+    });
+
+    elements.customerEditForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await handleCustomerEdit(event.currentTarget || elements.customerEditForm);
+    });
+
+    elements.snapshotEditForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await handleSnapshotEdit(event.currentTarget || elements.snapshotEditForm);
+    });
+
     elements.pendingUserList?.addEventListener("click", async (event) => {
       const button = event.target.closest("button[data-pending-user-id]");
       if (!button) return;
@@ -1182,6 +1282,405 @@
 
     state.executionStorageMessage = "";
     state.executionTasks[taskCode] = data || payload;
+    return true;
+  }
+
+  function getConsultingMessageTone(nextFollowupAt) {
+    if (!nextFollowupAt) return "warn";
+    const diffMs = new Date(nextFollowupAt).getTime() - Date.now();
+    if (Number.isNaN(diffMs)) return "warn";
+    const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    if (daysLeft < 0) return "bad";
+    if (daysLeft <= 3) return "bad";
+    if (daysLeft <= 7) return "warn";
+    return "good";
+  }
+
+  function resetConsultingNoteForm() {
+    state.consultingEditingId = null;
+    if (elements.consultingNoteId) elements.consultingNoteId.value = "";
+    if (elements.consultingNoteDate) elements.consultingNoteDate.value = fmtDateInput(new Date());
+    if (elements.consultingNoteText) elements.consultingNoteText.value = "";
+    if (elements.consultingNoteNextAction) elements.consultingNoteNextAction.value = "";
+    if (elements.consultingNoteFollowup) elements.consultingNoteFollowup.value = "";
+  }
+
+  function startConsultingNoteEdit(noteId) {
+    if (!canEditConsultingNote()) return;
+    const note = (state.consultingNotes || []).find((item) => Number(item.id) === Number(noteId));
+    if (!note) return;
+
+    state.consultingEditingId = Number(note.id);
+    if (elements.consultingNoteId) elements.consultingNoteId.value = String(note.id);
+    if (elements.consultingNoteDate) elements.consultingNoteDate.value = fmtDateInput(note.note_at || note.created_at);
+    if (elements.consultingNoteText) elements.consultingNoteText.value = note.note || "";
+    if (elements.consultingNoteNextAction) elements.consultingNoteNextAction.value = note.next_action || "";
+    if (elements.consultingNoteFollowup) elements.consultingNoteFollowup.value = fmtDateInput(note.next_followup_at);
+    setMessage(elements.consultingNoteMessage, "수정 모드입니다. 내용을 바꾼 뒤 저장하세요.", false);
+  }
+
+  async function deleteConsultingNote(noteId) {
+    if (!canEditConsultingNote() || !state.activeCustomerId) return false;
+    const shouldDelete = globalThis.confirm?.("이 상담 메모를 삭제할까요?");
+    if (shouldDelete === false) return false;
+
+    const { error } = await db
+      .from("portal_consulting_notes")
+      .delete()
+      .eq("id", noteId)
+      .eq("customer_id", state.activeCustomerId);
+
+    if (error) {
+      setMessage(elements.consultingNoteMessage, `상담 메모 삭제 실패: ${error.message}`, true);
+      return false;
+    }
+
+    state.consultingNotes = (state.consultingNotes || []).filter((note) => Number(note.id) !== Number(noteId));
+    if (Number(state.consultingEditingId) === Number(noteId)) {
+      resetConsultingNoteForm();
+    }
+    renderConsultingNotes();
+    setMessage(elements.consultingNoteMessage, "상담 메모를 삭제했습니다.", false);
+    return true;
+  }
+
+  async function loadConsultingNotes(customerId) {
+    state.consultingNotes = [];
+    state.consultingStorageMessage = "";
+    state.consultingEditingId = null;
+    resetConsultingNoteForm();
+
+    const { data, error } = await db
+      .from("portal_consulting_notes")
+      .select("id, note_at, note, next_action, next_followup_at, created_by, created_at, updated_at")
+      .eq("customer_id", customerId)
+      .order("note_at", { ascending: false });
+
+    if (error) {
+      if (isMissingTableError(error)) {
+        state.consultingStorageAvailable = false;
+        state.consultingStorageMessage = "상담 메모 테이블이 없습니다. 마이그레이션을 먼저 실행하세요.";
+      } else {
+        state.consultingStorageAvailable = false;
+        state.consultingStorageMessage = `상담 메모 조회 실패: ${error.message}`;
+      }
+      return;
+    }
+
+    state.consultingStorageAvailable = true;
+    state.consultingNotes = data || [];
+  }
+
+  function renderConsultingNotes() {
+    if (!elements.consultingNoteList || !elements.consultingNoteForm) return;
+
+    const canEdit = state.profile?.role === "admin" && state.consultingStorageAvailable;
+    const inputs = [
+      elements.consultingNoteDate,
+      elements.consultingNoteText,
+      elements.consultingNoteNextAction,
+      elements.consultingNoteFollowup,
+    ];
+    inputs.forEach((input) => {
+      if (input) input.disabled = !canEdit;
+    });
+
+    if (elements.consultingNoteId) {
+      elements.consultingNoteId.value = state.consultingEditingId ? String(state.consultingEditingId) : "";
+    }
+    if (elements.consultingNoteSubmit) {
+      elements.consultingNoteSubmit.textContent = state.consultingEditingId ? "상담 메모 수정" : "상담 메모 저장";
+      elements.consultingNoteSubmit.disabled = !canEdit;
+    }
+    if (elements.consultingNoteCancel) {
+      elements.consultingNoteCancel.classList.toggle("hidden", !canEdit || !state.consultingEditingId);
+      elements.consultingNoteCancel.disabled = !canEdit;
+    }
+
+    if (!state.consultingEditingId && !elements.consultingNoteDate?.value) {
+      elements.consultingNoteDate.value = fmtDateInput(new Date());
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const nextFollowup = (state.consultingNotes || [])
+      .map((note) => {
+        const at = note.next_followup_at ? new Date(note.next_followup_at) : null;
+        if (!at || Number.isNaN(at.getTime()) || at < today) return null;
+        return { ...note, nextFollowupAt: at };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.nextFollowupAt.getTime() - b.nextFollowupAt.getTime())[0];
+
+    const nextFollowupText = nextFollowup
+      ? `다음 상담일: ${fmtDate(nextFollowup.nextFollowupAt, false)} (다음 액션: ${nextFollowup.next_action || "-"})`
+      : "다음 상담일: -";
+
+    const nextFollowupTone = getConsultingMessageTone(nextFollowup?.nextFollowupAt);
+    const storageMessage = state.consultingStorageMessage
+      ? `<div class="consulting-note-summary consult-tone-${nextFollowupTone}">${escapeHtml(state.consultingStorageMessage)}</div>`
+      : "";
+
+    elements.consultingNoteList.innerHTML = `
+      <div class="consulting-note-summary ${nextFollowupTone === "good" ? "consult-tone-good" : nextFollowupTone === "warn" ? "consult-tone-warn" : "consult-tone-bad"}">
+        <strong>상담 요약</strong>
+        <div>${escapeHtml(nextFollowupText)}</div>
+      </div>
+      ${state.consultingNotes.length
+        ? state.consultingNotes
+            .map((note) => {
+              const tone = getConsultingMessageTone(note.next_followup_at);
+              const followup = note.next_followup_at
+                ? `다음 상담일: ${fmtDate(note.next_followup_at, false)}`
+                : "다음 상담일: -";
+              const action = note.next_action ? `<div class="consulting-note-meta">다음 액션: ${escapeHtml(note.next_action)}</div>` : "";
+              const actions = canEdit
+                ? `
+                  <div class="consulting-note-actions">
+                    <button type="button" class="ghost-button" data-consult-edit-id="${note.id}">수정</button>
+                    <button type="button" class="ghost-button" data-consult-delete-id="${note.id}">삭제</button>
+                  </div>
+                `
+                : "";
+              return `
+                <article class="consulting-note-item consult-tone-${tone}">
+                  <div class="consulting-note-meta">${fmtDate(note.note_at, true)}</div>
+                  <div class="consulting-note-note">${escapeHtml(note.note || "")}</div>
+                  ${action}
+                  <div class="consulting-note-meta">${escapeHtml(followup)}</div>
+                  ${actions}
+                </article>
+              `;
+            })
+            .join("")
+        : `<p class="message">등록된 상담 메모가 없습니다.</p>`}
+      ${storageMessage}
+    `;
+  }
+
+  async function saveConsultingNote(form) {
+    if (!canEditConsultingNote()) return false;
+
+    const noteDateInput = form?.querySelector("#consulting-note-date") || elements.consultingNoteDate;
+    const noteTextInput = form?.querySelector("#consulting-note-text") || elements.consultingNoteText;
+    const nextActionInput = form?.querySelector("#consulting-note-next-action") || elements.consultingNoteNextAction;
+    const nextFollowupInput = form?.querySelector("#consulting-note-followup") || elements.consultingNoteFollowup;
+
+    const note = noteTextInput?.value?.trim() || "";
+    const nextAction = nextActionInput?.value?.trim() || null;
+    const nextFollowup = nextFollowupInput?.value || "";
+    const editingId = Number(state.consultingEditingId || elements.consultingNoteId?.value || 0) || null;
+    const nowIso = new Date().toISOString();
+    const noteAt = noteDateInput?.value
+      ? new Date(`${noteDateInput.value}T00:00:00`).toISOString()
+      : nowIso;
+
+    if (!note && !nextAction) {
+      setMessage(elements.consultingNoteMessage, "상담 메모 또는 다음 액션을 입력하세요.", true);
+      return false;
+    }
+
+    const basePayload = {
+      customer_id: state.activeCustomerId,
+      note_at: noteAt,
+      note,
+      next_action: nextAction,
+      next_followup_at: nextFollowup ? new Date(`${nextFollowup}T00:00:00`).toISOString() : null,
+      updated_at: nowIso,
+    };
+
+    let query = db
+      .from("portal_consulting_notes")
+      .select("id, note_at, note, next_action, next_followup_at, created_by, created_at, updated_at");
+
+    if (editingId) {
+      query = db
+        .from("portal_consulting_notes")
+        .update(basePayload)
+        .eq("id", editingId)
+        .eq("customer_id", state.activeCustomerId)
+        .select("id, note_at, note, next_action, next_followup_at, created_by, created_at, updated_at");
+    } else {
+      query = db
+        .from("portal_consulting_notes")
+        .insert({
+          ...basePayload,
+          created_by: state.authUserId || null,
+        })
+        .select("id, note_at, note, next_action, next_followup_at, created_by, created_at, updated_at");
+    }
+
+    const { data, error } = await query.single();
+
+    if (error) {
+      state.consultingStorageMessage = editingId
+        ? `상담 메모 수정 실패: ${error.message}`
+        : `상담 메모 저장 실패: ${error.message}`;
+      setMessage(elements.consultingNoteMessage, state.consultingStorageMessage, true);
+      return false;
+    }
+
+    state.consultingStorageMessage = "";
+    state.consultingNotes = editingId
+      ? (state.consultingNotes || []).map((item) => (Number(item.id) === editingId ? (data || item) : item))
+      : [data || basePayload, ...(state.consultingNotes || [])];
+    state.consultingNotes.sort((a, b) => new Date(b.note_at).getTime() - new Date(a.note_at).getTime());
+    resetConsultingNoteForm();
+    renderConsultingNotes();
+    setMessage(elements.consultingNoteMessage, editingId ? "상담 메모를 수정했습니다." : "상담 메모를 저장했습니다.", false);
+    return true;
+  }
+
+  function canEditConsultingNote() {
+    return state.profile?.role === "admin" && state.consultingStorageAvailable;
+  }
+
+  function renderAdminEditForms(customer, latest) {
+    if (!elements.adminEditGrid) return;
+
+    const isAdmin = state.profile?.role === "admin";
+    elements.adminEditGrid.classList.toggle("hidden", !isAdmin);
+    if (!isAdmin) return;
+
+    if (elements.customerEditName) elements.customerEditName.value = customer?.name || "";
+    if (elements.customerEditBirthYear) elements.customerEditBirthYear.value = customer?.birth_year ?? "";
+    if (elements.customerEditGender) elements.customerEditGender.value = customer?.gender || "";
+    if (elements.customerEditJob) elements.customerEditJob.value = customer?.job || "";
+    if (elements.customerEditPhone) elements.customerEditPhone.value = customer?.phone || "";
+    if (elements.customerEditEmail) elements.customerEditEmail.value = customer?.email || "";
+    if (elements.customerEditGoal) elements.customerEditGoal.value = customer?.financial_goal || "";
+    if (elements.customerEditAddress) elements.customerEditAddress.value = customer?.address || "";
+    setMessage(elements.customerEditMessage, "", false);
+
+    const hasSnapshot = Boolean(latest?.id);
+    if (elements.snapshotEditId) elements.snapshotEditId.value = hasSnapshot ? String(latest.id) : "";
+    if (elements.snapshotEditIncome) elements.snapshotEditIncome.value = hasSnapshot ? Number(latest.total_monthly_income || 0) : "";
+    if (elements.snapshotEditExpense) elements.snapshotEditExpense.value = hasSnapshot ? Number(latest.total_expense || 0) : "";
+    if (elements.snapshotEditSavings) elements.snapshotEditSavings.value = hasSnapshot ? Number(latest.savings_capacity || 0) : "";
+    if (elements.snapshotEditSafeAssets) elements.snapshotEditSafeAssets.value = hasSnapshot ? Number(latest.safe_assets || 0) : "";
+    if (elements.snapshotEditInvestAssets) elements.snapshotEditInvestAssets.value = hasSnapshot ? Number(latest.investment_assets || 0) : "";
+    if (elements.snapshotEditRealEstate) elements.snapshotEditRealEstate.value = hasSnapshot ? Number(latest.real_estate_total || 0) : "";
+    if (elements.snapshotEditTotalAssets) elements.snapshotEditTotalAssets.value = hasSnapshot ? Number(latest.total_assets || 0) : "";
+    if (elements.snapshotEditTotalDebt) elements.snapshotEditTotalDebt.value = hasSnapshot ? Number(latest.total_debt || 0) : "";
+    if (elements.snapshotEditNetAssets) elements.snapshotEditNetAssets.value = hasSnapshot ? Number(latest.net_assets || 0) : "";
+    if (elements.snapshotEditReturnRate) elements.snapshotEditReturnRate.value = hasSnapshot ? Number(latest.overall_return_rate || 0) : "";
+    if (elements.snapshotEditInsurance) elements.snapshotEditInsurance.value = hasSnapshot ? Number(latest.insurance_premium || 0) : "";
+
+    if (elements.snapshotEditForm) {
+      const controls = elements.snapshotEditForm.querySelectorAll("input, button");
+      controls.forEach((control) => {
+        if (control.id === "snapshot-edit-id") return;
+        control.disabled = !hasSnapshot;
+      });
+    }
+    if (!hasSnapshot) {
+      setMessage(elements.snapshotEditMessage, "수정할 스냅샷이 없습니다. 먼저 스냅샷을 업로드하세요.", true);
+    } else {
+      setMessage(elements.snapshotEditMessage, "", false);
+    }
+  }
+
+  async function handleCustomerEdit(form) {
+    if (state.profile?.role !== "admin" || !state.activeCustomerId || !form) return false;
+
+    const name = form.querySelector("#customer-edit-name")?.value?.trim() || "";
+    if (!name) {
+      setMessage(elements.customerEditMessage, "이름은 필수입니다.", true);
+      return false;
+    }
+
+    const payload = {
+      name,
+      birth_year: parseOptionalInteger(form.querySelector("#customer-edit-birth-year")?.value, null),
+      gender: form.querySelector("#customer-edit-gender")?.value?.trim() || null,
+      job: form.querySelector("#customer-edit-job")?.value?.trim() || null,
+      phone: form.querySelector("#customer-edit-phone")?.value?.trim() || null,
+      email: form.querySelector("#customer-edit-email")?.value?.trim() || null,
+      financial_goal: form.querySelector("#customer-edit-goal")?.value?.trim() || null,
+      address: form.querySelector("#customer-edit-address")?.value?.trim() || null,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await db
+      .from("portal_customers")
+      .update(payload)
+      .eq("id", state.activeCustomerId);
+
+    if (error) {
+      setMessage(elements.customerEditMessage, `고객정보 저장 실패: ${error.message}`, true);
+      return false;
+    }
+
+    const keepCustomerId = state.activeCustomerId;
+    await loadCustomers(elements.searchInput?.value?.trim?.() || "");
+    await loadCustomerDetail(keepCustomerId);
+    setMessage(elements.customerEditMessage, "고객 기본정보를 저장했습니다.", false);
+    return true;
+  }
+
+  async function handleSnapshotEdit(form) {
+    if (state.profile?.role !== "admin" || !state.activeCustomerId || !form) return false;
+
+    const snapshotId = Number(form.querySelector("#snapshot-edit-id")?.value || 0);
+    if (!snapshotId) {
+      setMessage(elements.snapshotEditMessage, "수정할 스냅샷이 없습니다.", true);
+      return false;
+    }
+
+    const current = state.snapshots.find((item) => Number(item.id) === snapshotId);
+    if (!current) {
+      setMessage(elements.snapshotEditMessage, "현재 화면의 스냅샷 정보를 찾을 수 없습니다.", true);
+      return false;
+    }
+
+    const income = parseOptionalNumber(form.querySelector("#snapshot-edit-income")?.value, Number(current.total_monthly_income || 0));
+    const expense = parseOptionalNumber(form.querySelector("#snapshot-edit-expense")?.value, Number(current.total_expense || 0));
+    const savings = parseOptionalNumber(form.querySelector("#snapshot-edit-savings")?.value, Number(current.savings_capacity || 0));
+    const safeAssets = parseOptionalNumber(form.querySelector("#snapshot-edit-safe-assets")?.value, Number(current.safe_assets || 0));
+    const investAssets = parseOptionalNumber(form.querySelector("#snapshot-edit-invest-assets")?.value, Number(current.investment_assets || 0));
+    const realEstate = parseOptionalNumber(form.querySelector("#snapshot-edit-real-estate")?.value, Number(current.real_estate_total || 0));
+    const totalAssets = parseOptionalNumber(form.querySelector("#snapshot-edit-total-assets")?.value, Number(current.total_assets || 0));
+    const totalDebt = parseOptionalNumber(form.querySelector("#snapshot-edit-total-debt")?.value, Number(current.total_debt || 0));
+    const netAssetsRaw = parseOptionalNumber(form.querySelector("#snapshot-edit-net-assets")?.value, null);
+    const returnRate = parseOptionalNumber(form.querySelector("#snapshot-edit-return-rate")?.value, Number(current.overall_return_rate || 0));
+    const insurance = parseOptionalNumber(form.querySelector("#snapshot-edit-insurance")?.value, Number(current.insurance_premium || 0));
+
+    const totalFinancialAssets = (safeAssets || 0) + (investAssets || 0);
+    const savingsRatio = income > 0 ? (savings / income) * 100 : 0;
+    const investmentRatio = totalFinancialAssets > 0 ? (investAssets / totalFinancialAssets) * 100 : 0;
+    const netAssets = netAssetsRaw === null ? (totalAssets || 0) - (totalDebt || 0) : netAssetsRaw;
+
+    const payload = {
+      total_monthly_income: income || 0,
+      total_expense: expense || 0,
+      savings_capacity: savings || 0,
+      savings_ratio: Number(savingsRatio.toFixed(2)),
+      safe_assets: safeAssets || 0,
+      investment_assets: investAssets || 0,
+      total_financial_assets: totalFinancialAssets || 0,
+      investment_ratio: Number(investmentRatio.toFixed(2)),
+      real_estate_total: realEstate || 0,
+      total_assets: totalAssets || 0,
+      total_debt: totalDebt || 0,
+      net_assets: netAssets || 0,
+      overall_return_rate: returnRate || 0,
+      insurance_premium: insurance || 0,
+    };
+
+    const { error } = await db
+      .from("portal_snapshots")
+      .update(payload)
+      .eq("id", snapshotId)
+      .eq("customer_id", state.activeCustomerId);
+
+    if (error) {
+      setMessage(elements.snapshotEditMessage, `스냅샷 저장 실패: ${error.message}`, true);
+      return false;
+    }
+
+    const keepCustomerId = state.activeCustomerId;
+    await loadCustomerDetail(keepCustomerId);
+    setMessage(elements.snapshotEditMessage, "최신 스냅샷 값을 저장했습니다.", false);
     return true;
   }
 
@@ -1864,16 +2363,22 @@
       elements.customerSubtitle.textContent = "데이터를 불러오는 중 오류가 발생했습니다.";
       elements.customerMeta.innerHTML = "";
       elements.summaryCards.innerHTML = `<p class="message">데이터 조회 중 오류가 발생했습니다.</p>`;
+      elements.adminEditGrid?.classList.add("hidden");
       return;
     }
 
     state.snapshots = snapshots || [];
     state.files = files || [];
     elements.customerDetail.classList.remove("hidden");
-    await Promise.all([loadExecutionTasks(customerId), loadStrategyConfig(customerId)]);
+    await Promise.all([
+      loadExecutionTasks(customerId),
+      loadStrategyConfig(customerId),
+      loadConsultingNotes(customerId),
+    ]);
 
     renderCustomerHeader(customer, state.snapshots[0], state.files);
     renderSummaryCards(state.snapshots[0], state.snapshots[1]);
+    renderAdminEditForms(customer, state.snapshots[0]);
     renderPlanningBoards(customer, state.snapshots[0], state.snapshots[1], state.files);
     renderAssetManagementBoards(state.snapshots[0], state.snapshots[1], state.files);
     renderAllocation(state.snapshots[0]);
@@ -1891,6 +2396,7 @@
     renderList(elements.swotT, insight.swot.threats);
 
     await renderPortfolio(state.files);
+    renderConsultingNotes();
     updateSnapshotSelect(state.snapshots);
     if (state.profile.role === "admin") {
       elements.portfolioCustomerSelect.value = String(customerId);

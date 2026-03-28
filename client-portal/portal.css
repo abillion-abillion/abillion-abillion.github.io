@@ -60,7 +60,8 @@ button:hover {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   border: 1px solid var(--line);
   background: #fff;
@@ -71,10 +72,17 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
   border-color: rgba(43, 111, 242, 0.55);
   box-shadow: 0 0 0 4px rgba(43, 111, 242, 0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.45;
 }
 
 .ghost-button {
@@ -296,6 +304,18 @@ p {
 .card-form {
   display: grid;
   gap: 10px;
+}
+
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.form-action-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .card-form h3,
@@ -643,6 +663,7 @@ p {
 }
 
 .strategy-grid,
+.admin-edit-grid,
 .asset-management-grid,
 .primary-grid,
 .insight-layout,
@@ -653,6 +674,10 @@ p {
 
 .strategy-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.admin-edit-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .primary-grid {
@@ -1561,6 +1586,62 @@ td:nth-child(2) {
   color: var(--ink-soft);
 }
 
+.consulting-note-list {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.consulting-note-summary,
+.consulting-note-item {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  display: grid;
+  gap: 7px;
+}
+
+.consulting-note-summary.consult-tone-good,
+.consulting-note-item.consult-tone-good {
+  border-color: rgba(99, 212, 180, 0.46);
+  background: linear-gradient(180deg, rgba(99, 212, 180, 0.12), rgba(255, 255, 255, 0.94) 60%);
+}
+
+.consulting-note-summary.consult-tone-warn,
+.consulting-note-item.consult-tone-warn {
+  border-color: rgba(240, 171, 85, 0.46);
+  background: linear-gradient(180deg, rgba(240, 171, 85, 0.14), rgba(255, 255, 255, 0.94) 60%);
+}
+
+.consulting-note-summary.consult-tone-bad,
+.consulting-note-item.consult-tone-bad {
+  border-color: rgba(239, 107, 127, 0.46);
+  background: linear-gradient(180deg, rgba(239, 107, 127, 0.12), rgba(255, 255, 255, 0.94) 60%);
+}
+
+.consulting-note-note {
+  white-space: pre-wrap;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.consulting-note-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.consulting-note-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.consulting-note-actions button {
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 @media (max-width: 1400px) {
   .summary-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1577,6 +1658,7 @@ td:nth-child(2) {
 
 @media (max-width: 1180px) {
   .dashboard-shell,
+  .admin-edit-grid,
   .strategy-grid,
   .asset-management-grid,
   .primary-grid,
@@ -1603,6 +1685,10 @@ td:nth-child(2) {
   }
 
   .strategy-grid-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .edit-form-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -1649,6 +1735,10 @@ td:nth-child(2) {
     grid-template-columns: 1fr;
   }
 
+  .edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
   .strategy-action-row {
     flex-direction: column;
     align-items: stretch;
@@ -1656,6 +1746,12 @@ td:nth-child(2) {
 
   .strategy-action-row button {
     width: 100%;
+  }
+
+  .form-action-row,
+  .consulting-note-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .asset-kpi-grid {

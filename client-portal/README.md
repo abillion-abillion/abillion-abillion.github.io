@@ -19,6 +19,8 @@
 
 - `supabase-add-portal-execution-tasks.sql`
 - `supabase-add-portal-strategy-configs.sql`
+- `supabase-add-portal-consulting-notes.sql`
+- `supabase-add-portal-account-recovery.sql`
 
 ```sql
 insert into public.portal_users (auth_user_id, role, is_active)
