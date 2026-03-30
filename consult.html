@@ -1200,7 +1200,7 @@
 
 <script>
   'use strict';
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJrUcBZr8pw-HU0SQlp0_JtpRMTMakg1qw6eXlLvc497cqKEpJVY0kz1rd3b4a-9WH/exec';
   const KAKAO_URL = 'https://open.kakao.com/me/jwfinancial';
   let surveyData = {};
 
@@ -1307,7 +1307,6 @@
     // ① 구글 스프레드시트 전송 (no-cors)
     fetch(SHEET_URL, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name:     surveyData.name,
