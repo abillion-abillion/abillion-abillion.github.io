@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>핀사이트랩스 자산관리 전문가 모집 | 사업설명회 신청</title>
+<meta name="description" content="투자자문·IR·리서치·자산관리 4개 법인 시너지. 지인영업 없이 시장이 찾아오는 구조. 사업설명회 무료 신청.">
+<meta property="og:title" content="핀사이트랩스 | 자산관리 전문가 모집">
+<meta property="og:description" content="4개 법인 시너지로 만드는 새로운 자산관리. 사업설명회 무료 신청">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f1f3a;
+    --navy-light: #162a4a;
+    --gold: #c9b382;
+    --gold-light: #e0d0a8;
+    --gold-bright: #d4c48e;
+    --white: #f8f6f0;
+    --gray: #8a9bb5;
+    --text: #c8d4e6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,179,130,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(201,179,130,0.04) 0%, transparent 50%);
+    animation: drift 20s ease-in-out infinite;
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-30px, 20px); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 20px;
+    border: 1px solid rgba(201,179,130,0.4);
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900;
+    font-size: clamp(28px, 6vw, 48px);
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 3vw, 18px);
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 48px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(201,179,130,0.3);
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,179,130,0.4);
+  }
+
+  /* ─── SECTION ─── */
+  section {
+    padding: 80px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-weight: 700;
+    font-size: clamp(22px, 5vw, 32px);
+    color: var(--white);
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+
+  /* ─── 문제 제기 ─── */
+  .problem-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,179,130,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .problem-card h3 {
+    color: var(--gold-light);
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .problem-card p {
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ─── 시너지 다이어그램 ─── */
+  .synergy-section {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 80px 24px;
+  }
+
+  .synergy-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .synergy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .synergy-card {
+    background: rgba(201,179,130,0.06);
+    border: 1px solid rgba(201,179,130,0.2);
+    border-radius: 14px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .synergy-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,179,130,0.1);
+    transform: translateY(-4px);
+  }
+
+  .synergy-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .synergy-card h4 {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .synergy-card p {
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .synergy-result {
+    background: linear-gradient(135deg, rgba(201,179,130,0.12), rgba(201,179,130,0.06));
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .synergy-result h3 {
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .synergy-result p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .synergy-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: var(--gold);
+    margin: 16px 0;
+    opacity: 0.6;
+  }
+
+  /* ─── 숫자 강조 ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 40px 0;
+  }
+
+  .stat-box {
+    text-align: center;
+    padding: 24px 12px;
+    background: rgba(201,179,130,0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(201,179,130,0.12);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 36px);
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* ─── 혜택 ─── */
+  .benefit-list {
+    list-style: none;
+  }
+
+  .benefit-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(201,179,130,0.1);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .benefit-list li:last-child { border-bottom: none; }
+
+  .benefit-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(201,179,130,0.15);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .benefit-text h4 {
+    color: var(--white);
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .benefit-text p {
+    color: var(--gray);
+    font-size: 14px;
+  }
+
+  /* ─── 신청 폼 ─── */
+  .form-section {
+    background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%);
+    padding: 80px 24px;
+  }
+
+  .form-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .form-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,179,130,0.25);
+    border-radius: 20px;
+    padding: 40px 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .form-group label .req {
+    color: #e87878;
+    margin-left: 2px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,179,130,0.2);
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(200,212,230,0.3);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3e%3cpath d='M2 4l4 4 4-4' stroke='%23c9b382' stroke-width='1.5' fill='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+
+  .form-group select option {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .form-group textarea {
+    height: 80px;
+    resize: none;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .form-submit:hover {
+    box-shadow: 0 8px 32px rgba(201,179,130,0.4);
+    transform: translateY(-2px);
+  }
+
+  .form-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 16px;
+    opacity: 0.7;
+  }
+
+  /* ─── 완료 메시지 ─── */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .success-msg .check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(201,179,130,0.15);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+  }
+
+  .success-msg h3 {
+    color: var(--gold);
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .success-msg p {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* ─── FAQ ─── */
+  .faq-list { margin-top: 8px; }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(201,179,130,0.12);
+  }
+
+  .faq-q {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    gap: 16px;
+    transition: color 0.3s;
+  }
+
+  .faq-q:hover { color: var(--gold); }
+
+  .faq-arrow {
+    font-size: 20px;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding-bottom: 20px;
+  }
+
+  .faq-a p {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.8;
+    padding-left: 4px;
+  }
+
+  .faq-a strong { color: var(--gold-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid rgba(201,179,130,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--gray);
+    opacity: 0.5;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .synergy-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; gap: 12px; }
+    .form-box { padding: 28px 20px; }
+    section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Recruiting · 사업설명회</div>
+    <h1 class="hero-title">
+      금융의 미래를 함께 만들<br>
+      <em>자산관리 전문가</em>를 찾습니다
+    </h1>
+    <p class="hero-sub">
+      투자자문 · IR · 리서치 · 자산관리<br>
+      4개 법인 시너지가 만드는 새로운 기회의 구조
+    </p>
+    <a href="#apply" class="hero-cta">사업설명회 무료 신청 →</a>
+  </div>
+</div>
+
+<!-- ═══ 문제 제기 ═══ -->
+<section>
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">기존 금융영업,<br>왜 어렵다고 느끼셨나요?</h2>
+
+  <div class="problem-card">
+    <h3>"지인한테 팔아야 해서요"</h3>
+    <p>대부분의 금융영업이 어려운 이유는 단 하나, 지인영업이라는 구조적 한계입니다. 인맥이 바닥나면 영업도 멈춥니다.</p>
+  </div>
+
+  <div class="problem-card">
+    <h3>"혼자서 다 해야 하니까요"</h3>
+    <p>개인의 역량에만 의존하는 구조. 시장을 만들어주는 플랫폼도, 체계적인 교육 시스템도 없는 환경에서 버티는 것은 한계가 있습니다.</p>
+  </div>
+
+  <div class="problem-card">
+    <h3>"10만원 팔면 1만원이니까요"</h3>
+    <p>낮은 수수료 구조에서는 노력 대비 수익이 비례하지 않습니다. 구조가 바뀌어야 수익도 바뀝니다.</p>
+  </div>
+</section>
+
+<!-- ═══ DB유입 및 상담고객 유치 ═══ -->
+<div class="synergy-section">
+  <div class="synergy-inner">
+    <div class="section-label">Our Edge</div>
+    <h2 class="section-title">DB유입 및<br>상담고객 유치</h2>
+    <p style="color:var(--gray); margin-bottom:32px; font-size:15px; line-height:1.8;">
+      다양한 채널에서 고객이 먼저 찾아오는 구조.<br>
+      영업이 아니라, 전문가로서 선택받는 환경을 만듭니다.
+    </p>
+
+    <div class="synergy-grid">
+      <div class="synergy-card">
+        <div class="synergy-icon">🏢</div>
+        <h4>코스닥 상장기업<br>재테크 세미나</h4>
+        <p>상장사 임직원 대상 초청 강연<br>고소득 직장인 DB 확보<br><strong style="color:var(--gold-light)">고관여 고객 직접 유입</strong></p>
+      </div>
+      <div class="synergy-card">
+        <div class="synergy-icon">🎤</div>
+        <h4>재테크 인플루언서<br>강연 홍보부스</h4>
+        <p>대형 재테크 행사 참가<br>현장 상담 · QR 유입<br><strong style="color:var(--gold-light)">관심 고객 즉시 확보</strong></p>
+      </div>
+      <div class="synergy-card">
+        <div class="synergy-icon">📹</div>
+        <h4>유튜브 및<br>칼럼 연재</h4>
+        <p>유튜브 6만+ · 텔레그램 5만+<br>전문 칼럼 정기 발행<br><strong style="color:var(--gold-light)">온라인 신규 유입</strong></p>
+      </div>
+      <div class="synergy-card">
+        <div class="synergy-icon">📺</div>
+        <h4>방송사<br>금융방송 출연</h4>
+        <p>SBS 등 지상파 출연<br>전문가 브랜드 구축<br><strong style="color:var(--gold-light)">대중 신뢰도 확보</strong></p>
+      </div>
+    </div>
+
+    <div class="synergy-arrow">▼</div>
+
+    <div class="synergy-result">
+      <h3>상담 고객이 끊이지 않는 구조</h3>
+      <p>
+        방송 출연이 <strong>신뢰</strong>를 만들고,<br>
+        유튜브·칼럼이 <strong>전문성</strong>을 증명하고,<br>
+        세미나·강연이 <strong>고관여 고객</strong>을 데려옵니다.<br><br>
+        <strong style="color:var(--gold)">지인영업 없이, 상담 요청이 먼저 들어오는 구조.</strong><br>
+        당신은 소화만 하면 됩니다.
+      </p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">6만+</div>
+        <div class="stat-label">유튜브 구독자</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5만+</div>
+        <div class="stat-label">텔레그램 멤버</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1만/월</div>
+        <div class="stat-label">월 신규 유입</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 혜택 ═══ -->
+<section>
+  <div class="section-label">What You Get</div>
+  <h2 class="section-title">함께하면 달라지는 것들</h2>
+
+  <ul class="benefit-list">
+    <li>
+      <div class="benefit-num">1</div>
+      <div class="benefit-text">
+        <h4>지인영업 ZERO</h4>
+        <p>플랫폼이 만들어주는 시장. 월 1만 명이 찾아옵니다. 영업 부담 없이 전문가로서 가치를 전달하세요.</p>
+      </div>
+    </li>
+    <li>
+      <div class="benefit-num">2</div>
+      <div class="benefit-text">
+        <h4>체계적 교육 시스템</h4>
+        <p>금융 지식과 경험은 교육으로 만들어집니다. 필요한 건 꾸준함과 성실함, 나머지는 시스템이 합니다.</p>
+      </div>
+    </li>
+    <li>
+      <div class="benefit-num">3</div>
+      <div class="benefit-text">
+        <h4>여의도 법인 소속</h4>
+        <p>금융의 메카 여의도. 전문가로서의 포지셔닝과 네트워크, 지금이 입성의 기회입니다.</p>
+      </div>
+    </li>
+    <li>
+      <div class="benefit-num">4</div>
+      <div class="benefit-text">
+        <h4>수익 구조의 전환</h4>
+        <p>10만원 팔면 100만원. 구조가 다르면 수익이 다릅니다. 100만원 계약이 1,000만원이 되는 레버리지.</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section>
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">자주 묻는 질문</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>금융 자격증이나 경험이 없어도 지원할 수 있나요?</span>
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <p>네, 가능합니다. 금융 지식과 자격증은 합류 후 체계적인 교육 프로그램을 통해 취득하게 됩니다. 실제로 비전공자 출신 팀원들도 3~6개월 내 현장에 투입되고 있습니다. 필요한 건 전문지식보다 <strong>꾸준함과 성실함</strong>입니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>수익은 언제부터, 어느 정도 기대할 수 있나요?</span>
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <p>개인 역량과 투입 시간에 따라 다르지만, 교육 이수 후 1~2개월 내 첫 계약이 발생하는 경우가 일반적입니다. 기존 금융영업 대비 수수료 구조가 크기 때문에, 계약 건당 수익이 상당히 높습니다. 구체적인 수익 모델은 사업설명회에서 상세히 안내드립니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>정말 지인영업을 안 해도 되나요?</span>
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <p>네. 대표님의 유튜브·텔레그램 채널과 방송 출연을 통해 매월 1만 명 이상이 자발적으로 유입됩니다. 이 플랫폼 위에서 전문가로서 가치를 전달하는 구조이기 때문에, 지인에게 연락할 필요가 없습니다. <strong>시장이 먼저 찾아오는 구조</strong>가 핵심 차별점입니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>근무 형태는 어떻게 되나요? (출퇴근 / 자율)</span>
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <p>여의도 법인 사무실을 기반으로 운영됩니다. 초기에는 교육과 OJT를 위해 출근이 필요하며, 역량이 갖춰진 이후에는 자율적인 스케줄 운영이 가능합니다. 직장인처럼 시간에 묶이는 것이 아니라, 성과 중심의 유연한 근무 환경입니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>사업설명회 참석만으로 비용이 발생하나요?</span>
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <p>아닙니다. 사업설명회는 <strong>완전 무료</strong>이며, 참석 후 합류 여부는 자유롭게 결정하시면 됩니다. 설명회에서 법인 구조, 수익 모델, 교육 과정을 직접 확인하신 후 판단해주세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 신청 폼 ═══ -->
+<div class="form-section" id="apply">
+  <div class="form-inner">
+    <div class="section-label" style="text-align:center;">Apply Now</div>
+    <h2 class="section-title" style="text-align:center;">사업설명회 신청</h2>
+    <p style="text-align:center; color:var(--gray); margin-bottom:32px; font-size:14px;">
+      아래 정보를 남겨주시면 사업설명회 일정을 안내드립니다.<br>
+      선착순 마감이며, 참석 확정 시 개별 연락드립니다.
+    </p>
+
+    <div class="form-box" id="formBox">
+      <div class="form-group">
+        <label>이름 <span class="req">*</span></label>
+        <input type="text" id="fname" placeholder="실명을 입력해주세요" required>
+      </div>
+
+      <div class="form-group">
+        <label>연락처 <span class="req">*</span></label>
+        <input type="tel" id="fphone" placeholder="010-0000-0000" required>
+      </div>
+
+      <div class="form-group">
+        <label>금융업 경력</label>
+        <select id="fcareer">
+          <option value="무">경력 없음 (신입)</option>
+          <option value="1년 미만">1년 미만</option>
+          <option value="1~3년">1~3년</option>
+          <option value="3~5년">3~5년</option>
+          <option value="5년 이상">5년 이상</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>신청 계기 (짧게)</label>
+        <textarea id="freason" placeholder="어떤 계기로 관심을 갖게 되셨나요?"></textarea>
+      </div>
+
+      <button class="form-submit" id="submitBtn" onclick="submitForm()">
+        사업설명회 신청하기
+      </button>
+
+      <p class="form-note" style="margin-top:12px; font-size:13px; color:var(--gold-light); opacity:1;">자세한 내용은 개별안내 예정</p>
+      <p class="form-note">* 개인정보는 사업설명회 안내 목적으로만 사용됩니다.</p>
+    </div>
+
+    <!-- 성공 메시지 -->
+    <div class="success-msg" id="successMsg">
+      <div class="check">✓</div>
+      <h3>신청이 완료되었습니다!</h3>
+      <p>
+        담당자가 확인 후 빠르게 연락드리겠습니다.<br>
+        사업설명회에서 만나뵙겠습니다.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">FINSIGHT LABS</div>
+  <p>핀사이트랩스 자산관리센터 · 여의도</p>
+</footer>
+
+<script>
+// FAQ 토글
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+// ============================================================
+// 텔레그램 봇 연동 설정
+// ※ 기존 무료 DB 모집용 봇 토큰과 Chat ID를 아래에 입력하세요
+// ============================================================
+const BOT_TOKEN = 'YOUR_BOT_TOKEN';   // ← 기존 무료 DB 모집 봇 토큰
+const CHAT_ID   = 'YOUR_CHAT_ID';     // ← 본인 Chat ID
+
+async function submitForm() {
+  const name    = document.getElementById('fname').value.trim();
+  const phone   = document.getElementById('fphone').value.trim();
+  const career  = document.getElementById('fcareer').value;
+  const reason  = document.getElementById('freason').value.trim();
+
+  // 유효성 검사
+  if (!name) {
+    alert('이름을 입력해주세요.');
+    document.getElementById('fname').focus();
+    return;
+  }
+  if (!phone) {
+    alert('연락처를 입력해주세요.');
+    document.getElementById('fphone').focus();
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '신청 중...';
+
+  // 텔레그램 메시지 구성
+  const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+  const msg = `🔔 *사업설명회 신청 접수*\n`
+            + `━━━━━━━━━━━━━━━\n`
+            + `👤 이름: ${name}\n`
+            + `📱 연락처: ${phone}\n`
+            + `💼 경력: ${career}\n`
+            + `📝 신청계기: ${reason || '(미작성)'}\n`
+            + `━━━━━━━━━━━━━━━\n`
+            + `🕐 ${now}`;
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: msg,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('formBox').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } else {
+      throw new Error('전송 실패');
+    }
+  } catch (err) {
+    alert('신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    btn.disabled = false;
+    btn.textContent = '사업설명회 신청하기';
+  }
+}
+</script>
+</body>
+</html>
