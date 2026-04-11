@@ -1199,7 +1199,7 @@
 
 <script>
   'use strict';
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwyAA8_DNyfRlvKhHZLrCzHEtx4iFxWmuIbxuPXKsdxNwi80DufBz0rrp2P_dFEumDI/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxpf53qGPTImdudt5zFx5X7aGBeD2KAAwwNvu4tDtocQU3a9JoQRGfshxZke7Bo_QM8/exec';
   const KAKAO_URL = 'https://open.kakao.com/me/jwfinancial';
   let surveyData = {};
 
@@ -1305,6 +1305,7 @@
 
     // ① 구글 스프레드시트 + 텔레그램 전송 (POST 우선, GET 폴백)
     var qs = new URLSearchParams();
+    qs.append('request_id', Date.now().toString() + '-' + Math.random().toString(36).slice(2, 8));
     qs.append('name',     surveyData.name);
     qs.append('referral', surveyData.referral);
     qs.append('contact',  surveyData.contact);
@@ -1327,27 +1328,43 @@
     qs.append('reason',   surveyData.reason);
     qs.append('goal',     surveyData.goal);
     var payload = qs.toString();
-    fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: payload
-    }).catch(function() {
-      // doPost 미지원 환경/배포에서 GET으로 1회 재시도
-      fetch(SHEET_URL + '?' + payload, { mode: 'no-cors' }).catch(function(){});
-    });
+    var sent = false;
 
-    // ② 완료 화면 전환
-    document.getElementById('progress-wrap').style.display = 'none';
-    document.getElementById('form-wrap').style.display = 'none';
-    document.querySelector('.hero').style.display = 'none';
-    document.getElementById('page-complete').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 1) unload 친화적인 POST 전송
+    if (navigator.sendBeacon) {
+      try {
+        var beaconBody = new Blob([payload], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+        sent = navigator.sendBeacon(SHEET_URL, beaconBody);
+      } catch (e) {
+        sent = false;
+      }
+    }
 
-    // ③ 3초 후 카카오톡으로 이동
-    setTimeout(function() {
-      window.open(KAKAO_URL, '_blank');
-    }, 3000);
+    // 2) sendBeacon 실패 시 GET 비콘으로 폴백
+    if (!sent) {
+      var beacon = new Image();
+      beacon.referrerPolicy = 'no-referrer';
+      beacon.src = SHEET_URL + '?' + payload;
+    }
+
+    // ② 요청 시작 후 짧게 대기한 뒤 완료 화면 전환
+    var moved = false;
+    function moveToComplete() {
+      if (moved) return;
+      moved = true;
+      document.getElementById('progress-wrap').style.display = 'none';
+      document.getElementById('form-wrap').style.display = 'none';
+      document.querySelector('.hero').style.display = 'none';
+      document.getElementById('page-complete').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // ③ 3초 후 카카오톡으로 이동
+      setTimeout(function() {
+        window.open(KAKAO_URL, '_blank');
+      }, 3000);
+    }
+
+    setTimeout(moveToComplete, 700);
   }
 
   // 햄버거 메뉴 토글
