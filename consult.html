@@ -1303,7 +1303,7 @@
     btn.disabled = true;
     btn.textContent = '전송 중...';
 
-    // ① 구글 스프레드시트 + 텔레그램 전송 (POST + urlencoded)
+    // ① 구글 스프레드시트 + 텔레그램 전송 (POST 우선, GET 폴백)
     var qs = new URLSearchParams();
     qs.append('name',     surveyData.name);
     qs.append('referral', surveyData.referral);
@@ -1326,12 +1326,16 @@
     qs.append('preinfo',  surveyData.preinfo);
     qs.append('reason',   surveyData.reason);
     qs.append('goal',     surveyData.goal);
+    var payload = qs.toString();
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: qs.toString()
-    }).catch(function(){});
+      body: payload
+    }).catch(function() {
+      // doPost 미지원 환경/배포에서 GET으로 1회 재시도
+      fetch(SHEET_URL + '?' + payload, { mode: 'no-cors' }).catch(function(){});
+    });
 
     // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
