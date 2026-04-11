@@ -1303,34 +1303,34 @@
     btn.disabled = true;
     btn.textContent = '전송 중...';
 
-    // ① 구글 스프레드시트 전송 (no-cors)
+    // ① 구글 스프레드시트 + 텔레그램 전송 (POST + urlencoded)
+    var qs = new URLSearchParams();
+    qs.append('name',     surveyData.name);
+    qs.append('referral', surveyData.referral);
+    qs.append('contact',  surveyData.contact);
+    qs.append('mbti',     surveyData.mbti);
+    qs.append('gender',   surveyData.gender);
+    qs.append('age',      surveyData.age);
+    qs.append('married',  surveyData.married);
+    qs.append('job',      surveyData.job);
+    qs.append('region',   surveyData.region);
+    qs.append('exp',      surveyData.exp.join(', '));
+    qs.append('interest', surveyData.interest.join(', '));
+    qs.append('products', surveyData.products.join(', '));
+    qs.append('income',   surveyData.income);
+    qs.append('expense',  surveyData.expense);
+    qs.append('save',     surveyData.save);
+    qs.append('asset',    surveyData.asset);
+    qs.append('debt',     surveyData.debt);
+    qs.append('housing',  surveyData.housing);
+    qs.append('preinfo',  surveyData.preinfo);
+    qs.append('reason',   surveyData.reason);
+    qs.append('goal',     surveyData.goal);
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name:     surveyData.name,
-        referral: surveyData.referral,
-        contact:  surveyData.contact,
-        mbti:     surveyData.mbti,
-        gender:   surveyData.gender,
-        age:      surveyData.age,
-        married:  surveyData.married,
-        job:      surveyData.job,
-        region:   surveyData.region,
-        exp:      surveyData.exp.join(', '),
-        interest: surveyData.interest.join(', '),
-        products: surveyData.products.join(', '),
-        income:   surveyData.income,
-        expense:  surveyData.expense,
-        save:     surveyData.save || getVal('save-other'),
-        asset:    surveyData.asset || getVal('asset-other'),
-        debt:     surveyData.debt || getVal('debt-other'),
-        housing:  surveyData.housing,
-        preinfo:  surveyData.preinfo,
-        reason:   surveyData.reason,
-        goal:     surveyData.goal,
-      }),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: qs.toString()
     }).catch(function(){});
 
     // ② 완료 화면 전환
