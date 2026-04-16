@@ -659,7 +659,7 @@
     btn.disabled = true;
     btn.textContent = '발송 중...';
 
-    const payload = new URLSearchParams({
+    const params = new URLSearchParams({
       type: 'ebook_request',
       vol: vol,
       email: email,
@@ -667,15 +667,22 @@
       timestamp: new Date().toISOString(),
     });
 
-    let sent = false;
-    try { sent = navigator.sendBeacon(EBOOK_SCRIPT_URL, payload); } catch(e) {}
-    if (!sent) { new Image().src = EBOOK_SCRIPT_URL + '?' + payload.toString(); }
+    // GET 방식으로 전송 (Apps Script no-cors 가장 안정적)
+    const getUrl = EBOOK_SCRIPT_URL + '?' + params.toString();
+
+    // 1순위: fetch no-cors
+    try {
+      fetch(getUrl, { method: 'GET', mode: 'no-cors' });
+    } catch(e) {
+      // 2순위: Image fallback
+      new Image().src = getUrl;
+    }
 
     setTimeout(function() {
       succ.style.display = 'block';
       btn.textContent = '발송 완료 ✓';
       input.value = '';
-    }, 800);
+    }, 1000);
   }
 
 </script>
