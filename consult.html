@@ -728,6 +728,21 @@
   button, .btn-gold, .btn-outline, .btn-subscribe, .btn-ebook, .btn-next, .btn-submit, .btn-prev { font-weight: 700; }
   .nav-links a { font-weight: 700; }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PFQ0F1K8F9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PFQ0F1K8F9');
+</script>
+<!-- Naver Analytics -->
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+  if(!wcs_add) var wcs_add = {};
+  wcs_add["wa"] = "524686fd17f6d0";
+  if(window.wcs) { wcs_do(); }
+</script>
 </head>
 <body>
 
@@ -1199,7 +1214,7 @@
 
 <script>
   'use strict';
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwyAA8_DNyfRlvKhHZLrCzHEtx4iFxWmuIbxuPXKsdxNwi80DufBz0rrp2P_dFEumDI/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxpf53qGPTImdudt5zFx5X7aGBeD2KAAwwNvu4tDtocQU3a9JoQRGfshxZke7Bo_QM8/exec';
   const KAKAO_URL = 'https://open.kakao.com/me/jwfinancial';
   let surveyData = {};
 
@@ -1303,9 +1318,8 @@
     btn.disabled = true;
     btn.textContent = '전송 중...';
 
-    // ① 구글 스프레드시트 + 텔레그램 전송 (POST 우선, GET 폴백)
+    // ① 구글 스프레드시트 + 텔레그램 전송 (GET + 쿼리스트링 — 리다이렉트 body 유실 방지)
     var qs = new URLSearchParams();
-    qs.append('request_id', Date.now().toString() + '-' + Math.random().toString(36).slice(2, 8));
     qs.append('name',     surveyData.name);
     qs.append('referral', surveyData.referral);
     qs.append('contact',  surveyData.contact);
@@ -1327,44 +1341,19 @@
     qs.append('preinfo',  surveyData.preinfo);
     qs.append('reason',   surveyData.reason);
     qs.append('goal',     surveyData.goal);
-    var payload = qs.toString();
-    var sent = false;
+    fetch(SHEET_URL + '?' + qs.toString(), { mode: 'no-cors' }).catch(function(){});
 
-    // 1) unload 친화적인 POST 전송
-    if (navigator.sendBeacon) {
-      try {
-        var beaconBody = new Blob([payload], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
-        sent = navigator.sendBeacon(SHEET_URL, beaconBody);
-      } catch (e) {
-        sent = false;
-      }
-    }
+    // ② 완료 화면 전환
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('form-wrap').style.display = 'none';
+    document.querySelector('.hero').style.display = 'none';
+    document.getElementById('page-complete').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 2) sendBeacon 실패 시 GET 비콘으로 폴백
-    if (!sent) {
-      var beacon = new Image();
-      beacon.referrerPolicy = 'no-referrer';
-      beacon.src = SHEET_URL + '?' + payload;
-    }
-
-    // ② 요청 시작 후 짧게 대기한 뒤 완료 화면 전환
-    var moved = false;
-    function moveToComplete() {
-      if (moved) return;
-      moved = true;
-      document.getElementById('progress-wrap').style.display = 'none';
-      document.getElementById('form-wrap').style.display = 'none';
-      document.querySelector('.hero').style.display = 'none';
-      document.getElementById('page-complete').classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // ③ 3초 후 카카오톡으로 이동
-      setTimeout(function() {
-        window.open(KAKAO_URL, '_blank');
-      }, 3000);
-    }
-
-    setTimeout(moveToComplete, 700);
+    // ③ 3초 후 카카오톡으로 이동
+    setTimeout(function() {
+      window.open(KAKAO_URL, '_blank');
+    }, 3000);
   }
 
   // 햄버거 메뉴 토글
