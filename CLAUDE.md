@@ -70,3 +70,46 @@
 3. `git add column.html`
 4. `git commit -m "칼럼 추가: [제목]"`
 5. `git push`
+
+---
+
+# tips.html 영상/링크 카드 추가 가이드
+
+## 삽입 위치 규칙
+
+**새 카드는 항상 맨 앞에 표시되도록** `tips.html`의 아래 주석 **바로 뒤**에 삽입합니다.
+
+```html
+  <div class="videos-grid" id="videosGrid">
+```
+
+즉, 기존 `<!-- 영상 1 -->` 카드 **바로 위**에 새 카드를 추가합니다.
+
+## 영상 카드 HTML 템플릿
+
+```html
+    <!-- 영상 N -->
+    <div class="video-card" onclick="openModal('[유튜브ID]', this)" data-tags="[카테고리]">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/[유튜브ID]/hqdefault.jpg" alt="영상 썸네일" loading="lazy" />
+        <div class="play-btn">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">[카테고리]</div>
+        <div class="video-title">[영상 제목]</div>
+        <div class="video-meta">[채널명]</div>
+      </div>
+    </div>
+```
+
+## 전체 작업 순서 (Claude Code가 실행)
+
+1. `tips.html` 열기
+2. `<div class="videos-grid" id="videosGrid">` 바로 다음 줄에 새 카드 삽입 (맨 앞)
+3. `git add tips.html`
+4. `git commit -m "영상 추가: [제목]"`
+5. `git push`
