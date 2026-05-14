@@ -1214,7 +1214,7 @@
 
 <script>
   'use strict';
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxpf53qGPTImdudt5zFx5X7aGBeD2KAAwwNvu4tDtocQU3a9JoQRGfshxZke7Bo_QM8/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
   const KAKAO_URL = 'https://open.kakao.com/me/jwfinancial';
   let surveyData = {};
 
@@ -1341,7 +1341,12 @@
     qs.append('preinfo',  surveyData.preinfo);
     qs.append('reason',   surveyData.reason);
     qs.append('goal',     surveyData.goal);
-    fetch(SHEET_URL + '?' + qs.toString(), { mode: 'no-cors' }).catch(function(){});
+    var request_id = Date.now() + '_' + Math.random().toString(36).slice(2,7);
+    qs.append('request_id', request_id);
+    var fullUrl = SHEET_URL + '?' + qs.toString();
+    var sent = false;
+    if (navigator.sendBeacon) { sent = navigator.sendBeacon(fullUrl); }
+    if (!sent) { new Image().src = fullUrl; }
 
     // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
