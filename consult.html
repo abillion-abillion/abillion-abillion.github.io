@@ -1214,7 +1214,7 @@
 
 <script>
   'use strict';
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJnqm6q3jMWPS2vFKJh3JrZyDex68Z1kIqhREeL4qM0y_0KsyAvtM3t0fhh0kNVBdc/exec';
   const KAKAO_URL = 'https://open.kakao.com/me/jwfinancial';
   let surveyData = {};
 
@@ -1318,33 +1318,36 @@
     btn.disabled = true;
     btn.textContent = '전송 중...';
 
-    // ① 구글 스프레드시트 + 텔레그램 전송 (GET + 쿼리스트링 — 리다이렉트 body 유실 방지)
-    var qs = new URLSearchParams();
-    qs.append('name',     surveyData.name);
-    qs.append('referral', surveyData.referral);
-    qs.append('contact',  surveyData.contact);
-    qs.append('mbti',     surveyData.mbti);
-    qs.append('gender',   surveyData.gender);
-    qs.append('age',      surveyData.age);
-    qs.append('married',  surveyData.married);
-    qs.append('job',      surveyData.job);
-    qs.append('region',   surveyData.region);
-    qs.append('exp',      surveyData.exp.join(', '));
-    qs.append('interest', surveyData.interest.join(', '));
-    qs.append('products', surveyData.products.join(', '));
-    qs.append('income',   surveyData.income);
-    qs.append('expense',  surveyData.expense);
-    qs.append('save',     surveyData.save);
-    qs.append('asset',    surveyData.asset);
-    qs.append('debt',     surveyData.debt);
-    qs.append('housing',  surveyData.housing);
-    qs.append('preinfo',  surveyData.preinfo);
-    qs.append('reason',   surveyData.reason);
-    qs.append('goal',     surveyData.goal);
-    var request_id = Date.now() + '_' + Math.random().toString(36).slice(2,7);
-    qs.append('request_id', request_id);
-    var fullUrl = SHEET_URL + '?' + qs.toString();
-    fetch(fullUrl, { mode: 'no-cors' }).catch(function(){});
+    // ① 구글 스프레드시트 + 알림톡 전송 (POST JSON)
+    var payload = {
+      name:       surveyData.name,
+      referral:   surveyData.referral,
+      contact:    surveyData.contact,
+      mbti:       surveyData.mbti,
+      gender:     surveyData.gender,
+      age:        surveyData.age,
+      married:    surveyData.married,
+      job:        surveyData.job,
+      region:     surveyData.region,
+      exp:        surveyData.exp.join(', '),
+      interest:   surveyData.interest.join(', '),
+      products:   surveyData.products.join(', '),
+      income:     surveyData.income,
+      expense:    surveyData.expense,
+      save:       surveyData.save,
+      asset:      surveyData.asset,
+      debt:       surveyData.debt,
+      housing:    surveyData.housing,
+      preinfo:    surveyData.preinfo,
+      reason:     surveyData.reason,
+      goal:       surveyData.goal,
+      request_id: Date.now() + '_' + Math.random().toString(36).slice(2,7)
+    };
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      body:   JSON.stringify(payload)
+    }).catch(function(){});
 
     // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
