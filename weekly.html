@@ -28,14 +28,17 @@
 
 <style>
 :root{
-  /* ─── JW Financial 브랜드 토큰 (기존 사이트와 동일) ─── */
   --primary:#5C7A3E; --primary-light:#7A9E58; --primary-dark:#3F5B28;
+  --primary-deeper:#2A3E1A;
   --accent:#A8B89A;
-  --bg:#FAF8F4; --bg-tint:#EAF2E3; --white:#fff;
+  --gold:#D4B04A; --gold-soft:#E5C97E;
+  --bg:#FAF8F4; --bg-tint:#EAF2E3; --bg-warm:#F5F0E4; --white:#fff;
   --text-primary:#2C2C2C; --text-secondary:#5A5A5A; --text-muted:#8A8A8A;
   --border:#DDD9D0;
-  /* 시장 관례색 — 팔레트에 맞춰 채도만 낮춤 */
+  /* 시장 관례색 - 밝은 배경 */
   --rise:#A8402F; --fall:#2F6690;
+  /* 어두운 배경용 밝은 상승/하락색 */
+  --rise-on-dark:#F08A6B; --fall-on-dark:#7DB4E0;
   --wrap:760px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -163,39 +166,120 @@ body.menu-open { overflow: hidden; }
 }
 
 
-/* ── 히어로 ── */
-.hero{background:var(--bg-tint); border-bottom:1px solid var(--border); padding:114px 0 58px}
-.wk{font-size:14px; font-weight:700; letter-spacing:3px; color:var(--primary)}
-.pd{margin-top:8px; font-size:15px; color:var(--text-muted); font-weight:400}
-.hero h1{margin-top:20px; font-size:40px; font-weight:800; line-height:1.38;
-         letter-spacing:-1.6px; color:var(--primary-dark)}
-.hero h1 em{font-style:normal; color:var(--primary-light)}
+/* ── 히어로 (임팩트 강화 다크 버전) ── */
+.hero{
+  background:linear-gradient(135deg, var(--primary-deeper) 0%, var(--primary-dark) 100%);
+  color:#fff;
+  padding:96px 0 68px;
+  position:relative;
+  overflow:hidden;
+}
+/* 은은한 골드 라인 액센트 */
+.hero::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+/* 우상단 은은한 반원 액센트 */
+.hero::after{
+  content:""; position:absolute; top:-140px; right:-140px;
+  width:340px; height:340px; border-radius:50%;
+  background:radial-gradient(circle, rgba(212,176,74,.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+.wk{
+  display:inline-block; padding:6px 14px;
+  background:rgba(212,176,74,.14); border:1px solid rgba(212,176,74,.35);
+  color:var(--gold-soft); font-size:13px; font-weight:700;
+  letter-spacing:3px; border-radius:100px;
+}
+.pd{margin-top:14px; font-size:15px; color:rgba(255,255,255,.55); font-weight:400}
+.hero h1{
+  margin-top:22px; font-size:52px; font-weight:800; line-height:1.28;
+  letter-spacing:-1.8px; color:#fff;
+  text-shadow:0 2px 20px rgba(0,0,0,.15);
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(120deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
 
-.tot{margin-top:34px; display:flex; gap:44px; flex-wrap:wrap}
-.tot span{display:block; font-size:14px; color:var(--text-muted); font-weight:400}
-.tot strong{display:block; margin-top:2px; font-size:31px; font-weight:800;
-            letter-spacing:-1px; font-variant-numeric:tabular-nums}
+.tot{
+  margin-top:44px; display:flex; gap:0; flex-wrap:wrap;
+  background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.08);
+  border-radius:10px; overflow:hidden;
+}
+.tot > div{
+  flex:1; padding:22px 24px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.tot > div:last-child{border-right:none}
+.tot span{display:block; font-size:13px; color:rgba(255,255,255,.55); font-weight:400; letter-spacing:.5px}
+.tot strong{
+  display:block; margin-top:8px; font-size:38px; font-weight:800;
+  letter-spacing:-1.4px; font-variant-numeric:tabular-nums;
+}
 .r{color:var(--rise)} .b{color:var(--fall)} .g{color:var(--primary)}
+/* 다크 히어로 안에서만 밝은 상승·하락색 사용 */
+.hero .r{color:var(--rise-on-dark)}
+.hero .b{color:var(--fall-on-dark)}
+.hero .g{color:var(--gold-soft)}
 
-/* ── 시그니처 : 5일 막대 ─────────────────────────
-   막대 높이(px) = |당일 등락률| ÷ 주간 최대 등락률 × 96
+/* ── 시그니처 : 5일 막대 (꽉 찬 느낌 + 다크 히어로 대응) ─────
+   막대 높이(%) = |당일 등락률| ÷ 그 주 최대 등락률 × 100
    ──────────────────────────────────────────── */
-.chart{margin-top:42px; padding-top:28px; border-top:1px solid rgba(92,122,62,.22)}
-.chart-h{font-size:13px; letter-spacing:2px; color:var(--text-muted);
-         font-weight:400; margin-bottom:18px}
-.bars{display:flex; gap:0}
+.chart{
+  margin-top:52px; padding:28px 22px 22px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.08); border-radius:10px;
+  position:relative;
+}
+.chart-h{
+  font-size:12px; letter-spacing:2.5px; color:rgba(255,255,255,.55);
+  font-weight:400; margin-bottom:24px; text-transform:uppercase;
+}
+.chart-body{position:relative; padding-left:44px}
+/* Y축 그리드라인 */
+.grid-line{
+  position:absolute; left:44px; right:0;
+  height:1px; background:rgba(255,255,255,.08);
+  pointer-events:none;
+}
+.grid-line span{
+  position:absolute; left:-40px; top:-9px;
+  font-size:11px; color:rgba(255,255,255,.4);
+  font-variant-numeric:tabular-nums; letter-spacing:.5px;
+  font-weight:500;
+}
+.grid-line.zero{background:rgba(255,255,255,.32); height:1.5px}
+.grid-line.zero span{color:rgba(255,255,255,.7); font-weight:800}
+.bars{display:flex; gap:0; position:relative; z-index:2}
 .bar{flex:1; display:flex; flex-direction:column; align-items:center}
 .bar-t,.bar-b{height:130px; width:100%; display:flex; flex-direction:column; align-items:center}
 .bar-t{justify-content:flex-end}
-.bar-b{justify-content:flex-start; border-top:1px solid rgba(92,122,62,.32)}
+.bar-b{justify-content:flex-start}
 .tr{height:104px; width:100%; display:flex; justify-content:center}
 .bar-t .tr{align-items:flex-end} .bar-b .tr{align-items:flex-start}
-.bar i{display:block; width:44px}
-.bar-t i{background:var(--rise); border-radius:3px 3px 0 0}
-.bar-b i{background:var(--fall); border-radius:0 0 3px 3px}
-.bar u{text-decoration:none; height:26px; line-height:26px; font-size:13px;
-       font-weight:700; font-variant-numeric:tabular-nums}
-.bar-l{margin-top:12px; font-size:14px; color:var(--text-muted); font-weight:500}
+.bar i{
+  display:block; width:78px;
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
+}
+.bar-t i{
+  background:linear-gradient(180deg, var(--rise-on-dark), #C86A50);
+  border-radius:3px 3px 0 0;
+}
+.bar-b i{
+  background:linear-gradient(180deg, #5A9BC8, var(--fall-on-dark));
+  border-radius:0 0 3px 3px;
+}
+.bar u{
+  text-decoration:none; height:26px; line-height:26px; font-size:14px;
+  font-weight:800; font-variant-numeric:tabular-nums;
+}
+.bar-l{
+  margin-top:16px; font-size:14px; color:rgba(255,255,255,.6);
+  font-weight:600; letter-spacing:1.5px;
+}
 
 /* ── 본문 ── */
 section{padding:54px 0; border-bottom:1px solid var(--border)}
@@ -211,6 +295,89 @@ h2::after{content:""; flex:1; height:1px; background:var(--border)}
 .tbl th{width:44%; font-weight:500; color:var(--text-secondary); background:#F5F8F2}
 .tbl td{font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.3px}
 .tbl td small{font-weight:400; color:var(--text-muted); font-size:14px; margin-left:6px}
+
+/* ── 수급 : 다이버징 바 차트 (외국인·기관·개인 대비) ── */
+.flow-sec{background:var(--bg-tint); border-bottom:1px solid var(--border)}
+.flow-lead{
+  font-size:15px; color:var(--text-secondary); line-height:1.75;
+  margin-bottom:32px; padding:16px 20px;
+  background:rgba(255,255,255,.6); border-left:4px solid var(--primary);
+  border-radius:0 6px 6px 0;
+}
+.flow-lead b{color:var(--primary-dark); font-weight:800}
+.dv{
+  background:var(--white); border:1px solid var(--border);
+  border-radius:10px; padding:26px 28px; overflow:hidden;
+}
+.dv-row{
+  display:grid;
+  grid-template-columns: 82px 1fr 150px;
+  align-items:center; gap:18px;
+  padding:20px 0; border-bottom:1px dashed var(--border);
+}
+.dv-row:last-child{border-bottom:none}
+.dv-lbl{
+  font-size:17px; font-weight:800; color:var(--text-primary);
+  letter-spacing:-.3px;
+}
+.dv-bar{
+  position:relative; height:42px;
+  background:rgba(0,0,0,.04); border-radius:5px;
+}
+/* 중앙 0 라인 */
+.dv-bar::before{
+  content:""; position:absolute; left:50%; top:-6px; bottom:-6px;
+  width:2px; background:var(--text-secondary); opacity:.5;
+}
+/* 눈금 (25%, 75% 위치에 옅은 세로선) */
+.dv-bar::after{
+  content:""; position:absolute; left:25%; right:25%; top:0; bottom:0;
+  background:
+    linear-gradient(to right,
+      transparent 0,
+      transparent calc(50% - 1px),
+      rgba(0,0,0,.06) calc(50% - 1px),
+      rgba(0,0,0,.06) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+  pointer-events:none;
+}
+.dv-fill{
+  position:absolute; top:0; bottom:0;
+  border-radius:4px;
+  box-shadow:0 3px 10px rgba(0,0,0,.12);
+}
+.dv-fill.pos{
+  left:50%; background:linear-gradient(90deg, var(--rise), #C05841);
+}
+.dv-fill.neg{
+  right:50%; background:linear-gradient(270deg, var(--fall), #244F73);
+}
+.dv-val{
+  text-align:right; font-size:22px; font-weight:800;
+  font-variant-numeric:tabular-nums; letter-spacing:-.6px;
+}
+.dv-val small{
+  display:block; font-size:12px; font-weight:500;
+  color:var(--text-muted); margin-top:2px; letter-spacing:.5px;
+}
+.dv-axis{
+  display:grid; grid-template-columns:82px 1fr 150px; gap:18px;
+  margin-top:10px; align-items:center;
+}
+.dv-axis-scale{
+  position:relative; height:14px;
+  font-size:11px; color:var(--text-muted); font-variant-numeric:tabular-nums;
+}
+.dv-axis-scale span{
+  position:absolute; top:0; transform:translateX(-50%);
+}
+.dv-cap{
+  margin-top:24px; padding:14px 18px;
+  background:var(--bg-warm); border-radius:6px;
+  font-size:14px; color:var(--text-secondary); line-height:1.6;
+}
+.dv-cap b{color:var(--primary-dark); font-weight:800}
 
 .flow{margin-bottom:40px}
 .flow:last-child{margin-bottom:0}
@@ -354,11 +521,19 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
 
   <div class="chart">
     <div class="chart-h">코스피 일별 등락 (월~목)</div>
-    <div class="bars">
-      <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:100%"></i></div><u class="b">−8.95%</u></div><div class="bar-l">월</div></div>
-      <div class="bar"><div class="bar-t"><u class="r">+0.73%</u><div class="tr"><i style="height:8%"></i></div></div><div class="bar-b"></div><div class="bar-l">화</div></div>
-      <div class="bar"><div class="bar-t"><u class="r">+6.24%</u><div class="tr"><i style="height:70%"></i></div></div><div class="bar-b"></div><div class="bar-l">수</div></div>
-      <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:71%"></i></div><u class="b">−6.37%</u></div><div class="bar-l">목</div></div>
+    <div class="chart-body">
+      <!-- Y축 그리드라인 (기준: 최대 절대값 8.95%를 104px 트랙 상단으로) -->
+      <div class="grid-line" style="top:0"><span>+8%</span></div>
+      <div class="grid-line" style="top:46px"><span>+4%</span></div>
+      <div class="grid-line zero" style="top:104px"><span>0</span></div>
+      <div class="grid-line" style="top:162px"><span>−4%</span></div>
+      <div class="grid-line" style="top:220px"><span>−8%</span></div>
+      <div class="bars">
+        <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:100%"></i></div><u class="b">−8.95%</u></div><div class="bar-l">월</div></div>
+        <div class="bar"><div class="bar-t"><u class="r">+0.73%</u><div class="tr"><i style="height:8%"></i></div></div><div class="bar-b"></div><div class="bar-l">화</div></div>
+        <div class="bar"><div class="bar-t"><u class="r">+6.24%</u><div class="tr"><i style="height:70%"></i></div></div><div class="bar-b"></div><div class="bar-l">수</div></div>
+        <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:71%"></i></div><u class="b">−6.37%</u></div><div class="bar-l">목</div></div>
+      </div>
     </div>
   </div>
 </div></header>
@@ -374,13 +549,55 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
     <tr><th>주중 최저점 (7/14 장중)</th><td>6,448.86 <small>포인트</small></td></tr>
     <tr><th>주중 최고점 (7/15 장중)</th><td>7,400 <small>포인트 이상</small></td></tr>
     <tr><th>사이드카·서킷브레이커</th><td class="g">4회 <small>월 2건 · 수 1건 · 목 1건</small></td></tr>
-    <tr><th>외국인 4일 누적 (코스피)</th><td class="r">+5,318억 <small>순매수</small></td></tr>
-    <tr><th>기관 4일 누적 (코스피)</th><td class="b">−1조 7,697억 <small>순매도</small></td></tr>
-    <tr><th>개인 4일 누적 (코스피)</th><td class="r">+1조 562억 <small>순매수</small></td></tr>
     <tr><th>원 / 달러 (7/16 기준)</th><td>1,489원 <small>대</small></td></tr>
     <tr><th>WTI 국제유가</th><td class="r">80달러 <small>선 근접</small></td></tr>
     <tr><th>한국은행 기준금리</th><td class="r">2.75% <small>0.25%p 인상 · 3년 6개월 만</small></td></tr>
   </table>
+</div></section>
+
+<!-- ═══ 매주 수정 ③-2 : 수급 (누가 사고 누가 팔았나) ═══ -->
+<section class="flow-sec"><div class="wrap">
+  <h2>수 급</h2>
+  <p class="flow-lead">
+    이번 주 코스피에서 <b>기관이 압도적으로 팔았고</b>, 외국인과 개인이 나눠 받아냈습니다.
+    지수를 흔든 매물의 진원지가 어디였는지 한눈에 보입니다.
+  </p>
+
+  <div class="dv">
+    <div class="dv-row">
+      <div class="dv-lbl">기관</div>
+      <div class="dv-bar"><div class="dv-fill neg" style="width:44%"></div></div>
+      <div class="dv-val b">−1조 7,697억<small>4일 누적 순매도</small></div>
+    </div>
+    <div class="dv-row">
+      <div class="dv-lbl">개인</div>
+      <div class="dv-bar"><div class="dv-fill pos" style="width:26%"></div></div>
+      <div class="dv-val r">+1조 562억<small>4일 누적 순매수</small></div>
+    </div>
+    <div class="dv-row">
+      <div class="dv-lbl">외국인</div>
+      <div class="dv-bar"><div class="dv-fill pos" style="width:13%"></div></div>
+      <div class="dv-val r">+5,318억<small>4일 누적 순매수</small></div>
+    </div>
+
+    <div class="dv-axis">
+      <div></div>
+      <div class="dv-axis-scale">
+        <span style="left:0%">−2조</span>
+        <span style="left:25%">−1조</span>
+        <span style="left:50%">0</span>
+        <span style="left:75%">+1조</span>
+        <span style="left:100%">+2조</span>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="dv-cap">
+      기관은 <b>−1조 7,697억</b>으로 4일간 가장 크게 팔았고,
+      개인은 <b>+1조 562억</b>으로 가장 크게 받아냈습니다.
+      외국인은 소폭 매수 우위(<b>+5,318억</b>)로 균형을 잡았습니다.
+    </div>
+  </div>
 </div></section>
 
 <!-- ═══ 매주 수정 ④ : 흐름 (주제별, 날짜순 아님) ═══ -->
