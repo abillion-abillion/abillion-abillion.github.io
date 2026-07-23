@@ -392,8 +392,11 @@ h2::after{content:""; flex:1; height:1px; background:var(--border)}
 .exp{background:var(--white); border:1px solid var(--border); border-radius:8px; padding:6px 26px}
 .exp li{list-style:none; padding:24px 0; border-bottom:1px dashed var(--border)}
 .exp li:last-child{border-bottom:none}
-.exp b{display:block; font-size:17px; font-weight:800; color:var(--primary); margin-bottom:8px}
-.exp span{color:var(--text-secondary)}
+/* 항목 제목(li의 직계 자식 b)만 블록으로 */
+.exp > li > b{display:block; font-size:17px; font-weight:800; color:var(--primary); margin-bottom:8px}
+.exp span{color:var(--text-secondary); line-height:1.75}
+/* 본문 안 강조(span 안의 b)는 인라인으로 자연스럽게 */
+.exp span b{font-weight:800; color:var(--primary-dark)}
 
 .cal{border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)}
 .cal li{list-style:none; display:flex; gap:22px; padding:20px 24px; border-bottom:1px solid var(--border)}
@@ -662,7 +665,7 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
       이번 주 목요일 하락에서 성장주가 더 크게 밀린 이유가 이것입니다.</span></li>
     <li><b>지금 같은 변동성이 흔한가요</b>
       <span>단순히 말하면 흔하지 않습니다. 4일 사이에 −9%, +6%, −6%를 연달아 기록한 건
-      최근 몇 년을 통틀어도 손에 꼽습니다. 다만 이런 국면이 <b>드물다는 것과
+      최근 몇 년을 통틀어도 손에 꼽습니다. 다만 이런 국면이 <b>드물다는 것</b>과
       <b>언젠가 다시 온다는 것</b>은 별개입니다. 시장의 정상 상태에는 이런 국면이 주기적으로 포함된다는 게
       역사적으로 관찰된 사실이며, 그래서 자산배분과 시간분산이 이야기됩니다.</span></li>
   </ul>
