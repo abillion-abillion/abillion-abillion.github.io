@@ -559,10 +559,167 @@
       .sched-time-grid { grid-template-columns: 1fr; }
       .step-card { grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 18px; }
     }
-  </style>
+  
+/* ═══ 통합 네비게이션 (JW Financial 브랜드 표준) ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(250,248,244,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #DDD9D0;
+  font-family: 'Hahmlet', serif;
+}
+.nav-logo {
+  font-family: 'Hahmlet', serif; font-size: 20px; letter-spacing: 0.15em;
+  color: #5C7A3E; text-decoration: none; flex-shrink: 0; z-index: 2;
+  font-weight: 700;
+}
+.nav-links {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 1.9rem; list-style: none; z-index: 1;
+  margin: 0; padding: 0;
+}
+.nav-links > li { position: relative; list-style: none; }
+.nav-links a {
+  color: #2C2C2C; text-decoration: none;
+  font-size: 0.86rem; letter-spacing: 0.08em;
+  font-weight: 700; white-space: nowrap;
+  transition: color 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: #5C7A3E; }
+.nav-dropdown > a { display: inline-flex; align-items: center; cursor: pointer; }
+.nav-dropdown.open .nav-submenu { display: flex; }
+.nav-submenu {
+  display: none; position: absolute; top: calc(100% + 14px); left: 50%;
+  transform: translateX(-50%); min-width: 170px;
+  padding: 0.6rem 0.7rem; border: 1px solid #DDD9D0;
+  background: rgba(250,248,244,0.98); list-style: none;
+  flex-direction: column; gap: 0.35rem; z-index: 30;
+  margin: 0;
+}
+.nav-submenu a {
+  display: block; padding: 0.55rem 0.8rem;
+  font-size: 0.82rem; letter-spacing: 0.06em;
+  color: #2C2C2C; text-decoration: none; font-weight: 500;
+  border-radius: 4px; transition: background 0.2s, color 0.2s;
+}
+.nav-submenu a:hover, .nav-submenu a.active {
+  background: #EAF2E3; color: #5C7A3E;
+}
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  padding: 8px; z-index: 200;
+}
+.nav-toggle span {
+  display: block; width: 26px; height: 2px; background: #2C2C2C;
+  margin: 6px 0; transition: transform 0.3s, opacity 0.3s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* 모바일 풀스크린 메뉴 */
+.mobile-menu {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: #FAF8F4; z-index: 150;
+  display: flex; flex-direction: column; padding: 80px 24px 32px;
+  transform: translateX(100%); transition: transform 0.35s ease;
+  overflow-y: auto;
+}
+.mobile-menu.open { transform: translateX(0); }
+.menu-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px; border-bottom: 1px solid #DDD9D0;
+  font-family: 'Hahmlet', serif; color: #5C7A3E; font-size: 16px;
+  letter-spacing: 0.1em; font-weight: 700;
+}
+.menu-close {
+  background: none; border: none; font-size: 22px; cursor: pointer;
+  color: #2C2C2C; padding: 4px 8px;
+}
+.mobile-link {
+  display: block; padding: 18px 4px;
+  border-bottom: 1px solid #DDD9D0;
+  color: #2C2C2C; text-decoration: none;
+  font-family: 'Hahmlet', serif; font-size: 18px; font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.mobile-link:hover { color: #5C7A3E; }
+.mobile-submenu {
+  display: flex; flex-direction: column;
+  background: #F5F8F2; margin: 0 -24px;
+  padding: 4px 24px;
+}
+.mobile-sublink {
+  display: block; padding: 14px 8px;
+  color: #5A5A5A; text-decoration: none;
+  font-size: 15px; font-weight: 500;
+  border-bottom: 1px dashed #DDD9D0;
+}
+.mobile-sublink:last-child { border-bottom: none; }
+.mobile-sublink:hover { color: #5C7A3E; }
+
+body.menu-open { overflow: hidden; }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+}
+
+</style>
 </head>
 <body>
-<div class="page-wrap">
+<nav>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="index.html">홈</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li class="nav-dropdown">
+      <a href="freebie.html" class="submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="tips.html">재테크 영상</a></li>
+        <li><a href="guides.html">무료 전자책 시리즈</a></li>
+        <li><a href="education.html">왕쉬운 금융교육</a></li>
+      </ul>
+    </li>
+    <li><a href="weekly.html">주간 시황</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="kakotalk-consulting-guide.html" class="active">컨설팅 안내</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- 모바일 풀스크린 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+  </div>
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="guides.html" class="mobile-sublink">무료 전자책 시리즈</a>
+    <a href="education.html" class="mobile-sublink">왕쉬운 금융교육</a>
+  </div>
+  <a href="weekly.html" class="mobile-link">주간 시황</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="kakotalk-consulting-guide.html" class="mobile-link">컨설팅 안내</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<div class="page-wrap" style="padding-top:80px">
   <!-- Hero -->
   <div class="hero">
     <div class="hero-badge">JW Financial · 남진우 팀장</div>
@@ -737,5 +894,42 @@
     <div class="sub">J.W. Financial Consulting &nbsp;|&nbsp; jwfinancial.co.kr</div>
   </div>
 </div>
+
+<script>
+(function(){
+  // 햄버거 토글
+  var toggle = document.getElementById('navToggle');
+  var mobile = document.getElementById('mobileMenu');
+  if (toggle && mobile) {
+    toggle.addEventListener('click', function(){
+      var willOpen = !toggle.classList.contains('open');
+      toggle.classList.toggle('open', willOpen);
+      mobile.classList.toggle('open', willOpen);
+      document.body.style.overflow = willOpen ? 'hidden' : '';
+    });
+  }
+  // 무료 혜택 드롭다운
+  var dd = document.querySelector('.nav-dropdown');
+  if (dd) {
+    var trg = dd.querySelector('.submenu-toggle');
+    if (trg) {
+      trg.addEventListener('click', function(e){
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        var open = !dd.classList.contains('open');
+        dd.classList.toggle('open', open);
+        trg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function(e){
+        if (!dd.contains(e.target)) {
+          dd.classList.remove('open');
+          trg.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
