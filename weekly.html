@@ -265,6 +265,24 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
   /* ── 아카이브 목록: /weekly 폴더를 GitHub API로 읽어 카드 렌더링 ──
      파일명 규칙: weekly_YY.MM_N.html  (예: weekly_26.08_3.html → 2026년 8월 3주차)
      새 주차 페이지를 이 규칙대로 /weekly 폴더에 추가만 하면 이 페이지가 자동으로 반영합니다. */
+  const RAW_BASE = 'https://raw.githubusercontent.com/abillion-abillion/abillion-abillion.github.io/main/weekly/';
+
+  /* 개별 주차 파일에서 <h1> 제목을 읽어와 순수 텍스트로 변환합니다.
+     raw.githubusercontent.com은 GitHub API와 별도 경로라 60회/시간 제한에 걸리지 않습니다. */
+  async function fetchTitle(name) {
+    try {
+      const res = await fetch(RAW_BASE + name);
+      if (!res.ok) return null;
+      const html = await res.text();
+      const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+      if (!m) return null;
+      const text = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      return text || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async function loadArchive() {
     const listEl = document.getElementById('archive-list');
     const stateEl = document.getElementById('archive-state');
@@ -298,19 +316,26 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
         return;
       }
 
-      const html = '<div class="archive-list">' + items.map(it => (
+      // 목록 골격을 먼저 그려서 로딩 체감을 줄이고, 제목만 순차적으로 채워 넣습니다.
+      listEl.innerHTML = '<div class="archive-list">' + items.map((it, i) => (
         '<a class="archive-item" href="weekly/' + it.name + '">' +
           '<div class="archive-row">' +
             '<div>' +
               '<div class="archive-badge">' + it.year + '년 ' + it.month + '월 ' + it.week + '주차</div>' +
-              '<div class="archive-title">주간 시황 브리핑 보기</div>' +
+              '<div class="archive-title" id="archive-title-' + i + '">주간 시황 브리핑 보기</div>' +
             '</div>' +
             '<span class="archive-arrow">→</span>' +
           '</div>' +
         '</a>'
       )).join('') + '</div>';
 
-      listEl.innerHTML = html;
+      items.forEach(async (it, i) => {
+        const title = await fetchTitle(it.name);
+        if (title) {
+          const el = document.getElementById('archive-title-' + i);
+          if (el) el.textContent = title;
+        }
+      });
     } catch (err) {
       stateEl.textContent = '목록을 불러오지 못했습니다. 잠시 후 새로고침 해주세요.';
       console.error(err);
