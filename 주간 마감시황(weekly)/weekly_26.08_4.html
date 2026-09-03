@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JW Financial 주간 시황 브리핑 · 2026년 8월 4주차</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#5C7A3E;
+    --primary-light:#7A9E58;
+    --primary-dark:#3F5B28;
+    --accent:#A8B89A;
+    --bg:#FAF8F4;
+    --bg-tint:#EAF2E3;
+    --text:#2C2C2C;
+    --border:#DDD9D0;
+    --gold:#D4B04A;
+    --gold-light:#E5C97E;
+    --hero-up:#F08A6B;
+    --hero-down:#7DB4E0;
+    --up:#B23A2E;
+    --down:#3E6FA8;
+    --flow-buy:#5C7A3E;
+    --flow-sell:#A6714A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Hahmlet', serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+  }
+  a{color:var(--primary-dark);}
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(160deg, #2A3E1A 0%, #3F5B28 100%);
+    color:#fff;
+    padding:56px 24px 64px;
+  }
+  .hero-inner{max-width:880px; margin:0 auto;}
+  .badge{
+    display:inline-block;
+    background:linear-gradient(120deg, var(--gold), var(--gold-light));
+    color:#3A2B08;
+    font-weight:600;
+    font-size:14px;
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:20px;
+    letter-spacing:0.3px;
+  }
+  .hero h1{
+    font-size:40px;
+    line-height:1.35;
+    font-weight:700;
+    margin:0 0 14px;
+    max-width:640px;
+  }
+  @media(min-width:640px){ .hero h1{font-size:52px;} }
+  .hero p.sub{
+    font-size:16px;
+    color:#D9E4CE;
+    max-width:560px;
+    margin:0 0 36px;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+    gap:12px;
+  }
+  .stat-card{
+    background:rgba(0,0,0,0.28);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+    padding:18px 18px 16px;
+  }
+  .stat-card .label{font-size:13px; color:#C6D3BA; margin-bottom:6px;}
+  .stat-card .value{font-size:30px; font-weight:700; letter-spacing:-0.5px;}
+  @media(min-width:640px){ .stat-card .value{font-size:38px;} }
+  .stat-card .value.up{color:var(--hero-up);}
+  .stat-card .value.down{color:var(--hero-down);}
+  .stat-card .delta{font-size:13px; color:#C6D3BA; margin-top:4px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0;}
+  section.tint{background:var(--bg-tint);}
+  h2.section-title{
+    font-size:26px;
+    font-weight:700;
+    margin:0 0 8px;
+    color:var(--primary-dark);
+  }
+  p.section-desc{color:#5b5b52; margin:0 0 32px; max-width:560px;}
+
+  /* daily bars */
+  .daybars{
+    display:flex;
+    gap:14px;
+    align-items:flex-end;
+    padding:20px 0 8px;
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+  }
+  .daycol{width:78px; flex:0 0 78px; text-align:center;}
+  @media(max-width:480px){ .daycol{width:26px; flex-basis:26px;} }
+  .track{
+    height:104px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    border-left:1px dashed var(--border);
+    border-right:1px dashed var(--border);
+    margin-bottom:8px;
+  }
+  .track .zero{position:absolute; left:0; right:0; top:50%; border-top:1px solid var(--border);}
+  .bar{
+    width:60%;
+    margin:0 auto;
+    border-radius:3px 3px 0 0;
+    position:relative;
+  }
+  .bar.up{background:var(--up); align-self:flex-end;}
+  .bar.down{background:var(--down); align-self:flex-start; border-radius:0 0 3px 3px;}
+  .daycol .pct{font-size:13px; font-weight:600; margin-top:2px;}
+  .daycol .pct.up{color:var(--up);}
+  .daycol .pct.down{color:var(--down);}
+  .daycol .dlabel{font-size:12px; color:#7a7a70; margin-top:4px;}
+  .index-legend{display:flex; gap:20px; font-size:13px; color:#5b5b52; margin-top:14px;}
+  .index-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+
+  /* flow diverging bars */
+  .flowchart{margin-top:8px;}
+  .flowday{margin-bottom:22px;}
+  .flowday .fdate{font-size:13px; font-weight:600; color:var(--primary-dark); margin-bottom:6px;}
+  .frow{display:grid; grid-template-columns:56px 1fr; align-items:center; gap:10px; margin-bottom:4px; font-size:12.5px;}
+  .frow .flabel{color:#5b5b52;}
+  .fbar-outer{position:relative; height:16px; background:var(--border); border-radius:3px; overflow:visible;}
+  .fbar-center{position:absolute; left:50%; top:0; bottom:0; width:1px; background:#999;}
+  .fbar{position:absolute; top:1px; bottom:1px; border-radius:2px;}
+  .fbar.buy{background:var(--flow-buy); left:50%;}
+  .fbar.sell{background:var(--flow-sell); right:50%;}
+  .faxis{display:flex; justify-content:space-between; font-size:11px; color:#9a9a90; margin-top:2px;}
+
+  /* thematic flow write-ups */
+  .theme-block{margin-bottom:30px;}
+  .theme-block h3{font-size:18px; color:var(--primary-dark); margin:0 0 8px;}
+  .theme-block p{margin:0 0 10px; font-size:15.5px;}
+  .theme-block .tag{
+    display:inline-block; font-size:12px; color:var(--primary-dark);
+    background:var(--bg-tint); border:1px solid var(--border);
+    border-radius:6px; padding:2px 8px; margin-right:6px; margin-bottom:8px;
+  }
+
+  /* glossary */
+  .exp{list-style:none; margin:0; padding:0;}
+  .exp > li{
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .exp > li:first-child{padding-top:0;}
+  .exp > li > b{
+    display:block;
+    font-size:17px;
+    color:var(--primary-dark);
+    margin-bottom:6px;
+  }
+  .exp > li > span{
+    display:block;
+    font-size:15px;
+    color:#3d3d36;
+  }
+  .exp > li > span > b{font-weight:700; color:var(--text);}
+
+  /* next week */
+  .sched{list-style:none; margin:0; padding:0;}
+  .sched li{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    font-size:15px;
+  }
+  .sched li .d{font-weight:600; color:var(--primary-dark);}
+
+  /* archive */
+  .archive-list{list-style:none; margin:0; padding:0;}
+  .archive-list li{
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center; font-size:15px;
+  }
+  .archive-list a{text-decoration:none; font-weight:600;}
+  .archive-list .arrow{color:var(--primary);}
+
+  /* author + cta */
+  .author{
+    display:flex; flex-direction:column; gap:18px;
+  }
+  @media(min-width:640px){ .author{flex-direction:row; align-items:flex-start;} }
+  .author .name{font-size:20px; font-weight:700; margin:0 0 6px;}
+  .author .role{font-size:13.5px; color:#7a7a70; margin:0 0 14px;}
+  .author p.bio{margin:0 0 20px; font-size:15.5px; max-width:480px;}
+  .cta-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .cta{
+    padding:11px 20px;
+    border-radius:8px;
+    font-size:14.5px;
+    font-weight:600;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .cta.primary{background:var(--primary); color:#fff;}
+  .cta.secondary{background:#fff; color:var(--primary-dark); border:1px solid var(--primary);}
+
+  /* compliance */
+  .compliance{
+    background:#F1EFE8;
+    border-top:1px solid var(--border);
+  }
+  .compliance ul{margin:0; padding-left:18px; font-size:12.5px; color:#6b6b60;}
+  .compliance li{margin-bottom:6px;}
+  .compliance .source{font-size:12.5px; color:#6b6b60; margin-top:14px;}
+
+  footer.site-footer{
+    text-align:center; padding:24px; font-size:12px; color:#9a9a90;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="badge">2026년 8월 4주차</span>
+    <h1>대형주 변동성 속 순환매, 코스피 4주차 등락 정리</h1>
+    <p class="sub">8월 24일(월)부터 28일(금)까지 코스피·코스닥 마감 시황을 정리했습니다.</p>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="label">코스피 주간 종가 (8/28)</div>
+        <div class="value down">6,788.88</div>
+        <div class="delta">8/24 종가 6,696.96 → 주중 +1.4%p 등락 구간</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">코스닥 주간 종가 (8/28)</div>
+        <div class="value up">838.41</div>
+        <div class="delta">8/24 종가 813.33 대비 3.1%p 상승 구간</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">외국인 주간 순매매(코스피)</div>
+        <div class="value down">-9.1조원</div>
+        <div class="delta">5거래일 중 4일 순매도</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 숫자 ============ -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">일별 등락 흐름</h2>
+    <p class="section-desc">5거래일 동안의 코스피·코스닥 등락률입니다. 막대 높이는 그 주 최대 등락일 대비 상대 비율로 표시했습니다.</p>
+
+    <div class="daybars">
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar down" style="height:50%"></div></div>
+        <div class="pct down">-3.12%</div>
+        <div class="dlabel">8/24(월)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:11%"></div></div>
+        <div class="pct up">+0.68%</div>
+        <div class="dlabel">8/25(화)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:15%"></div></div>
+        <div class="pct up">+0.97%</div>
+        <div class="dlabel">8/26(수)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:25%"></div></div>
+        <div class="pct up">+1.53%</div>
+        <div class="dlabel">8/27(목)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar down" style="height:29%"></div></div>
+        <div class="pct down">-1.79%</div>
+        <div class="dlabel">8/28(금)</div>
+      </div>
+    </div>
+    <div class="index-legend">
+      <span><span class="dot" style="background:var(--up)"></span>상승</span>
+      <span><span class="dot" style="background:var(--down)"></span>하락</span>
+      <span>· 코스피 기준, 그래프 높이는 그 주 최대 등락률(3.12%) 대비 비율</span>
+    </div>
+
+    <div class="daybars" style="margin-top:36px;">
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:42%"></div></div>
+        <div class="pct up">+1.42%</div>
+        <div class="dlabel">8/24(월)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:50%"></div></div>
+        <div class="pct up">+1.70%</div>
+        <div class="dlabel">8/25(화)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar down" style="height:1%"></div></div>
+        <div class="pct down">-0.03%</div>
+        <div class="dlabel">8/26(수)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:38%"></div></div>
+        <div class="pct up">+1.30%</div>
+        <div class="dlabel">8/27(목)</div>
+      </div>
+      <div class="daycol">
+        <div class="track"><div class="zero"></div><div class="bar up" style="height:3%"></div></div>
+        <div class="pct up">+0.09%</div>
+        <div class="dlabel">8/28(금)</div>
+      </div>
+    </div>
+    <div class="index-legend">
+      <span>· 코스닥 기준, 그래프 높이는 그 주 최대 등락률(1.70%) 대비 비율</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 수급 ============ -->
+<section class="tint">
+  <div class="wrap">
+    <h2 class="section-title">주체별 수급 동향 (코스피)</h2>
+    <p class="section-desc">개인·외국인·기관의 일별 순매매 금액입니다. 중앙선 오른쪽은 순매수, 왼쪽은 순매도입니다.</p>
+
+    <div class="flowchart">
+      <div class="flowday">
+        <div class="fdate">8/24(월)</div>
+        <div class="frow"><div class="flabel">개인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:48%"></div></div></div>
+        <div class="frow"><div class="flabel">외국인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:48.7%"></div></div></div>
+        <div class="frow"><div class="flabel">기관</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:20.8%"></div></div></div>
+      </div>
+      <div class="flowday">
+        <div class="fdate">8/25(화)</div>
+        <div class="frow"><div class="flabel">개인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:14.1%"></div></div></div>
+        <div class="frow"><div class="flabel">외국인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:49.5%"></div></div></div>
+        <div class="frow"><div class="flabel">기관</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:15.6%"></div></div></div>
+      </div>
+      <div class="flowday">
+        <div class="fdate">8/26(수)</div>
+        <div class="frow"><div class="flabel">개인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:31.2%"></div></div></div>
+        <div class="frow"><div class="flabel">외국인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:1.5%"></div></div></div>
+        <div class="frow"><div class="flabel">기관</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:10%"></div></div></div>
+      </div>
+      <div class="flowday">
+        <div class="fdate">8/27(목)</div>
+        <div class="frow"><div class="flabel">개인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:34.7%"></div></div></div>
+        <div class="frow"><div class="flabel">외국인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:8.2%"></div></div></div>
+        <div class="frow"><div class="flabel">기관</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:6.8%"></div></div></div>
+      </div>
+      <div class="flowday">
+        <div class="fdate">8/28(금)</div>
+        <div class="frow"><div class="flabel">개인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar buy" style="width:11%"></div></div></div>
+        <div class="frow"><div class="flabel">외국인</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:25.7%"></div></div></div>
+        <div class="frow"><div class="flabel">기관</div><div class="fbar-outer"><div class="fbar-center"></div><div class="fbar sell" style="width:5.3%"></div></div></div>
+      </div>
+      <div class="faxis"><span>-4조</span><span>0</span><span>+4조</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 흐름 (주제별) ============ -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">이번 주 흐름</h2>
+    <p class="section-desc">날짜순이 아닌 네 가지 주제로 한 주를 정리했습니다.</p>
+
+    <div class="theme-block">
+      <span class="tag">반도체 대형주</span>
+      <h3>급락 → 반등 → 재하락, 널뛴 한 주</h3>
+      <p>삼성전자는 월요일(8/24) 대규모 주주환원안의 배당 재원 스케줄이 불확실하다는 해석 속에 -8.70%로 급락했습니다. 이후 이틀에 걸쳐 낙폭을 되돌렸고, 목요일(8/27)에는 엔비디아의 분기 실적이 컨센서스를 웃돌면서 삼성전자 +1.72%, SK하이닉스 +2.49%로 마감했습니다.</p>
+      <p>하지만 금요일(8/28) 개장 전 미국 정부가 반도체 완제품까지 관세를 확대하는 방안을 검토 중이라는 보도가 나오면서, 두 대형주가 다시 지수를 끌어내렸습니다. 한 주 동안 지수 방향을 사실상 결정한 것은 반도체 대형주의 등락이었습니다.</p>
+    </div>
+
+    <div class="theme-block">
+      <span class="tag">수급</span>
+      <h3>외국인 이탈을 흡수한 자사주·기타법인 매수</h3>
+      <p>외국인은 5거래일 중 4일 코스피에서 순매도했고, 주간 합계로는 약 9.1조원을 순매도했습니다. 반면 자사주 매입 성격의 기타법인 자금과 기관이 그 공백을 메우는 구조가 반복적으로 확인됐습니다. 목~금요일에는 외국인·기관이 시가총액 최상위 종목 위주로 매수를 집중하면서, 시장 전체보다 대형주로 자금이 쏠리는 장세가 두드러졌습니다.</p>
+    </div>
+
+    <div class="theme-block">
+      <span class="tag">매크로 이벤트</span>
+      <h3>금리 인상에도 오른 증시, 그리고 관세 변수</h3>
+      <p>목요일(8/27) 한국은행이 기준금리를 2.75%에서 3.00%로 25bp 인상했습니다. 두 달 연속 인상이었지만, "긴축을 감당할 만큼 경기와 자금 흐름이 buffer가 있다"는 해석이 힘을 얻으며 지수는 오히려 상승했습니다. 미국 쪽에서는 엔비디아의 실적 서프라이즈와 장기 국채금리 하락이 초반 반등의 배경이 됐고, 금요일에는 반도체 관세 이슈와 잭슨홀 연설 대기 심리가 시장을 다시 조심스럽게 만들었습니다.</p>
+    </div>
+
+    <div class="theme-block">
+      <span class="tag">업종별 순환매</span>
+      <h3>원전·이차전지·비반도체로 옮겨 다닌 자금</h3>
+      <p>화요일에는 전력수급 계획 상향 소식에 원전 관련주가, 수요일에는 반도체 부품·소재 업종이 강세를 보였습니다. 금요일에는 반도체 대형주가 관세 이슈로 눌리자 자금이 정유·화장품·건설·에너지 등 비반도체 업종으로 옮겨갔고, 상승 종목 비율이 코스피 68%대까지 올라갔습니다. 같은 날 코로나19 재확산 통계가 공개되며 진단·제약 테마도 다시 부각됐습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 이건 무슨 뜻일까요 ============ -->
+<section class="tint">
+  <div class="wrap">
+    <h2 class="section-title">이건 무슨 뜻일까요</h2>
+    <p class="section-desc">이번 주 브리핑에 나온 용어와 흐름을 조금 더 풀어드립니다.</p>
+    <ul class="exp">
+      <li>
+        <b>대형주 쏠림 장세란?</b>
+        <span>지수 전체에 자금이 고르게 퍼지는 것이 아니라, <b>시가총액 상위 몇 종목에만 매수가 집중</b>되는 흐름을 말합니다. 지수는 오르지만 실제 체감 상승률은 종목마다 크게 다를 수 있어, 지수만 보고 시장 전체 분위기를 판단하기 어려운 구간입니다.</span>
+      </li>
+      <li>
+        <b>반도체 관세가 왜 '완제품'까지 번질까요?</b>
+        <span>기존에는 반도체 칩 자체에 대한 관세가 논의됐다면, 이번 주 보도는 <b>노트북·서버처럼 반도체가 들어간 완성품 전체</b>로 적용 범위를 넓히는 방안입니다. 적용 대상이 넓어질수록 관련 기업의 실적 추정에 미치는 불확실성도 커지기 때문에 시장이 민감하게 반응했습니다.</span>
+      </li>
+      <li>
+        <b>금리를 올렸는데 왜 증시가 올랐을까요?</b>
+        <span>통상 기준금리 인상은 주식시장에 부담 요인입니다. 다만 이번에는 <b>"경기가 긴축을 감당할 만큼 튼튼하다"</b>는 해석이 함께 나오면서, 인상 자체보다 그 배경이 된 경기 자신감 쪽으로 시장의 초점이 옮겨간 하루였습니다.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 다음 주 일정 ============ -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">다음 주 확인할 일정</h2>
+    <ul class="sched">
+      <li><div class="d">8/28(금) 밤</div><div>케빈 워시 연준의장의 첫 잭슨홀 연설이 한국시간 밤 11시로 예정되어 있었습니다. 연설 내용은 다음 주 초 시장에 반영될 예정입니다.</div></li>
+      <li><div class="d">9/9(수)</div><div>미 재무부의 장기 국채 바이백 시행 예정일입니다. 이번 주 장기금리 하락의 배경이 된 재료가 실제로 확인되는 시점입니다.</div></li>
+      <li><div class="d">미정</div><div>반도체 완제품 관세 확대와 관련한 미국 정부의 후속 발표 일정은 아직 확정되지 않았습니다.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 지난 브리핑 아카이브 ============ -->
+<section class="tint">
+  <div class="wrap">
+    <h2 class="section-title">지난 브리핑</h2>
+    <ul class="archive-list">
+      <li><a href="#">2026년 8월 3주차 브리핑</a><span class="arrow">→</span></li>
+      <li><a href="#">2026년 8월 2주차 브리핑</a><span class="arrow">→</span></li>
+    </ul>
+    <p style="font-size:13px; color:#8a8a80; margin-top:10px;">※ 실제 3주차·4주차 브리핑 URL을 알려주시면 링크를 연결해드리겠습니다.</p>
+  </div>
+</section>
+
+<!-- ============ 작성자 + CTA ============ -->
+<section>
+  <div class="wrap">
+    <div class="author">
+      <div>
+        <div class="name">남진우</div>
+        <div class="role">JW Financial · Market Analyst</div>
+        <p class="bio">직장인과 사업자들의 자산관리를 위한 컨설팅을 해드립니다. 상담 문의 전 영상과 칼럼을 통해 먼저 도움을 받으셨으면 좋겠습니다.</p>
+        <div class="cta-row">
+          <a class="cta primary" href="#">영상 보기</a>
+          <a class="cta secondary" href="#">칼럼 읽기</a>
+          <a class="cta secondary" href="#">상담 문의</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 컴플라이언스 ============ -->
+<section class="compliance">
+  <div class="wrap">
+    <ul>
+      <li>본 자료는 시장 이해를 돕기 위한 정보 제공 및 교육 목적으로 작성되었으며, 특정 금융상품의 매수·매도를 권유하지 않습니다.</li>
+      <li>투자에 대한 최종 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.</li>
+      <li>본 자료의 시황 데이터 및 차트는 루미네어IR, 키움증권 자료를 인용하였습니다.</li>
+      <li>본 자료는 게시 전 계열사(루미네어IR) 서면 승인 및 당사 컴플라이언스 담당자의 검토 절차를 거칩니다.</li>
+    </ul>
+    <div class="source">자료 출처: 루미네어IR, 키움증권 · 작성: JW Financial 남진우</div>
+  </div>
+</section>
+
+<footer class="site-footer">© 2026 JW Financial. All rights reserved.</footer>
+
+</body>
+</html>
