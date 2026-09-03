@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- ═══ 매주 수정 ① : 검색·카톡 미리보기 ═══ -->
+<title>2026년 8월 1주차 주간 시황 | JW Financial</title>
+<meta name="description" content="8월 1주차 국내 증시 정리. 코스피 -5.1%, 코스닥 +11.0%로 정반대로 갈린 한 주, 레버리지 청산 후폭풍과 대형주에서 중소형주로 옮겨간 자금까지 한 번에 정리했습니다.">
+<link rel="canonical" href="https://jwfinancial.co.kr/weekly/weekly_26.08_1.html">
+<meta name="theme-color" content="#5C7A3E">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026년 8월 1주차 주간 시황">
+<meta property="og:description" content="코스피 -5.1%, 코스닥 +11.0%. 같은 시장, 정반대의 한 주를 3분 정리.">
+<meta property="og:url" content="https://jwfinancial.co.kr/weekly/weekly_26.08_1.html">
+<meta property="og:image" content="https://jwfinancial.co.kr/weekly/og/weekly_26.08_1.png">
+<meta property="og:site_name" content="JW Financial">
+<meta name="twitter:card" content="summary_large_image">
+<!-- ※ og:image 1200×630px. 카톡 링크 미리보기에 이 이미지가 뜹니다. -->
+
+<link rel="icon" type="image/svg+xml" href="/jw_financial_briefcase_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* ─── JW Financial 브랜드 토큰 (기존 사이트와 동일) ─── */
+  --primary:#5C7A3E; --primary-light:#7A9E58; --primary-dark:#3F5B28;
+  --accent:#A8B89A;
+  --bg:#FAF8F4; --bg-tint:#EAF2E3; --white:#fff;
+  --text-primary:#2C2C2C; --text-secondary:#5A5A5A; --text-muted:#8A8A8A;
+  --border:#DDD9D0;
+  /* 시장 관례색 — 팔레트에 맞춰 채도만 낮춤 */
+  --rise:#A8402F; --fall:#2F6690;
+  --wrap:760px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Hahmlet',serif; font-weight:500;
+  background:var(--bg); color:var(--text-primary);
+  font-size:17px; line-height:1.8; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
+a{color:inherit; text-decoration:none}
+
+/* ── NAV (사이트 공통, column.html과 동일 규격) ── */
+nav{position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:rgba(250,248,244,0.93); backdrop-filter:blur(12px); border-bottom:1px solid var(--border)}
+.nav-logo{font-size:1.1rem; letter-spacing:0.15em; color:var(--primary); text-decoration:none; flex-shrink:0; z-index:2; font-weight:700}
+.nav-links{position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:1.8rem; list-style:none; margin:0; padding:0}
+.nav-links > li{position:relative}
+.nav-links a{color:var(--text-secondary); text-decoration:none; font-size:0.86rem; letter-spacing:0.08em; transition:color 0.3s; font-weight:700; white-space:nowrap}
+.nav-links a:hover, .nav-links a.active{color:var(--primary)}
+.nav-dropdown > a{display:inline-flex; align-items:center}
+.nav-submenu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); min-width:170px; padding:0.6rem 0.7rem; border:1px solid var(--border); background:rgba(250,248,244,0.98); list-style:none; flex-direction:column; gap:0.35rem; z-index:30; margin:0}
+.nav-dropdown.open .nav-submenu{display:flex}
+.nav-submenu a{display:block; padding:0.38rem 0.5rem; font-size:0.73rem; letter-spacing:0.04em; color:var(--text-secondary)}
+.nav-submenu a:hover, .nav-submenu a.active{color:var(--primary)}
+.nav-toggle{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px}
+.nav-toggle span{display:block; width:22px; height:1.5px; background:var(--text-primary); transition:all 0.3s}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mobile-menu{display:none; position:fixed; inset:0; background:rgba(250,248,244,0.98); z-index:99; flex-direction:column; align-items:center; justify-content:flex-start; gap:2rem}
+.mobile-menu.open{display:flex}
+.menu-header{display:flex; align-items:center; justify-content:space-between; width:100%; padding:1.2rem 2rem; border-bottom:1px solid var(--border); font-size:0.88rem; color:var(--primary); letter-spacing:0.12em}
+.menu-close{background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-primary); line-height:1; padding:4px}
+.mobile-link{font-size:1.25rem; color:var(--primary); text-decoration:none; letter-spacing:0.1em; transition:color 0.3s}
+.mobile-submenu{display:flex; flex-direction:column; align-items:center; gap:0.55rem; margin-top:-0.9rem; margin-bottom:0.15rem}
+.mobile-sublink{font-family:'Hahmlet',serif; font-size:0.95rem; color:var(--text-secondary); text-decoration:none; letter-spacing:0.05em}
+.mobile-sublink:hover{color:var(--primary)}
+@media (max-width:600px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+}
+
+/* ── 히어로 ── */
+.hero{background:var(--bg-tint); border-bottom:1px solid var(--border); padding:130px 0 58px}
+.wk{font-size:14px; font-weight:700; letter-spacing:3px; color:var(--primary)}
+.pd{margin-top:8px; font-size:15px; color:var(--text-muted); font-weight:400}
+.hero h1{margin-top:20px; font-size:40px; font-weight:800; line-height:1.38;
+         letter-spacing:-1.6px; color:var(--primary-dark)}
+.hero h1 em{font-style:normal; color:var(--primary-light)}
+
+.tot{margin-top:34px; display:flex; gap:44px; flex-wrap:wrap}
+.tot span{display:block; font-size:14px; color:var(--text-muted); font-weight:400}
+.tot strong{display:block; margin-top:2px; font-size:31px; font-weight:800;
+            letter-spacing:-1px; font-variant-numeric:tabular-nums}
+.r{color:var(--rise)} .b{color:var(--fall)} .g{color:var(--primary)}
+
+/* ── 시그니처 : 5일 막대 ─────────────────────────
+   막대 높이(px) = |당일 등락률| ÷ 주간 최대 등락률 × 96
+   ──────────────────────────────────────────── */
+.chart{margin-top:42px; padding-top:28px; border-top:1px solid rgba(92,122,62,.22)}
+.chart-h{font-size:13px; letter-spacing:2px; color:var(--text-muted);
+         font-weight:400; margin-bottom:18px}
+.bars{display:flex; gap:0}
+.bar{flex:1; display:flex; flex-direction:column; align-items:center}
+.bar-t,.bar-b{height:130px; width:100%; display:flex; flex-direction:column; align-items:center}
+.bar-t{justify-content:flex-end}
+.bar-b{justify-content:flex-start; border-top:1px solid rgba(92,122,62,.32)}
+.tr{height:104px; width:100%; display:flex; justify-content:center}
+.bar-t .tr{align-items:flex-end} .bar-b .tr{align-items:flex-start}
+.bar i{display:block; width:44px}
+.bar-t i{background:var(--rise); border-radius:3px 3px 0 0}
+.bar-b i{background:var(--fall); border-radius:0 0 3px 3px}
+.bar u{text-decoration:none; height:26px; line-height:26px; font-size:13px;
+       font-weight:700; font-variant-numeric:tabular-nums}
+.bar-l{margin-top:12px; font-size:14px; color:var(--text-muted); font-weight:500}
+
+/* ── 본문 ── */
+section{padding:54px 0; border-bottom:1px solid var(--border)}
+h2{font-size:13px; font-weight:800; letter-spacing:4px; color:var(--primary);
+   display:flex; align-items:center; gap:14px; margin-bottom:28px}
+h2::after{content:""; flex:1; height:1px; background:var(--border)}
+
+.tbl{width:100%; border-collapse:collapse; background:var(--white);
+     border:1px solid var(--border); border-radius:8px; overflow:hidden}
+.tbl th,.tbl td{padding:15px 18px; text-align:left;
+                border-bottom:1px solid var(--border); font-size:16px}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:none}
+.tbl th{width:44%; font-weight:500; color:var(--text-secondary); background:#F5F8F2}
+.tbl td{font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.3px}
+.tbl td small{font-weight:400; color:var(--text-muted); font-size:14px; margin-left:6px}
+
+.flow{margin-bottom:40px}
+.flow:last-child{margin-bottom:0}
+.flow h3{font-size:24px; font-weight:800; letter-spacing:-.8px;
+         line-height:1.45; margin-bottom:12px; color:var(--primary-dark)}
+.flow h3::before{content:""; display:inline-block; width:22px; height:3px;
+                 background:var(--primary-light); vertical-align:middle; margin-right:12px}
+.flow p{margin-bottom:14px; color:var(--text-secondary)}
+.flow p:last-child{margin-bottom:0}
+.flow b{font-weight:800; color:var(--text-primary)}
+
+.exp{background:var(--white); border:1px solid var(--border); border-radius:8px; padding:6px 26px}
+.exp li{list-style:none; padding:24px 0; border-bottom:1px dashed var(--border)}
+.exp li:last-child{border-bottom:none}
+.exp b{display:block; font-size:17px; font-weight:800; color:var(--primary); margin-bottom:8px}
+.exp span{color:var(--text-secondary)}
+
+.cal{border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)}
+.cal li{list-style:none; display:flex; gap:22px; padding:20px 24px; border-bottom:1px solid var(--border)}
+.cal li:last-child{border-bottom:none}
+.cal em{font-style:normal; flex:none; width:96px; font-size:14px; font-weight:800;
+        color:var(--primary); padding-top:3px}
+.cal p{font-size:16px; line-height:1.6; font-weight:700}
+.cal p i{font-style:normal; display:block; font-size:14px; color:var(--text-muted);
+         font-weight:400; margin-top:3px}
+
+.arc a{display:flex; justify-content:space-between; align-items:center; gap:16px;
+       padding:18px 4px; border-bottom:1px solid var(--border)}
+.arc a:last-child{border-bottom:none}
+.arc a:hover .arc-t{color:var(--primary)}
+.arc-t{font-weight:600; font-size:16px; transition:color .15s}
+.arc-d{flex:none; font-size:14px; color:var(--text-muted); font-variant-numeric:tabular-nums}
+
+/* 작성자 */
+.who{display:flex; gap:20px; align-items:flex-start; background:var(--white);
+     border:1px solid var(--border); border-radius:8px; padding:28px}
+.who-i{flex:none; width:56px; height:56px; border-radius:50%; background:var(--primary);
+       color:#fff; display:flex; align-items:center; justify-content:center;
+       font-weight:800; font-size:20px; letter-spacing:-1px}
+.who-n{font-size:18px; font-weight:800}
+.who-n span{font-weight:400; color:var(--text-muted); font-size:15px; margin-left:9px}
+.who-p{margin-top:9px; font-size:15px; color:var(--text-secondary); line-height:1.8}
+.btns{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap}
+.btn{display:inline-block; padding:11px 22px; border-radius:6px;
+     font-size:15px; font-weight:700; border:1px solid var(--primary)}
+.btn-p{background:var(--primary); color:#fff}
+.btn-p:hover{background:var(--primary-dark); border-color:var(--primary-dark)}
+.btn-s{background:transparent; color:var(--primary)}
+.btn-s:hover{background:var(--bg-tint)}
+
+footer{background:var(--primary-dark); color:#C3D4B4; padding:44px 0 56px;
+       font-size:14px; line-height:1.9}
+footer li{list-style:none; padding-left:15px; position:relative; font-weight:400}
+footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)}
+.src{margin-top:20px; padding-top:18px; border-top:1px solid rgba(255,255,255,.16);
+     font-size:13px; color:#9DB08C; font-weight:400}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .hero{padding:110px 0 42px}
+  .hero h1{font-size:28px; letter-spacing:-1.2px}
+  .tot{gap:26px} .tot strong{font-size:25px}
+  .bar-t,.bar-b{height:106px}
+  .tr{height:84px}
+  .bar i{width:26px}
+  .bar u{font-size:11px; height:22px; line-height:22px}
+  .bar-l{margin-top:9px; font-size:13px}
+  section{padding:38px 0}
+  .flow h3{font-size:21px}
+  .tbl th,.tbl td{padding:13px 14px; font-size:15px}
+  .cal li{flex-direction:column; gap:6px}
+  .cal em{width:auto}
+  .nav-l{gap:14px; font-size:14px}
+  .who{flex-direction:column; gap:16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">홈</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li class="nav-dropdown">
+      <a href="../freebie.html" class="submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="../diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="../tips.html">재테크 영상</a></li>
+        <li><a href="../guides.html">무료 전자책 시리즈</a></li>
+        <li><a href="../education.html">왕쉬운 금융교육</a></li>
+      </ul>
+    </li>
+    <li><a href="../weekly.html" class="active">주간 시황</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../kakotalk-consulting-guide.html">컨설팅 안내</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="closeMobile()">✕</button>
+  </div>
+  <a href="../index.html" class="mobile-link">홈</a>
+  <a href="../services.html" class="mobile-link">서비스</a>
+  <a href="../reviews.html" class="mobile-link">후기</a>
+  <a href="../freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="../diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="../tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="../guides.html" class="mobile-sublink">무료 전자책 시리즈</a>
+    <a href="../education.html" class="mobile-sublink">왕쉬운 금융교육</a>
+  </div>
+  <a href="../weekly.html" class="mobile-link">주간 시황</a>
+  <a href="../column.html" class="mobile-link">칼럼</a>
+  <a href="../kakotalk-consulting-guide.html" class="mobile-link">컨설팅 안내</a>
+  <a href="../consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<!-- ═══ 매주 수정 ② : 히어로 ═══ -->
+<header class="hero"><div class="wrap">
+  <div class="wk">2026년 8월 1주차</div>
+  <div class="pd">8월 3일 (월) — 8월 7일 (금)</div>
+
+  <h1>코스피 −5.1%, 코스닥 +11.0%<br><em>정반대로</em> 갈린 한 주</h1>
+
+  <div class="tot">
+    <div><span>KOSPI 주간</span><strong class="b">−5.1%</strong></div>
+    <div><span>KOSDAQ 주간</span><strong class="r">+11.0%</strong></div>
+    <div><span>외국인 5일 누적</span><strong class="b">−7.53조</strong></div>
+  </div>
+
+  <div class="chart">
+    <div class="chart-h">코스피 일별 등락</div>
+    <div class="bars">
+      <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:100%"></i></div><u class="b">−5.12%</u></div><div class="bar-l">월</div></div>
+      <div class="bar"><div class="bar-t"><u class="r">+1.62%</u><div class="tr"><i style="height:32%"></i></div></div><div class="bar-b"></div><div class="bar-l">화</div></div>
+      <div class="bar"><div class="bar-t"><u class="r">+3.76%</u><div class="tr"><i style="height:73%"></i></div></div><div class="bar-b"></div><div class="bar-l">수</div></div>
+      <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:89%"></i></div><u class="b">−4.58%</u></div><div class="bar-l">목</div></div>
+      <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:12%"></i></div><u class="b">−0.60%</u></div><div class="bar-l">금</div></div>
+    </div>
+  </div>
+</div></header>
+
+<main>
+
+<!-- ═══ 매주 수정 ③ : 숫자 ═══ -->
+<section><div class="wrap">
+  <h2>숫 자</h2>
+  <table class="tbl">
+    <tr><th>KOSPI 종가 (8/7)</th><td>6,258.77 <small class="b">주간 −5.1%</small></td></tr>
+    <tr><th>KOSDAQ 종가 (8/7)</th><td>798.91 <small class="r">주간 +11.0%</small></td></tr>
+    <tr><th>주중 최저 종가</th><td>6,257.45 <small>(8월 3일)</small></td></tr>
+    <tr><th>외국인 5일 누적 (코스피)</th><td class="b">−7조 5,335억 <small>순매도</small></td></tr>
+    <tr><th>기관 5일 누적 (코스피)</th><td class="b">−2조 8,540억 <small>순매도</small></td></tr>
+    <tr><th>개인 5일 누적 (코스피)</th><td class="r">+9조 9,769억 <small>순매수</small></td></tr>
+    <tr><th>원 / 달러</th><td>1,416원대 <small>주중 미·일 공동개입 여파로 하락</small></td></tr>
+    <tr><th>WTI 국제유가</th><td class="b">77.29달러 <small>주중 75~82달러대 등락</small></td></tr>
+  </table>
+</div></section>
+
+<!-- ═══ 매주 수정 ④ : 흐름 (주제별, 날짜순 아님) ═══ -->
+<section><div class="wrap">
+  <h2>흐 름</h2>
+
+  <div class="flow">
+    <h3>레버리지 청산 후폭풍으로 한 주가 시작됐습니다</h3>
+    <p>월요일 KOSPI는 <b>−5.12%</b> 하락하며 <b>삼성전자·SK하이닉스</b>가 각각 −8.8%대로 밀렸습니다.
+       신용잔고가 전주 대비 3.2조원(−10%) 급감한 28.9조원까지 내려왔고, 변동성 지수 VKOSPI는 80.8p를
+       기록했습니다. 직전 거래일이었던 지난달 31일 코스피가 역대 최대 상승률(+17.91%)을 기록했던 만큼,
+       이날 하락은 그 상승분에 대한 차익실현과 레버리지 청산이 겹친 결과로 해석됐습니다.</p>
+    <p>같은 날 7월 수출이 전년비 +62.8%(역대 2위), 반도체 수출이 +178.8%(YoY)를 기록해, 이번 하락 역시
+       펀더멘털이 아니라 수급·심리 요인에서 비롯됐다는 점이 함께 확인됐습니다.</p>
+  </div>
+
+  <div class="flow">
+    <h3>자금이 대형주에서 중소형주로 옮겨갔습니다</h3>
+    <p>화요일부터 목요일까지 코스닥은 사흘 연속 매수 사이드카가 발동될 만큼 강세를 이어갔습니다.
+       바이오(리가켐바이오 +15.20%, HLB +11.17%), 2차전지(에코프로 +5.94%), 로봇(에스피지 +14.9%) 등
+       업종 전반에 매수세가 확산됐고, 정부의 2026년 세제개편안에서 반도체·이차전지·로봇부품 등이
+       생산세액공제 대상에 포함된 점도 재료로 작용했습니다.</p>
+    <p>목요일에는 삼성전자·SK하이닉스가 각각 <b>−6.3%, −10.37%</b>로 다시 급락하며 코스피가 −4.58% 밀렸지만,
+       코스닥은 오히려 +0.26% 소폭 상승해 5거래일 연속 오름세를 이어갔습니다. 대형 반도체에서 이탈한
+       자금이 시장을 떠난 게 아니라 중소형 성장주로 옮겨갔다는 신호로 해석됩니다.</p>
+  </div>
+
+  <div class="flow">
+    <h3>한 주를 정리하면, 두 지수의 성적표가 정반대였습니다</h3>
+    <p>금요일 발표된 주간 수치는 <b>코스피 −5.1%, 코스닥 +11.0%</b>로 이번 주의 성격을 그대로 보여줍니다.
+       개인은 코스피에서 5일간 약 10조원을 순매수하며 하락을 받아냈고, 외국인은 7.5조원 넘게 순매도했습니다.
+       반대로 코스닥에서는 개인이 순매수세를 이어가며 지수를 밀어올렸습니다.</p>
+  </div>
+</div></section>
+
+<!-- ═══ 매주 수정 ⑤ : 용어·인과 설명. 전망·판단·권유 금지 ═══ -->
+<section><div class="wrap">
+  <h2>이 건 무 슨 뜻 일 까 요</h2>
+  <ul class="exp">
+    <li><b>VKOSPI(변동성지수)가 뭔가요</b>
+      <span>코스피200 옵션 가격을 바탕으로 향후 시장이 얼마나 출렁일 것으로 예상되는지를 나타내는 지수입니다.
+      수치가 높을수록 투자자들이 큰 변동성을 예상하고 있다는 뜻이며, 특정 방향(상승·하락)을 가리키는
+      지표는 아닙니다.</span></li>
+    <li><b>신용잔고가 줄어들었다는 건 무슨 뜻인가요</b>
+      <span>신용잔고는 투자자가 증권사에서 돈을 빌려 주식을 산 금액의 합계입니다. 이 금액이 급감했다는 것은
+      빚을 내서 산 주식이 강제로 정리(반대매매)됐거나 투자자들이 스스로 빚을 갚았다는 의미로, 레버리지
+      비중이 줄어드는 국면을 나타내는 참고 지표입니다.</span></li>
+    <li><b>생산세액공제(한국판 IRA)가 뭔가요</b>
+      <span>기업이 국내에서 실제로 생산한 물량에 기준 공제액을 곱해 세액을 깎아주는 제도입니다.
+      연구개발이나 설비투자 단계가 아니라 실제 생산 실적을 기준으로 하기 때문에, 정책 효과가 매출과
+      직접 연결되는 구조라는 점이 특징입니다.</span></li>
+    <li><b>미·일 통화당국의 공동 개입이 뭔가요</b>
+      <span>정부나 중앙은행이 외환시장에서 직접 통화를 사고팔아 환율 움직임에 개입하는 것을 말합니다.
+      두 나라가 동시에 개입했다는 것은 그만큼 환율 변동을 심각하게 보고 있다는 뜻이며, 드물게
+      나타나는 이벤트라는 점에서 시장의 주목을 받았습니다.</span></li>
+  </ul>
+</div></section>
+
+<!-- ═══ 매주 수정 ⑥ : 다음 주 일정 ═══ -->
+<section><div class="wrap">
+  <h2>다 음 주</h2>
+  <ul class="cal">
+    <li><em>8 / 12 수</em><p>미국 7월 소비자물가(CPI) 발표<i>9월 FOMC 금리 결정에 영향을 주는 핵심 지표로 예고되어 있습니다</i></p></li>
+    <li><em>상 시</em><p>반도체 대형주 변동성 지속 여부<i>이번 주 삼성전자·SK하이닉스가 하루 단위로 급등락을 반복한 만큼, 다음 주 방향성이 주목됩니다</i></p></li>
+    <li><em>상 시</em><p>국제유가 추이<i>WTI가 한 주간 75~82달러대를 오간 만큼, 중동 정세에 따른 등락이 이어질 수 있습니다</i></p></li>
+  </ul>
+</div></section>
+
+<!-- ═══ 고정 : 아카이브 (매주 맨 위에 한 줄 추가) ═══ -->
+<section><div class="wrap">
+  <h2>지 난 브 리 핑</h2>
+  <div class="arc">
+    <a href="../weekly.html"><span class="arc-t">전체 주간 브리핑 목록 보기</span><span class="arc-d">→</span></a>
+  </div>
+</div></section>
+
+<!-- ═══ 고정 : 작성자 ═══ -->
+<section style="border-bottom:none"><div class="wrap">
+  <div class="who">
+    <div class="who-i">남</div>
+    <div>
+      <div class="who-n">남진우<span>JW Financial</span></div>
+      <p class="who-p">직장인과 사업자들의 자산관리를 위한 컨설팅을 해드립니다.
+         상담 문의 전 영상과 칼럼을 통해 먼저 도움을 받으셨으면 좋겠습니다.</p>
+      <div class="btns">
+        <a class="btn btn-p" href="../tips.html">재테크 영상 보기</a>
+        <a class="btn btn-s" href="../column.html">금융교육 칼럼</a>
+        <a class="btn btn-s" href="../consult.html">상담 신청</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <ul>
+    <li>본 자료는 정보 제공 및 교육 목적으로 작성되었으며, 특정 종목의 매수·매도를 권유하지 않습니다.</li>
+    <li>본 자료는 시장에서 이미 공개된 사실을 정리한 것으로, 향후 시장 방향에 대한 예측이나 보장을 포함하지 않습니다.</li>
+    <li>투자 판단과 그에 따른 결과의 책임은 투자자 본인에게 있습니다.</li>
+    <li>본 자료는 투자 결과에 대한 법적 증빙 자료로 사용될 수 없습니다.</li>
+  </ul>
+  <div class="src">시장 데이터 출처 · 루미네어IR, 키움증권 &nbsp;|&nbsp; 편집 · JW Financial 남진우</div>
+</div></footer>
+
+<script>
+  function closeMobile() {
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function initNav() {
+    const t = document.getElementById('navToggle');
+    const m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', () => {
+      t.classList.toggle('open');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    });
+    m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
+  }
+
+  function setupFreebieDropdown() {
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    const trigger = dropdown.querySelector('.submenu-toggle');
+    const submenu = dropdown.querySelector('.nav-submenu');
+    if (!trigger || !submenu) return;
+    const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const closeDropdown = () => { dropdown.classList.remove('open'); setExpanded(false); };
+    const toggleDropdown = () => {
+      const willOpen = !dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', willOpen);
+      setExpanded(willOpen);
+    };
+    trigger.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      toggleDropdown();
+    });
+    document.addEventListener('click', (event) => { if (!dropdown.contains(event.target)) closeDropdown(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDropdown(); });
+    submenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDropdown));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    setupFreebieDropdown();
+  });
+</script>
+
+</body>
+</html>
