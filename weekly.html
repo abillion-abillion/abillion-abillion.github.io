@@ -4,22 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- ═══ 매주 수정 ① : 검색·카톡 미리보기 ═══ -->
-<title>2026년 7월 3주차 주간 시황 | JW Financial</title>
-<meta name="description" content="7월 3주차 국내 증시 정리. 사이드카·서킷브레이커가 4번 발동된 극단적 변동성의 4일, 반도체 대장주가 지수를 흔든 흐름과 한국은행 금리 인상, 그리고 다음 주 확인할 일정까지 한 번에 정리했습니다.">
+<title>주간 시황 아카이브 | JW Financial</title>
+<meta name="description" content="JW Financial이 매주 정리하는 국내 증시 주간 시황 브리핑 아카이브입니다. 코스피·코스닥 등락과 수급, 그 주의 흐름을 사실과 해설 중심으로 정리합니다.">
 <link rel="canonical" href="https://jwfinancial.co.kr/weekly.html">
 <meta name="theme-color" content="#5C7A3E">
 
-<meta property="og:type" content="article">
-<meta property="og:title" content="2026년 7월 3주차 주간 시황">
-<meta property="og:description" content="사이드카·서킷브레이커가 4번 켜진 4일. 반도체가 흔든 지수와 한국은행 금리 인상까지 3분 정리.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="주간 시황 아카이브 | JW Financial">
+<meta property="og:description" content="매주 금요일 업데이트되는 국내 증시 주간 시황 브리핑을 한 곳에서 확인하세요.">
 <meta property="og:url" content="https://jwfinancial.co.kr/weekly.html">
 <meta property="og:image" content="https://jwfinancial.co.kr/weekly-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="JW Financial">
 <meta name="twitter:card" content="summary_large_image">
-<!-- ※ og:image 1200×630px. 카톡 링크 미리보기에 이 이미지가 뜹니다. -->
 
 <link rel="icon" type="image/svg+xml" href="/jw_financial_briefcase_icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,16 +27,10 @@
 <style>
 :root{
   --primary:#5C7A3E; --primary-light:#7A9E58; --primary-dark:#3F5B28;
-  --primary-deeper:#2A3E1A;
   --accent:#A8B89A;
-  --gold:#D4B04A; --gold-soft:#E5C97E;
-  --bg:#FAF8F4; --bg-tint:#EAF2E3; --bg-warm:#F5F0E4; --white:#fff;
+  --bg:#FAF8F4; --bg-tint:#EAF2E3; --white:#fff;
   --text-primary:#2C2C2C; --text-secondary:#5A5A5A; --text-muted:#8A8A8A;
   --border:#DDD9D0;
-  /* 시장 관례색 - 밝은 배경 */
-  --rise:#A8402F; --fall:#2F6690;
-  /* 어두운 배경용 밝은 상승/하락색 */
-  --rise-on-dark:#F08A6B; --fall-on-dark:#7DB4E0;
   --wrap:760px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -51,372 +43,66 @@ body{
 .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
 a{color:inherit; text-decoration:none}
 
-/* ── 샘플 배너 : 실제 게시 전 이 줄 삭제 ── */
-.demo{background:var(--rise); color:#fff; text-align:center;
-      padding:10px 16px; font-size:14px; font-weight:600}
-
-
-/* ═══ 통합 네비게이션 (JW Financial 브랜드 표준) ═══ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 20px 40px;
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(250,248,244,0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #DDD9D0;
-  font-family: 'Hahmlet', serif;
-}
-.nav-logo {
-  font-family: 'Hahmlet', serif; font-size: 20px; letter-spacing: 0.15em;
-  color: #5C7A3E; text-decoration: none; flex-shrink: 0; z-index: 2;
-  font-weight: 700;
-}
-.nav-links {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 1.9rem; list-style: none; z-index: 1;
-  margin: 0; padding: 0;
-}
-.nav-links > li { position: relative; list-style: none; }
-.nav-links a {
-  color: #2C2C2C; text-decoration: none;
-  font-size: 0.86rem; letter-spacing: 0.08em;
-  font-weight: 700; white-space: nowrap;
-  transition: color 0.3s;
-}
-.nav-links a:hover, .nav-links a.active { color: #5C7A3E; }
-.nav-dropdown > a { display: inline-flex; align-items: center; cursor: pointer; }
-.nav-dropdown.open .nav-submenu { display: flex; }
-.nav-submenu {
-  display: none; position: absolute; top: calc(100% + 14px); left: 50%;
-  transform: translateX(-50%); min-width: 170px;
-  padding: 0.6rem 0.7rem; border: 1px solid #DDD9D0;
-  background: rgba(250,248,244,0.98); list-style: none;
-  flex-direction: column; gap: 0.35rem; z-index: 30;
-  margin: 0;
-}
-.nav-submenu a {
-  display: block; padding: 0.55rem 0.8rem;
-  font-size: 0.82rem; letter-spacing: 0.06em;
-  color: #2C2C2C; text-decoration: none; font-weight: 500;
-  border-radius: 4px; transition: background 0.2s, color 0.2s;
-}
-.nav-submenu a:hover, .nav-submenu a.active {
-  background: #EAF2E3; color: #5C7A3E;
-}
-.nav-toggle {
-  display: none; background: none; border: none; cursor: pointer;
-  padding: 8px; z-index: 200;
-}
-.nav-toggle span {
-  display: block; width: 26px; height: 2px; background: #2C2C2C;
-  margin: 6px 0; transition: transform 0.3s, opacity 0.3s;
-}
-.nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.nav-toggle.open span:nth-child(2) { opacity: 0; }
-.nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-/* 모바일 풀스크린 메뉴 */
-.mobile-menu {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: #FAF8F4; z-index: 150;
-  display: flex; flex-direction: column; padding: 80px 24px 32px;
-  transform: translateX(100%); transition: transform 0.35s ease;
-  overflow-y: auto;
-}
-.mobile-menu.open { transform: translateX(0); }
-.menu-header {
-  position: absolute; top: 0; left: 0; right: 0;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px 24px; border-bottom: 1px solid #DDD9D0;
-  font-family: 'Hahmlet', serif; color: #5C7A3E; font-size: 16px;
-  letter-spacing: 0.1em; font-weight: 700;
-}
-.menu-close {
-  background: none; border: none; font-size: 22px; cursor: pointer;
-  color: #2C2C2C; padding: 4px 8px;
-}
-.mobile-link {
-  display: block; padding: 18px 4px;
-  border-bottom: 1px solid #DDD9D0;
-  color: #2C2C2C; text-decoration: none;
-  font-family: 'Hahmlet', serif; font-size: 18px; font-weight: 700;
-  letter-spacing: 0.06em;
-}
-.mobile-link:hover { color: #5C7A3E; }
-.mobile-submenu {
-  display: flex; flex-direction: column;
-  background: #F5F8F2; margin: 0 -24px;
-  padding: 4px 24px;
-}
-.mobile-sublink {
-  display: block; padding: 14px 8px;
-  color: #5A5A5A; text-decoration: none;
-  font-size: 15px; font-weight: 500;
-  border-bottom: 1px dashed #DDD9D0;
-}
-.mobile-sublink:last-child { border-bottom: none; }
-.mobile-sublink:hover { color: #5C7A3E; }
-
-body.menu-open { overflow: hidden; }
-
-@media (max-width: 768px) {
-  nav { padding: 16px 20px; }
-  .nav-links { display: none; }
-  .nav-toggle { display: block; }
+/* ── NAV (사이트 공통, column.html과 동일 규격) ── */
+nav{position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 3rem; background:rgba(250,248,244,0.93); backdrop-filter:blur(12px); border-bottom:1px solid var(--border)}
+.nav-logo{font-size:1.1rem; letter-spacing:0.15em; color:var(--primary); text-decoration:none; flex-shrink:0; z-index:2; font-weight:700}
+.nav-links{position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:1.8rem; list-style:none; margin:0; padding:0}
+.nav-links > li{position:relative}
+.nav-links a{color:var(--text-secondary); text-decoration:none; font-size:0.86rem; letter-spacing:0.08em; transition:color 0.3s; font-weight:700; white-space:nowrap}
+.nav-links a:hover, .nav-links a.active{color:var(--primary)}
+.nav-dropdown > a{display:inline-flex; align-items:center}
+.nav-submenu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); min-width:170px; padding:0.6rem 0.7rem; border:1px solid var(--border); background:rgba(250,248,244,0.98); list-style:none; flex-direction:column; gap:0.35rem; z-index:30; margin:0}
+.nav-dropdown.open .nav-submenu{display:flex}
+.nav-submenu a{display:block; padding:0.38rem 0.5rem; font-size:0.73rem; letter-spacing:0.04em; color:var(--text-secondary)}
+.nav-submenu a:hover, .nav-submenu a.active{color:var(--primary)}
+.nav-toggle{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px}
+.nav-toggle span{display:block; width:22px; height:1.5px; background:var(--text-primary); transition:all 0.3s}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mobile-menu{display:none; position:fixed; inset:0; background:rgba(250,248,244,0.98); z-index:99; flex-direction:column; align-items:center; justify-content:flex-start; gap:2rem}
+.mobile-menu.open{display:flex}
+.menu-header{display:flex; align-items:center; justify-content:space-between; width:100%; padding:1.2rem 2rem; border-bottom:1px solid var(--border); font-size:0.88rem; color:var(--primary); letter-spacing:0.12em}
+.menu-close{background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-primary); line-height:1; padding:4px}
+.mobile-link{font-size:1.25rem; color:var(--primary); text-decoration:none; letter-spacing:0.1em; transition:color 0.3s}
+.mobile-submenu{display:flex; flex-direction:column; align-items:center; gap:0.55rem; margin-top:-0.9rem; margin-bottom:0.15rem}
+.mobile-sublink{font-family:'Hahmlet',serif; font-size:0.95rem; color:var(--text-secondary); text-decoration:none; letter-spacing:0.05em}
+.mobile-sublink:hover{color:var(--primary)}
+@media (max-width:600px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
 }
 
-
-/* ── 히어로 (임팩트 강화 다크 버전) ── */
-.hero{
-  background:linear-gradient(135deg, var(--primary-deeper) 0%, var(--primary-dark) 100%);
-  color:#fff;
-  padding:96px 0 68px;
-  position:relative;
-  overflow:hidden;
-}
-/* 은은한 골드 라인 액센트 */
-.hero::before{
-  content:""; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-/* 우상단 은은한 반원 액센트 */
-.hero::after{
-  content:""; position:absolute; top:-140px; right:-140px;
-  width:340px; height:340px; border-radius:50%;
-  background:radial-gradient(circle, rgba(212,176,74,.12) 0%, transparent 70%);
-  pointer-events:none;
-}
-.wk{
-  display:inline-block; padding:6px 14px;
-  background:rgba(212,176,74,.14); border:1px solid rgba(212,176,74,.35);
-  color:var(--gold-soft); font-size:13px; font-weight:700;
-  letter-spacing:3px; border-radius:100px;
-}
-.pd{margin-top:14px; font-size:15px; color:rgba(255,255,255,.55); font-weight:400}
-.hero h1{
-  margin-top:22px; font-size:52px; font-weight:800; line-height:1.28;
-  letter-spacing:-1.8px; color:#fff;
-  text-shadow:0 2px 20px rgba(0,0,0,.15);
-}
-.hero h1 em{
-  font-style:normal;
-  background:linear-gradient(120deg, var(--gold-soft), var(--gold));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-
-.tot{
-  margin-top:44px; display:flex; gap:0; flex-wrap:wrap;
-  background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.08);
-  border-radius:10px; overflow:hidden;
-}
-.tot > div{
-  flex:1; padding:22px 24px;
-  border-right:1px solid rgba(255,255,255,.08);
-}
-.tot > div:last-child{border-right:none}
-.tot span{display:block; font-size:13px; color:rgba(255,255,255,.55); font-weight:400; letter-spacing:.5px}
-.tot strong{
-  display:block; margin-top:8px; font-size:38px; font-weight:800;
-  letter-spacing:-1.4px; font-variant-numeric:tabular-nums;
-}
-.r{color:var(--rise)} .b{color:var(--fall)} .g{color:var(--primary)}
-/* 다크 히어로 안에서만 밝은 상승·하락색 사용 */
-.hero .r{color:var(--rise-on-dark)}
-.hero .b{color:var(--fall-on-dark)}
-.hero .g{color:var(--gold-soft)}
-
-/* ── 시그니처 : 5일 막대 (꽉 찬 느낌 + 다크 히어로 대응) ─────
-   막대 높이(%) = |당일 등락률| ÷ 그 주 최대 등락률 × 100
-   ──────────────────────────────────────────── */
-.chart{
-  margin-top:52px; padding:28px 22px 22px;
-  background:rgba(0,0,0,.18);
-  border:1px solid rgba(255,255,255,.08); border-radius:10px;
-  position:relative;
-}
-.chart-h{
-  font-size:12px; letter-spacing:2.5px; color:rgba(255,255,255,.55);
-  font-weight:400; margin-bottom:24px; text-transform:uppercase;
-}
-.chart-body{position:relative; padding-left:44px}
-/* Y축 그리드라인 */
-.grid-line{
-  position:absolute; left:44px; right:0;
-  height:1px; background:rgba(255,255,255,.08);
-  pointer-events:none;
-}
-.grid-line span{
-  position:absolute; left:-40px; top:-9px;
-  font-size:11px; color:rgba(255,255,255,.4);
-  font-variant-numeric:tabular-nums; letter-spacing:.5px;
-  font-weight:500;
-}
-.grid-line.zero{background:rgba(255,255,255,.32); height:1.5px}
-.grid-line.zero span{color:rgba(255,255,255,.7); font-weight:800}
-.bars{display:flex; gap:0; position:relative; z-index:2}
-.bar{flex:1; display:flex; flex-direction:column; align-items:center}
-.bar-t,.bar-b{height:130px; width:100%; display:flex; flex-direction:column; align-items:center}
-.bar-t{justify-content:flex-end}
-.bar-b{justify-content:flex-start}
-.tr{height:104px; width:100%; display:flex; justify-content:center}
-.bar-t .tr{align-items:flex-end} .bar-b .tr{align-items:flex-start}
-.bar i{
-  display:block; width:78px;
-  box-shadow:0 4px 16px rgba(0,0,0,.28);
-}
-.bar-t i{
-  background:linear-gradient(180deg, var(--rise-on-dark), #C86A50);
-  border-radius:3px 3px 0 0;
-}
-.bar-b i{
-  background:linear-gradient(180deg, #5A9BC8, var(--fall-on-dark));
-  border-radius:0 0 3px 3px;
-}
-.bar u{
-  text-decoration:none; height:26px; line-height:26px; font-size:14px;
-  font-weight:800; font-variant-numeric:tabular-nums;
-}
-.bar-l{
-  margin-top:16px; font-size:14px; color:rgba(255,255,255,.6);
-  font-weight:600; letter-spacing:1.5px;
-}
+/* ── 히어로 ── */
+.hero{background:var(--bg-tint); border-bottom:1px solid var(--border); padding:130px 0 58px}
+.wk{font-size:14px; font-weight:700; letter-spacing:3px; color:var(--primary)}
+.hero h1{margin-top:14px; font-size:38px; font-weight:800; line-height:1.4;
+         letter-spacing:-1.6px; color:var(--primary-dark)}
+.hero p{margin-top:16px; font-size:16px; color:var(--text-secondary); max-width:560px}
 
 /* ── 본문 ── */
-section{padding:54px 0; border-bottom:1px solid var(--border)}
+main{padding:54px 0 20px}
 h2{font-size:13px; font-weight:800; letter-spacing:4px; color:var(--primary);
    display:flex; align-items:center; gap:14px; margin-bottom:28px}
 h2::after{content:""; flex:1; height:1px; background:var(--border)}
 
-.tbl{width:100%; border-collapse:collapse; background:var(--white);
-     border:1px solid var(--border); border-radius:8px; overflow:hidden}
-.tbl th,.tbl td{padding:15px 18px; text-align:left;
-                border-bottom:1px solid var(--border); font-size:16px}
-.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:none}
-.tbl th{width:44%; font-weight:500; color:var(--text-secondary); background:#F5F8F2}
-.tbl td{font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.3px}
-.tbl td small{font-weight:400; color:var(--text-muted); font-size:14px; margin-left:6px}
+/* 아카이브 카드 리스트 */
+.archive-list{border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)}
+.archive-item{display:block; padding:22px 24px; border-bottom:1px solid var(--border); transition:background .15s}
+.archive-item:last-child{border-bottom:none}
+.archive-item:hover{background:var(--bg-tint)}
+.archive-row{display:flex; justify-content:space-between; align-items:center; gap:16px}
+.archive-badge{font-size:13px; font-weight:700; letter-spacing:1px; color:var(--primary); margin-bottom:4px}
+.archive-title{font-size:18px; font-weight:800; color:var(--text-primary)}
+.archive-arrow{flex:none; font-size:15px; color:var(--text-muted)}
 
-/* ── 수급 : 다이버징 바 차트 (외국인·기관·개인 대비) ── */
-.flow-sec{background:var(--bg-tint); border-bottom:1px solid var(--border)}
-.flow-lead{
-  font-size:15px; color:var(--text-secondary); line-height:1.75;
-  margin-bottom:32px; padding:16px 20px;
-  background:rgba(255,255,255,.6); border-left:4px solid var(--primary);
-  border-radius:0 6px 6px 0;
-}
-.flow-lead b{color:var(--primary-dark); font-weight:800}
-.dv{
-  background:var(--white); border:1px solid var(--border);
-  border-radius:10px; padding:26px 28px; overflow:hidden;
-}
-.dv-row{
-  display:grid;
-  grid-template-columns: 82px 1fr 150px;
-  align-items:center; gap:18px;
-  padding:20px 0; border-bottom:1px dashed var(--border);
-}
-.dv-row:last-child{border-bottom:none}
-.dv-lbl{
-  font-size:17px; font-weight:800; color:var(--text-primary);
-  letter-spacing:-.3px;
-}
-.dv-bar{
-  position:relative; height:42px;
-  background:rgba(0,0,0,.04); border-radius:5px;
-}
-/* 중앙 0 라인 */
-.dv-bar::before{
-  content:""; position:absolute; left:50%; top:-6px; bottom:-6px;
-  width:2px; background:var(--text-secondary); opacity:.5;
-}
-/* 눈금 (25%, 75% 위치에 옅은 세로선) */
-.dv-bar::after{
-  content:""; position:absolute; left:25%; right:25%; top:0; bottom:0;
-  background:
-    linear-gradient(to right,
-      transparent 0,
-      transparent calc(50% - 1px),
-      rgba(0,0,0,.06) calc(50% - 1px),
-      rgba(0,0,0,.06) calc(50% + 1px),
-      transparent calc(50% + 1px)
-    );
-  pointer-events:none;
-}
-.dv-fill{
-  position:absolute; top:0; bottom:0;
-  border-radius:4px;
-  box-shadow:0 3px 10px rgba(0,0,0,.12);
-}
-.dv-fill.pos{
-  left:50%; background:linear-gradient(90deg, var(--rise), #C05841);
-}
-.dv-fill.neg{
-  right:50%; background:linear-gradient(270deg, var(--fall), #244F73);
-}
-.dv-val{
-  text-align:right; font-size:22px; font-weight:800;
-  font-variant-numeric:tabular-nums; letter-spacing:-.6px;
-}
-.dv-val small{
-  display:block; font-size:12px; font-weight:500;
-  color:var(--text-muted); margin-top:2px; letter-spacing:.5px;
-}
-.dv-axis{
-  display:grid; grid-template-columns:82px 1fr 150px; gap:18px;
-  margin-top:10px; align-items:center;
-}
-.dv-axis-scale{
-  position:relative; height:14px;
-  font-size:11px; color:var(--text-muted); font-variant-numeric:tabular-nums;
-}
-.dv-axis-scale span{
-  position:absolute; top:0; transform:translateX(-50%);
-}
-.dv-cap{
-  margin-top:24px; padding:14px 18px;
-  background:var(--bg-warm); border-radius:6px;
-  font-size:14px; color:var(--text-secondary); line-height:1.6;
-}
-.dv-cap b{color:var(--primary-dark); font-weight:800}
-
-.flow{margin-bottom:40px}
-.flow:last-child{margin-bottom:0}
-.flow h3{font-size:24px; font-weight:800; letter-spacing:-.8px;
-         line-height:1.45; margin-bottom:12px; color:var(--primary-dark)}
-.flow h3::before{content:""; display:inline-block; width:22px; height:3px;
-                 background:var(--primary-light); vertical-align:middle; margin-right:12px}
-.flow p{margin-bottom:14px; color:var(--text-secondary)}
-.flow p:last-child{margin-bottom:0}
-.flow b{font-weight:800; color:var(--text-primary)}
-
-.exp{background:var(--white); border:1px solid var(--border); border-radius:8px; padding:6px 26px}
-.exp li{list-style:none; padding:24px 0; border-bottom:1px dashed var(--border)}
-.exp li:last-child{border-bottom:none}
-/* 항목 제목(li의 직계 자식 b)만 블록으로 */
-.exp > li > b{display:block; font-size:17px; font-weight:800; color:var(--primary); margin-bottom:8px}
-.exp span{color:var(--text-secondary); line-height:1.75}
-/* 본문 안 강조(span 안의 b)는 인라인으로 자연스럽게 */
-.exp span b{font-weight:800; color:var(--primary-dark)}
-
-.cal{border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)}
-.cal li{list-style:none; display:flex; gap:22px; padding:20px 24px; border-bottom:1px solid var(--border)}
-.cal li:last-child{border-bottom:none}
-.cal em{font-style:normal; flex:none; width:96px; font-size:14px; font-weight:800;
-        color:var(--primary); padding-top:3px}
-.cal p{font-size:16px; line-height:1.6; font-weight:700}
-.cal p i{font-style:normal; display:block; font-size:14px; color:var(--text-muted);
-         font-weight:400; margin-top:3px}
-
-.arc a{display:flex; justify-content:space-between; align-items:center; gap:16px;
-       padding:18px 4px; border-bottom:1px solid var(--border)}
-.arc a:last-child{border-bottom:none}
-.arc a:hover .arc-t{color:var(--primary)}
-.arc-t{font-weight:600; font-size:16px; transition:color .15s}
-.arc-d{flex:none; font-size:14px; color:var(--text-muted); font-variant-numeric:tabular-nums}
+.state-msg{padding:40px 24px; text-align:center; color:var(--text-muted); font-size:15px;
+           border:1px dashed var(--border); border-radius:8px; background:var(--white)}
 
 /* 작성자 */
 .who{display:flex; gap:20px; align-items:flex-start; background:var(--white);
-     border:1px solid var(--border); border-radius:8px; padding:28px}
+     border:1px solid var(--border); border-radius:8px; padding:28px; margin-top:44px}
 .who-i{flex:none; width:56px; height:56px; border-radius:50%; background:var(--primary);
        color:#fff; display:flex; align-items:center; justify-content:center;
        font-weight:800; font-size:20px; letter-spacing:-1px}
@@ -432,7 +118,7 @@ h2::after{content:""; flex:1; height:1px; background:var(--border)}
 .btn-s:hover{background:var(--bg-tint)}
 
 footer{background:var(--primary-dark); color:#C3D4B4; padding:44px 0 56px;
-       font-size:14px; line-height:1.9}
+       font-size:14px; line-height:1.9; margin-top:54px}
 footer li{list-style:none; padding-left:15px; position:relative; font-weight:400}
 footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)}
 .src{margin-top:20px; padding-top:18px; border-top:1px solid rgba(255,255,255,.16);
@@ -440,27 +126,15 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
 
 @media (max-width:640px){
   body{font-size:16px}
-  .hero{padding:36px 0 42px}
-  .hero h1{font-size:28px; letter-spacing:-1.2px}
-  .tot{gap:26px} .tot strong{font-size:25px}
-  .bar-t,.bar-b{height:106px}
-  .tr{height:84px}
-  .bar i{width:26px}
-  .bar u{font-size:11px; height:22px; line-height:22px}
-  .bar-l{margin-top:9px; font-size:13px}
-  section{padding:38px 0}
-  .flow h3{font-size:21px}
-  .tbl th,.tbl td{padding:13px 14px; font-size:15px}
-  .cal li{flex-direction:column; gap:6px}
-  .cal em{width:auto}
-  .nav-l{gap:14px; font-size:14px}
+  .hero{padding:110px 0 42px}
+  .hero h1{font-size:26px; letter-spacing:-1.2px}
+  main{padding:38px 0 10px}
+  .archive-title{font-size:16px}
   .who{flex-direction:column; gap:16px}
 }
 </style>
 </head>
 <body>
-
-<!-- 실제 게시 전 이 주석 아래 배너를 남기고 싶으시면 남기시고, 아니면 이 줄 통째로 삭제 -->
 
 <nav>
   <a href="index.html" class="nav-logo">JW Financial Consulting</a>
@@ -487,11 +161,10 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
   </button>
 </nav>
 
-<!-- 모바일 풀스크린 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="menu-header">
     <span>JW Financial Consulting</span>
-    <button class="menu-close" onclick="document.getElementById('navToggle').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow='';">✕</button>
+    <button class="menu-close" onclick="closeMobile()">✕</button>
   </div>
   <a href="index.html" class="mobile-link">홈</a>
   <a href="services.html" class="mobile-link">서비스</a>
@@ -509,189 +182,19 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
   <a href="consult.html" class="mobile-link">상담 신청</a>
 </div>
 
-<!-- ═══ 매주 수정 ② : 히어로 ═══ -->
 <header class="hero"><div class="wrap">
-  <div class="wk">2026년 7월 3주차</div>
-  <div class="pd">7월 13일 (월) — 7월 16일 (목)</div>
-
-  <h1>반도체가 흔든 지수,<br><em>사이드카가 매일 켜진</em> 한 주</h1>
-
-  <div class="tot">
-    <div><span>KOSPI 주간</span><strong class="b">−8.8%</strong></div>
-    <div><span>KOSDAQ 주간</span><strong class="b">−5.5%</strong></div>
-    <div><span>사이드카·서킷</span><strong class="g">4회 발동</strong></div>
-  </div>
-
-  <div class="chart">
-    <div class="chart-h">코스피 일별 등락 (월~목)</div>
-    <div class="chart-body">
-      <!-- Y축 그리드라인 (기준: 최대 절대값 8.95%를 104px 트랙 상단으로) -->
-      <div class="grid-line" style="top:0"><span>+8%</span></div>
-      <div class="grid-line" style="top:46px"><span>+4%</span></div>
-      <div class="grid-line zero" style="top:104px"><span>0</span></div>
-      <div class="grid-line" style="top:162px"><span>−4%</span></div>
-      <div class="grid-line" style="top:220px"><span>−8%</span></div>
-      <div class="bars">
-        <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:100%"></i></div><u class="b">−8.95%</u></div><div class="bar-l">월</div></div>
-        <div class="bar"><div class="bar-t"><u class="r">+0.73%</u><div class="tr"><i style="height:8%"></i></div></div><div class="bar-b"></div><div class="bar-l">화</div></div>
-        <div class="bar"><div class="bar-t"><u class="r">+6.24%</u><div class="tr"><i style="height:70%"></i></div></div><div class="bar-b"></div><div class="bar-l">수</div></div>
-        <div class="bar"><div class="bar-t"></div><div class="bar-b"><div class="tr"><i style="height:71%"></i></div><u class="b">−6.37%</u></div><div class="bar-l">목</div></div>
-      </div>
-    </div>
-  </div>
+  <div class="wk">JW FINANCIAL</div>
+  <h1>주간 시황 아카이브</h1>
+  <p>매주 금요일 장 마감 후, 그 주 코스피·코스닥의 등락과 수급, 흐름을
+     사실과 해설 중심으로 정리해 올립니다. 전망이나 매매 권유는 담지 않습니다.</p>
 </div></header>
 
-<main>
-
-<!-- ═══ 매주 수정 ③ : 숫자 ═══ -->
-<section><div class="wrap">
-  <h2>숫 자</h2>
-  <table class="tbl">
-    <tr><th>KOSPI 종가 (7/16)</th><td>6,820.60 <small class="b">주간 −8.8%</small></td></tr>
-    <tr><th>KOSDAQ 종가 (7/16)</th><td>791.84 <small class="b">주간 −5.5%</small></td></tr>
-    <tr><th>주중 최저점 (7/14 장중)</th><td>6,448.86 <small>포인트</small></td></tr>
-    <tr><th>주중 최고점 (7/15 장중)</th><td>7,400 <small>포인트 이상</small></td></tr>
-    <tr><th>사이드카·서킷브레이커</th><td class="g">4회 <small>월 2건 · 수 1건 · 목 1건</small></td></tr>
-    <tr><th>원 / 달러 (7/16 기준)</th><td>1,489원 <small>대</small></td></tr>
-    <tr><th>WTI 국제유가</th><td class="r">80달러 <small>선 근접</small></td></tr>
-    <tr><th>한국은행 기준금리</th><td class="r">2.75% <small>0.25%p 인상 · 3년 6개월 만</small></td></tr>
-  </table>
-</div></section>
-
-<!-- ═══ 매주 수정 ③-2 : 수급 (누가 사고 누가 팔았나) ═══ -->
-<section class="flow-sec"><div class="wrap">
-  <h2>수 급</h2>
-  <p class="flow-lead">
-    이번 주 코스피에서 <b>기관이 압도적으로 팔았고</b>, 외국인과 개인이 나눠 받아냈습니다.
-    지수를 흔든 매물의 진원지가 어디였는지 한눈에 보입니다.
-  </p>
-
-  <div class="dv">
-    <div class="dv-row">
-      <div class="dv-lbl">기관</div>
-      <div class="dv-bar"><div class="dv-fill neg" style="width:44%"></div></div>
-      <div class="dv-val b">−1조 7,697억<small>4일 누적 순매도</small></div>
-    </div>
-    <div class="dv-row">
-      <div class="dv-lbl">개인</div>
-      <div class="dv-bar"><div class="dv-fill pos" style="width:26%"></div></div>
-      <div class="dv-val r">+1조 562억<small>4일 누적 순매수</small></div>
-    </div>
-    <div class="dv-row">
-      <div class="dv-lbl">외국인</div>
-      <div class="dv-bar"><div class="dv-fill pos" style="width:13%"></div></div>
-      <div class="dv-val r">+5,318억<small>4일 누적 순매수</small></div>
-    </div>
-
-    <div class="dv-axis">
-      <div></div>
-      <div class="dv-axis-scale">
-        <span style="left:0%">−2조</span>
-        <span style="left:25%">−1조</span>
-        <span style="left:50%">0</span>
-        <span style="left:75%">+1조</span>
-        <span style="left:100%">+2조</span>
-      </div>
-      <div></div>
-    </div>
-
-    <div class="dv-cap">
-      기관은 <b>−1조 7,697억</b>으로 4일간 가장 크게 팔았고,
-      개인은 <b>+1조 562억</b>으로 가장 크게 받아냈습니다.
-      외국인은 소폭 매수 우위(<b>+5,318억</b>)로 균형을 잡았습니다.
-    </div>
-  </div>
-</div></section>
-
-<!-- ═══ 매주 수정 ④ : 흐름 (주제별, 날짜순 아님) ═══ -->
-<section><div class="wrap">
-  <h2>흐 름</h2>
-
-  <div class="flow">
-    <h3>반도체 대장주가 매일 지수를 결정했습니다</h3>
-    <p>4일 내내 <b>삼성전자</b>와 <b>SK하이닉스</b>가 지수 방향을 좌우했습니다.
-       월요일에는 두 종목이 <b>−10.7%</b>·<b>−15.4%</b>까지 밀리며 서킷브레이커를 불렀고,
-       수요일에는 미국 물가 지표 서프라이즈에 힘입어 지수를 6% 넘게 밀어 올렸다가,
-       목요일 다시 <b>−8.8%</b>·<b>−11.5%</b>로 마감했습니다.</p>
-    <p>이 두 종목의 시가총액 비중이 코스피 상위에서 60%를 넘습니다.
-       사실상 이번 주의 지수는 이 두 회사의 하루 등락 그림자였다고 봐도 크게 틀리지 않습니다.
-       실적 훼손이 아니라 <b>수급 되돌림·심리 이슈</b>였다는 게 대다수 증권사의 진단이었습니다.</p>
+<main><div class="wrap">
+  <h2>전 체 목 록</h2>
+  <div id="archive-list">
+    <div class="state-msg" id="archive-state">목록을 불러오는 중입니다…</div>
   </div>
 
-  <div class="flow">
-    <h3>한국은행이 3년 6개월 만에 금리를 인상했습니다</h3>
-    <p>목요일 금융통화위원회에서 기준금리를 <b>0.25%p 올린 2.75%</b>로 결정했습니다.
-       12개월간 이어진 동결을 끝내고 다시 긴축으로 방향을 바꿨고, 위원 7명이 <b>전원 찬성</b>했습니다.
-       시장은 여기서 그치지 않고 <b>8월 또는 10월 추가 인상</b> 가능성까지 반영하기 시작했습니다.</p>
-    <p>주식뿐 아니라 예금 금리, 대출 금리, 채권 가격이 함께 움직이는 이벤트라
-       주식 계좌만 보시는 분도 함께 살펴볼 대목입니다.</p>
-  </div>
-
-  <div class="flow">
-    <h3>중동 정세와 유가가 배경에 계속 깔려 있었습니다</h3>
-    <p>이란 관련 지정학 리스크가 이어지며 <b>WTI 국제유가</b>가 80달러선에 근접했습니다.
-       호르무즈 해협 통행 부담금 이슈까지 겹치며 정유·해운 종목이 반사이익을 받은 반면,
-       유가 부담이 물가 지표에 반영될 가능성은 금리 인상 압력과 이어져 있습니다.</p>
-  </div>
-
-  <div class="flow">
-    <h3>이번 주 반등을 만든 재료 두 가지</h3>
-    <p>수요일 대반등의 뒷배경은 두 가지였습니다. 하나는 미국 <b>6월 소비자물가</b>가
-       예상을 크게 하회하며 금리 공포를 하루 아침에 걷어낸 것,
-       다른 하나는 ASML·SK하이닉스 미국주식(ADR)의 실적 서프라이즈로
-       <b>메모리 둔화론</b>이 잠재워진 것입니다.
-       여기에 국내에서는 <b>국민성장펀드 150→200조 확대</b> 정책이 심리적 지지선을 더했습니다.</p>
-  </div>
-</div></section>
-
-<!-- ═══ 매주 수정 ⑤ : 용어·인과 설명. 전망·판단·권유 금지 ═══ -->
-<section><div class="wrap">
-  <h2>이 건 무 슨 뜻 일 까 요</h2>
-  <ul class="exp">
-    <li><b>서킷브레이커가 뭔가요</b>
-      <span>지수가 짧은 시간에 8% 넘게 급락하면 <b>주식 시장 전체 거래를 20분간 완전히 멈추는</b> 제도입니다.
-      사이드카(선물 급변시 5분 정지)보다 한 단계 위인 조치이고,
-      국내에서는 올해 7번째, 월요일 하루에만 사이드카와 서킷브레이커가 함께 발동됐습니다.
-      시장을 진정시키기 위한 장치이지, 무언가를 사거나 팔라는 신호가 아닙니다.</span></li>
-    <li><b>왜 반도체 두 종목이 지수를 흔들까요</b>
-      <span>코스피 지수는 시가총액이 큰 기업의 영향을 크게 받습니다.
-      삼성전자와 SK하이닉스 두 종목이 코스피 시가총액에서 차지하는 비중이 20%가 훌쩍 넘습니다.
-      이 두 종목이 10%씩 움직이면 지수도 2%씩 움직이는 셈이라, 다른 종목이 아무리 잘해도 이 흐름을 이기기 어렵습니다.</span></li>
-    <li><b>금리 인상이 왜 주식에 부담이 될까요</b>
-      <span>기준금리가 오르면 예금·채권 같은 안전자산의 이자가 올라갑니다.
-      상대적으로 주식의 매력이 줄어들고, 대출로 주식을 사는 부담도 커집니다.
-      또 기업이 미래에 벌어들일 이익을 오늘 가치로 환산할 때 쓰는 <b>할인율</b>이 커져서,
-      성장주(미래 이익 비중이 큰 종목)의 주가가 특히 민감해집니다.
-      이번 주 목요일 하락에서 성장주가 더 크게 밀린 이유가 이것입니다.</span></li>
-    <li><b>지금 같은 변동성이 흔한가요</b>
-      <span>단순히 말하면 흔하지 않습니다. 4일 사이에 −9%, +6%, −6%를 연달아 기록한 건
-      최근 몇 년을 통틀어도 손에 꼽습니다. 다만 이런 국면이 <b>드물다는 것</b>과
-      <b>언젠가 다시 온다는 것</b>은 별개입니다. 시장의 정상 상태에는 이런 국면이 주기적으로 포함된다는 게
-      역사적으로 관찰된 사실이며, 그래서 자산배분과 시간분산이 이야기됩니다.</span></li>
-  </ul>
-</div></section>
-
-<!-- ═══ 매주 수정 ⑥ : 다음 주 일정 ═══ -->
-<section><div class="wrap">
-  <h2>다 음 주</h2>
-  <ul class="cal">
-    <li><em>다음 주 내내</em><p>미국·국내 주요 기업 2분기 실적 발표<i>수요일 대반등을 만들었던 실적 서프라이즈 흐름이 이어질지가 관건입니다</i></p></li>
-    <li><em>다음 주 목</em><p>한국은행 총재 발언 · 추가 인상 신호 여부<i>이번 인상이 시작인지 마무리인지에 대한 시장 판단이 결정됩니다</i></p></li>
-    <li><em>상 시</em><p>원/달러 1,490원선 · WTI 80달러선 유지 여부<i>두 선이 뚫리는 방향에 따라 국내 물가·금리 이야기가 다시 나올 수 있습니다</i></p></li>
-    <li><em>상 시</em><p>사이드카 발동 여부<i>이번 주처럼 잦은 발동이 다음 주에도 이어지는지가 변동성 국면의 종료·연장을 가르는 지표입니다</i></p></li>
-  </ul>
-</div></section>
-
-<!-- ═══ 고정 : 아카이브 (매주 맨 위에 한 줄 추가) ═══ -->
-<section><div class="wrap">
-  <h2>지 난 브 리 핑</h2>
-  <div class="arc" style="text-align:center; padding:36px 4px; color:var(--text-muted); font-size:15px">
-    지난 브리핑 아카이브는 곧 준비될 예정입니다.
-  </div>
-</div></section>
-
-<!-- ═══ 고정 : 작성자 ═══ -->
-<section style="border-bottom:none"><div class="wrap">
   <div class="who">
     <div class="who-i">남</div>
     <div>
@@ -705,9 +208,7 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
       </div>
     </div>
   </div>
-</div></section>
-
-</main>
+</div></main>
 
 <footer><div class="wrap">
   <ul>
@@ -719,41 +220,108 @@ footer li::before{content:"·"; position:absolute; left:2px; color:var(--accent)
   <div class="src">시장 데이터 출처 · 루미네어IR, 키움증권 &nbsp;|&nbsp; 편집 · JW Financial 남진우</div>
 </div></footer>
 
-
 <script>
-(function(){
-  // 햄버거 토글
-  var toggle = document.getElementById('navToggle');
-  var mobile = document.getElementById('mobileMenu');
-  if (toggle && mobile) {
-    toggle.addEventListener('click', function(){
-      var willOpen = !toggle.classList.contains('open');
-      toggle.classList.toggle('open', willOpen);
-      mobile.classList.toggle('open', willOpen);
-      document.body.style.overflow = willOpen ? 'hidden' : '';
-    });
+  function closeMobile() {
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
   }
-  // 무료 혜택 드롭다운
-  var dd = document.querySelector('.nav-dropdown');
-  if (dd) {
-    var trg = dd.querySelector('.submenu-toggle');
-    if (trg) {
-      trg.addEventListener('click', function(e){
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        e.preventDefault();
-        var open = !dd.classList.contains('open');
-        dd.classList.toggle('open', open);
-        trg.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-      document.addEventListener('click', function(e){
-        if (!dd.contains(e.target)) {
-          dd.classList.remove('open');
-          trg.setAttribute('aria-expanded', 'false');
-        }
-      });
+
+  function initNav() {
+    const t = document.getElementById('navToggle');
+    const m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', () => {
+      t.classList.toggle('open');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    });
+    m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
+  }
+
+  function setupFreebieDropdown() {
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    const trigger = dropdown.querySelector('.submenu-toggle');
+    const submenu = dropdown.querySelector('.nav-submenu');
+    if (!trigger || !submenu) return;
+    const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const closeDropdown = () => { dropdown.classList.remove('open'); setExpanded(false); };
+    const toggleDropdown = () => {
+      const willOpen = !dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', willOpen);
+      setExpanded(willOpen);
+    };
+    trigger.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      toggleDropdown();
+    });
+    document.addEventListener('click', (event) => { if (!dropdown.contains(event.target)) closeDropdown(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDropdown(); });
+    submenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDropdown));
+  }
+
+  /* ── 아카이브 목록: /weekly 폴더를 GitHub API로 읽어 카드 렌더링 ──
+     파일명 규칙: weekly_YY.MM_N.html  (예: weekly_26.08_3.html → 2026년 8월 3주차)
+     새 주차 페이지를 이 규칙대로 /weekly 폴더에 추가만 하면 이 페이지가 자동으로 반영합니다. */
+  async function loadArchive() {
+    const listEl = document.getElementById('archive-list');
+    const stateEl = document.getElementById('archive-state');
+    const API_URL = 'https://api.github.com/repos/abillion-abillion/abillion-abillion.github.io/contents/weekly';
+    const NAME_RE = /^weekly_(\d{2})\.(\d{2})_(\d+)\.html$/;
+
+    try {
+      const res = await fetch(API_URL, { headers: { 'Accept': 'application/vnd.github+json' } });
+      if (!res.ok) throw new Error('GitHub API 응답 오류: ' + res.status);
+      const files = await res.json();
+      if (!Array.isArray(files)) throw new Error('예상치 못한 응답 형식');
+
+      const items = files
+        .map(f => {
+          const m = f.name.match(NAME_RE);
+          if (!m) return null;
+          const [, yy, mm, week] = m;
+          return {
+            name: f.name,
+            year: 2000 + parseInt(yy, 10),
+            month: parseInt(mm, 10),
+            week: parseInt(week, 10),
+            sortKey: parseInt(yy, 10) * 10000 + parseInt(mm, 10) * 100 + parseInt(week, 10)
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.sortKey - a.sortKey);
+
+      if (items.length === 0) {
+        stateEl.textContent = '아직 등록된 주간 브리핑이 없습니다.';
+        return;
+      }
+
+      const html = '<div class="archive-list">' + items.map(it => (
+        '<a class="archive-item" href="weekly/' + it.name + '">' +
+          '<div class="archive-row">' +
+            '<div>' +
+              '<div class="archive-badge">' + it.year + '년 ' + it.month + '월 ' + it.week + '주차</div>' +
+              '<div class="archive-title">주간 시황 브리핑 보기</div>' +
+            '</div>' +
+            '<span class="archive-arrow">→</span>' +
+          '</div>' +
+        '</a>'
+      )).join('') + '</div>';
+
+      listEl.innerHTML = html;
+    } catch (err) {
+      stateEl.textContent = '목록을 불러오지 못했습니다. 잠시 후 새로고침 해주세요.';
+      console.error(err);
     }
   }
-})();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    setupFreebieDropdown();
+    loadArchive();
+  });
 </script>
 
 </body>
