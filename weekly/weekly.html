@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주간 시황 Weekly Briefing · JW Financial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#5C7A3E;
+    --primary-dark:#3F5B28;
+    --accent:#A8B89A;
+    --bg:#FAF8F4;
+    --bg-tint:#EAF2E3;
+    --text:#2C2C2C;
+    --border:#DDD9D0;
+    --text-primary:#1A1A1A;
+    --text-secondary:#5A5A5A;
+    --text-muted:#8A8A8A;
+    --border-light:#EDEBE6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Hahmlet', serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+
+  /* ── NAV (사이트 공통) ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; background: rgba(250,248,244,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; font-weight: 700; }
+  .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links > li { position: relative; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.86rem; letter-spacing: 0.08em; transition: color 0.3s; font-weight: 700; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+  .nav-dropdown > a { display: inline-flex; align-items: center; }
+  .nav-submenu { display: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); min-width: 170px; padding: 0.6rem 0.7rem; border: 1px solid var(--border); background: rgba(250,248,244,0.98); list-style: none; flex-direction: column; gap: 0.35rem; z-index: 30; margin:0; }
+  .nav-dropdown.open .nav-submenu { display: flex; }
+  .nav-submenu a { display: block; padding: 0.38rem 0.5rem; font-size: 0.73rem; letter-spacing: 0.04em; color: var(--text-secondary); }
+  .nav-submenu a:hover, .nav-submenu a.active { color: var(--primary); }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.3s; }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px,4.5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px,-4.5px); }
+  .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(250,248,244,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2rem; }
+  .mobile-menu.open { display: flex; }
+  .menu-header { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--primary); letter-spacing: 0.12em; }
+  .menu-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px; }
+  .mobile-link { font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+  .mobile-submenu { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; margin-top: -0.9rem; margin-bottom: 0.15rem; }
+  .mobile-sublink { font-family: 'Hahmlet', serif; font-size: 0.95rem; color: var(--text-secondary); text-decoration: none; letter-spacing: 0.05em; }
+  .mobile-sublink:hover { color: var(--primary); }
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+  }
+
+  .wrap{max-width:920px; margin:0 auto; padding:120px 24px 80px;}
+  h1{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    color:var(--primary-dark);
+    margin:0 0 8px;
+  }
+  p.lead{
+    text-align:center;
+    color:#6b6b60;
+    font-size:15px;
+    margin:0 0 44px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
+    gap:18px;
+  }
+  .card{
+    display:flex;
+    align-items:flex-start;
+    padding:22px 18px;
+    min-height:150px;
+    background:var(--bg-tint);
+    border:1px solid var(--border);
+    border-radius:10px;
+    text-decoration:none;
+    color:var(--text);
+    font-weight:600;
+    font-size:17px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{border-color:var(--primary); transform:translateY(-2px);}
+  .card.skeleton{
+    background:#E4E4DC;
+    color:transparent;
+    pointer-events:none;
+    animation:pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.55;} }
+  .empty, .error{
+    text-align:center;
+    color:#8a8a80;
+    font-size:14.5px;
+    padding:40px 0;
+    grid-column:1 / -1;
+  }
+  .error a{color:var(--primary-dark);}
+  footer{
+    text-align:center;
+    padding:24px;
+    font-size:12px;
+    color:#9a9a90;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="index.html">홈</a></li>
+    <li><a href="services.html">서비스</a></li>
+    <li><a href="reviews.html">후기</a></li>
+    <li class="nav-dropdown">
+      <a href="freebie.html" class="submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="tips.html">재테크 영상</a></li>
+        <li><a href="guides.html">무료 전자책 시리즈</a></li>
+        <li><a href="education.html">왕쉬운 금융교육</a></li>
+      </ul>
+    </li>
+    <li><a href="weekly.html" class="active">주간 시황</a></li>
+    <li><a href="column.html">칼럼</a></li>
+    <li><a href="kakotalk-consulting-guide.html">컨설팅 안내</a></li>
+    <li><a href="consult.html">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="closeMobile()">✕</button>
+  </div>
+  <a href="index.html" class="mobile-link">홈</a>
+  <a href="services.html" class="mobile-link">서비스</a>
+  <a href="reviews.html" class="mobile-link">후기</a>
+  <a href="freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="guides.html" class="mobile-sublink">무료 전자책 시리즈</a>
+    <a href="education.html" class="mobile-sublink">왕쉬운 금융교육</a>
+  </div>
+  <a href="weekly.html" class="mobile-link">주간 시황</a>
+  <a href="column.html" class="mobile-link">칼럼</a>
+  <a href="kakotalk-consulting-guide.html" class="mobile-link">컨설팅 안내</a>
+  <a href="consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<div class="wrap">
+  <h1>주간 시황 Weekly Briefing</h1>
+  <p class="lead">매주 발행되는 JW Financial 마감 시황 브리핑입니다. 카드를 눌러 각 주차 브리핑을 확인하세요.</p>
+  <div class="grid" id="grid">
+    <!-- 로딩 중 스켈레톤 -->
+    <div class="card skeleton">불러오는 중</div>
+    <div class="card skeleton">불러오는 중</div>
+    <div class="card skeleton">불러오는 중</div>
+  </div>
+</div>
+
+<footer>© 2026 JW Financial. All rights reserved.</footer>
+
+<script>
+  // ── 설정 ──
+  // GitHub 저장소의 /weekly 폴더를 읽어와, 그 안의 weekly_YY.MM_N.html 파일들을
+  // 자동으로 카드로 나열합니다. 새 주차 파일을 이 폴더에 넣고 push만 하면
+  // 이 페이지는 별도 수정 없이 그 파일을 자동으로 목록에 추가합니다.
+  const REPO_OWNER = 'abillion-abillion';
+  const REPO_NAME = 'abillion-abillion.github.io';
+  const FOLDER = 'weekly';
+  const FILENAME_PATTERN = /^weekly_(\d{2})\.(\d{2})_(\d+)\.html$/;
+
+  // 폴더를 못 읽어올 때(오프라인, API 장애 등) 최소한 보여줄 안전망 목록.
+  // 새 주차를 추가할 때 이 배열도 함께 갱신해두면 더 안전합니다(선택 사항).
+  const FALLBACK = [
+    { file: 'weekly_26.08_4.html' }
+  ];
+
+  function labelFromFilename(name) {
+    const m = name.match(FILENAME_PATTERN);
+    if (!m) return null;
+    const [, yy, mm, week] = m;
+    return {
+      file: name,
+      yy, mm, week,
+      sortKey: parseInt(yy,10) * 10000 + parseInt(mm,10) * 100 + parseInt(week,10),
+      label: `${yy}년 ${parseInt(mm,10)}월 ${parseInt(week,10)}주차`
+    };
+  }
+
+  function render(items) {
+    const grid = document.getElementById('grid');
+    if (!items.length) {
+      grid.innerHTML = '<div class="empty">아직 등록된 주간 브리핑이 없습니다.</div>';
+      return;
+    }
+    items.sort((a, b) => b.sortKey - a.sortKey);
+    grid.innerHTML = items.map(it =>
+      `<a class="card" href="./weekly/${it.file}">${it.label}</a>`
+    ).join('');
+  }
+
+  async function load() {
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FOLDER}`,
+        { headers: { 'Accept': 'application/vnd.github+json' } }
+      );
+      if (!res.ok) throw new Error('folder fetch failed: ' + res.status);
+      const files = await res.json();
+      const items = files
+        .map(f => labelFromFilename(f.name))
+        .filter(Boolean);
+      render(items.length ? items : FALLBACK.map(f => labelFromFilename(f.file)).filter(Boolean));
+    } catch (e) {
+      // API 실패 시 안전망 목록으로 대체
+      const items = FALLBACK.map(f => labelFromFilename(f.file)).filter(Boolean);
+      render(items);
+    }
+  }
+
+  function closeMobile() {
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function initNav() {
+    const t = document.getElementById('navToggle');
+    const m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', () => {
+      t.classList.toggle('open');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    });
+    m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
+  }
+
+  function setupFreebieDropdown() {
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    const trigger = dropdown.querySelector('.submenu-toggle');
+    const submenu = dropdown.querySelector('.nav-submenu');
+    if (!trigger || !submenu) return;
+    const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const closeDropdown = () => { dropdown.classList.remove('open'); setExpanded(false); };
+    const toggleDropdown = () => {
+      const willOpen = !dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', willOpen);
+      setExpanded(willOpen);
+    };
+    trigger.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      toggleDropdown();
+    });
+    document.addEventListener('click', (event) => { if (!dropdown.contains(event.target)) closeDropdown(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDropdown(); });
+    submenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDropdown));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    setupFreebieDropdown();
+  });
+
+  load();
+</script>
+
+</body>
+</html>
