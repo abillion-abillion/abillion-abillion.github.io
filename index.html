@@ -142,6 +142,8 @@
   }
   .nav-submenu a:hover,
   .nav-submenu a.active { color: var(--primary); }
+  .nav-dropdown--apply:hover > .nav-submenu,
+  .nav-dropdown--apply:focus-within > .nav-submenu { display: flex; }
   .hero {
     min-height: 100vh;
     display: flex;
@@ -745,7 +747,13 @@
     <li><a href="weekly.html">주간 시황</a></li>
     <li><a href="column.html">칼럼</a></li>
     <li><a href="kakotalk-consulting-guide.html">컨설팅 안내</a></li>
-    <li><a href="consult.html">상담 신청</a></li>
+    <li class="nav-dropdown nav-dropdown--apply">
+      <a href="consult.html" class="submenu-toggle">신청/문의</a>
+      <ul class="nav-submenu">
+        <li><a href="consult.html">상담 신청</a></li>
+        <li><a href="2030-seminar.html">금융취업 세미나</a></li>
+      </ul>
+    </li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
     <span></span><span></span><span></span>
@@ -771,7 +779,11 @@
   <a href="weekly.html" class="mobile-link">주간 시황</a>
   <a href="column.html" class="mobile-link">칼럼</a>
   <a href="kakotalk-consulting-guide.html" class="mobile-link">컨설팅 안내</a>
-  <a href="consult.html" class="mobile-link">상담 신청</a>
+  <a href="consult.html" class="mobile-link">신청/문의</a>
+  <div class="mobile-submenu">
+    <a href="consult.html" class="mobile-sublink">상담 신청</a>
+    <a href="2030-seminar.html" class="mobile-sublink">금융취업 세미나</a>
+  </div>
 </div>
 
 <section class="hero">
