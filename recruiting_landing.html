@@ -816,11 +816,35 @@ function toggleFaq(btn) {
 const BOT_TOKEN = '8720572160:AAF8kYdv8PceDfQxDtrD4mRme2IC820dwOc';   // ← 기존 무료 DB 모집 봇 토큰
 const CHAT_ID   = '6234327488';     // ← 본인 Chat ID
 
+
+// Meta Pixel이 설치된 경우 신청 완료를 Lead 이벤트로 전송
+function trackMetaLead() {
+  if (typeof window.fbq === 'function') {
+    window.fbq('track', 'Lead', {
+      content_name: '현직자 세미나',
+      content_category: 'Recruiting Seminar'
+    });
+  }
+}
+
+// 광고 성과 분석용 UTM/Meta click id 수집
+function getAttributionParams() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content: p.get('utm_content') || '',
+    fbclid: p.get('fbclid') || ''
+  };
+}
+
 async function submitForm() {
   const name    = document.getElementById('fname').value.trim();
   const phone   = document.getElementById('fphone').value.trim();
   const career  = document.getElementById('fcareer').value;
   const reason  = document.getElementById('freason').value.trim();
+  const attribution = getAttributionParams();
 
   // 유효성 검사
   if (!name) {
@@ -846,6 +870,7 @@ async function submitForm() {
             + `📱 연락처: ${phone}\n`
             + `💼 경력: ${career}\n`
             + `📝 신청계기: ${reason || '(미작성)'}\n`
+            + `📊 광고유입: ${attribution.utm_campaign || '-'} / ${attribution.utm_content || '-'}\n`
             + `━━━━━━━━━━━━━━━\n`
             + `🕐 ${now}`;
 
@@ -861,6 +886,7 @@ async function submitForm() {
     });
 
     if (res.ok) {
+      trackMetaLead();
       document.getElementById('formBox').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
     } else {
