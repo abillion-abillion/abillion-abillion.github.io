@@ -4,6 +4,7 @@ const NOTIFY_EMAIL   = 'njw852@gmail.com';
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+    if (data.type === 'seminar') return seminarSubmit_(data);
 
     // ── 전자책 신청 ────────────────────────────────────────────
     if (data.type === 'ebook') {
@@ -166,7 +167,119 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  if (e && e.parameter && ['seminar_health', 'seminar_status'].indexOf(e.parameter.action) >= 0) return seminarGet_(e);
   return ContentService
     .createTextOutput('Apps Script 작동 중 ✅')
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+
+// Add these functions to the current Apps Script project.
+// Route data.type === 'seminar' to seminarSubmit_(data) inside its existing doPost.
+// Route seminar_health / seminar_status to seminarGet_(e) inside its existing doGet.
+const SEMINAR_PROTOCOL = 'seminar-v1';
+const SEMINAR_HEADERS = ['제출일시', '이름', '휴대전화', '설계사 경력', '관심 주제',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid',
+  'request_id', '동의 버전', '동의 일시', '랜딩페이지'];
+
+function seminarJson_(data) {
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
+function seminarSpreadsheet_() {
+  const configured = PropertiesService.getScriptProperties().getProperty('SEMINAR_SPREADSHEET_ID');
+  const fallback = typeof SPREADSHEET_ID !== 'undefined' ? SPREADSHEET_ID : '';
+  if (!configured && !fallback) throw new Error('세미나 스프레드시트 설정이 없습니다.');
+  return SpreadsheetApp.openById(configured || fallback);
+}
+function seminarSheet_(create) {
+  const ss = seminarSpreadsheet_();
+  let sheet = ss.getSheetByName('현직자세미나');
+  if (!sheet && create) {
+    sheet = ss.insertSheet('현직자세미나');
+    sheet.appendRow(SEMINAR_HEADERS);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+function seminarStored_(sheet, requestId) {
+  if (!sheet || sheet.getLastRow() < 2) return false;
+  return !!sheet.getRange(2, 12, sheet.getLastRow() - 1, 1)
+    .createTextFinder(requestId).matchEntireCell(true).useRegularExpression(false).findNext();
+}
+function seminarIdValid_(id) { return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id || ''); }
+function seminarText_(value, length) {
+  const text = String(value == null ? '' : value).replace(/[\u0000-\u001f]/g, ' ').slice(0, length);
+  // Avoid spreadsheet formula evaluation in user-controlled fields.
+  return /^[=+@-]/.test(text) ? "'" + text : text;
+}
+function seminarSubmit_(data) {
+  const requestId = String(data.request_id || '');
+  const name = String(data.name || '').trim();
+  const phone = String(data.phone || '').trim();
+  const digits = phone.replace(/\D/g, '');
+  const experiences = ['', '신입', '3년 미만', '3~7년', '7년 이상', '관리자'];
+  const concerns = ['', '700종신 이후 영업', '1,200%룰 이후 수익 구조', '자산관리 상담 방식', '방송DB, 투자DB 제공량 및 활용법'];
+  if (!seminarIdValid_(requestId) || data.consent !== true || data.website || name.length < 2 || name.length > 30 ||
+      !/^(01[016789]\d{7,8}|8201[016789]\d{7,8}|821[016789]\d{7,8})$/.test(digits) ||
+      experiences.indexOf(data.experience || '') < 0 || concerns.indexOf(data.concern || '') < 0) {
+    return seminarJson_({ result: 'error', code: 'validation', stored: false });
+  }
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  let duplicate = false;
+  const now = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
+  try {
+    const sheet = seminarSheet_(true);
+    duplicate = seminarStored_(sheet, requestId);
+    if (!duplicate) {
+      sheet.appendRow([now, seminarText_(name, 30), seminarText_(phone, 30),
+        seminarText_(data.experience, 40), seminarText_(data.concern, 100),
+        ...['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'].map(key => seminarText_(data[key], 500)),
+        requestId, seminarText_(data.consent_version, 80), now, seminarText_(data.landing_url, 500)]);
+      SpreadsheetApp.flush();
+    }
+  } finally { lock.releaseLock(); }
+  if (!duplicate) seminarNotify_(data, now);
+  return seminarJson_({ protocol: SEMINAR_PROTOCOL, result: 'success', stored: true, request_id: requestId, duplicate });
+}
+function seminarNotify_(data, now) {
+  const properties = PropertiesService.getScriptProperties();
+  const text = '[현직자 세미나 신청]\n이름: ' + data.name + '\n연락처: ' + data.phone +
+    '\n경력: ' + (data.experience || '미선택') + '\n관심 주제: ' + (data.concern || '미선택') +
+    '\n캠페인: ' + (data.utm_campaign || '') + '\n소재: ' + (data.utm_content || '') + '\n일시: ' + now;
+  const email = properties.getProperty('SEMINAR_NOTIFY_EMAIL') ||
+    (typeof NOTIFY_EMAIL !== 'undefined' ? NOTIFY_EMAIL : '');
+  if (email) {
+    try { MailApp.sendEmail(email, '[현직자 세미나] 새 신청: ' + data.name, text); }
+    catch (error) { console.error('세미나 이메일 알림 실패: ' + error); }
+  }
+  const token = properties.getProperty('BOT_TOKEN');
+  const chatId = properties.getProperty('CHAT_ID');
+  if (token && chatId) {
+    try {
+      const response = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+        method: 'post', contentType: 'application/json',
+        payload: JSON.stringify({ chat_id: chatId, text }), muteHttpExceptions: true
+      });
+      if (response.getResponseCode() >= 300) console.error('세미나 Telegram 알림 실패');
+    } catch (_) { console.error('세미나 Telegram 알림 실패'); }
+  }
+}
+function seminarGet_(e) {
+  const params = e.parameter || {};
+  const callback = String(params.callback || '');
+  if (!/^_seminar_cb_[A-Za-z0-9_]{1,80}$/.test(callback)) return seminarJson_({ result: 'error' });
+  let result = { protocol: SEMINAR_PROTOCOL, ready: false };
+  try {
+    if (params.action === 'seminar_health') {
+      seminarSpreadsheet_();
+      result.ready = true;
+    } else if (params.action === 'seminar_status' && seminarIdValid_(params.request_id)) {
+      result = { protocol: SEMINAR_PROTOCOL, request_id: params.request_id,
+        stored: seminarStored_(seminarSheet_(false), params.request_id) };
+    }
+  } catch (_) { result = { protocol: SEMINAR_PROTOCOL, ready: false }; }
+  // Read-only receipt only. Never expose application details through JSONP.
+  return ContentService.createTextOutput(callback + '(' + JSON.stringify(result) + ');')
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
