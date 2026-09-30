@@ -5,6 +5,8 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
 
+    if (data.type === 'seminar') return saveSeminar(data);
+
     // ── 전자책 신청 ────────────────────────────────────────────
     if (data.type === 'ebook') {
       const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -166,7 +168,79 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  if (e && e.parameter && e.parameter.action === 'seminar_status') return seminarStatus(e);
   return ContentService
     .createTextOutput('Apps Script 작동 중 ✅')
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+
+// 보험설계사 세미나 전용 저장·확인. 기존 상담/전자책/진단 분기는 유지합니다.
+function seminarResponse(value) {
+  return ContentService.createTextOutput(JSON.stringify(value)).setMimeType(ContentService.MimeType.JSON);
+}
+function seminarStatus(e) {
+  var id = String(e.parameter.request_id || '');
+  var callback = String(e.parameter.callback || '');
+  var result = {result:'pending',request_id:id};
+  if (/^[a-f0-9-]{36}$/.test(id)) {
+    var cached = CacheService.getScriptCache().get('seminar:' + id);
+    if (cached) result = JSON.parse(cached);
+  } else result = {result:'error'};
+  result.protocol = 'seminar-v1';
+  if (/^seminarReceipt_[a-f0-9]{32}$/.test(callback)) {
+    return ContentService.createTextOutput(callback + '(' + JSON.stringify(result) + ');').setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return seminarResponse(result);
+}
+function saveSeminar(data) {
+  var id = String(data.request_id || '');
+  var phone = String(data.phone || '').replace(/[^0-9]/g,'');
+  var name = String(data.name || '').trim();
+  var exp = String(data.experience || '');
+  var concern = String(data.concern || '');
+  if (data.consent !== true || name.length < 2 || name.length > 30 || !/^01[016789][0-9]{7,8}$/.test(phone) || !/^[a-f0-9-]{36}$/.test(id) || ['', '신입', '3년 미만', '3~7년', '7년 이상', '관리자'].indexOf(exp) < 0 || ['', '700종신 이후 영업', '1,200%룰 이후 수익 구조', '자산관리 상담 방식', '방송DB, 투자DB 제공량 및 활용법'].indexOf(concern) < 0) {
+    return seminarResponse({result:'error'});
+  }
+  function cell(value, limit) {
+    var s = String(value || '').slice(0, limit || 500);
+    return /^[\s]*[=+@-]/.test(s) ? "'" + s : s;
+  }
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  var sheet, row, duplicate = false;
+  try {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    sheet = ss.getSheetByName('보험설계사세미나');
+    if (!sheet) {
+      sheet = ss.insertSheet('보험설계사세미나');
+      sheet.appendRow(['접수일시','접수ID','이름','휴대전화','경력','관심주제','개인정보동의','UTM source','UTM medium','UTM campaign','UTM content','UTM term','fbclid','클라이언트접수일시','알림상태']);
+      sheet.setFrozenRows(1);
+    }
+    if (sheet.getLastRow() > 1) {
+      var found = sheet.getRange(2,2,sheet.getLastRow()-1,1).createTextFinder(id).matchEntireCell(true).findNext();
+      if (found) { row = found.getRow(); duplicate = true; }
+    }
+    if (!duplicate) {
+      sheet.appendRow([Utilities.formatDate(new Date(),'Asia/Seoul','yyyy-MM-dd HH:mm:ss'),id,cell(name,30),"'"+phone,cell(exp),cell(concern),'동의',cell(data.utm_source),cell(data.utm_medium),cell(data.utm_campaign),cell(data.utm_content),cell(data.utm_term),cell(data.fbclid),cell(data.submitted_at), '대기']);
+      row = sheet.getLastRow();
+      SpreadsheetApp.flush();
+    }
+    CacheService.getScriptCache().put('seminar:' + id, JSON.stringify({result:'success',request_id:id}),21600);
+  } finally { lock.releaseLock(); }
+  if (!duplicate) {
+    var notified = [];
+    var message = '[보험설계사 세미나 신청]\n이름: ' + name + '\n연락처: ' + phone + '\n경력: ' + exp + '\n관심주제: ' + concern;
+    try { MailApp.sendEmail({to:NOTIFY_EMAIL,subject:'[세미나 신청] '+name+'님',body:message}); notified.push('이메일 완료'); } catch (err) { notified.push('이메일 실패'); }
+    var props = PropertiesService.getScriptProperties();
+    var token = props.getProperty('BOT_TOKEN'), chat = props.getProperty('CHAT_ID');
+    if (token && chat) {
+      try {
+        var response = UrlFetchApp.fetch('https://api.telegram.org/bot'+token+'/sendMessage',{method:'post',contentType:'application/json',payload:JSON.stringify({chat_id:chat,text:message}),muteHttpExceptions:true});
+        notified.push(response.getResponseCode()===200 ? '텔레그램 완료' : '텔레그램 실패');
+      } catch (err) { notified.push('텔레그램 실패'); }
+    }
+    sheet.getRange(row,15).setValue(notified.join(' / '));
+  }
+  return seminarResponse({result:'success',request_id:id,duplicate:duplicate});
 }
