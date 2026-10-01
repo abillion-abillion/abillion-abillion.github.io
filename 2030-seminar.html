@@ -921,7 +921,15 @@ fbq('track','PageView');
       body:JSON.stringify(payload)
     }).then(function(r){
       if (!r.ok) throw new Error("status " + r.status);
-      return { stored:true };
+      return r.text().then(function(body){
+        var ack = null;
+        try { ack = JSON.parse(body); } catch (_) {}
+        if (ack && (ack.result === "error" || ack.success === false || ack.ok === false)) {
+          throw new Error("신청 저장 실패");
+        }
+        var confirmed = !!(ack && (ack.result === "success" || ack.success === true || ack.ok === true || ack.stored === true));
+        return { stored:confirmed };
+      });
     });
   }
 
