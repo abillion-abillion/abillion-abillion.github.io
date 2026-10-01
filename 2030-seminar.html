@@ -431,6 +431,12 @@ a{color:inherit}
   .mq-in{animation:none}
 }
 </style>
+<!-- Meta Pixel: seminar visits and completed applications -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1568491221231346');
+fbq('track','PageView');
+</script>
 </head>
 <body>
 
@@ -872,6 +878,14 @@ a{color:inherit}
     moreBtn.textContent = open ? "접기" : "내용 보기";
   });
 
+  // Capture only campaign attribution; personal form fields are never sent to Meta.
+  var attribution = {};
+  var campaignQuery = new URLSearchParams(location.search);
+  ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"].forEach(function(key){
+    attribution[key] = campaignQuery.get(key) || "";
+  });
+  var leadSent = false;
+
   // form
   var form = document.getElementById("form");
   var nm = document.getElementById("nm"), ph = document.getElementById("ph"), ag = document.getElementById("ag");
@@ -931,8 +945,18 @@ a{color:inherit}
       place:"핀사이트랩스 본사 B1 세미나홀",
       pageUrl:location.href,
       referrer:document.referrer || "",
+      utm_source:attribution.utm_source,
+      utm_medium:attribution.utm_medium,
+      utm_campaign:attribution.utm_campaign,
+      utm_content:attribution.utm_content,
+      utm_term:attribution.utm_term,
+      fbclid:attribution.fbclid,
       submittedAt:new Date().toISOString()
     }).then(function(res){
+      if (res.stored && !leadSent && typeof window.fbq === "function") {
+        leadSent = true;
+        window.fbq("track","Lead",{content_name:"2030-finance-career-seminar",content_category:"career_seminar"});
+      }
       document.getElementById("doneName").textContent = nm.value.trim();
       document.getElementById("previewNote").hidden = res.stored;
       form.hidden = true;
