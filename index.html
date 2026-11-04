@@ -30,16 +30,19 @@
   wcs_add["wa"] = "524686fd17f6d0";
   if(window.wcs) { wcs_do(); }
 </script>
+<link rel="stylesheet" href="assets/jw-typography.css">
+<link rel="stylesheet" href="assets/jw-navigation.css">
+<script src="assets/jw-navigation.js" defer></script>
 </head>
-<body><a class="skip" href="#main">본문 바로가기</a>
-<header class="site-header">
-<div class="wrap header-inner"><a class="brand" href="index.html" aria-label="JW Financial 홈"><img src="jw_financial_briefcase_icon.svg" width="33" height="33" alt=""><span><strong>JW Financial</strong><small>CONSULTING · 남진우 자산관리</small></span></a>
-<nav class="desktop-nav" aria-label="주 메뉴"><a href="index.html#consulting">컨설팅</a><a href="index.html#cases">실제 사례</a><a href="index.html#about">남진우 소개</a><a href="freebie.html">무료 자료</a><a href="careers.html">함께 일하기</a><a class="nav-cta" href="consult.html" data-track="consulting">상담 문의</a>
-</nav><button type="button" class="menu-toggle" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false">메뉴</button>
-</div>
-<nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden><a href="index.html#consulting">컨설팅</a><a href="index.html#cases">실제 사례</a><a href="index.html#about">남진우 소개</a><a href="freebie.html">무료 자료</a><a href="careers.html">함께 일하기</a><a href="consult.html" data-track="consulting">상담 문의 →</a>
-</nav>
-</header>
+<body data-jw-nav-offset="true">
+<!-- Shared navigation: keep links identical across public content pages. -->
+<header id="jw-site-header" class="jw-site-header"><div class="jw-nav-inner">
+<a class="jw-nav-brand" href="index.html" aria-label="JW Financial 홈"><img src="jw_financial_briefcase_icon.svg" width="30" height="30" alt=""><span>JW Financial<small>남진우 자산관리 컨설팅</small></span></a>
+<button id="jw-menu-toggle" class="jw-menu-toggle" type="button" aria-expanded="false" aria-controls="jw-site-links">메뉴</button>
+<div id="jw-site-links" class="jw-site-links" role="navigation" aria-label="주 메뉴"><a class="jw-nav-link " href="services.html">컨설팅</a><a class="jw-nav-link " href="index.html#about">남진우 소개</a><a class="jw-nav-link " href="reviews.html">고객 후기</a><div class="jw-resource-group"><div class="jw-resource-heading"><a class="jw-nav-link " href="freebie.html">무료 자료</a><button class="jw-resource-toggle" type="button" aria-label="무료 자료 하위 메뉴 열기" aria-expanded="false" aria-controls="jw-resource-links">⌄</button></div><div class="jw-resource-links" id="jw-resource-links" hidden><a class="jw-nav-link " href="freebie.html">전체 무료 자료</a><a class="jw-nav-link " href="diagnosis.html">무료진단 보고서</a><a class="jw-nav-link " href="tips.html">재테크 영상</a><a class="jw-nav-link " href="guides.html">무료 전자책</a><a class="jw-nav-link " href="education.html">왕쉬운 금융교육</a></div></div><a class="jw-nav-link " href="weekly.html">주간 시황</a><a class="jw-nav-link " href="column.html">칼럼</a><a class="jw-nav-link " href="careers.html">함께 일하기</a><a class="jw-nav-link jw-nav-cta" href="consult.html">상담 신청</a></div>
+</div></header>
+<a class="skip" href="#main">본문 바로가기</a>
+
 <main id="main">
 <section class="hero">
 <div class="wrap hero-grid">
@@ -186,10 +189,10 @@
 <div class="price-label">개인·부부 동일 · 3회 전체 컨설팅</div>
 <div><s>190,000원</s><strong>95,000원</strong>
 </div>
-<p class="micro">최종 할인가 · 부부 동반 추가 비용 없음</p>
+<p class="micro">홈페이지 사전설문 신청 혜택 · 50% 할인</p>
 </div><a class="button" href="consult.html" data-track="consulting">우리 집 자산관리 상담하기 →</a>
 </div>
-<p class="micro">한 분부터 시작하셔도 좋습니다. 문의 단계에서 결제하지 않습니다.</p></div></section>
+<p class="discount-reason">사전설문으로 상담 준비를 함께해주시는 홈페이지 신청 고객께<br>3회 전체 컨설팅 비용의 50%를 할인해드립니다.</p><p class="micro">개인·부부 동일 · 부부 동반 추가 비용 없음 · 한 분부터 상담 가능</p></div></section>
 </main>
 <footer class="site-footer">
 <div class="wrap footer-row">

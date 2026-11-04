@@ -1,29 +1,12 @@
 'use strict';
 (() => {
-  const career = new URLSearchParams(location.search).get('type') === 'career';
   const form = document.getElementById('inquiry-form');
   const status = document.getElementById('form-status');
   const submit = document.getElementById('submit-inquiry');
-  const topic = document.getElementById('topic');
   const experience = document.getElementById('experience');
   const endpoint = 'https://script.google.com/macros/s/AKfycbzHXzLcaGfUgv3Su7ymafJaq7dS4dicBwidFBUujEr-2jt4rx0uqv_Aen2vSWa8896r/exec';
-  const kind = career ? 'career' : 'consulting';
-  const submitLabel = career ? '직무·교육 문의 남기기 →' : '컨설팅 문의 남기기 →';
-  submit.textContent = submitLabel;
-  if(career){
-    document.getElementById('inquiry-eyebrow').textContent='CAREER INQUIRY';
-    document.getElementById('inquiry-title').innerHTML='새로운 시작,<br>궁금한 것부터 물어보세요.';
-    document.getElementById('inquiry-intro').textContent='실제 업무와 교육 과정, 위촉 조건과 보수 구조를 안내합니다. 신입과 타 업종 이직 희망자 모두 문의할 수 있습니다.';
-    document.getElementById('consulting-info').hidden=true;
-    document.getElementById('inquiry-price').hidden=true;
-    document.getElementById('career-info').hidden=false;
-    document.getElementById('topic-field').hidden=true;
-    document.getElementById('career-field').hidden=false;
-    document.getElementById('consulting-tab').removeAttribute('aria-current');
-    document.getElementById('career-tab').setAttribute('aria-current','page');
-    topic.disabled=true;topic.required=false;
-    experience.disabled=false;experience.required=true;
-  }
+  const kind = 'career';
+  const submitLabel = '직무·교육 문의 남기기 →';
   function showStatus(title,message,isError=false){
     status.replaceChildren();
     const heading=document.createElement('h3');heading.textContent=title;
@@ -52,9 +35,9 @@
     // labelled in the fields visible in its existing sheet and email templates.
     const payload={
       name:name.value.trim(),contact:contact.value.trim(),
-      referral:career?'홈페이지 함께 일하기 문의':'홈페이지 간단한 컨설팅 문의',
-      interest:career?'[리쿠르팅] 직무·교육·보수 안내':topic.value,
-      job:career?experience.value:'',
+      referral:'홈페이지 함께 일하기 문의',
+      interest:'[리쿠르팅] 직무·교육·보수 안내',
+      job:experience.value,
       reason:document.getElementById('message').value.trim(),
       preinfo:'개인정보 수집·이용 동의: 문의 응대 목적 / '+new Date().toISOString(),
       request_id:globalThis.crypto?.randomUUID?.() || Date.now()+'_'+Math.random().toString(36).slice(2),

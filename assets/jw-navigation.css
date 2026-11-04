@@ -1,0 +1,38 @@
+/* One navigation system for public pages. Layout does not depend on page styles. */
+#jw-site-header,#jw-site-header *{box-sizing:border-box}
+#jw-site-header{position:fixed;inset:0 0 auto;z-index:1000;margin:0;padding:0;border:0;border-bottom:1px solid #d9ddd2;background:#faf8f4;color:#283529;line-height:1.5;text-align:left;letter-spacing:normal;isolation:isolate}
+#jw-site-header .jw-nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;width:min(1320px,100%);min-height:76px;margin:0 auto;padding:0 24px}
+#jw-site-header a{color:#283529;text-decoration:none;letter-spacing:normal;transition:background .15s,color .15s}
+#jw-site-header .jw-nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;padding:0;font-size:19px;font-weight:700;line-height:1.2;white-space:nowrap}
+#jw-site-header .jw-nav-brand img{display:block;width:30px;height:30px;margin:0;object-fit:contain}
+#jw-site-header .jw-nav-brand small{display:block;margin-top:5px;font-size:10px;font-weight:400;color:#626b60;letter-spacing:.03em}
+#jw-site-header .jw-site-links{display:flex;align-items:center;justify-content:flex-end;gap:17px;position:static;transform:none;margin:0;padding:0;border:0;background:transparent;list-style:none}
+#jw-site-header .jw-nav-link{display:block;flex-shrink:0;min-height:44px;padding:12px 0;font-size:14px;font-weight:600;line-height:20px;white-space:nowrap}
+#jw-site-header .jw-nav-link:hover,#jw-site-header .jw-nav-link[aria-current=page]{color:#4b653b;text-decoration:underline;text-underline-offset:5px}
+#jw-site-header .jw-nav-cta{padding:12px 16px;border:1px solid #4b653b;border-radius:4px;background:#4b653b;color:white}
+#jw-site-header .jw-nav-cta:hover{background:#354d29;color:white}
+#jw-site-header button{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:0;padding:8px;border:1px solid #d9ddd2;border-radius:4px;background:transparent;color:#283529;font-size:14px;font-weight:600;line-height:20px;cursor:pointer;box-shadow:none;touch-action:manipulation}
+#jw-site-header .jw-menu-toggle{display:none}
+#jw-site-header .jw-resource-group{position:relative;margin:0;padding:0}
+#jw-site-header .jw-resource-heading{display:flex;align-items:center;gap:1px}
+#jw-site-header .jw-resource-toggle{min-width:32px;width:32px;border:0;font-size:18px}
+#jw-site-header .jw-resource-links{position:absolute;top:100%;left:0;z-index:1;display:flex;flex-direction:column;gap:0;min-width:180px;padding:8px 14px;border:1px solid #d9ddd2;border-radius:4px;background:#fffefa;box-shadow:0 8px 20px #28352912}
+#jw-site-header .jw-resource-links .jw-nav-link{font-size:13px}
+#jw-site-header [hidden]{display:none!important}
+#jw-site-header :is(a,button):focus-visible{outline:3px solid #9a6e32;outline-offset:3px}
+body[data-jw-nav-offset]{padding-top:76px}
+html{scroll-padding-top:96px}
+@media(max-width:1199px){
+ #jw-site-header .jw-nav-inner{min-height:68px;padding:0 20px;gap:0 12px;flex-wrap:wrap}
+ #jw-site-header .jw-nav-brand{font-size:18px;min-height:67px}
+ #jw-site-header .jw-menu-toggle{display:flex;padding:10px 14px}
+ #jw-site-header .jw-site-links{flex:0 0 calc(100% + 40px);width:calc(100% + 40px);margin:0 -20px;padding:8px 20px max(20px,env(safe-area-inset-bottom));border-top:1px solid #d9ddd2;display:block;max-height:calc(100vh - 68px);max-height:calc(100dvh - 68px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#faf8f4}
+ #jw-site-header .jw-nav-link{padding:12px 6px;min-height:46px;font-size:15px}
+ #jw-site-header .jw-resource-heading{justify-content:space-between}
+ #jw-site-header .jw-resource-heading>.jw-nav-link{flex:1}
+ #jw-site-header .jw-resource-toggle{min-width:44px;width:44px;border:1px solid #d9ddd2}
+ #jw-site-header .jw-resource-links{position:static;min-width:0;box-shadow:none;margin:0 0 8px;padding:4px 12px;background:#edf0e7}
+ #jw-site-header .jw-nav-cta{margin-top:10px;text-align:center}
+ body[data-jw-nav-offset]{padding-top:68px}
+}
+@media print{#jw-site-header{display:none}body[data-jw-nav-offset]{padding-top:0}}

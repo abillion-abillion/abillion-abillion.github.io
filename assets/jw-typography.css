@@ -1,0 +1,5 @@
+/* Shared typography for JW Financial. Pretendard 1.3.9, SIL OFL 1.1. */
+@font-face{font-family:'JW Pretendard';font-style:normal;font-weight:100 900;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2');}
+:root{--jw-font:'JW Pretendard',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;--serif:var(--jw-font);--sans:var(--jw-font);}
+/* The sentinel in :is gives legacy !important rules a consistent override. */
+html,body,html body :is(*,#jw-typography-sentinel),html body :is(*,#jw-typography-sentinel)::before,html body :is(*,#jw-typography-sentinel)::after{font-family:var(--jw-font)!important;}
