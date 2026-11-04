@@ -15,6 +15,7 @@
     document.getElementById('inquiry-title').innerHTML='새로운 시작,<br>궁금한 것부터 물어보세요.';
     document.getElementById('inquiry-intro').textContent='실제 업무와 교육 과정, 위촉 조건과 보수 구조를 안내합니다. 신입과 타 업종 이직 희망자 모두 문의할 수 있습니다.';
     document.getElementById('consulting-info').hidden=true;
+    document.getElementById('inquiry-price').hidden=true;
     document.getElementById('career-info').hidden=false;
     document.getElementById('topic-field').hidden=true;
     document.getElementById('career-field').hidden=false;
