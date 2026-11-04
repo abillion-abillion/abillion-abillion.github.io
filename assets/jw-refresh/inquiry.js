@@ -64,8 +64,12 @@
       if(response.type!=='opaque' && !response.ok)throw new Error('Request failed');
       let confirmed=false;
       if(response.type!=='opaque'){
-        const result=await response.json();
-        if(result.result!=='success')throw new Error('Receiver rejected request');
+        const raw=(await response.text()).trim();
+        let accepted=raw==='ok';
+        if(!accepted){
+          try{accepted=JSON.parse(raw).result==='success';}catch(error){accepted=false;}
+        }
+        if(!accepted)throw new Error('Receiver rejected request');
         confirmed=true;
       }
       sent=true;
