@@ -12,3 +12,5 @@ if(menuButton && mobileMenu){
 document.querySelectorAll('[data-track]').forEach(link=>link.addEventListener('click',()=>{
   if(typeof window.gtag==='function')window.gtag('event','inquiry_cta_click',{inquiry_type:link.dataset.track,page_path:location.pathname});
 }));
+
+document.querySelectorAll('[data-proof]').forEach(link=>link.addEventListener('click',()=>{if(typeof window.gtag==='function')window.gtag('event','proof_click',{proof_type:link.dataset.proof,page_path:location.pathname});}));

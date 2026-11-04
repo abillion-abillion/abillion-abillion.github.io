@@ -1,0 +1,51 @@
+# JW Financial 홈페이지 작업 인수 기록 · 2026-11-05
+
+## 이어서 할 위치
+- 저장소: abillion-abillion/abillion-abillion.github.io
+- 브랜치: feat/couples-consulting-careers
+- 검토 PR: https://github.com/abillion-abillion/abillion-abillion.github.io/pull/3
+- 운영 배포는 하지 않음. main 병합은 GitHub Pages 즉시 반영이므로 검토 후 진행.
+- 로컬: /workspace/scratch/6cb1fa824671/jw-homepage
+
+## 반드시 유지할 결정
+대기업 직장인·부부 상담 특화. 한 분부터 가능. 3회 전체 정가 19만원, 최종 9.5만원, 부부 추가 비용 없음. 가격은 마지막 안내. 작은 프로필 사진과 자신감 있는 문구, 모바일 우선.
+리쿠르팅은 신입·이직 우선. 위촉직·고정급 없음. 초기 3개월 정착지원금 조건 협의, 이후 성과 수수료. 신입 교육지원비, 본인 초기 비용 없음. 기본 교육 2~3주, 참관 가능·모의상담, 이후 회사 DB 무료 배분. 생산 경로 비공개, 주기·수량 입사 OT 안내.
+
+## 이번 변경
+- 첫 화면: 방송 썸네일과 출연 기사 링크로 권위 시각화.
+- WORK YOU CAN SEE: 공개 세금 강의, 금융교육 모임 사진·세미나 소개, 돈독 실제 사진·11월 선정도서, 대기업 부부 상담 사례 4카드.
+- 클릭마다 proof_click 이벤트와 proof_type 기록. 개인정보 미포함.
+- 사진은 사용자 기존 강의안에서 추출. 웹 전달용 WebP 인코딩. 큰 PNG 원본은 공개 저장소에 넣지 않음.
+- 클래스101 제작 이력은 과거 자료+사용자 설명을 근거로 명시. 공개 판매/수강 페이지 확인 전까지 개강·수강 가능·공식 강사 등의 문구 금지.
+- 독서모임 사진의 참석자 동의 범위는 운영 게시 전 확인할 사항. 현재 검토 브랜치에만 배치.
+
+## 확보 자료와 출처
+- SBS Biz 출연 원문: https://biz.sbs.co.kr/amp/article/20000333655 (2026-09-09, 남진우 팀장 출연·성과급 절세 확인)
+- 방송 썸네일: 기존 tips.html SmIxuSv1lf8
+- 세금 강의: 기존 tips.html p8sVuTCtKec
+- 소개 영상: 기존 tips.html f9bUo2bJadA
+- 사진: Library 금융취업세미나_남진우_자료반영_수정안_v4.pptx, libfile_2668573039688191a8819e9890d41d9f, slide6 media image7.png=보드게임 모임, image8.png=독서모임.
+- 선정도서: libfile_122d5c37ae7481919fc132721ce44e84.
+- 클래스101 인수자료: libfile_276d441ad8e88191a7807860ff6e2777. 공개 강의 링크·촬영 사진 미확보.
+- 기존 행사 부스 원격 이미지 다운로드 실패. 다른 행사인 것처럼 재활용하지 않고 실제 금융교육 모임 사진을 정확한 설명으로 사용.
+
+## 벤치마크 조사 · 추론과 지표 구분
+- Similarweb toss.im September 2026: comparison area 9.9M 표시, pages/visit 3.24, duration 3:56. 도메인 전체 추정이며 홈페이지 개별 성과 아님. https://www.similarweb.com/website/toss.im/
+- Similarweb ramseysolutions.com September 2026: comparison area 4.4M 표시, pages/visit 3.22, duration 2:22. https://www.similarweb.com/website/ramseysolutions.com/
+- 위 비교 수치의 기간이 월간/3개월 중 모호하므로 방문 횟수를 확정 월간 수치로 외부 홍보하지 말 것. 구조 판단만 참고.
+- Ramsey 공식 페이지: 고객 문제별 입구, 간단한 진단, 단계적 계획, 영상/전문가 연결. https://www.ramseysolutions.com/
+- CLASS101 공식 페이지: 주제별 탐색과 이미지 중심 콘텐츠 선택. https://class101.net/ko
+- 차용: 설명보다 실제 증거를 먼저, 한 카드 한 행동, 모바일 단일 열, 사례 이후 상담 CTA. 전환 향상은 아직 검증 안 된 가설.
+- 경쟁사 CTA CTR은 공개 데이터로 확인 못함. 높은 CTR이라고 주장하지 말 것.
+
+## 남은 작업
+1. 새 자료 카드 모바일·PC 시각 검증, 썸네일 원본과 제목 일치 확인.
+2. 독서모임 사진 공개 범위 확인 또는 인물 없는 선정도서 이미지 중심으로 교체.
+3. 실제 클래스101 제작 캡처·촬영사진과 실제 강연 현장 사진 확보해 보강.
+4. 구식 2030 세미나 페이지의 10/24 일정·미연결 접수 안내 정리. 이번 카드 링크는 과거 행사 소개로만 표시.
+5. 문의 실제 저장·알림 수신 테스트 필요. 기존 no-cors는 접수 저장 확인 불가. opaque 응답에 접수 완료를 표시하지 않음.
+6. GA4에서 CTA 클릭/방문 세션, 문의 전송요청/CTA 클릭 비교. 2~4주 기준선 후 비교. 데이터 수집 전 효과 수치 만들지 말 것.
+7. 최종 검토 후 운영 배포.
+
+## 재개 명령 예시
+이 MD를 읽고 PR #3 브랜치의 최신 파일을 확인한 뒤, 남은 작업 1번부터 진행하세요. 실제 운영 사이트 반영 전 검토 상태를 유지하세요.
