@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 기대에 올랐지만, 유가와 금리에 흔들렸어요 | JW Financial · 2026년 9월 2주차</title><meta name="description" content="2026.09.07–09.11 주간 시황. 코스피 +3.33% · 코스닥 +0.88%. AI 기대에 올랐지만, 유가와 금리에 흔들렸어요"><link rel="canonical" href="https://jwfinancial.co.kr/weekly/weekly_26.09_2.html"><meta property="og:type" content="article"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="JW Financial"><meta property="og:title" content="9월 2주차 주간 시황 | AI 기대에 올랐지만, 유가와 금리에 흔들렸어요"><meta property="og:description" content="2026.09.07–09.11 주간 시황. 코스피 +3.33% · 코스닥 +0.88%. AI 기대에 올랐지만, 유가와 금리에 흔들렸어요"><meta property="og:url" content="https://jwfinancial.co.kr/weekly/weekly_26.09_2.html"><meta property="og:image" content="https://jwfinancial.co.kr/weekly-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#5C7A3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+  :root{
+    --primary:#5C7A3E;
+    --primary-light:#7A9E58;
+    --primary-dark:#3F5B28;
+    --accent:#A8B89A;
+    --bg:#FAF8F4;
+    --bg-tint:#EAF2E3;
+    --text:#2C2C2C;
+    --border:#DDD9D0;
+    --gold:#D4B04A;
+    --gold-light:#E5C97E;
+    --hero-up:#F08A6B;
+    --hero-down:#7DB4E0;
+    --up:#B23A2E;
+    --down:#3E6FA8;
+    --flow-buy:#5C7A3E;
+    --flow-sell:#A6714A;
+    --text-primary:#1A1A1A;
+    --text-secondary:#5A5A5A;
+    --text-muted:#8A8A8A;
+    --border-light:#EDEBE6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Hahmlet', serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+  }
+  a{color:var(--primary-dark);}
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
+
+  /* ── NAV (사이트 공통) ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; background: rgba(250,248,244,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--primary); text-decoration: none; flex-shrink: 0; z-index: 2; font-weight: 700; }
+  .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.8rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links > li { position: relative; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.86rem; letter-spacing: 0.08em; transition: color 0.3s; font-weight: 700; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+  .nav-dropdown > a { display: inline-flex; align-items: center; }
+  .nav-submenu { display: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); min-width: 170px; padding: 0.6rem 0.7rem; border: 1px solid var(--border); background: rgba(250,248,244,0.98); list-style: none; flex-direction: column; gap: 0.35rem; z-index: 30; margin:0; }
+  .nav-dropdown.open .nav-submenu { display: flex; }
+  .nav-submenu a { display: block; padding: 0.38rem 0.5rem; font-size: 0.73rem; letter-spacing: 0.04em; color: var(--text-secondary); }
+  .nav-submenu a:hover, .nav-submenu a.active { color: var(--primary); }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.3s; }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px,4.5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px,-4.5px); }
+  .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(250,248,244,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2rem; }
+  .mobile-menu.open { display: flex; }
+  .menu-header { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--primary); letter-spacing: 0.12em; }
+  .menu-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); line-height: 1; padding: 4px; }
+  .mobile-link { font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+  .mobile-submenu { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; margin-top: -0.9rem; margin-bottom: 0.15rem; }
+  .mobile-sublink { font-family: 'Hahmlet', serif; font-size: 0.95rem; color: var(--text-secondary); text-decoration: none; letter-spacing: 0.05em; }
+  .mobile-sublink:hover { color: var(--primary); }
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(160deg, #2A3E1A 0%, #3F5B28 100%);
+    color:#fff;
+    padding:130px 24px 64px;
+  }
+  .hero-inner{max-width:880px; margin:0 auto;}
+  .badge{
+    display:inline-block;
+    background:linear-gradient(120deg, var(--gold), var(--gold-light));
+    color:#3A2B08;
+    font-weight:600;
+    font-size:14px;
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:20px;
+    letter-spacing:0.3px;
+  }
+  .hero h1{
+    font-size:40px;
+    line-height:1.35;
+    font-weight:700;
+    margin:0 0 14px;
+    max-width:640px;
+  }
+  @media(min-width:640px){ .hero h1{font-size:52px;} }
+  .hero p.sub{
+    font-size:16px;
+    color:#D9E4CE;
+    max-width:560px;
+    margin:0 0 36px;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+    gap:12px;
+  }
+  .stat-card{
+    background:rgba(0,0,0,0.28);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+    padding:18px 18px 16px;
+  }
+  .stat-card .label{font-size:13px; color:#C6D3BA; margin-bottom:6px;}
+  .stat-card .value{font-size:30px; font-weight:700; letter-spacing:-0.5px;}
+  @media(min-width:640px){ .stat-card .value{font-size:38px;} }
+  .stat-card .value.up{color:var(--hero-up);}
+  .stat-card .value.down{color:var(--hero-down);}
+  .stat-card .delta{font-size:13px; color:#C6D3BA; margin-top:4px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0;}
+  section.tint{background:var(--bg-tint);}
+  h2.section-title{
+    font-size:26px;
+    font-weight:700;
+    margin:0 0 8px;
+    color:var(--primary-dark);
+  }
+  p.section-desc{color:#5b5b52; margin:0 0 32px; max-width:560px;}
+
+  /* daily bars */
+  .daybars{
+    display:flex;
+    gap:14px;
+    align-items:flex-end;
+    padding:20px 0 8px;
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+  }
+  .daycol{width:78px; flex:0 0 78px; text-align:center;}
+  @media(max-width:480px){ .daycol{width:26px; flex-basis:26px;} }
+  .track{
+    height:104px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    border-left:1px dashed var(--border);
+    border-right:1px dashed var(--border);
+    margin-bottom:8px;
+  }
+  .track .zero{position:absolute; left:0; right:0; top:50%; border-top:1px solid var(--border);}
+  .bar{
+    width:60%;
+    margin:0 auto;
+    border-radius:3px 3px 0 0;
+    position:relative;
+  }
+  .bar.up{background:var(--up); align-self:flex-end;}
+  .bar.down{background:var(--down); align-self:flex-start; border-radius:0 0 3px 3px;}
+  .daycol .pct{font-size:13px; font-weight:600; margin-top:2px;}
+  .daycol .pct.up{color:var(--up);}
+  .daycol .pct.down{color:var(--down);}
+  .daycol .dlabel{font-size:12px; color:#7a7a70; margin-top:4px;}
+  .index-legend{display:flex; gap:20px; font-size:13px; color:#5b5b52; margin-top:14px;}
+  .index-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+
+  /* flow diverging bars */
+  .flowchart{margin-top:8px;}
+  .flowday{margin-bottom:22px;}
+  .flowday .fdate{font-size:13px; font-weight:600; color:var(--primary-dark); margin-bottom:6px;}
+  .frow{display:grid; grid-template-columns:56px 1fr; align-items:center; gap:10px; margin-bottom:4px; font-size:12.5px;}
+  .frow .flabel{color:#5b5b52;}
+  .fbar-outer{position:relative; height:16px; background:var(--border); border-radius:3px; overflow:visible;}
+  .fbar-center{position:absolute; left:50%; top:0; bottom:0; width:1px; background:#999;}
+  .fbar{position:absolute; top:1px; bottom:1px; border-radius:2px;}
+  .fbar.buy{background:var(--flow-buy); left:50%;}
+  .fbar.sell{background:var(--flow-sell); right:50%;}
+  .faxis{display:flex; justify-content:space-between; font-size:11px; color:#9a9a90; margin-top:2px;}
+
+  /* thematic flow write-ups */
+  .theme-block{margin-bottom:30px;}
+  .theme-block h3{font-size:18px; color:var(--primary-dark); margin:0 0 8px;}
+  .theme-block p{margin:0 0 10px; font-size:15.5px;}
+  .theme-block .tag{
+    display:inline-block; font-size:12px; color:var(--primary-dark);
+    background:var(--bg-tint); border:1px solid var(--border);
+    border-radius:6px; padding:2px 8px; margin-right:6px; margin-bottom:8px;
+  }
+
+  /* glossary */
+  .exp{list-style:none; margin:0; padding:0;}
+  .exp > li{
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .exp > li:first-child{padding-top:0;}
+  .exp > li > b{
+    display:block;
+    font-size:17px;
+    color:var(--primary-dark);
+    margin-bottom:6px;
+  }
+  .exp > li > span{
+    display:block;
+    font-size:15px;
+    color:#3d3d36;
+  }
+  .exp > li > span > b{font-weight:700; color:var(--text);}
+
+  /* next week */
+  .sched{list-style:none; margin:0; padding:0;}
+  .sched li{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    font-size:15px;
+  }
+  .sched li .d{font-weight:600; color:var(--primary-dark);}
+
+  /* archive */
+  .archive-list{list-style:none; margin:0; padding:0;}
+  .archive-list li{
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center; font-size:15px;
+  }
+  .archive-list a{text-decoration:none; font-weight:600;}
+  .archive-list .arrow{color:var(--primary);}
+
+  /* author + cta */
+  .author{
+    display:flex; flex-direction:column; gap:18px;
+  }
+  @media(min-width:640px){ .author{flex-direction:row; align-items:flex-start;} }
+  .author .name{font-size:20px; font-weight:700; margin:0 0 6px;}
+  .author .role{font-size:13.5px; color:#7a7a70; margin:0 0 14px;}
+  .author p.bio{margin:0 0 20px; font-size:15.5px; max-width:480px;}
+  .cta-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .cta{
+    padding:11px 20px;
+    border-radius:8px;
+    font-size:14.5px;
+    font-weight:600;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .cta.primary{background:var(--primary); color:#fff;}
+  .cta.secondary{background:#fff; color:var(--primary-dark); border:1px solid var(--primary);}
+
+  /* compliance */
+  .compliance{
+    background:#F1EFE8;
+    border-top:1px solid var(--border);
+  }
+  .compliance ul{margin:0; padding-left:18px; font-size:12.5px; color:#6b6b60;}
+  .compliance li{margin-bottom:6px;}
+  .compliance .source{font-size:12.5px; color:#6b6b60; margin-top:14px;}
+
+  footer.site-footer{
+    text-align:center; padding:24px; font-size:12px; color:#9a9a90;
+  }
+
+.article{padding:52px 24px 64px;max-width:880px;margin:auto;font-size:17px;line-height:1.95}.article h2{font-size:25px;color:var(--primary-dark);margin:56px 0 18px;line-height:1.5;letter-spacing:-.8px}.article h2:first-child{margin-top:0}.article p{margin:16px 0}.article li{margin:12px 0}.article ol,.article ul{padding-left:25px}.table-scroll{overflow-x:auto;margin:24px 0;border:1px solid var(--border);border-radius:12px;background:white}table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}th,td{padding:16px 14px;text-align:right;border-bottom:1px solid var(--border-light)}th:first-child,td:first-child{text-align:left}th{background:var(--bg-tint);font-weight:700}tbody tr:last-child td{border-bottom:0}.source-links{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 40px}.source-links a{font-size:13px;padding:7px 12px;border:1px solid var(--border);border-radius:30px;text-decoration:none;background:white}.backlink{display:inline-block;margin:0 0 20px;color:var(--primary-dark)}.authorline{border-top:1px solid var(--border);padding-top:24px;margin-top:36px;color:var(--text-secondary);font-size:14px}.stat-row{grid-template-columns:repeat(3,minmax(0,1fr))}.hero .delta{font-size:13px}.hero h1{font-size:clamp(27px,4.2vw,46px);word-break:keep-all}.hero .sub{word-break:keep-all}@media(max-width:600px){.article{font-size:16px;padding:34px 20px 42px}.article h2{font-size:22px;margin-top:38px}th,td{padding:12px 10px;font-size:13px}.stat-row{grid-template-columns:1fr}.hero .stat-card .value{font-size:32px}}
+
+/* Readable editorial layout: short sections, plain explanations, optional data. */
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}.hero-inner{max-width:880px}.hero h1{font-size:clamp(30px,4vw,44px);letter-spacing:-1.5px;line-height:1.4}.hero .sub{font-size:18px;line-height:1.8}.article{max-width:776px;font-size:18px;line-height:1.9;color:#343c46;letter-spacing:-.3px}.article h2{font-size:30px;line-height:1.45;letter-spacing:-1px;margin:14px 0 26px;color:#202b22}.article p{margin:0 0 23px}.article strong{font-weight:700;color:#202b22}.quick-summary{background:#edf3e8;border-radius:22px;padding:30px 32px;margin:18px 0 38px}.eyebrow{display:block;font-size:14px;font-weight:700;color:var(--primary-dark);margin-bottom:17px;letter-spacing:0}.quick-summary ul{list-style:none;padding:0;margin:0}.quick-summary li{font-size:16px;line-height:1.8;padding:0 0 19px;margin:0 0 19px;border-bottom:1px solid #d9e5d0}.quick-summary li:last-child{padding-bottom:0;margin-bottom:0;border:0}.quick-summary .data-note{margin-top:22px;margin-bottom:0}.data-note{font-size:13px!important;color:#687365;line-height:1.7}.intro{font-size:19px;line-height:1.9;margin-bottom:0!important}.reading-section{padding:60px 0 6px;border:0;background:none}.section-number{display:block;font-size:15px;font-weight:700;color:var(--primary);letter-spacing:1px}.easy-example,.fact-card,.takeaway{background:#f0f1ee;border-radius:18px;padding:26px 28px;margin:28px 0}.easy-example p,.fact-card p,.takeaway p{margin:0}.fact-card strong{font-size:23px}.week-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:28px 0}.week-flow div{background:#fff;border:1px solid var(--border);border-radius:16px;padding:19px 12px;text-align:center}.week-flow span{display:block;font-size:14px;color:#72786e;margin-bottom:6px}.week-flow b{font-size:19px}.week-flow .up{color:var(--up)}.week-flow .down{color:var(--down)}.number-details{border:1px solid var(--border);border-radius:18px;background:white;margin:38px 0 50px;overflow:hidden}.number-details summary{padding:22px 24px;cursor:pointer;font-size:17px;font-weight:700;color:#2c352c;display:flex;justify-content:space-between;gap:12px;list-style:none}.number-details summary::-webkit-details-marker{display:none}.number-details[open] summary{border-bottom:1px solid var(--border)}.number-details[open] summary span{transform:rotate(45deg)}.details-inner{padding:10px 20px 20px}.details-inner h3{font-size:17px;margin:25px 0 10px}.sources-area h2{font-size:18px;margin:0 0 15px}.source-links{margin:0 0 35px;gap:9px}.source-links a{border-radius:12px;padding:10px 13px;background:#fff;font-size:13px;color:#45533b;line-height:1.5}.source-links a:hover{background:#eaf2e3}.disclaimer{font-size:13px;line-height:1.8;color:#818779}.authorline{font-size:13px}.backlink{font-size:14px}.number-details summary:focus-visible,.source-links a:focus-visible{outline:3px solid #8aaa6c;outline-offset:4px}@media(max-width:600px){.hero{padding-top:110px}.hero .sub{font-size:16px}.article{padding:30px 22px 40px;font-size:17px;line-height:1.9}.article h2{font-size:27px;margin-bottom:23px}.quick-summary{padding:24px 22px;margin-top:15px}.quick-summary li{font-size:15px}.intro{font-size:17px}.reading-section{padding-top:45px}.easy-example,.fact-card,.takeaway{padding:23px 22px}.fact-card strong{font-size:20px}.week-flow{gap:8px}.week-flow div{padding:17px 8px}.number-details summary{padding:20px;font-size:16px}.details-inner{padding:4px 14px 16px}.source-links a{font-size:12px}.hero h1{font-size:32px}.stat-row{gap:12px}}
+.issue-navigation{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.number-details td.up{color:var(--up)}.number-details td.down{color:var(--down)}.table-scroll:focus-visible{outline:3px solid #8aaa6c;outline-offset:3px}</style></head><body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">JW Financial Consulting</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">홈</a></li>
+    <li><a href="../services.html">서비스</a></li>
+    <li><a href="../reviews.html">후기</a></li>
+    <li class="nav-dropdown">
+      <a href="../freebie.html" class="submenu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="freebiesSubmenu">무료 혜택</a>
+      <ul class="nav-submenu" id="freebiesSubmenu">
+        <li><a href="../diagnosis.html">무료진단 보고서</a></li>
+        <li><a href="../tips.html">재테크 영상</a></li>
+        <li><a href="../guides.html">무료 전자책 시리즈</a></li>
+        <li><a href="../education.html">왕쉬운 금융교육</a></li>
+      </ul>
+    </li>
+    <li><a href="../weekly.html" class="active">주간 시황</a></li>
+    <li><a href="../column.html">칼럼</a></li>
+    <li><a href="../kakotalk-consulting-guide.html">컨설팅 안내</a></li>
+    <li><a href="../consult.html">상담 신청</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="menu-header">
+    <span>JW Financial Consulting</span>
+    <button class="menu-close" onclick="closeMobile()">✕</button>
+  </div>
+  <a href="../index.html" class="mobile-link">홈</a>
+  <a href="../services.html" class="mobile-link">서비스</a>
+  <a href="../reviews.html" class="mobile-link">후기</a>
+  <a href="../freebie.html" class="mobile-link">무료 혜택</a>
+  <div class="mobile-submenu">
+    <a href="../diagnosis.html" class="mobile-sublink">무료진단 보고서</a>
+    <a href="../tips.html" class="mobile-sublink">재테크 영상</a>
+    <a href="../guides.html" class="mobile-sublink">무료 전자책 시리즈</a>
+    <a href="../education.html" class="mobile-sublink">왕쉬운 금융교육</a>
+  </div>
+  <a href="../weekly.html" class="mobile-link">주간 시황</a>
+  <a href="../column.html" class="mobile-link">칼럼</a>
+  <a href="../kakotalk-consulting-guide.html" class="mobile-link">컨설팅 안내</a>
+  <a href="../consult.html" class="mobile-link">상담 신청</a>
+</div>
+
+<header class="hero"><div class="hero-inner"><span class="badge">2026년 9월 2주차 · 09.07–09.11</span><h1>AI 기대에 올랐지만, 유가와 금리에 흔들렸어요</h1><p class="sub">AI 관련 기대가 반도체에서 장비·전력·통신 인프라로 이어졌어요.</p><div class="stat-row"><div class="stat-card"><div class="label">한 주 동안 코스피는</div><div class="value up">+3.33%</div><div class="delta">9/11 종가 6,909.91</div></div><div class="stat-card"><div class="label">한 주 동안 코스닥은</div><div class="value up">+0.88%</div><div class="delta">9/11 종가 820.64</div></div><div class="stat-card"><div class="label">이번 주 거래일</div><div class="value">5일</div><div class="delta">9/7–9/11</div></div></div></div></header><main class="article"><a class="backlink" href="../weekly.html">← 전체 주간 시황</a><div class="quick-summary"><span class="eyebrow">이번 주, 이것만 기억하세요</span><ul><li><strong>코스피는 주간 3.33%, 코스닥은 0.88% 올랐어요.</strong></li><li><strong>AI 관련 기대가 반도체에서 장비·전력·통신 인프라로 이어졌어요.</strong></li><li><strong>주 후반에는 고유가·금리 부담과 만기·지수 비중 조정이 변동성을 키웠어요.</strong></li></ul><p class="data-note">2026.09.07–09.11 · 주간 등락률은 9/4 종가와 9/11 종가를 비교했어요.</p></div><p class="intro">월요일 코스피가 4% 넘게 뛰고, 수요일에는 7,000선을 넘겼어요. 하지만 주 후반에는 유가와 금리 부담이 다시 커졌어요. 금요일은 하락했어도 주간으로는 두 지수가 모두 올랐어요. 시작과 끝을 함께 보면, 강한 기대와 불안이 번갈아 시장을 움직인 한 주예요.</p><section class="reading-section" aria-labelledby="story1"><span class="section-number">01</span><h2 id="story1">AI 소식은 왜 반도체와 전력주까지 연결됐을까요?</h2><p>월요일 코스피는 4.61% 올라 6,995.39로 마쳤어요. 루미네어IR은 오픈AI의 새 모델 공개 이후 커진 AI 활용 기대와 반도체 매수세를 주요 배경으로 봤어요. 삼성전자·SK하이닉스 같은 큰 기업에 매수가 집중돼 코스피 상승폭이 코스닥보다 컸다는 설명이에요.</p><p>AI를 더 많이 쓰려면 데이터를 계산하고 저장할 반도체가 필요해요. 이 장비를 모아 둔 데이터센터에는 전기, 냉각 장치, 통신망도 필요해요. 수요일 당시 시황 보고서는 시장의 관심이 반도체에서 전력기기·전선·광통신으로 퍼졌다고 짚었어요. 하나의 기술이 여러 산업과 연결되는 구조를 보여줘요.</p></section><section class="reading-section" aria-labelledby="story2"><span class="section-number">02</span><h2 id="story2">지수 상승과 실제 판매 성적을 함께 볼 수 있어요</h2><p>수요일 코스피는 7,051.64, 코스닥은 830.37로 함께 올랐어요. 목요일에는 코스피가 조금 내렸지만 코스닥은 0.79% 상승했어요. 당시 시황 보고서는 반도체 장비주를 중심으로 기관 매수가 들어왔다고 설명했어요. 대형주가 쉬는 날 다른 종목으로 관심이 옮겨가는 움직임을 순환매라고 불러요.</p><p>금요일 발표된 9월 1~10일 수출 잠정치는 350억 달러로 지난해 같은 기간보다 82.6% 늘었어요. 반도체 수출도 165억 달러로 같은 기간 기준 최대였어요. 다만 수출은 산업의 판매 성적이고, 주가는 투자자의 기대와 비용 부담까지 반영해요. 당시 시황 보고서도 강한 수출과 금리 걱정이 함께 존재한 상황으로 봤어요.</p></section><section class="reading-section" aria-labelledby="story3"><span class="section-number">03</span><h2 id="story3">금요일 하락에는 기업 밖의 변수도 있었어요</h2><p>금요일 코스피는 1.76%, 코스닥은 1.95% 하락했어요. 당시 시황 보고서는 높은 유가와 미국 장기금리 상승, 중앙은행 회의를 앞둔 경계심을 배경으로 설명했어요. 같은 고유가도 정유업에는 판매가격 측면의 기대가, 운송업에는 연료비 부담이 될 수 있어요. 그래서 시장이 흔들릴 때도 업종별 반응은 달라져요.</p><p>목요일에는 선물·옵션 만기와 지수 비중을 다시 맞추는 거래도 겹쳤어요. 당시 시황 보고서는 이런 거래가 기업의 새 실적 발표와 별개로 장중 등락을 키웠다고 봤어요. 주가 변동을 이해할 때 회사에 무슨 일이 생겼는지와, 시장 자금이 어떤 일정에 맞춰 움직였는지를 나눠 보는 이유예요.</p><div class="easy-example"><span class="eyebrow">쉽게 생각해 보면</span><p>가상의 장바구니를 떠올려 보세요. 정해 둔 품목 비율을 맞추려고 물건을 더 담거나 빼는 행동은, 그날 물건의 품질이 달라져서 하는 선택과는 이유가 달라요.</p></div></section><details class="number-details"><summary>날짜별 숫자 자세히 보기 <span aria-hidden="true">＋</span></summary><div class="details-inner"><h3>한 주의 시작과 끝</h3><div class="table-scroll" tabindex="0" role="region" aria-label="주간 지수 비교"><table><thead><tr><th scope="col">지수</th><th scope="col">9/4 종가</th><th scope="col">9/11 종가</th><th scope="col">주간 등락률</th></tr></thead><tbody><tr><th scope="row">코스피</th><td>6,687.21</td><td>6,909.91</td><td class="up">+3.33%</td></tr><tr><th scope="row">코스닥</th><td>813.50</td><td>820.64</td><td class="up">+0.88%</td></tr></tbody></table></div><p class="data-note">일별 등락률을 더한 값이 아니라, 두 날짜의 종가를 비교한 값이에요.</p><h3>날짜별 장 마감 지수</h3><div class="table-scroll" tabindex="0" role="region" aria-label="날짜별 마감 지수"><table><thead><tr><th scope="col">날짜</th><th scope="col">코스피</th><th scope="col">전일 대비</th><th scope="col">코스닥</th><th scope="col">전일 대비</th></tr></thead><tbody><tr><th scope="row">9/7(월)</th><td>6,995.39</td><td class="up">+4.61%</td><td>822.19</td><td class="up">+1.07%</td></tr><tr><th scope="row">9/8(화)</th><td>6,954.52</td><td class="down">−0.58%</td><td>811.88</td><td class="down">−1.25%</td></tr><tr><th scope="row">9/9(수)</th><td>7,051.64</td><td class="up">+1.40%</td><td>830.37</td><td class="up">+2.28%</td></tr><tr><th scope="row">9/10(목)</th><td>7,033.92</td><td class="down">−0.25%</td><td>836.92</td><td class="up">+0.79%</td></tr><tr><th scope="row">9/11(금)</th><td>6,909.91</td><td class="down">−1.76%</td><td>820.64</td><td class="down">−1.95%</td></tr></tbody></table></div><p class="data-note">전일 대비는 직전 거래일 종가와 비교해 계산했어요. 지수는 소수 둘째 자리까지 표시했어요.</p></div></details><div class="sources-area"><h2>자료 살펴보기</h2><div class="source-links"><a href="https://www.luminaire.co.kr/" target="_blank" rel="noopener noreferrer">루미네어IR · 시황자료</a><a href="https://openai.com/index/gpt-6-astra/" target="_blank" rel="noopener noreferrer">오픈AI 새 모델 발표</a><a href="https://customs.go.kr/kcs/na/ntt/selectNttInfo.do?bbsId=1362&amp;mi=2891&amp;nttSn=10176444&amp;nttSnUrl=8599e04facbad02816d3af783a538778" target="_blank" rel="noopener noreferrer">9월 초 수출 공식 발표</a><a href="https://www.kiwoom.com/h/hts/popup/VHtsNoticePopView?gubun=1&amp;pagegb=2&amp;seq=00002486&amp;title=%2826%EB%85%84+2%EC%B0%A8%29+%ED%8C%8C%EC%83%9D%EC%83%81%ED%92%88%EC%8B%9C%EC%9E%A5+%EC%A3%BC%EC%8B%9D%EC%84%A0%EB%AC%BC%C2%B7%EC%98%B5%EC%85%98+%EC%A0%95%EA%B8%B0%EB%B3%80%EA%B2%BD+%EC%95%88%EB%82%B4&amp;tp=H4" target="_blank" rel="noopener noreferrer">파생상품 정기변경 안내</a></div></div><p class="disclaimer">이 글은 시장을 이해하는 데 도움을 드리기 위한 자료예요. 특정 종목의 매수·매도를 권하지 않으며, 투자 판단과 결과의 책임은 투자자 본인에게 있어요.</p><p class="authorline">편집 · 남진우 / JW Financial<br>대상 기간 2026.09.07–09.11 · 게시일 2026.11.04</p><div class="issue-navigation"><a class="backlink" href="weekly_26.09_1.html">← 이전 주 시황</a><a class="backlink" href="weekly_26.09_3.html">다음 주 시황 →</a></div><a class="backlink" href="../weekly.html">다른 주간 시황도 읽어보기 →</a></main><footer class="site-footer">© 2026 JW Financial. All rights reserved.</footer><script>
+  function closeMobile() {
+    document.getElementById('navToggle').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function initNav() {
+    const t = document.getElementById('navToggle');
+    const m = document.getElementById('mobileMenu');
+    if (!t || !m) return;
+    t.addEventListener('click', () => {
+      t.classList.toggle('open');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    });
+    m.querySelectorAll('.mobile-link, .mobile-sublink').forEach(l => l.addEventListener('click', closeMobile));
+  }
+
+  function setupFreebieDropdown() {
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    const trigger = dropdown.querySelector('.submenu-toggle');
+    const submenu = dropdown.querySelector('.nav-submenu');
+    if (!trigger || !submenu) return;
+    const setExpanded = (isOpen) => trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const closeDropdown = () => { dropdown.classList.remove('open'); setExpanded(false); };
+    const toggleDropdown = () => {
+      const willOpen = !dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', willOpen);
+      setExpanded(willOpen);
+    };
+    trigger.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      toggleDropdown();
+    });
+    document.addEventListener('click', (event) => { if (!dropdown.contains(event.target)) closeDropdown(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDropdown(); });
+    submenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDropdown));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    setupFreebieDropdown();
+  });
+</script>
+
+</body></html>
+
