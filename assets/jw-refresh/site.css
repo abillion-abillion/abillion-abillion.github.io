@@ -17,3 +17,11 @@
 .evidence-card{display:block}.evidence-card>img{width:100%;height:auto;min-height:0;aspect-ratio:16/9;object-fit:contain;background:#e2e8d9}.evidence-card>div{padding:25px}.evidence-card h3 br{display:none}.evidence-card p{max-width:95%}
 
 .discount-reason{font-size:15px;color:var(--muted);line-height:1.9;margin-top:20px}.inquiry-heading{font-size:20px;margin:0 0 25px}@media(max-width:640px){.discount-reason{font-size:14px}.discount-reason br{display:none}}
+
+/* Balanced first-screen portrait: readable at every viewport. */
+.hero-expert{gap:22px;margin-top:28px}
+.hero-expert>img{width:132px;height:156px;flex:0 0 auto;border-radius:8px;object-position:center 17%}
+.hero-expert>div{min-width:0}
+@media(max-width:900px){.hero-expert{gap:18px}.hero-expert>img{width:116px;height:138px}}
+@media(max-width:640px){.hero-expert{gap:16px;margin-top:24px}.hero-expert>img{width:100px;height:120px}.hero-expert strong small{display:block;margin-left:0}.hero-expert p{max-width:210px}}
+@media(max-width:360px){.hero-expert{gap:13px}.hero-expert>img{width:88px;height:106px}}
