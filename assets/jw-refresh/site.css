@@ -25,3 +25,18 @@
 @media(max-width:900px){.hero-expert{gap:18px}.hero-expert>img{width:116px;height:138px}}
 @media(max-width:640px){.hero-expert{gap:16px;margin-top:24px}.hero-expert>img{width:100px;height:120px}.hero-expert strong small{display:block;margin-left:0}.hero-expert p{max-width:210px}}
 @media(max-width:360px){.hero-expert{gap:13px}.hero-expert>img{width:88px;height:106px}}
+
+/* Mobile reading: article title uses the full row; let copy wrap naturally. */
+@media(max-width:640px){
+ .authority-panel .authority-row{display:block;padding:16px 0}
+ .authority-panel .authority-row strong{font-size:17px;line-height:1.65;overflow-wrap:anywhere}
+ .authority-panel .authority-row small{margin-top:7px;font-size:12px;line-height:1.7}
+ .hero h1,.section h2,.section h3,.authority-row strong,.career-hero h1{text-wrap:balance}
+ .hero h1{font-size:clamp(30px,8.2vw,36px);letter-spacing:-.045em;line-height:1.5}
+ .hero h1 br,.hero-lead br,.section h2 br,.section h3 br,.section-heading>p br,.bio-intro br,.authority-row br,.career-hero h1 br{display:none}
+ .hero h1 em,.career-hero h1 em{display:block}
+ .career-hero h1{font-size:clamp(29px,8vw,36px);letter-spacing:-.045em}
+ .faq summary{line-height:1.65;padding-right:8px;overflow-wrap:anywhere}
+ .faq details p{line-height:1.85;overflow-wrap:anywhere}
+ .closing .price-panel{width:100%;min-width:0}
+}
