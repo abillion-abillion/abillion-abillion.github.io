@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부동산 매수 세금 & 대출 종합 시뮬레이터</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f8fafc;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-4 md:p-8">
+    <div class="max-w-6xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 md:p-8 rounded-2xl shadow-xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-indigo-500/30 text-indigo-200 text-xs font-semibold rounded-full mb-2">매수 자금 계획 · 대출·세금 추정</span>
+                    <h1 class="text-2xl md:text-3xl font-bold tracking-tight">부동산 매수 세금 & 대출 종합 시뮬레이터</h1>
+                    <p class="text-slate-300 text-sm mt-1">매수 예정월까지 모을 돈과 대출·기타 조달자금을 합산해 예상 매수 비용과 비교합니다.</p>
+                </div>
+                <div id="statusBadge" class="px-5 py-3 rounded-xl font-bold text-lg text-center shadow-lg transition-all">
+                    <!-- Status dynamic -->
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Panel: Controls (Inputs) -->
+            <div class="lg:col-span-5 space-y-5">
+                <div class="card p-6 space-y-5">
+                    <h2 class="text-lg font-bold border-b pb-3 text-slate-900 flex items-center justify-between">
+                        <span class="flex items-center gap-2">⚙️ 매수 조건 및 대출·세제 입력</span>
+                        <span class="text-xs text-indigo-600 font-normal">* 숫자 직접 수정 가능</span>
+                    </h2>
+
+                    <!-- 매수 희망 주택 가격 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="text-xs font-bold text-slate-700">매수 희망 주택 가격</label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_price" step="0.1" min="0.5" max="100" value="10" class="w-24 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">억 원</span>
+                            </div>
+                        </div>
+                        <input type="range" id="price" min="2" max="30" step="0.5" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    </div>
+
+                    <!-- 현재 순자산 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label for="num_cash" class="text-xs font-bold text-slate-700">현재 순자산</label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_cash" step="any" value="3" class="w-24 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">억 원</span>
+                            </div>
+                        </div>
+                        <input type="range" id="cash" aria-label="현재 순자산 조절" min="-10" max="150" step="0.5" value="3" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        <p class="mt-2 text-xs text-slate-500">부채를 차감하고 매수에 투입할 수 있는 금액을 입력하세요.</p>
+                    </div>
+
+                    <div class="border-t pt-4 space-y-3">
+                        <h3 class="text-sm font-bold text-slate-900">매수 시점과 저축 계획</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label for="purchase_month" class="min-w-0 text-xs font-bold text-slate-700">
+                                매수 예정 연월
+                                <input type="month" id="purchase_month" placeholder="YYYY-MM" aria-describedby="purchase_timing" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="monthly_savings" class="min-w-0 text-xs font-bold text-slate-700">
+                                월 저축액 (만 원)
+                                <input type="number" id="monthly_savings" min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                        </div>
+                        <label for="annual_savings_return" class="block text-xs font-bold text-slate-700">
+                            예상 연 수익률 (%)
+                            <input type="number" id="annual_savings_return" min="-100" step="any" inputmode="decimal" value="0" aria-describedby="savings_return_note purchase_timing" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                        </label>
+                        <p id="savings_return_note" class="text-xs text-slate-500">매월 말 납입·월 복리 기준입니다. 0%는 원금만 반영하며, 음수도 입력할 수 있습니다.</p>
+                        <p id="purchase_timing" class="rounded-lg bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700" aria-live="polite"></p>
+                    </div>
+
+                    <fieldset class="border-t pt-4">
+                        <legend class="pr-2 text-sm font-bold text-slate-900">기타 조달자금</legend>
+                        <p class="mb-3 text-xs text-slate-500">매수 시점까지 확보할 금액을 입력하세요. 순자산이나 저축에 포함한 금액은 중복 입력을 피해주세요.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label for="fund_bonus" class="min-w-0 text-xs font-bold text-slate-700">
+                                성과급·보너스 (만 원)
+                                <input type="number" id="fund_bonus" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_family" class="min-w-0 text-xs font-bold text-slate-700">
+                                부모님 지원 (만 원)
+                                <input type="number" id="fund_family" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_spouse" class="min-w-0 text-xs font-bold text-slate-700">
+                                배우자 자산 (만 원)
+                                <input type="number" id="fund_spouse" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_credit" class="min-w-0 text-xs font-bold text-slate-700">
+                                신용대출 (만 원)
+                                <input type="number" id="fund_credit" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_overdraft" class="min-w-0 text-xs font-bold text-slate-700">
+                                마이너스통장 (만 원)
+                                <input type="number" id="fund_overdraft" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_secured" class="min-w-0 text-xs font-bold text-slate-700">
+                                금융상품 담보대출 (만 원)
+                                <input type="number" id="fund_secured" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                            <label for="fund_other" class="min-w-0 text-xs font-bold text-slate-700">
+                                그 외 조달자금 (만 원)
+                                <input type="number" id="fund_other" data-other-funding min="0" step="any" inputmode="decimal" value="0" class="mt-1 block w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-semibold text-indigo-700">
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <!-- 연봉 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="text-xs font-bold text-slate-700">본인 세전 연봉</label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_salary" step="100" min="1000" max="50000" value="7000" class="w-24 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">만 원</span>
+                            </div>
+                        </div>
+                        <input type="range" id="salary" min="3000" max="30000" step="500" value="7000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    </div>
+
+                    <!-- 주담대 외 대출의 DSR 부담 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label for="num_debt" class="text-xs font-bold text-slate-700">기존·추가 대출의 DSR 월 환산액</label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_debt" step="5" min="0" max="1000" value="0" class="w-24 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">만 원</span>
+                            </div>
+                        </div>
+                        <input type="range" id="debt" min="0" max="500" step="10" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        <p class="mt-2 text-xs text-slate-500">기타 조달자금에 새 대출을 넣었다면, 주담대 심사에 반영될 월 환산 상환액을 이곳에도 입력하세요.</p>
+                    </div>
+
+                    <!-- 주택담보대출 금리 설정 -->
+                    <div class="pt-2 border-t">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="text-xs font-bold text-slate-700">주택담보대출 적용 금리</label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_interest" step="0.05" min="1.0" max="15.0" value="4.2" class="w-24 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="interest_rate" min="2.5" max="8.0" step="0.1" value="4.2" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    </div>
+
+                    <!-- 대출 거치기간 설정 -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                                <span>⏳ 대출 거치기간 (이자만 내는 기간)</span>
+                            </label>
+                            <div class="flex items-center gap-1">
+                                <input type="number" id="num_grace" step="1" min="0" max="10" value="0" class="w-20 px-2 py-1 text-right text-sm font-extrabold text-indigo-600 bg-slate-50 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <span class="text-xs font-bold text-slate-600">년</span>
+                            </div>
+                        </div>
+                        <input type="range" id="grace_period" min="0" max="5" step="1" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    </div>
+
+                    <!-- 대출 상환 방식 선택 -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-700 block mb-2">대출 상환 방식 선택 (30년 만기 기준)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="repay_equal_pmt" onclick="setRepayMethod('equal_pmt')" class="py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700">원리금균등 상환</button>
+                            <button type="button" id="repay_equal_principal" onclick="setRepayMethod('equal_principal')" class="py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600">원금균등 상환</button>
+                        </div>
+                    </div>
+
+                    <!-- 생애 최초 구매 여부 -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-700 block mb-2">생애 최초 주택 구입 여부</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="first_home_off" onclick="setFirstHome(false)" class="py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700">일반 (LTV 70%)</button>
+                            <button type="button" id="first_home_on" onclick="setFirstHome(true)" class="py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600">생애최초 특례 (LTV 80%)</button>
+                        </div>
+                    </div>
+
+                    <!-- 주택 수 -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-700 block mb-2">매수 후 주택 수</label>
+                        <select id="house_count" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="1" selected>1주택 (무주택 / 일시적 2주택)</option>
+                            <option value="2">2주택 (조정대상지역)</option>
+                            <option value="3">3주택 이상 또는 법인</option>
+                        </select>
+                    </div>
+
+                    <div class="border-t pt-4 space-y-2">
+                        <label for="planned_loan" class="block text-sm font-bold text-slate-900">실제 사용할 주담대 (만 원)</label>
+                        <div class="flex items-stretch gap-2">
+                            <input type="number" id="planned_loan" min="0" step="any" inputmode="decimal" aria-describedby="planned_loan_hint" class="min-w-0 w-full rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-right text-sm font-bold text-indigo-700">
+                            <button type="button" id="use_max_loan" aria-pressed="true" class="shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs font-bold text-indigo-700">최대 적용</button>
+                        </div>
+                        <p id="planned_loan_hint" class="text-xs text-slate-500" aria-live="polite"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Panel: Results & Analytics -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <section class="card p-5 md:p-6 space-y-4" aria-labelledby="funding_title">
+                    <h2 id="funding_title" class="text-lg font-bold text-slate-900">매수 시점 자금 계획</h2>
+                    <dl class="space-y-2.5 text-sm">
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-slate-600" id="funding_savings_label">매수 전 누적 저축액</dt>
+                            <dd class="shrink-0 text-right font-semibold" id="res_funding_savings">0만 원</dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-slate-600">현재 순자산</dt>
+                            <dd class="shrink-0 text-right font-semibold" id="res_funding_assets">0만 원</dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-slate-600">실제 사용할 주담대</dt>
+                            <dd class="shrink-0 text-right font-semibold" id="res_funding_loan">0만 원</dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-slate-600">기타 조달자금 합계</dt>
+                            <dd class="shrink-0 text-right font-semibold" id="res_funding_other">0만 원</dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-3 border-t border-indigo-100 pt-3 text-indigo-700">
+                            <dt class="font-bold">총 가용자금</dt>
+                            <dd class="shrink-0 text-right text-lg font-extrabold" id="res_total_funding">0만 원</dd>
+                        </div>
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-slate-600">총 매수 비용 <span class="text-xs text-slate-500">(집값 + 취득세 + 중개보수)</span></dt>
+                            <dd class="shrink-0 text-right font-semibold" id="res_total_purchase_cost">0만 원</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <!-- Key Metrics Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="card p-4 bg-indigo-50/50 border-indigo-100">
+                        <span class="text-xs font-semibold text-slate-500">예상 최대 주담대</span>
+                        <div class="text-xl font-extrabold text-indigo-700 mt-1" id="res_max_loan">0억 원</div>
+                        <span class="text-[10px] text-slate-400 mt-1 block" id="res_loan_limit_reason">입력 조건의 LTV·DSR 40% 가정</span>
+                    </div>
+
+                    <div class="card p-4 bg-amber-50/50 border-amber-100">
+                        <span class="text-xs font-semibold text-slate-500">주담대 외 필요자금</span>
+                        <div class="text-xl font-extrabold text-amber-700 mt-1" id="res_needed_cash">0억 원</div>
+                        <span class="text-[10px] text-slate-400 mt-1 block">총 매수 비용 − 사용 주담대</span>
+                    </div>
+
+                    <div class="card p-4 bg-slate-50 border-slate-200" id="card_diff">
+                        <span class="text-xs font-semibold text-slate-500">최종 자금 여유 / 부족액</span>
+                        <div class="text-xl font-extrabold mt-1" id="res_cash_diff">0억 원</div>
+                        <span class="text-[10px] text-slate-400 mt-1 block">총 가용자금 − 총 매수 비용</span>
+                    </div>
+                </div>
+
+                <p class="px-1 text-xs text-slate-500">대출 한도와 세금은 입력 조건에 따른 추정치입니다. 매수 시점의 대출 심사와 세금에 따라 실제 금액이 달라질 수 있습니다.</p>
+
+                <!-- Monthly Repayment Spotlight Box -->
+                <div class="card p-5 bg-gradient-to-r from-blue-900 to-slate-900 text-white space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                        <span class="text-xs font-semibold text-blue-200 flex items-center gap-1">
+                            <span>💳 월 주담대 상환액</span>
+                            <span class="text-slate-400">(<span id="txt_repay_method">원리금균등</span>)</span>
+                        </span>
+                        <span class="text-xs bg-blue-500/30 px-2 py-0.5 rounded text-blue-200" id="txt_loan_term">30년 만기</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                        <!-- 거치기간 동안 -->
+                        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700" id="box_grace_info">
+                            <span class="text-xs text-amber-300 font-bold block flex items-center gap-1">
+                                <span>⏳ 거치기간 중 월 납부액</span>
+                                <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded" id="tag_grace_years">0년</span>
+                            </span>
+                            <div class="text-2xl font-black text-amber-400 mt-1" id="res_monthly_grace">0만 원</div>
+                            <span class="text-[10px] text-slate-400 block mt-1">원금 상환 없이 <b class="text-slate-200">순수 이자만</b> 납부</span>
+                        </div>
+
+                        <!-- 거치기간 종료 후 -->
+                        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                            <span class="text-xs text-indigo-300 font-bold block flex items-center gap-1">
+                                <span>🚀 거치 종료 후 월 상환액</span>
+                                <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.2 rounded" id="tag_repay_years">30년</span>
+                            </span>
+                            <div class="text-2xl font-black text-indigo-300 mt-1" id="res_monthly_payment_after">0만 원</div>
+                            <span class="text-[10px] text-slate-400 block mt-1" id="txt_monthly_note">원금 + 이자 본격 상환</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Tax Breakdown Box (재산세 & 종부세 분리) -->
+                <div class="card p-6 space-y-4">
+                    <h3 class="text-sm font-bold text-slate-900 border-b pb-2 flex justify-between items-center">
+                        <span>🏛️ 보유세 (재산세 + 종부세) 상세 분리 계산</span>
+                        <span class="text-xs text-slate-500 font-normal">공시가 시세 70% 가산 기준</span>
+                    </h3>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-500 block text-[11px] font-semibold">예상 재산세 (연)</span>
+                            <span class="font-extrabold text-slate-900 text-base mt-0.5 block" id="res_property_tax">0만 원</span>
+                            <span class="text-[10px] text-slate-400">지방교육세 포함</span>
+                        </div>
+                        <div class="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100">
+                            <span class="text-indigo-600 block text-[11px] font-semibold">예상 종합부동산세 (연)</span>
+                            <span class="font-extrabold text-indigo-900 text-base mt-0.5 block" id="res_종부세">0만 원</span>
+                            <span class="text-[10px] text-indigo-400" id="txt_종부세_공제">1주택 12억 공제</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100 col-span-2 md:col-span-1">
+                            <span class="text-emerald-700 block text-[11px] font-semibold">총 연간 보유세 합계</span>
+                            <span class="font-extrabold text-emerald-900 text-base mt-0.5 block" id="res_total_holding_tax">0만 원</span>
+                            <span class="text-[10px] text-emerald-600">월 환산 약 <span id="res_monthly_holding_tax">0만 원</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Chart & Initial Costs -->
+                    <div class="pt-3 border-t">
+                        <h4 class="text-xs font-bold text-slate-700 mb-2">📊 매수 비용 구성</h4>
+                        <div class="h-52 relative">
+                            <canvas id="costChart" role="img" aria-label="매수 비용 구성"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2 text-xs border-t">
+                        <div class="p-2.5 bg-slate-50 rounded-lg">
+                            <span class="text-slate-400 block text-[11px]">취득세 (부납세 포함)</span>
+                            <span class="font-bold text-slate-800" id="res_tax_acquisition">0만 원</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg">
+                            <span class="text-slate-400 block text-[11px]">중개보수 (복비 Max)</span>
+                            <span class="font-bold text-slate-800" id="res_brokerage">0만 원</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let isFirstHome = false;
+        let repayMethod = 'equal_pmt'; // 'equal_pmt' or 'equal_principal'
+        let chart = null;
+        let useMaxLoan = true;
+
+        const purchaseMonth = document.getElementById('purchase_month');
+        const monthlySavings = document.getElementById('monthly_savings');
+        const annualSavingsReturn = document.getElementById('annual_savings_return');
+        const plannedLoan = document.getElementById('planned_loan');
+        const maxLoanButton = document.getElementById('use_max_loan');
+        const otherFundingInputs = document.querySelectorAll('[data-other-funding]');
+        const monthFormatter = new Intl.DateTimeFormat('en', {
+            timeZone: 'Asia/Seoul',
+            year: 'numeric',
+            month: '2-digit'
+        });
+
+        function currentMonth() {
+            const parts = monthFormatter.formatToParts(new Date());
+            const year = parts.find(part => part.type === 'year').value;
+            const month = parts.find(part => part.type === 'month').value;
+            return `${year}-${month}`;
+        }
+
+        function monthsBetween(from, to) {
+            if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(to)) return null;
+            const [fromYear, fromMonth] = from.split('-').map(Number);
+            const [toYear, toMonth] = to.split('-').map(Number);
+            const months = (toYear - fromYear) * 12 + toMonth - fromMonth;
+            return months >= 0 ? months : null;
+        }
+
+        function inputManWon(input) {
+            return Math.round(Math.max(0, input.valueAsNumber || 0) * 10000);
+        }
+
+        function paymentFactor(monthlyRate, months) {
+            if (monthlyRate === 0) return 1 / months;
+            const growth = Math.pow(1 + monthlyRate, months);
+            return monthlyRate * growth / (growth - 1);
+        }
+
+        // Synchronize Slider and Number Input
+        function syncPair(sliderId, numberId) {
+            const slider = document.getElementById(sliderId);
+            const numInput = document.getElementById(numberId);
+
+            slider.addEventListener('input', () => {
+                numInput.value = slider.value;
+                calculate();
+            });
+
+            numInput.addEventListener('input', () => {
+                let val = parseFloat(numInput.value);
+                if (isNaN(val)) val = 0;
+                slider.value = val;
+                calculate();
+            });
+        }
+
+        function setFirstHome(val) {
+            isFirstHome = val;
+            const btnOff = document.getElementById('first_home_off');
+            const btnOn = document.getElementById('first_home_on');
+            if (isFirstHome) {
+                btnOn.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700";
+                btnOff.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600";
+            } else {
+                btnOff.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700";
+                btnOn.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600";
+            }
+            calculate();
+        }
+
+        function setRepayMethod(method) {
+            repayMethod = method;
+            const btnPmt = document.getElementById('repay_equal_pmt');
+            const btnPrin = document.getElementById('repay_equal_principal');
+            if (repayMethod === 'equal_pmt') {
+                btnPmt.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700";
+                btnPrin.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600";
+                document.getElementById('txt_repay_method').innerText = "원리금균등 상환";
+            } else {
+                btnPrin.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-indigo-600 bg-indigo-50 text-indigo-700";
+                btnPmt.className = "py-2 text-xs font-semibold rounded-lg border transition-all border-slate-200 bg-white text-slate-600";
+                document.getElementById('txt_repay_method').innerText = "원금균등 상환";
+            }
+            calculate();
+        }
+
+        function formatEok(valInWon) {
+            const manWon = Math.round(Math.abs(valInWon) / 10000);
+            const sign = valInWon < 0 && manWon > 0 ? '−' : '';
+            const eok = Math.floor(manWon / 10000);
+            const remainder = manWon % 10000;
+            if (eok === 0) return `${sign}${remainder.toLocaleString('ko-KR')}만 원`;
+            if (remainder === 0) return `${sign}${eok.toLocaleString('ko-KR')}억 원`;
+            return `${sign}${eok.toLocaleString('ko-KR')}억 ${remainder.toLocaleString('ko-KR')}만 원`;
+        }
+
+        function calculate() {
+            const priceEok = Math.max(0, parseFloat(document.getElementById('num_price').value) || 0);
+            const cashEok = parseFloat(document.getElementById('num_cash').value) || 0;
+            const salary = (parseFloat(document.getElementById('num_salary').value) || 0) * 10000; // 원
+            const otherDebtMonthly = inputManWon(document.getElementById('num_debt'));
+            const houseCount = parseInt(document.getElementById('house_count').value);
+            const interestRate = Math.max(0, parseFloat(document.getElementById('num_interest').value) || 0); // %
+            const graceYears = Math.min(10, Math.max(0, parseInt(document.getElementById('num_grace').value) || 0));
+
+            const housePriceWon = Math.round(priceEok * 100000000);
+            const netAssets = Math.round(cashEok * 100000000);
+            const thisMonth = currentMonth();
+            purchaseMonth.min = thisMonth;
+            const monthsToPurchase = monthsBetween(thisMonth, purchaseMonth.value);
+            const monthlySavingsWon = inputManWon(monthlySavings);
+            const savingsMonths = monthsToPurchase ?? 0;
+            const savingsPrincipal = savingsMonths * monthlySavingsWon;
+            const annualReturn = (annualSavingsReturn.valueAsNumber || 0) / 100;
+            const monthlyLogGrowth = Math.log1p(annualReturn) / 12;
+            const savedByPurchase = savingsPrincipal === 0 || monthlyLogGrowth === 0
+                ? savingsPrincipal
+                : Math.round(monthlySavingsWon * Math.expm1(savingsMonths * monthlyLogGrowth) / Math.expm1(monthlyLogGrowth));
+            const validSavingsReturn = !annualSavingsReturn.validity.badInput
+                && annualReturn >= -1 && Number.isFinite(savedByPurchase);
+            const savingsGain = savedByPurchase - savingsPrincipal;
+            const otherFunding = Array.from(otherFundingInputs).reduce((total, input) => total + inputManWon(input), 0);
+
+            purchaseMonth.setAttribute('aria-invalid', String(monthsToPurchase === null));
+            annualSavingsReturn.setAttribute('aria-invalid', String(!validSavingsReturn));
+            document.getElementById('purchase_timing').innerText = monthsToPurchase === null
+                ? '이번 달 이후의 연월을 입력하세요. 예: ' + thisMonth
+                : !validSavingsReturn
+                    ? '연 수익률은 −100% 이상의 계산 가능한 숫자로 입력하세요.'
+                    : `${savingsMonths}개월 후 예상 적립금 ${formatEok(savedByPurchase)}\n원금 ${formatEok(savingsPrincipal)} · 예상 손익 ${savingsGain > 0 ? '+' : ''}${formatEok(savingsGain)}`;
+
+            // 1. LTV Limit Calculation
+            let ltvRatio = 0.7;
+            if (isFirstHome) {
+                ltvRatio = 0.8;
+            } else if (houseCount >= 2) {
+                ltvRatio = 0.4;
+            }
+            const ltvMaxLoan = housePriceWon * ltvRatio;
+
+            // 2. DSR Limit Calculation (DSR 40%, 30년 만기)
+            const annualDsrCap = salary * 0.4;
+            const availableAnnualDsr = Math.max(0, annualDsrCap - otherDebtMonthly * 12);
+            
+            const r = (interestRate / 100) / 12;
+            const totalMonths = 360; // 30년
+            const repayMonths = Math.max(1, totalMonths - (graceYears * 12)); // 거치 후 실제 원금 상환 개월수
+            
+            // DSR 산정용 상환계수 (원리금균등 기준)
+            const pmtFactor = paymentFactor(r, totalMonths);
+            const dsrMaxLoan = (availableAnnualDsr / 12) / pmtFactor;
+
+            // 최대 주담대와 실제 사용할 주담대를 구분합니다.
+            const maxLoan = Math.floor(Math.min(ltvMaxLoan, dsrMaxLoan));
+            plannedLoan.max = maxLoan / 10000;
+            const requestedLoan = inputManWon(plannedLoan);
+            const usedLoan = useMaxLoan ? maxLoan : Math.min(requestedLoan, maxLoan);
+            const exceedsLimit = !useMaxLoan && requestedLoan > maxLoan;
+            if (useMaxLoan || (exceedsLimit && document.activeElement !== plannedLoan)) {
+                plannedLoan.value = usedLoan / 10000;
+            }
+            maxLoanButton.setAttribute('aria-pressed', String(useMaxLoan));
+            const maxLoanText = Number(plannedLoan.max).toLocaleString('ko-KR', { maximumFractionDigits: 4 });
+            const loanModeText = useMaxLoan ? ' · 최대 한도 자동 반영' : '';
+            const cappedText = exceedsLimit ? ' · 한도를 초과해 최대 금액으로 반영했습니다.' : '';
+            document.getElementById('planned_loan_hint').innerText = `입력 한도 ${maxLoanText}만 원${loanModeText}${cappedText}`;
+
+            // 3. Grace Period & Monthly Repayment Calculation
+            const monthlyGraceInterest = usedLoan * r; // 거치기간 중 순수 이자
+            
+            let firstRepayMonthPayment = 0;
+            let monthlyNote = "";
+
+            if (repayMethod === 'equal_pmt') {
+                // 원리금균등: 남은 repayMonths 동안 균등 상환
+                firstRepayMonthPayment = usedLoan * paymentFactor(r, repayMonths);
+                monthlyNote = `매월 고정 <b>${Math.round(firstRepayMonthPayment / 10000).toLocaleString()}만 원</b> 균등 상환`;
+            } else {
+                // 원금균등: 남은 repayMonths 동안 원금 균등 분할 + 잔당 이자
+                const monthlyPrincipal = usedLoan / repayMonths;
+                firstRepayMonthPayment = monthlyPrincipal + (usedLoan * r);
+                const lastMonthPayment = monthlyPrincipal + (monthlyPrincipal * r);
+                monthlyNote = `첫 달 <b>${Math.round(firstRepayMonthPayment / 10000).toLocaleString()}만 원</b> 시작 (마지막 달 약 ${Math.round(lastMonthPayment / 10000)}만 원)`;
+            }
+
+            // Render Repayment Cards
+            document.getElementById('res_monthly_grace').innerText = `${Math.round(monthlyGraceInterest / 10000).toLocaleString()}만 원`;
+            document.getElementById('res_monthly_payment_after').innerText = `${Math.round(firstRepayMonthPayment / 10000).toLocaleString()}만 원`;
+            document.getElementById('tag_grace_years').innerText = `${graceYears}년`;
+            document.getElementById('tag_repay_years').innerText = `${30 - graceYears}년`;
+            document.getElementById('txt_monthly_note').innerHTML = monthlyNote;
+
+            const graceBox = document.getElementById('box_grace_info');
+            if (graceYears === 0) {
+                graceBox.style.opacity = '0.4';
+            } else {
+                graceBox.style.opacity = '1';
+            }
+
+            // 4. Tax Calculation (취득세)
+            let taxRate = 0.035; // 1주택 9억 초과 기본
+            if (houseCount === 1) {
+                if (priceEok <= 6) taxRate = 0.011;
+                else if (priceEok <= 9) taxRate = 0.024;
+                else taxRate = 0.035;
+            } else if (houseCount === 2) {
+                taxRate = 0.090; // 조정 2주택
+            } else {
+                taxRate = 0.134; // 3주택 이상
+            }
+
+            let acquisitionTax = housePriceWon * taxRate;
+            if (isFirstHome) {
+                acquisitionTax = Math.max(0, acquisitionTax - 2000000); // 200만 원 감면
+            }
+
+            // 5. Brokerage Fee (중개보수 요율)
+            let brokerageRate = 0.005;
+            if (priceEok >= 15) brokerageRate = 0.007;
+            else if (priceEok >= 9) brokerageRate = 0.005;
+            else if (priceEok >= 6) brokerageRate = 0.004;
+            const brokerageFee = housePriceWon * brokerageRate;
+
+            // 6. Detailed Holding Tax (재산세 & 종부세 분리)
+            const publicPrice = housePriceWon * 0.7; // 공시가 약 70% 가정
+            
+            // 6-1. 재산세
+            const propertyTaxBase = publicPrice * 0.6;
+            let propertyTax = 0;
+            if (propertyTaxBase <= 60000000) {
+                propertyTax = propertyTaxBase * 0.001;
+            } else if (propertyTaxBase <= 150000000) {
+                propertyTax = 6000 + (propertyTaxBase - 60000000) * 0.0015;
+            } else if (propertyTaxBase <= 300000000) {
+                propertyTax = 195000 + (propertyTaxBase - 150000000) * 0.0025;
+            } else {
+                propertyTax = 570000 + (propertyTaxBase - 300000000) * 0.004;
+            }
+            const totalPropertyTax = propertyTax * 1.5; // 세부담+교육세
+
+            // 6-2. 종부세
+            let jongbuDeduction = 1200000000;
+            if (houseCount >= 2) jongbuDeduction = 900000000;
+            
+            document.getElementById('txt_종부세_공제').innerText = houseCount === 1 ? "1주택 12억 공제" : "다주택 9억 공제";
+
+            let jongbuTax = 0;
+            if (publicPrice > jongbuDeduction) {
+                const jongbuBase = (publicPrice - jongbuDeduction) * 0.6;
+                let jongbuRate = 0.005;
+                if (jongbuBase > 300000000) jongbuRate = 0.0075;
+                if (jongbuBase > 600000000) jongbuRate = 0.01;
+                if (houseCount >= 3) jongbuRate = 0.02;
+                jongbuTax = jongbuBase * jongbuRate * 1.2;
+            }
+
+            const totalHoldingTax = totalPropertyTax + jongbuTax;
+
+            document.getElementById('res_property_tax').innerText = formatEok(totalPropertyTax);
+            document.getElementById('res_종부세').innerText = jongbuTax > 0 ? formatEok(jongbuTax) : "0원 (과세미달)";
+            document.getElementById('res_total_holding_tax').innerText = formatEok(totalHoldingTax);
+            document.getElementById('res_monthly_holding_tax').innerText = `${Math.round((totalHoldingTax / 12) / 10000).toLocaleString()}만 원`;
+
+            // 7. 매수 시점의 총 가용자금과 부대비용을 포함한 총 매수 비용을 비교합니다.
+            const neededEquity = housePriceWon - usedLoan;
+            const totalPurchaseCost = housePriceWon + Math.round(acquisitionTax) + Math.round(brokerageFee);
+            const totalNeededCash = totalPurchaseCost - usedLoan;
+            const totalFunding = savedByPurchase + netAssets + usedLoan + otherFunding;
+            const cashDifference = totalFunding - totalPurchaseCost;
+            const validPurchaseMonth = monthsToPurchase !== null;
+            const validSavingsPlan = validPurchaseMonth && validSavingsReturn;
+
+            // Render Summary Badges & Cards
+            document.getElementById('funding_savings_label').innerText = validPurchaseMonth
+                ? `${monthsToPurchase}개월 후 예상 적립금`
+                : '매수 전 예상 적립금';
+            document.getElementById('res_funding_savings').innerText = validSavingsPlan ? formatEok(savedByPurchase) : '—';
+            document.getElementById('res_funding_assets').innerText = formatEok(netAssets);
+            document.getElementById('res_funding_loan').innerText = formatEok(usedLoan);
+            document.getElementById('res_funding_other').innerText = formatEok(otherFunding);
+            document.getElementById('res_total_funding').innerText = validSavingsPlan ? formatEok(totalFunding) : '—';
+            document.getElementById('res_total_purchase_cost').innerText = formatEok(totalPurchaseCost);
+            document.getElementById('res_max_loan').innerText = formatEok(maxLoan);
+            document.getElementById('res_needed_cash').innerText = formatEok(totalNeededCash);
+            
+            const diffElem = document.getElementById('res_cash_diff');
+            const cardDiff = document.getElementById('card_diff');
+            const badgeElem = document.getElementById('statusBadge');
+
+            if (!validSavingsPlan) {
+                diffElem.innerText = '—';
+                diffElem.className = "text-xl font-extrabold mt-1 text-slate-500";
+                cardDiff.className = "card p-4 bg-slate-50 border-slate-200";
+                badgeElem.innerText = validPurchaseMonth ? "예상 연 수익률 확인" : "매수 예정 연월 확인";
+                badgeElem.className = "px-5 py-3 rounded-xl font-bold text-lg text-center shadow-lg bg-slate-700 text-white";
+            } else if (cashDifference >= 0) {
+                diffElem.innerText = `+${formatEok(cashDifference)} 여유`;
+                diffElem.className = "text-xl font-extrabold mt-1 text-emerald-600";
+                cardDiff.className = "card p-4 bg-emerald-50/50 border-emerald-100";
+                badgeElem.innerText = "✅ 예상 매수 자금 충족";
+                badgeElem.className = "px-5 py-3 rounded-xl font-bold text-lg text-center shadow-lg bg-emerald-500 text-white";
+            } else {
+                diffElem.innerText = `-${formatEok(Math.abs(cashDifference))} 부족`;
+                diffElem.className = "text-xl font-extrabold mt-1 text-rose-600";
+                cardDiff.className = "card p-4 bg-rose-50/50 border-rose-100";
+                badgeElem.innerText = "❌ 예상 매수 자금 부족";
+                badgeElem.className = "px-5 py-3 rounded-xl font-bold text-lg text-center shadow-lg bg-rose-500 text-white";
+            }
+
+            document.getElementById('res_tax_acquisition').innerText = formatEok(acquisitionTax);
+            document.getElementById('res_brokerage').innerText = formatEok(brokerageFee);
+
+            // Update Chart
+            updateChart(usedLoan / 100000000, neededEquity / 100000000, (acquisitionTax + brokerageFee) / 100000000);
+        }
+
+        function updateChart(loanEok, equityEok, costEok) {
+            if (typeof Chart === 'undefined') return;
+            const canvas = document.getElementById('costChart');
+            canvas.setAttribute('aria-label', `매수 비용 구성. 사용할 주담대 ${formatEok(loanEok * 100000000)}, 주담대 외 집값 ${formatEok(equityEok * 100000000)}, 취득세와 중개보수 ${formatEok(costEok * 100000000)}`);
+            if (chart) {
+                chart.data.datasets[0].data[0] = loanEok;
+                chart.data.datasets[1].data[0] = equityEok;
+                chart.data.datasets[2].data[0] = costEok;
+                chart.update('none');
+                return;
+            }
+            const ctx = canvas.getContext('2d');
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                plugins: [{ id: 'costAmounts', afterDatasetsDraw: drawCostAmounts }],
+                data: {
+                    labels: ['자금 구성 구조'],
+                    datasets: [
+                        {
+                            label: '실제 사용할 주담대',
+                            data: [loanEok],
+                            backgroundColor: '#4f46e5'
+                        },
+                        {
+                            label: '주담대 외 집값',
+                            data: [equityEok],
+                            backgroundColor: '#f59e0b'
+                        },
+                        {
+                            label: '부대비용 (취득세+복비)',
+                            data: [costEok],
+                            backgroundColor: '#ef4444'
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: { padding: { top: 54 } },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: { display: true, text: '금액 (억 원)' }
+                        },
+                        y: { stacked: true }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        function drawCostAmounts(costChart) {
+            const { ctx, width } = costChart;
+            let calloutCount = 0;
+            ctx.save();
+            ctx.font = 'bold 12px Pretendard, system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            costChart.data.datasets.forEach((dataset, index) => {
+                if (!costChart.isDatasetVisible(index) || dataset.data[0] <= 0) return;
+                const { x, y, base, height } = costChart.getDatasetMeta(index).data[0];
+                const center = (x + base) / 2;
+                const amount = formatEok(dataset.data[0] * 100000000);
+                const labelWidth = ctx.measureText(amount).width;
+
+                if (Math.abs(x - base) >= labelWidth + 12 && height >= 18) {
+                    ctx.fillStyle = index === 1 ? '#1e293b' : '#ffffff';
+                    ctx.fillText(amount, center, y);
+                    return;
+                }
+
+                const top = y - height / 2;
+                const labelY = top - 12 - calloutCount * 16;
+                const margin = labelWidth / 2 + 4;
+                const labelX = Math.max(margin, Math.min(center, width - margin));
+                calloutCount += 1;
+                ctx.strokeStyle = dataset.backgroundColor;
+                ctx.beginPath();
+                ctx.moveTo(center, top);
+                ctx.lineTo(labelX, labelY + 7);
+                ctx.stroke();
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(labelX - margin, labelY - 7, margin * 2, 14);
+                ctx.fillStyle = '#334155';
+                ctx.fillText(amount, labelX, labelY);
+            });
+            ctx.restore();
+        }
+
+        // Setup Pairs
+        syncPair('price', 'num_price');
+        syncPair('cash', 'num_cash');
+        syncPair('salary', 'num_salary');
+        syncPair('debt', 'num_debt');
+        syncPair('interest_rate', 'num_interest');
+        syncPair('grace_period', 'num_grace');
+
+        document.getElementById('house_count').addEventListener('change', calculate);
+        purchaseMonth.value = currentMonth();
+        purchaseMonth.addEventListener('input', calculate);
+        monthlySavings.addEventListener('input', calculate);
+        annualSavingsReturn.addEventListener('input', calculate);
+        otherFundingInputs.forEach(input => input.addEventListener('input', calculate));
+        plannedLoan.addEventListener('input', () => {
+            useMaxLoan = false;
+            calculate();
+        });
+        plannedLoan.addEventListener('blur', () => {
+            if (!useMaxLoan) plannedLoan.value = Math.min(inputManWon(plannedLoan) / 10000, Number(plannedLoan.max));
+            calculate();
+        });
+        maxLoanButton.addEventListener('click', () => {
+            useMaxLoan = true;
+            calculate();
+        });
+
+        // Initial Calculation
+        calculate();
+    </script>
+</body>
+</html>
