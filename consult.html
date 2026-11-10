@@ -791,9 +791,9 @@
       나중에는 <strong>저의 도움 없이도 본인 스스로 관리할 수 있는 능력</strong>을 만들어 드릴 겁니다.
     </p>
     <div class="promise">
-  "여기까지 읽으신 분들은 상담에 <span style="font-size:1.15em;font-weight:600;color:var(--primary);">200%</span> 이상 만족하실 겁니다. 장담합니다."
+  3번의 상담으로 지금 상황 진단부터 실행 순서까지 함께 정리합니다.
     </div>
-    <p style="margin-top:16px">상담 전 아래 설문을 작성해주시면 <strong>더욱 원활한 상담</strong>이 됩니다.</p>
+    <p style="margin-top:16px">아래 사전설문을 작성해 주시면 3회 컨설팅을 <strong>95,000원</strong>(정가 190,000원)에 진행합니다. 개인·부부 비용은 같습니다.</p>
     <div class="sign">자산관리사 남진우 팀장 드림</div>
   </div>
 </div>
@@ -825,33 +825,33 @@
     <div class="q-block" id="q-name">
       <div class="q-label"><span class="req">*</span> 이름</div>
       <input type="text" class="text-input" id="name" placeholder="이름을 입력해주세요">
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">이름을 입력해 주세요.</div>
     </div>
 
     <!-- 추천인 -->
     <div class="q-block" id="q-referral">
       <div class="q-label"><span class="req">*</span> 추천인 성함 (혹은 유입경로)</div>
       <input type="text" class="text-input" id="referral" placeholder="예: 홍길동 소개, 유튜브, 인스타그램 등">
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">추천인 성함이나 알게 된 경로를 입력해 주세요.</div>
     </div>
 
     <!-- 연락처 -->
     <div class="q-block" id="q-contact">
       <div class="q-label"><span class="req">*</span> 연락처 (번호 혹은 카톡 ID)</div>
       <input type="text" class="text-input" id="contact" placeholder="010-0000-0000 또는 카카오톡 ID">
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">연락받으실 번호나 카카오톡 ID를 입력해 주세요.</div>
     </div>
 
     <!-- MBTI -->
     <div class="q-block" id="q-mbti">
-      <div class="q-label"><span class="req">*</span> MBTI</div>
+      <div class="q-label">MBTI <span style="color:var(--text-muted);font-weight:400">(선택)</span></div>
       <input type="text" class="text-input" id="mbti" placeholder="예: INTJ, ENFP 등">
       <div class="q-error">필수 항목입니다.</div>
     </div>
 
     <!-- 성별 -->
     <div class="q-block" id="q-gender">
-      <div class="q-label"><span class="req">*</span> 성별</div>
+      <div class="q-label">성별 <span style="color:var(--text-muted);font-weight:400">(선택)</span></div>
       <div class="radio-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="radio-item"><input type="radio" name="gender" id="g1" value="여자"><label for="g1">여자</label></div>
         <div class="radio-item"><input type="radio" name="gender" id="g2" value="남자"><label for="g2">남자</label></div>
@@ -871,7 +871,7 @@
         <div class="radio-item"><input type="radio" name="age" id="a6" value="46~50세"><label for="a6">46~50세</label></div>
         <div class="radio-item"><input type="radio" name="age" id="a7" value="51세 이상"><label for="a7">51세 이상</label></div>
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">연령대를 선택해 주세요.</div>
     </div>
 
     <!-- 결혼여부 -->
@@ -882,14 +882,14 @@
         <div class="radio-item"><input type="radio" name="married" id="m2" value="기혼(자녀없음)"><label for="m2">기혼(자녀없음)</label></div>
         <div class="radio-item"><input type="radio" name="married" id="m3" value="기혼(자녀있음)"><label for="m3">기혼(자녀있음)</label></div>
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">결혼 여부를 선택해 주세요.</div>
     </div>
 
     <!-- 직업 -->
     <div class="q-block" id="q-job">
       <div class="q-label"><span class="req">*</span> 직업, 경력 (구체적일수록 좋습니다)</div>
       <input type="text" class="text-input" id="job" placeholder="예: IT회사 개발자 3년차, 간호사 5년차, 자영업(음식점) 등">
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">직업과 경력을 입력해 주세요.</div>
     </div>
 
     <!-- 거주지 -->
@@ -908,7 +908,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="region-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">거주지를 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 금융컨설팅 경험 -->
@@ -925,7 +925,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="exp-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">하나 이상 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 관심분야 -->
@@ -946,7 +946,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="interest-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">하나 이상 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     </div>
@@ -973,7 +973,7 @@
         <div class="check-item"><input type="checkbox" name="products" id="p11" value="부동산(임대소득/오피스텔)"><label for="p11">부동산(임대소득/오피스텔)</label></div>
         <div class="check-item"><input type="checkbox" name="products" id="p12" value="아무것도 없음"><label for="p12">아무것도 없음</label></div>
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">하나 이상 선택해 주세요. 없으면 '아무것도 없음'을 선택해 주세요.</div>
     </div>
 
     <!-- 월평균 수입 -->
@@ -995,7 +995,7 @@
         <div class="radio-item"><input type="radio" name="income" id="inc13" value="900만~1,000만"><label for="inc13">900~1,000만</label></div>
         <div class="radio-item"><input type="radio" name="income" id="inc14" value="1,000만 이상"><label for="inc14">1,000만 이상</label></div>
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">월평균 수입을 선택해 주세요.</div>
     </div>
 
     <!-- 월평균 지출 -->
@@ -1021,7 +1021,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="expense-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">월평균 지출을 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 저축가능금액 -->
@@ -1049,7 +1049,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="save-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">저축 가능 금액을 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 자산 현황 -->
@@ -1074,7 +1074,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="asset-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">자산 현황을 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 부채 현황 -->
@@ -1098,7 +1098,7 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="debt-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">부채 현황을 선택하거나 직접 입력해 주세요. 없으면 '없음'이라고 적어 주세요.</div>
     </div>
 
     <!-- 주거 현황 -->
@@ -1116,35 +1116,52 @@
         <span class="other-label">기타:</span>
         <input type="text" class="other-text" id="housing-other" placeholder="직접 입력">
       </div>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">주거 현황을 선택하거나 직접 입력해 주세요.</div>
     </div>
 
     <!-- 미리 알려주실 내용 -->
     <div class="q-block" id="q-preinfo">
       <div class="q-label"><span class="req">*</span> 제가 미리 알고있으면 상담에 도움이 될 만한 부분을 적어주세요!</div>
       <textarea class="textarea-input" id="preinfo" rows="4" placeholder="자유롭게 적어주세요. 없으면 '없음'이라고 적어주세요."></textarea>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">없으면 '없음'이라고 적어 주세요.</div>
     </div>
 
     <!-- 신청 계기 / 가장 큰 고민 -->
     <div class="q-block" id="q-reason">
-      <div class="q-label"><span class="req">*</span> 컨설팅 신청 계기 혹은 자산관리에서 가장 고민은 무엇인가요?</div>
+      <div class="q-label"><span class="req">*</span> 컨설팅 신청 계기 혹은 자산관리에서 가장 큰 고민은 무엇인가요?</div>
       <textarea class="textarea-input" id="reason" rows="4" placeholder="솔직하게 적어주실수록 더 좋은 상담이 됩니다."></textarea>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">신청 계기나 가장 큰 고민을 적어 주세요.</div>
     </div>
 
     <!-- 얻어가고 싶은 것 -->
     <div class="q-block" id="q-goal">
       <div class="q-label"><span class="req">*</span> 저와의 컨설팅을 통해 얻어가고 싶은 것을 두 가지 이상 적어주세요.</div>
       <textarea class="textarea-input" id="goal" rows="4" placeholder="예: 투자 방향 잡기, 보험 정리, 노후 준비 방법 등..."></textarea>
-      <div class="q-error">필수 항목입니다.</div>
+      <div class="q-error">얻어가고 싶은 것을 적어 주세요.</div>
     </div>
 
-    <div class="form-actions" style="justify-content:center;">
+    <!-- 개인정보 수집·이용 동의 -->
+    <div class="q-block" id="q-privacy">
+      <div class="q-label"><span class="req">*</span> 개인정보 수집·이용 동의</div>
+      <div style="font-size:13px;line-height:1.7;color:var(--text-secondary);margin-bottom:14px">
+        수집 항목: 이름, 연락처, 연령대, 결혼 여부, 직업, 거주지, 소득·지출·자산·부채 등 설문에 적은 내용<br>
+        이용 목적: 상담 준비와 상담 일정·비용 안내<br>
+        보관 기간: 상담 종료 후 1년. 요청하시면 바로 삭제합니다.<br>
+        동의하지 않으셔도 되지만, 이 경우 사전설문 신청을 진행할 수 없습니다.
+      </div>
+      <div class="check-item"><input type="checkbox" id="privacy-agree"><label for="privacy-agree">위 내용을 확인했고 개인정보 수집·이용에 동의합니다.</label></div>
+      <div class="q-error">개인정보 수집·이용에 동의해 주셔야 설문을 보낼 수 있습니다.</div>
+    </div>
+
+    <div class="form-actions" style="justify-content:center;flex-direction:column;align-items:center;">
       <button class="btn-submit" id="btn-submit" onclick="submitForm()">
         설문 제출하기
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
+      <p id="submit-error" role="alert" style="display:none;margin-top:16px;font-size:13px;line-height:1.7;color:#c0392b;text-align:center">
+        설문을 보내지 못했습니다. 입력하신 내용은 그대로 있으니 다시 보내 주세요.<br>
+        계속 안 되면 <a href="https://open.kakao.com/me/jwfinancial" target="_blank" rel="noopener noreferrer" style="color:inherit">카카오톡으로 문의</a>해 주세요.
+      </p>
     </div>
   </div>
 
@@ -1155,11 +1172,11 @@
   <div class="complete-icon">
     <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
   </div>
-  <h2>설문이 <em>완료</em>되었습니다</h2>
+  <h2>설문을 <em>받았습니다</em></h2>
   <p>
-    소중한 답변 감사합니다. 🙏<br>
-    잠시 후 카카오톡으로 자동 이동합니다.<br>
-    <strong style="color:var(--primary)">"설문 작성했습니다"</strong> 한 마디만 보내주시면 접수 완료입니다.
+    아직 신청이 끝나지 않았습니다.<br>
+    카카오톡으로 <strong style="color:var(--primary)">"설문 작성했습니다"</strong>를 보내 주셔야 신청이 접수됩니다.<br>
+    잠시 후 카카오톡 창이 열립니다.
   </p>
 
   <div class="complete-box">
@@ -1220,8 +1237,6 @@
       { id: 'q-name',     fn: function(){ return getVal('name'); } },
       { id: 'q-referral', fn: function(){ return getVal('referral'); } },
       { id: 'q-contact',  fn: function(){ return getVal('contact'); } },
-      { id: 'q-mbti',     fn: function(){ return getVal('mbti'); } },
-      { id: 'q-gender',   fn: function(){ return getRadio('gender'); } },
       { id: 'q-age',      fn: function(){ return getRadio('age'); } },
       { id: 'q-married',  fn: function(){ return getRadio('married'); } },
       { id: 'q-job',      fn: function(){ return getVal('job'); } },
@@ -1238,6 +1253,7 @@
       { id: 'q-preinfo',  fn: function(){ return getVal('preinfo'); } },
       { id: 'q-reason',   fn: function(){ return getVal('reason'); } },
       { id: 'q-goal',     fn: function(){ return getVal('goal'); } },
+      { id: 'q-privacy',  fn: function(){ return document.getElementById('privacy-agree').checked ? 'ok' : ''; } },
     ];
     checks.forEach(function(c) {
       var v = c.fn();
@@ -1291,8 +1307,11 @@
 
     // 버튼 비활성화
     var btn = document.getElementById('btn-submit');
+    if (!window.__btnHtml) window.__btnHtml = btn.innerHTML;
+    var btnHtml = window.__btnHtml;
     btn.disabled = true;
-    btn.textContent = '전송 중...';
+    btn.textContent = '보내는 중…';
+    document.getElementById('submit-error').style.display = 'none';
 
     // ① 구글 스프레드시트 + 알림톡 전송 (POST JSON)
     var payload = {
@@ -1319,12 +1338,33 @@
       goal:       surveyData.goal,
       request_id: Date.now() + '_' + Math.random().toString(36).slice(2,7)
     };
+    var controller = ('AbortController' in window) ? new AbortController() : null;
+    var timer = controller ? setTimeout(function(){ controller.abort(); }, 20000) : null;
     fetch(SHEET_URL, {
-      method: 'POST',
-      mode:   'no-cors',
-      body:   JSON.stringify(payload)
-    }).catch(function(){});
+      method:  'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body:    JSON.stringify(payload),
+      signal:  controller ? controller.signal : undefined
+    }).then(function(res) {
+      return res.text().then(function(text) {
+        var data = null;
+        try { data = JSON.parse(text); } catch (e) {}
+        if (!res.ok || !data || data.result !== 'success') throw new Error('save failed');
+      });
+    }).then(function() {
+      if (timer) clearTimeout(timer);
+      showComplete();
+    }).catch(function() {
+      if (timer) clearTimeout(timer);
+      btn.disabled = false;
+      btn.innerHTML = btnHtml.replace('설문 제출하기', '다시 보내기');
+      var err = document.getElementById('submit-error');
+      err.style.display = 'block';
+      err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
 
+  function showComplete() {
     // ② 완료 화면 전환
     document.getElementById('progress-wrap').style.display = 'none';
     document.getElementById('form-wrap').style.display = 'none';
