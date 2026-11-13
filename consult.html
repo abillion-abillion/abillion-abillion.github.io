@@ -1158,10 +1158,12 @@
         설문 제출하기
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
-      <p id="submit-error" role="alert" style="display:none;margin-top:16px;font-size:13px;line-height:1.7;color:#c0392b;text-align:center">
-        전송 결과를 확인하지 못했습니다. 이미 접수됐을 수 있으니 다시 보내지 마시고<br>
-        접수 여부를 <a href="https://open.kakao.com/me/jwfinancial" target="_blank" rel="noopener noreferrer" style="color:inherit">카카오톡으로 문의</a>해 주세요.
-      </p>
+      <div id="submit-error" role="status" style="display:none;margin-top:16px;font-size:14px;line-height:1.8;color:var(--text-primary);text-align:center">
+        <strong>카카오톡으로 접수를 확인해 주세요</strong><br>
+        설문 접수 여부를 바로 확인하지 못했습니다.<br>
+        다시 제출하지 마시고, 카카오톡에 ‘설문 작성했습니다’라고 보내주시면 확인 후 안내해 드리겠습니다.<br>
+        <a href="https://open.kakao.com/me/jwfinancial" target="_blank" rel="noopener noreferrer" class="kakao-btn" style="margin-top:18px">카카오톡으로 확인하기 →</a>
+      </div>
     </div>
   </div>
 
@@ -1359,7 +1361,7 @@
     }).catch(function() {
       if (timer) clearTimeout(timer);
       btn.disabled = true;
-      btn.textContent = '전송 결과 확인 중';
+      btn.style.display = 'none';
       var err = document.getElementById('submit-error');
       err.style.display = 'block';
       err.scrollIntoView({ behavior: 'smooth', block: 'center' });
