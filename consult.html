@@ -844,14 +844,14 @@
 
     <!-- MBTI -->
     <div class="q-block" id="q-mbti">
-      <div class="q-label">MBTI <span style="color:var(--text-muted);font-weight:400">(선택)</span></div>
+      <div class="q-label"><span class="req">*</span> MBTI</div>
       <input type="text" class="text-input" id="mbti" placeholder="예: INTJ, ENFP 등">
       <div class="q-error">필수 항목입니다.</div>
     </div>
 
     <!-- 성별 -->
     <div class="q-block" id="q-gender">
-      <div class="q-label">성별 <span style="color:var(--text-muted);font-weight:400">(선택)</span></div>
+      <div class="q-label"><span class="req">*</span> 성별</div>
       <div class="radio-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="radio-item"><input type="radio" name="gender" id="g1" value="여자"><label for="g1">여자</label></div>
         <div class="radio-item"><input type="radio" name="gender" id="g2" value="남자"><label for="g2">남자</label></div>
@@ -1159,8 +1159,8 @@
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
       <p id="submit-error" role="alert" style="display:none;margin-top:16px;font-size:13px;line-height:1.7;color:#c0392b;text-align:center">
-        설문을 보내지 못했습니다. 입력하신 내용은 그대로 있으니 다시 보내 주세요.<br>
-        계속 안 되면 <a href="https://open.kakao.com/me/jwfinancial" target="_blank" rel="noopener noreferrer" style="color:inherit">카카오톡으로 문의</a>해 주세요.
+        전송 결과를 확인하지 못했습니다. 이미 접수됐을 수 있으니 다시 보내지 마시고<br>
+        접수 여부를 <a href="https://open.kakao.com/me/jwfinancial" target="_blank" rel="noopener noreferrer" style="color:inherit">카카오톡으로 문의</a>해 주세요.
       </p>
     </div>
   </div>
@@ -1237,6 +1237,8 @@
       { id: 'q-name',     fn: function(){ return getVal('name'); } },
       { id: 'q-referral', fn: function(){ return getVal('referral'); } },
       { id: 'q-contact',  fn: function(){ return getVal('contact'); } },
+      { id: 'q-mbti',     fn: function(){ return getVal('mbti'); } },
+      { id: 'q-gender',   fn: function(){ return getRadio('gender'); } },
       { id: 'q-age',      fn: function(){ return getRadio('age'); } },
       { id: 'q-married',  fn: function(){ return getRadio('married'); } },
       { id: 'q-job',      fn: function(){ return getVal('job'); } },
@@ -1356,8 +1358,8 @@
       showComplete();
     }).catch(function() {
       if (timer) clearTimeout(timer);
-      btn.disabled = false;
-      btn.innerHTML = btnHtml.replace('설문 제출하기', '다시 보내기');
+      btn.disabled = true;
+      btn.textContent = '전송 결과 확인 중';
       var err = document.getElementById('submit-error');
       err.style.display = 'block';
       err.scrollIntoView({ behavior: 'smooth', block: 'center' });
